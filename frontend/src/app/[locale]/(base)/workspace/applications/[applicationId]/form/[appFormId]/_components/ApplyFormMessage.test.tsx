@@ -62,6 +62,24 @@ describe("getWarningLinkText", () => {
     );
   });
 
+  it("uses the innermost entry number for nested FieldList warnings", () => {
+    const warning: FormattedFormValidationWarning = {
+      field: "$.projects[1].periods[3].amount",
+      message: "'amount' is a required property",
+      formatted: "Amount is required",
+      type: "required",
+      value: null,
+      htmlField: "projects[1]--periods[3]--amount",
+      definition:
+        "/properties/projects/items/properties/periods/items/properties/amount",
+      fieldListLabel: "Budget periods",
+    };
+
+    expect(getWarningLinkText(warning)).toBe(
+      "Amount in Budget periods, Entry 4 is required",
+    );
+  });
+
   it("falls back to entry number only when definition is not a FieldList definition", () => {
     const warning: FormattedFormValidationWarning = {
       field: "$.weird_field[2]",

@@ -28,7 +28,9 @@ export const getWarningLinkText = (
   warning: FormattedFormValidationWarning,
 ): string => {
   const baseText = warning.formatted ?? warning.message;
-  const entryMatch = warning.htmlField?.match(/\[(\d+)\]--/);
+  const entryMatch = warning.htmlField
+    ? Array.from(warning.htmlField.matchAll(/\[(\d+)\]/g)).at(-1)
+    : undefined;
   const fieldListLabel = warning.fieldListLabel ?? "";
 
   if (!entryMatch) {

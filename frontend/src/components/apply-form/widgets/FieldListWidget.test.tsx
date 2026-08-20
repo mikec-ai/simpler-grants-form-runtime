@@ -1,5 +1,6 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { FieldListGroupItem } from "src/types/applyForm/types";
 
 import FieldListWidget from "src/components/apply-form/widgets/FieldListWidget";
 
@@ -70,6 +71,73 @@ const nestedGroupDefinition = [
     },
   },
 ];
+
+const repeatingNestedGroupDefinition = [
+  {
+    widget: "FieldList",
+    baseId: "projects[~~index~~]--periods",
+    definition: "/properties/projects/items/properties/periods",
+    storagePath: ["periods"],
+    fieldListProps: {
+      schema: { type: "array", title: "Budget periods" },
+      label: "Budget periods",
+      name: "periods",
+      minItems: 1,
+      groupDefinition: [
+        {
+          widget: "Text",
+          baseId: "periods[~~index~~]--amount",
+          definition:
+            "/properties/projects/items/properties/periods/items/properties/amount",
+          storagePath: ["amount"],
+          generalProps: {
+            schema: { type: "number", title: "Amount" },
+            rawErrors: [],
+            options: {},
+          },
+        },
+      ],
+    },
+  },
+] satisfies FieldListGroupItem[];
+
+const deeplyNestedGroupDefinition = [
+  {
+    ...repeatingNestedGroupDefinition[0],
+    fieldListProps: {
+      ...repeatingNestedGroupDefinition[0].fieldListProps,
+      groupDefinition: [
+        {
+          widget: "FieldList",
+          baseId: "periods[~~index~~]--line_items",
+          definition:
+            "/properties/projects/items/properties/periods/items/properties/line_items",
+          storagePath: ["line_items"],
+          fieldListProps: {
+            schema: { type: "array", title: "Line items" },
+            label: "Line items",
+            name: "line_items",
+            minItems: 1,
+            groupDefinition: [
+              {
+                widget: "Text",
+                baseId: "line_items[~~index~~]--name",
+                definition:
+                  "/properties/projects/items/properties/periods/items/properties/line_items/items/properties/name",
+                storagePath: ["name"],
+                generalProps: {
+                  schema: { type: "string", title: "Name" },
+                  rawErrors: [],
+                  options: {},
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+  },
+] satisfies FieldListGroupItem[];
 
 describe("FieldListWidget", () => {
   it("renders label, description, and minimum entry widgets", () => {
@@ -163,6 +231,246 @@ describe("FieldListWidget", () => {
     expect(screen.getAllByTestId("mock-widget")).toHaveLength(2);
   });
 
+  it("renders nested repeating groups with unique indexed input ids", () => {
+    render(
+      <FieldListWidget
+        id="projects"
+        key="projects"
+        schema={{ type: "array", title: "Projects" }}
+        label="Projects"
+        groupDefinition={repeatingNestedGroupDefinition}
+        rawErrors={[]}
+        requiredFields={["projects/periods/amount"]}
+        name="projects"
+        value={[{ periods: [{ amount: 100 }] }, { periods: [{ amount: 200 }] }]}
+      />,
+    );
+
+    expect(
+      screen.getAllByRole("heading", { name: "Budget periods", level: 5 }),
+    ).toHaveLength(2);
+    expect(
+      screen.getAllByRole("heading", { name: "Budget periods 1", level: 6 }),
+    ).toHaveLength(2);
+    expect(
+      screen.getByRole("button", {
+        name: "addEntry: Budget periods — Projects 1",
+      }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", {
+        name: "addEntry: Budget periods — Projects 2",
+      }),
+    ).toBeInTheDocument();
+    expect(screen.getAllByTestId("mock-widget")).toHaveLength(2);
+    expect(
+      screen.getByLabelText("projects[0]--periods[0]--amount"),
+    ).toHaveValue("100");
+    expect(
+      screen.getByLabelText("projects[1]--periods[0]--amount"),
+    ).toHaveValue("200");
+  });
+
+  it("preserves local edits across equivalent props and accepts authoritative changes", async () => {
+    const user = userEvent.setup();
+    const { rerender } = render(
+      <FieldListWidget
+        id="projects"
+        key="projects"
+        schema={{ type: "array", title: "Projects" }}
+        label="Projects"
+        groupDefinition={repeatingNestedGroupDefinition}
+        rawErrors={[]}
+        requiredFields={[]}
+        name="projects"
+        value={[{ periods: [{ amount: 100 }] }]}
+      />,
+    );
+
+    const amount = screen.getByLabelText("projects[0]--periods[0]--amount");
+    await user.clear(amount);
+    await user.type(amount, "250");
+
+    rerender(
+      <FieldListWidget
+        id="projects"
+        key="projects"
+        schema={{ type: "array", title: "Projects" }}
+        label="Projects"
+        groupDefinition={repeatingNestedGroupDefinition}
+        rawErrors={[]}
+        requiredFields={[]}
+        name="projects"
+        value={[{ periods: [{ amount: 100 }] }]}
+      />,
+    );
+
+    expect(
+      screen.getByLabelText("projects[0]--periods[0]--amount"),
+    ).toHaveValue("250");
+
+    rerender(
+      <FieldListWidget
+        id="projects"
+        key="projects"
+        schema={{ type: "array", title: "Projects" }}
+        label="Projects"
+        groupDefinition={repeatingNestedGroupDefinition}
+        rawErrors={[]}
+        requiredFields={[]}
+        name="projects"
+        value={[{ periods: [{ amount: 500 }] }]}
+      />,
+    );
+
+    expect(
+      screen.getByLabelText("projects[0]--periods[0]--amount"),
+    ).toHaveValue("500");
+  });
+
+  it("propagates nested entry additions through the outer FieldList value", async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    render(
+      <FieldListWidget
+        id="projects"
+        key="projects"
+        schema={{ type: "array", title: "Projects" }}
+        label="Projects"
+        groupDefinition={repeatingNestedGroupDefinition}
+        rawErrors={[]}
+        requiredFields={["projects/periods/amount"]}
+        name="projects"
+        value={[{ periods: [{ amount: 100 }] }]}
+        onChange={onChange}
+      />,
+    );
+
+    const nestedList = screen.getByRole("group", { name: "Budget periods" });
+    await user.click(
+      within(nestedList).getByRole("button", {
+        name: "addEntry: Budget periods — Projects 1",
+      }),
+    );
+
+    expect(onChange).toHaveBeenLastCalledWith([
+      { periods: [{ amount: 100 }, {}] },
+    ]);
+    expect(within(nestedList).getAllByTestId("mock-widget")).toHaveLength(2);
+  });
+
+  it("keeps sibling nested lists with the same terminal name independent", async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    const consoleError = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => undefined);
+    const siblingPeriods = ["direct_costs", "indirect_costs"].map(
+      (costType) => ({
+        widget: "FieldList" as const,
+        baseId: `projects[~~index~~]--${costType}--periods`,
+        definition: `/properties/projects/items/properties/${costType}/properties/periods`,
+        storagePath: [costType, "periods"],
+        fieldListProps: {
+          schema: { type: "array", title: `${costType} periods` },
+          label:
+            costType === "direct_costs"
+              ? "Direct budget periods"
+              : "Indirect budget periods",
+          name: "periods",
+          minItems: 1,
+          groupDefinition: [
+            {
+              widget: "Text" as const,
+              baseId: `${costType}--periods[~~index~~]--amount`,
+              definition: `/properties/projects/items/properties/${costType}/properties/periods/items/properties/amount`,
+              storagePath: ["amount"],
+              generalProps: {
+                schema: { type: "number", title: "Amount" },
+                rawErrors: [],
+                options: {},
+              },
+            },
+          ],
+        },
+      }),
+    ) satisfies FieldListGroupItem[];
+
+    try {
+      render(
+        <FieldListWidget
+          id="projects"
+          key="projects"
+          schema={{ type: "array", title: "Projects" }}
+          label="Projects"
+          groupDefinition={siblingPeriods}
+          rawErrors={[]}
+          requiredFields={[]}
+          name="projects"
+          value={[
+            {
+              direct_costs: { periods: [{ amount: 100 }] },
+              indirect_costs: { periods: [{ amount: 200 }] },
+            },
+          ]}
+          onChange={onChange}
+        />,
+      );
+
+      const directList = screen.getByRole("group", {
+        name: "Direct budget periods",
+      });
+      const indirectList = screen.getByRole("group", {
+        name: "Indirect budget periods",
+      });
+
+      await user.click(
+        within(directList).getByRole("button", { name: /addEntry/i }),
+      );
+
+      expect(within(directList).getAllByTestId("mock-widget")).toHaveLength(2);
+      expect(within(indirectList).getAllByTestId("mock-widget")).toHaveLength(
+        1,
+      );
+      expect(onChange).toHaveBeenLastCalledWith([
+        {
+          direct_costs: { periods: [{ amount: 100 }, {}] },
+          indirect_costs: { periods: [{ amount: 200 }] },
+        },
+      ]);
+      expect(
+        consoleError.mock.calls.some(([message]) =>
+          String(message).includes("same key"),
+        ),
+      ).toBe(false);
+    } finally {
+      consoleError.mockRestore();
+    }
+  });
+
+  it("preserves semantic heading levels beyond native h6", () => {
+    render(
+      <FieldListWidget
+        id="projects"
+        key="projects"
+        schema={{ type: "array", title: "Projects" }}
+        label="Projects"
+        groupDefinition={deeplyNestedGroupDefinition}
+        rawErrors={[]}
+        requiredFields={[]}
+        name="projects"
+        value={[{ periods: [{ line_items: [{ name: "Personnel" }] }] }]}
+      />,
+    );
+
+    expect(
+      screen.getByRole("heading", { name: "Line items", level: 7 }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Line items 1", level: 8 }),
+    ).toBeInTheDocument();
+  });
+
   it("adds a row", async () => {
     const user = userEvent.setup();
 
@@ -186,6 +494,35 @@ describe("FieldListWidget", () => {
       screen.getByRole("heading", { name: /contacts\s+2/i }),
     ).toBeInTheDocument();
     expect(screen.getAllByTestId("mock-widget")).toHaveLength(2);
+  });
+
+  it("preserves row identity when deleting and then adding", async () => {
+    const user = userEvent.setup();
+    render(
+      <FieldListWidget
+        id="contacts"
+        key="contacts"
+        schema={{ type: "array", title: "Contacts" }}
+        label="Contacts"
+        groupDefinition={baseGroupDefinition}
+        rawErrors={[]}
+        requiredFields={[]}
+        name="contacts"
+        value={[{ first_name: "A" }, { first_name: "B" }]}
+      />,
+    );
+
+    await user.click(
+      screen.getByRole("button", { name: "deleteEntry: Contacts 1" }),
+    );
+    await user.click(
+      screen.getByRole("button", { name: "addEntry: Contacts" }),
+    );
+
+    const inputs = screen.getAllByTestId("mock-widget");
+    expect(inputs).toHaveLength(2);
+    expect(inputs[0]).toHaveValue("B");
+    expect(inputs[1]).toHaveValue("");
   });
 
   it("disables add when maxItems is reached", () => {
@@ -253,7 +590,7 @@ describe("FieldListWidget", () => {
     );
 
     expect(
-      screen.getByRole("button", { name: /deleteEntry Contacts 1/i }),
+      screen.getByRole("button", { name: /deleteEntry: Contacts 1/i }),
     ).toBeDisabled();
   });
 

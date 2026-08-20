@@ -33,6 +33,24 @@ type FieldInfo<V extends BroadlyDefinedWidgetValue> = {
 
 const FIELD_LIST_INDEX_TOKEN = "~~index~~" as const;
 
+/** Returns data-property names from a JSON Schema pointer, omitting array items. */
+const getDataPropertyPath = (definition: string): string[] => {
+  const parts = definition.split("/").filter(Boolean);
+  const propertyPath: string[] = [];
+
+  for (let index = 0; index < parts.length; index += 1) {
+    if (parts[index] === "properties") {
+      const propertyName = parts[index + 1];
+      if (propertyName) {
+        propertyPath.push(propertyName);
+        index += 1;
+      }
+    }
+  }
+
+  return propertyPath;
+};
+
 /**
  * Builds the template id used by FieldList child widgets.
  *
@@ -77,17 +95,18 @@ export function buildFieldListBaseId({
  *   -> ["organization_name"]
  */
 export function buildFieldListStoragePath({
-  fieldListName,
+  fieldListDefinition,
   childDefinition,
 }: {
-  fieldListName: string;
+  fieldListDefinition: string;
   childDefinition: string;
 }): string[] {
-  const fieldListPrefix = `/properties/${fieldListName}/items/properties/`;
+  const fieldListPrefix = `${fieldListDefinition}/items/properties/`;
 
   if (!childDefinition.startsWith(fieldListPrefix)) {
-    const childDefinitionParts = childDefinition.split("/");
-    return [childDefinitionParts[childDefinitionParts.length - 1]];
+    throw new Error(
+      `fieldList child definition must begin with ${fieldListPrefix}`,
+    );
   }
 
   return childDefinition
@@ -96,9 +115,8 @@ export function buildFieldListStoragePath({
     .filter((pathPart) => pathPart.length > 0);
 }
 
-// FieldList currently supports root-level array fields only.
 /**
- * Compute the list of required field paths for a root-level FieldList.
+ * Compute the list of required field paths for a FieldList.
  *
  * This inspects the `items` schema of the named array property and
  * expands any nested `required` entries into full slash-separated paths
@@ -115,12 +133,21 @@ export function buildFieldListStoragePath({
 export const getFieldListRequiredFields = ({
   formSchema,
   fieldListName,
+  fieldListDefinition = `/properties/${fieldListName}`,
 }: {
   formSchema: RJSFSchema;
   fieldListName: string;
+  fieldListDefinition?: string;
 }): string[] => {
-  const fieldListSchema = formSchema.properties?.[fieldListName] as
-    RJSFSchema | undefined;
+  let fieldListSchema: RJSFSchema | undefined;
+  try {
+    fieldListSchema = getSchemaObjectFromPointer(
+      formSchema,
+      fieldListDefinition,
+    ) as RJSFSchema | undefined;
+  } catch {
+    return [];
+  }
 
   if (!fieldListSchema || fieldListSchema.type !== "array") {
     return [];
@@ -146,6 +173,8 @@ export const getFieldListRequiredFields = ({
    * Example returned path: "additional_sites/address/street1"
    */
 
+  const fieldListDataPath = getDataPropertyPath(fieldListDefinition).join("/");
+
   const expandRequiredFields = (
     requiredFieldNames: string[],
     properties: RJSFSchema["properties"],
@@ -154,7 +183,7 @@ export const getFieldListRequiredFields = ({
     const expandedRequiredFieldPaths: string[] = [];
     for (const fieldName of requiredFieldNames) {
       const fieldPath = pathPrefix ? `${pathPrefix}/${fieldName}` : fieldName;
-      const fullPath = `${fieldListName}/${fieldPath}`;
+      const fullPath = `${fieldListDataPath}/${fieldPath}`;
 
       expandedRequiredFieldPaths.push(fullPath);
 
@@ -540,10 +569,76 @@ const getFieldListConfig = ({
   formData: object;
   uiFieldObject: UiSchemaFieldList;
 }): FieldListConfig => {
+  const fieldListDefinition =
+    uiFieldObject.definition ?? `/properties/${uiFieldObject.name}`;
+  let fieldListSchema: RJSFSchema;
+  try {
+    fieldListSchema = getSchemaObjectFromPointer(
+      formSchema,
+      fieldListDefinition,
+    ) as RJSFSchema;
+  } catch {
+    throw new Error(
+      `fieldList definition does not resolve: ${fieldListDefinition}`,
+    );
+  }
+  const itemSchema = fieldListSchema.items;
+  if (
+    fieldListSchema.type !== "array" ||
+    !itemSchema ||
+    Array.isArray(itemSchema) ||
+    typeof itemSchema !== "object" ||
+    (itemSchema as RJSFSchema).type !== "object"
+  ) {
+    throw new Error(
+      `fieldList definition must resolve to an array of objects: ${fieldListDefinition}`,
+    );
+  }
+
   const groupDefinition: FieldListGroupItem[] = uiFieldObject.children.map(
     (childNode) => {
-      if (childNode.type !== "field" && childNode.type !== "multiField") {
+      if (
+        childNode.type !== "field" &&
+        childNode.type !== "multiField" &&
+        childNode.type !== "fieldList"
+      ) {
         throw new Error("fieldList children must be field nodes");
+      }
+
+      if (childNode.type === "fieldList") {
+        if (!childNode.definition) {
+          throw new Error("nested fieldList must include a definition");
+        }
+
+        const childFieldListConfig = getFieldListConfig({
+          errors,
+          formSchema,
+          formData: {},
+          uiFieldObject: childNode,
+        });
+        const {
+          id: _id,
+          key: _key,
+          value: _value,
+          onChange: _onChange,
+          formContext: _formContext,
+          ...fieldListProps
+        } = childFieldListConfig.props;
+        const storagePath = buildFieldListStoragePath({
+          fieldListDefinition,
+          childDefinition: childNode.definition,
+        });
+
+        return {
+          widget: "FieldList",
+          baseId: buildFieldListBaseId({
+            fieldListName: uiFieldObject.name,
+            storagePath,
+          }),
+          storagePath,
+          definition: childNode.definition,
+          fieldListProps,
+        };
       }
 
       if (!childNode.definition) {
@@ -565,7 +660,7 @@ const getFieldListConfig = ({
       });
 
       if (childWidgetConfig.type === "FieldList") {
-        throw new Error("nested fieldList is not supported");
+        throw new Error("unexpected FieldList configuration for child field");
       }
 
       if (childWidgetConfig.type === "Table") {
@@ -577,7 +672,7 @@ const getFieldListConfig = ({
       // Build once so the renderer can use the same path for id generation,
       // value lookup, and nested value updates.
       const storagePath = buildFieldListStoragePath({
-        fieldListName: uiFieldObject.name,
+        fieldListDefinition,
         childDefinition: childNode.definition,
       });
 
@@ -594,18 +689,19 @@ const getFieldListConfig = ({
     },
   );
 
-  const fieldListValue =
-    formData && typeof formData === "object" && !Array.isArray(formData)
-      ? (formData as Record<string, unknown>)[uiFieldObject.name]
-      : undefined;
+  const formDataPointer = `/${getDataPropertyPath(fieldListDefinition).join("/")}`;
+  let fieldListValue: unknown;
+  try {
+    fieldListValue = getByPointer(formData, formDataPointer);
+  } catch {
+    fieldListValue = undefined;
+  }
 
   const requiredFields = getFieldListRequiredFields({
     formSchema,
     fieldListName: uiFieldObject.name,
+    fieldListDefinition,
   });
-
-  const fieldListSchema = formSchema.properties?.[uiFieldObject.name] as
-    RJSFSchema | undefined;
 
   return {
     type: "FieldList",

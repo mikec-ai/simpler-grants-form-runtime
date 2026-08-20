@@ -251,6 +251,10 @@ export const UiJsonSchema: RJSFSchema = {
         name: {
           type: "string",
         },
+        definition: {
+          type: "string",
+          pattern: "^/(properties|\\$defs)(/[a-zA-Z0-9_]+)+$",
+        },
         description: {
           type: "string",
         },
@@ -275,6 +279,17 @@ export const UiJsonSchema: RJSFSchema = {
                       },
                       required: ["widget"],
                     },
+                  },
+                ],
+              },
+              {
+                allOf: [
+                  {
+                    $ref: "#/$defs/fieldList",
+                  },
+                  {
+                    type: "object",
+                    required: ["definition"],
                   },
                 ],
               },

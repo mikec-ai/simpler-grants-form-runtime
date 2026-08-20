@@ -7,6 +7,7 @@ import {
 } from "src/types/applyForm/types";
 import {
   buildFieldListBaseId,
+  buildFieldListStoragePath,
   determineFieldType,
   getBasicMultifieldInfo,
   getEnumOptions,
@@ -349,6 +350,26 @@ describe("getFieldConfig", () => {
           },
         },
         docs: { type: "array", items: { type: "string", format: "uuid" } },
+        projects: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              periods: {
+                type: "array",
+                minItems: 1,
+                maxItems: 5,
+                items: {
+                  type: "object",
+                  required: ["amount"],
+                  properties: {
+                    amount: { type: "number", title: "Amount" },
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     };
 
@@ -387,6 +408,17 @@ describe("getFieldConfig", () => {
       expect(result.props.groupDefinition[0].storagePath).toEqual([
         "firstName",
       ]);
+    });
+
+    it("rejects a child definition outside its FieldList schema", () => {
+      expect(() =>
+        buildFieldListStoragePath({
+          fieldListDefinition: "/properties/contacts",
+          childDefinition: "/properties/unrelated/items/properties/name",
+        }),
+      ).toThrow(
+        "fieldList child definition must begin with /properties/contacts/items/properties/",
+      );
     });
 
     it("returns nested storagePath and baseId for nested FieldList child fields", () => {
@@ -454,16 +486,69 @@ describe("getFieldConfig", () => {
       ).toThrow("fieldList children must be field nodes");
     });
 
-    it("throws for nested fieldList", () => {
-      const uiFieldObject = {
+    it("returns recursive config for a nested fieldList", () => {
+      const uiFieldObject: UiSchemaFieldList = {
         type: "fieldList",
-        name: "outer",
-        label: "Outer",
+        name: "projects",
+        label: "Projects",
         children: [
           {
             type: "fieldList",
-            name: "inner",
-            label: "Inner",
+            name: "periods",
+            label: "Budget periods",
+            definition: "/properties/projects/items/properties/periods",
+            children: [
+              {
+                type: "field",
+                definition:
+                  "/properties/projects/items/properties/periods/items/properties/amount",
+              },
+            ],
+          },
+        ],
+      };
+
+      const result = getFieldConfig({
+        errors: null,
+        formSchema,
+        formData: {},
+        uiFieldObject,
+        requiredField: false,
+      });
+
+      expect(result.type).toBe("FieldList");
+      if (result.type !== "FieldList") {
+        throw new Error("Expected FieldList");
+      }
+
+      const nestedGroup = result.props.groupDefinition[0];
+      expect(nestedGroup.widget).toBe("FieldList");
+      if (nestedGroup.widget !== "FieldList") {
+        throw new Error("Expected nested FieldList");
+      }
+      expect(nestedGroup.storagePath).toEqual(["periods"]);
+      expect(nestedGroup.fieldListProps.minItems).toBe(1);
+      expect(nestedGroup.fieldListProps.maxItems).toBe(5);
+      expect(nestedGroup.fieldListProps.requiredFields).toContain(
+        "projects/periods/amount",
+      );
+      expect(nestedGroup.fieldListProps.groupDefinition[0]).toMatchObject({
+        widget: "Text",
+        storagePath: ["amount"],
+        baseId: "periods[~~index~~]--amount",
+      });
+    });
+
+    it("requires an explicit definition for a nested fieldList", () => {
+      const uiFieldObject = {
+        type: "fieldList",
+        name: "projects",
+        label: "Projects",
+        children: [
+          {
+            type: "fieldList",
+            name: "periods",
+            label: "Budget periods",
             children: [],
           },
         ],
@@ -477,7 +562,43 @@ describe("getFieldConfig", () => {
           uiFieldObject,
           requiredField: false,
         }),
-      ).toThrow();
+      ).toThrow("nested fieldList must include a definition");
+    });
+
+    it("rejects a FieldList definition that does not resolve", () => {
+      expect(() =>
+        getFieldConfig({
+          errors: null,
+          formSchema,
+          formData: {},
+          uiFieldObject: {
+            type: "fieldList",
+            name: "missing",
+            label: "Missing",
+            children: [],
+          },
+          requiredField: false,
+        }),
+      ).toThrow("fieldList definition does not resolve: /properties/missing");
+    });
+
+    it("rejects a FieldList definition that is not an array of objects", () => {
+      expect(() =>
+        getFieldConfig({
+          errors: null,
+          formSchema,
+          formData: {},
+          uiFieldObject: {
+            type: "fieldList",
+            name: "docs",
+            label: "Documents",
+            children: [],
+          },
+          requiredField: false,
+        }),
+      ).toThrow(
+        "fieldList definition must resolve to an array of objects: /properties/docs",
+      );
     });
   });
 
