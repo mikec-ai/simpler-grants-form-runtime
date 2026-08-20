@@ -157,6 +157,7 @@ export const FormFields = ({
           type: widgetConfig.type,
           props: {
             ...widgetConfig.props,
+            ...(node.type === "null" ? { updateOnInput: true } : {}),
             formContext,
             isFormLocked,
           },
@@ -222,6 +223,7 @@ export const FormFields = ({
           type: widgetConfig.type,
           props: {
             ...widgetConfig.props,
+            ...(node.type === "null" ? { updateOnInput: true } : {}),
             formContext,
             isFormLocked,
           },

@@ -456,9 +456,13 @@ function FieldListEntry({
           required: isRequired,
           updateOnInput: true,
           additionalDescribedById: entryHeadingId,
-          disabled: isInteractionDisabled,
-          readOnly: isInteractionDisabled,
-          isFormLocked: isInteractionDisabled,
+          disabled:
+            isInteractionDisabled || Boolean(groupItem.generalProps.disabled),
+          readOnly:
+            isInteractionDisabled || Boolean(groupItem.generalProps.readOnly),
+          isFormLocked:
+            isInteractionDisabled ||
+            Boolean(groupItem.generalProps.isFormLocked),
           onChange: (nextValue) => {
             handleFieldChange({
               entryId,
@@ -593,6 +597,8 @@ function FieldListWidget(widgetProps: FieldListWidgetProps) {
     widgetProps.formContext?.widgetSupport?.onFieldListEntryDelete;
 
   const markFormDirty = widgetProps.formContext?.widgetSupport?.markFormDirty;
+  const onFieldListChange =
+    widgetProps.formContext?.widgetSupport?.onFieldListChange;
 
   const isInteractionDisabled = Boolean(disabled || readOnly || isFormLocked);
   const minimumEntryCount = minItems ?? 0;
@@ -660,7 +666,8 @@ function FieldListWidget(widgetProps: FieldListWidgetProps) {
         entryId: `field-list-entry-${nextEntryIdRef.current++}`,
       }),
     );
-  }, [handleEntriesChange, maximumEntryCount]);
+    onFieldListChange?.();
+  }, [handleEntriesChange, maximumEntryCount, onFieldListChange]);
 
   const handleDeleteEntry = useCallback(
     (entryId: string): void => {
@@ -683,12 +690,14 @@ function FieldListWidget(widgetProps: FieldListWidgetProps) {
       handleEntriesChange((previousEntries) =>
         previousEntries.filter((entry) => entry.entryId !== entryId),
       );
+      onFieldListChange?.();
     },
     [
       fieldListPath,
       handleEntriesChange,
       minimumEntryCount,
       onFieldListEntryDelete,
+      onFieldListChange,
     ],
   );
 

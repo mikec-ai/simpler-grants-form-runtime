@@ -599,6 +599,7 @@ const getFieldListConfig = ({
     (childNode) => {
       if (
         childNode.type !== "field" &&
+        childNode.type !== "null" &&
         childNode.type !== "multiField" &&
         childNode.type !== "fieldList"
       ) {

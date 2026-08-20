@@ -1,6 +1,7 @@
 import { RJSFSchema } from "@rjsf/utils";
 import { APIResponse } from "src/types/apiResponseTypes";
 import { UiSchema } from "src/types/applyForm/types";
+import type { ClientCalculationRuleSchema } from "src/utils/applyForm/clientCalculationRules";
 
 import { iso8601Date, RegexMatchedString } from "./generalTypes";
 
@@ -17,6 +18,7 @@ export interface FormDetail {
   form_name: string;
   form_json_schema: RJSFSchema;
   form_ui_schema: UiSchema;
+  form_rule_schema: ClientCalculationRuleSchema | null;
 }
 
 export interface FormDetailApiResponse extends APIResponse {

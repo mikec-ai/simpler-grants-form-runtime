@@ -34,7 +34,7 @@ type FormActionArgs = [
   {
     applicationId: string;
     formId: string;
-    formData: FormData;
+    formData: object;
     saved: boolean;
     error: boolean;
   },
@@ -46,7 +46,7 @@ type FormActionResult = Promise<{
   formId: string;
   saved: boolean;
   error: boolean;
-  formData: FormData;
+  formData: object;
 }>;
 
 const mockHandleFormAction = jest.fn<FormActionResult, FormActionArgs>();
@@ -264,6 +264,275 @@ describe("ApplyForm", () => {
     expect(screen.getByTestId("apply-form-return")).toBeInTheDocument();
     expect(screen.getByText("savingAndRefreshing")).toBeInTheDocument();
     expect(screen.getByText("returnToApplication")).toBeInTheDocument();
+  });
+
+  it("recalculates typed monetary rules as a user edits the form", async () => {
+    const user = userEvent.setup();
+    const calculationSchema: RJSFSchema = {
+      properties: {
+        amount_a: { type: "string", title: "Amount A" },
+        amount_b: { type: "string", title: "Amount B" },
+        total: { type: "string", title: "Total" },
+        server_value: { type: "string", title: "Server value" },
+      },
+    };
+    const calculationUiSchema: UiSchema = [
+      {
+        type: "section",
+        label: "Amounts",
+        name: "amounts",
+        children: [
+          { type: "field", definition: "/properties/amount_a" },
+          { type: "field", definition: "/properties/amount_b" },
+          { type: "null", definition: "/properties/total" },
+          { type: "null", definition: "/properties/server_value" },
+        ],
+      },
+    ];
+
+    render(
+      <ApplyForm
+        applicationId="application-123"
+        formId="calculation-form"
+        formSchema={calculationSchema}
+        formRuleSchema={{
+          total: {
+            gg_pre_population: {
+              rule: "sum_monetary",
+              fields: ["amount_a", "amount_b"],
+            },
+          },
+        }}
+        savedFormData={{
+          amount_a: "1.00",
+          amount_b: "2.00",
+          server_value: "preserve me",
+        }}
+        uiSchema={calculationUiSchema}
+        validationWarnings={[]}
+        attachments={[]}
+        applicationStatus="in_progress"
+      />,
+    );
+
+    expect(screen.getByTestId("total")).toHaveValue("3.00");
+    expect(screen.getByTestId("server_value")).toHaveValue("preserve me");
+    await user.clear(screen.getByTestId("amount_a"));
+    await user.type(screen.getByTestId("amount_a"), "4.50");
+    expect(screen.getByTestId("total")).toHaveValue("6.50");
+    expect(screen.getByTestId("server_value")).toHaveValue("preserve me");
+  });
+
+  it("reconciles calculated values with the authoritative save response", async () => {
+    const user = userEvent.setup();
+    const consoleError = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => undefined);
+    mockHandleFormAction.mockResolvedValue({
+      applicationId: "application-123",
+      formId: "calculation-form",
+      saved: true,
+      error: false,
+      formData: { amount: "1.00", rate: "invalid", total: "7.01" },
+    });
+
+    render(
+      <ApplyForm
+        applicationId="application-123"
+        formId="calculation-form"
+        formSchema={{
+          properties: {
+            amount: { type: "string", title: "Amount" },
+            rate: { type: "string", title: "Rate" },
+            total: { type: "string", title: "Total" },
+          },
+        }}
+        formRuleSchema={{
+          total: {
+            gg_pre_population: {
+              rule: "multiply_by_percentage",
+              amount: "amount",
+              percentage: "rate",
+            },
+          },
+        }}
+        savedFormData={{ amount: "1.00", rate: "invalid", total: "7.00" }}
+        uiSchema={[
+          { type: "field", definition: "/properties/amount" },
+          { type: "field", definition: "/properties/rate" },
+          { type: "null", definition: "/properties/total" },
+        ]}
+        validationWarnings={[]}
+        attachments={[]}
+        applicationStatus="in_progress"
+      />,
+    );
+
+    expect(screen.getByTestId("total")).toHaveValue("7.00");
+    await user.click(screen.getByTestId("apply-form-save"));
+    await waitFor(() => expect(mockHandleFormAction).toHaveBeenCalled());
+    const submittedFormData = mockHandleFormAction.mock.calls.at(-1)?.[1];
+    expect(submittedFormData).toBeInstanceOf(FormData);
+    expect(submittedFormData?.get("total")).toBe("7.00");
+    await waitFor(() => {
+      expect(screen.getByTestId("total")).toHaveValue("7.01");
+    });
+    consoleError.mockRestore();
+  });
+
+  it("preserves current edits when a save fails after an earlier success", async () => {
+    const user = userEvent.setup();
+    mockHandleFormAction
+      .mockResolvedValueOnce({
+        applicationId: "application-123",
+        formId: "simple-form",
+        saved: true,
+        error: false,
+        formData: { name: "server value" },
+      })
+      .mockResolvedValueOnce({
+        applicationId: "application-123",
+        formId: "simple-form",
+        saved: false,
+        error: true,
+        formData: new FormData(),
+      });
+
+    render(
+      <ApplyForm
+        applicationId="application-123"
+        formId="simple-form"
+        formSchema={{
+          properties: { name: { type: "string", title: "Name" } },
+        }}
+        savedFormData={{ name: "original value" }}
+        uiSchema={[{ type: "field", definition: "/properties/name" }]}
+        validationWarnings={[]}
+        attachments={[]}
+        applicationStatus="in_progress"
+      />,
+    );
+
+    await user.click(screen.getByTestId("apply-form-save"));
+    await waitFor(() => {
+      expect(screen.getByTestId("name")).toHaveValue("server value");
+    });
+
+    await user.clear(screen.getByTestId("name"));
+    await user.type(screen.getByTestId("name"), "current edit");
+    await user.click(screen.getByTestId("apply-form-save"));
+
+    await waitFor(() => {
+      expect(screen.getByTestId("name")).toHaveValue("current edit");
+    });
+  });
+
+  it("recalculates repeated rows and aggregates after edits and deletion", async () => {
+    const user = userEvent.setup();
+    const repeatedCalculationSchema: RJSFSchema = {
+      properties: {
+        periods: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              direct: { type: "string", title: "Direct" },
+              indirect: { type: "string", title: "Indirect" },
+              total: { type: "string", title: "Period total" },
+            },
+          },
+        },
+        grand_total: { type: "string", title: "Grand total" },
+      },
+    };
+    const repeatedCalculationUiSchema: UiSchema = [
+      {
+        type: "fieldList",
+        label: "Budget periods",
+        name: "periods",
+        definition: "/properties/periods",
+        children: [
+          {
+            type: "field",
+            definition: "/properties/periods/items/properties/direct",
+          },
+          {
+            type: "field",
+            definition: "/properties/periods/items/properties/indirect",
+          },
+          {
+            type: "null",
+            definition: "/properties/periods/items/properties/total",
+          },
+        ],
+      },
+      {
+        type: "null",
+        definition: "/properties/grand_total",
+      },
+    ];
+
+    render(
+      <ApplyForm
+        applicationId="application-123"
+        formId="repeated-calculation-form"
+        formSchema={repeatedCalculationSchema}
+        formRuleSchema={{
+          periods: {
+            gg_type: "array",
+            total: {
+              gg_pre_population: {
+                rule: "sum_monetary",
+                fields: ["@THIS.direct", "@THIS.indirect"],
+                order: 1,
+              },
+            },
+          },
+          grand_total: {
+            gg_pre_population: {
+              rule: "sum_monetary",
+              fields: ["periods[*].total"],
+              order: 2,
+            },
+          },
+        }}
+        savedFormData={{
+          periods: [
+            { direct: "10.00", indirect: "2.00" },
+            { direct: "20.00", indirect: "3.00" },
+          ],
+        }}
+        uiSchema={repeatedCalculationUiSchema}
+        validationWarnings={[]}
+        attachments={[]}
+        applicationStatus="in_progress"
+      />,
+    );
+
+    expect(screen.getByTestId("periods[0]--total")).toHaveValue("12.00");
+    expect(screen.getByTestId("periods[1]--total")).toHaveValue("23.00");
+    expect(screen.getByTestId("periods[0]--total")).toBeDisabled();
+    expect(screen.getByTestId("periods[1]--total")).toBeDisabled();
+    expect(screen.getByTestId("grand_total")).toHaveValue("35.00");
+
+    await user.clear(screen.getByTestId("periods[1]--direct"));
+    await user.type(screen.getByTestId("periods[1]--direct"), "30.00");
+    expect(screen.getByTestId("periods[1]--total")).toHaveValue("33.00");
+    expect(screen.getByTestId("grand_total")).toHaveValue("45.00");
+
+    await user.click(
+      screen.getByRole("button", { name: "deleteEntry: Budget periods 1" }),
+    );
+    await waitFor(() => {
+      expect(screen.getByTestId("grand_total")).toHaveValue("33.00");
+    });
+
+    await user.click(
+      screen.getByRole("button", { name: "addEntry: Budget periods" }),
+    );
+    await waitFor(() => {
+      expect(screen.getByTestId("periods[1]--total")).toHaveValue("0.00");
+    });
   });
 
   it("cannot be edited or saved when application is submitted", () => {
