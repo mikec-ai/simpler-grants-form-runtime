@@ -1,17 +1,17 @@
 import uuid
 
 from src.constants.lookup_constants import FormType
-from src.form_schema.families import (
-    NarrativeAttachmentFamilyConfig,
+from src.form_schema.forms.budget_narrative_attachment.config import FORM_ID, SHORT_FORM_NAME
+from src.form_schema.templates import (
+    NarrativeAttachmentTemplateConfig,
     build_narrative_attachment_form,
 )
-from src.form_schema.forms.budget_narrative_attachment.config import FORM_ID, SHORT_FORM_NAME
 
 # Sources:
 # https://grants.gov/forms/form-items-description/fid/543
 # https://apply07.grants.gov/apply/forms/schemas/BudgetNarrativeAttachments_1_2-V1.2.xsd
 _definition = build_narrative_attachment_form(
-    NarrativeAttachmentFamilyConfig(
+    NarrativeAttachmentTemplateConfig(
         form_id=FORM_ID,
         legacy_form_id=543,
         form_name="Budget Narrative Attachment Form",

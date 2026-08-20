@@ -70,17 +70,17 @@ def test_declared_version_dependencies_resolve(form_dir: Path, version_dir: Path
     assert checksum_path.read_text().strip() == compute_version_hash(form_dir, version_dir)
 
 
-def test_family_based_forms_declare_version_dependencies() -> None:
+def test_template_based_forms_declare_version_dependencies() -> None:
     missing_manifests = []
     for form_json_path in sorted(_FORMS_ROOT.rglob("form_json.py")):
-        if "src.form_schema.families" not in form_json_path.read_text():
+        if "src.form_schema.templates" not in form_json_path.read_text():
             continue
         if not (form_json_path.parent / "version_dependencies.txt").exists():
             missing_manifests.append(str(form_json_path))
 
     assert (
         not missing_manifests
-    ), "Family-based forms must declare version_dependencies.txt: " + ", ".join(missing_manifests)
+    ), "Template-based forms must declare version_dependencies.txt: " + ", ".join(missing_manifests)
 
 
 def test_compute_version_hash_is_stable(tmp_path: Path) -> None:
@@ -144,17 +144,17 @@ def test_compute_version_hash_changes_when_declared_dependency_changes(
     src_dir = tmp_path / "src"
     form_dir = src_dir / "form_schema" / "forms" / "my_form"
     version_dir = form_dir / "1" / "0"
-    family_path = src_dir / "form_schema" / "families" / "example.py"
+    template_path = src_dir / "form_schema" / "templates" / "example.py"
     version_dir.mkdir(parents=True)
-    family_path.parent.mkdir(parents=True)
+    template_path.parent.mkdir(parents=True)
     (form_dir / "config.py").write_text("FORM_ID = 'abc'\n")
     (version_dir / "form_json.py").write_text("SCHEMA = {}\n")
-    (version_dir / "version_dependencies.txt").write_text("form_schema/families/example.py\n")
-    family_path.write_text("SHARED_VALUE = 1\n")
+    (version_dir / "version_dependencies.txt").write_text("form_schema/templates/example.py\n")
+    template_path.write_text("SHARED_VALUE = 1\n")
     monkeypatch.setattr("src.task.forms.lock_form_version_task.SRC_DIR", src_dir)
 
     original = compute_version_hash(form_dir, version_dir)
-    family_path.write_text("SHARED_VALUE = 2\n")
+    template_path.write_text("SHARED_VALUE = 2\n")
 
     assert compute_version_hash(form_dir, version_dir) != original
 
