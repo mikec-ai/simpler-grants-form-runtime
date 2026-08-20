@@ -1,0 +1,126 @@
+[
+  {
+    "name": "root then-required branch",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "kind": { "type": "string" },
+        "organization_name": { "type": "string" }
+      },
+      "if": {
+        "properties": { "kind": { "const": "organization" } },
+        "required": ["kind"]
+      },
+      "then": { "required": ["organization_name"] }
+    },
+    "input": { "kind": "organization" },
+    "expected_required_fields": ["$.organization_name"]
+  },
+  {
+    "name": "else-required branch with false preserved",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "approved": { "type": "boolean" },
+        "reason": { "type": "string" }
+      },
+      "if": {
+        "properties": { "approved": { "const": true } },
+        "required": ["approved"]
+      },
+      "else": { "required": ["reason"] }
+    },
+    "input": { "approved": false },
+    "expected_required_fields": ["$.reason"]
+  },
+  {
+    "name": "conditions are evaluated independently per array row",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "contacts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "primary": { "type": "boolean" },
+              "email": { "type": "string" }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": { "primary": { "const": true } },
+                  "required": ["primary"]
+                },
+                "then": { "required": ["email"] }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "input": { "contacts": [{ "primary": true }, { "primary": false }] },
+    "expected_required_fields": ["$.contacts[0].email"]
+  },
+  {
+    "name": "contains uses exact Draft 2020-12 condition semantics",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "explanation": { "type": "string" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "tags": { "contains": { "const": "other" } } },
+            "required": ["tags"]
+          },
+          "then": { "required": ["explanation"] }
+        }
+      ]
+    },
+    "input": { "tags": ["standard", "other"] },
+    "expected_required_fields": ["$.explanation"]
+  },
+  {
+    "name": "populated zero satisfies an active requirement",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "count": { "type": "integer" }
+      },
+      "if": {
+        "properties": { "enabled": { "const": true } },
+        "required": ["enabled"]
+      },
+      "then": { "required": ["count"] }
+    },
+    "input": { "enabled": true, "count": 0 },
+    "expected_required_fields": []
+  },
+  {
+    "name": "boolean false condition activates else-required",
+    "schema": {
+      "type": "object",
+      "properties": { "fallback": { "type": "string" } },
+      "if": false,
+      "then": { "required": ["unreachable"] },
+      "else": { "required": ["fallback"] }
+    },
+    "input": {},
+    "expected_required_fields": ["$.fallback"]
+  },
+  {
+    "name": "not-required discriminator matches CD511 semantics",
+    "schema": {
+      "type": "object",
+      "properties": { "project_name": { "type": "string" } },
+      "if": { "not": { "required": ["project_name"] } },
+      "then": { "required": ["project_name"] }
+    },
+    "input": {},
+    "expected_required_fields": ["$.project_name"]
+  }
+]

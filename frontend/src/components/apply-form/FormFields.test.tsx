@@ -13,6 +13,120 @@ jest.mock("json-schema-merge-allof", () => ({
 }));
 
 describe("buildFormTreeRecursive", () => {
+  it("reacts to typed visibility and preserves hidden field values in the DOM", () => {
+    const schema: RJSFSchema = {
+      type: "object",
+      properties: {
+        showDetails: { type: "boolean", title: "Show details" },
+        details: { type: "string", title: "Details" },
+      },
+    };
+    const conditionalUiSchema: UiSchema = [
+      { type: "field", definition: "/properties/showDetails" },
+      {
+        type: "field",
+        definition: "/properties/details",
+        conditional: {
+          when: {
+            op: "equals",
+            ref: { scope: "root", pointer: "/showDetails" },
+            value: true,
+          },
+          then: { visible: true },
+          otherwise: { visible: false },
+        },
+      },
+    ];
+
+    const { rerender } = render(
+      <FormFields
+        errors={null}
+        formData={{ showDetails: false, details: "preserved" }}
+        schema={schema}
+        uiSchema={conditionalUiSchema}
+      />,
+    );
+    const details = screen.getByTestId("details");
+    expect(details).toHaveValue("preserved");
+    expect(details).not.toBeVisible();
+
+    rerender(
+      <FormFields
+        errors={null}
+        formData={{ showDetails: true, details: "preserved" }}
+        schema={schema}
+        uiSchema={conditionalUiSchema}
+      />,
+    );
+    expect(screen.getByTestId("details")).toBeVisible();
+  });
+
+  it("applies conditional requiredness and interaction without overriding a lock", () => {
+    const schema: RJSFSchema = {
+      type: "object",
+      properties: { detail: { type: "string", title: "Detail" } },
+    };
+    const conditionalUiSchema: UiSchema = [
+      {
+        type: "field",
+        definition: "/properties/detail",
+        conditional: {
+          when: {
+            op: "present",
+            ref: { scope: "root", pointer: "/detail" },
+          },
+          then: { interaction: "readOnly" },
+        },
+      },
+    ];
+    render(
+      <FormFields
+        errors={null}
+        formData={{ detail: "fixed" }}
+        schema={schema}
+        uiSchema={conditionalUiSchema}
+        formContext={{
+          rootSchema: schema,
+          rootFormData: { detail: "fixed" },
+          activeConditionalRequiredPaths: ["$.detail"],
+        }}
+        isFormLocked
+      />,
+    );
+    const detail = screen.getByTestId("detail");
+    expect(detail).toBeRequired();
+    expect(detail).toBeDisabled();
+  });
+
+  it("normalizes readOnly to disabled for controls without native readonly semantics", () => {
+    const schema: RJSFSchema = {
+      type: "object",
+      properties: { accepted: { type: "boolean", title: "Accepted" } },
+    };
+    render(
+      <FormFields
+        errors={null}
+        formData={{ accepted: true }}
+        schema={schema}
+        uiSchema={[
+          {
+            type: "field",
+            definition: "/properties/accepted",
+            conditional: {
+              when: {
+                op: "equals",
+                ref: { scope: "root", pointer: "/accepted" },
+                value: true,
+              },
+              then: { interaction: "readOnly" },
+            },
+          },
+        ]}
+      />,
+    );
+    expect(screen.getByRole("checkbox", { name: "Accepted" })).toBeDisabled();
+  });
+
   it("prints the SF-424 Short certification description without printing unrelated descriptions", () => {
     const certificationDescription =
       "** The list of certifications and assurances, or an internet site where you may obtain this list, is contained in the announcement or agency specific instructions. By signing this application, I certify (1) to the statements contained in the list of certifications and (2) that the statements herein are true, complete and accurate to the best of my knowledge. I also provide the required assurances and agree to comply with any resulting terms if I accept an award. I am aware that any false, fictitious, or fraudulent statements or claims may subject me to criminal, civil, or administrative penalties. (U.S. Code, Title 18, Section 1001)";

@@ -9,6 +9,10 @@ import {
 } from "src/types/applyForm/types";
 import { isFieldRequired } from "src/utils/applyForm/applyFormUtils";
 import {
+  resolveConditionalUiState,
+  supportsNativeReadOnly,
+} from "src/utils/applyForm/evaluateConditionalUi";
+import {
   getFieldListChildErrors,
   getFieldListGroupErrors,
 } from "src/utils/applyForm/fieldListHelpers";
@@ -356,6 +360,7 @@ function FieldListEntry({
   const entryContextLabel = ancestorContextLabel
     ? `${ancestorContextLabel}, ${entryLabel} ${entryIndex + 1}`
     : `${entryLabel} ${entryIndex + 1}`;
+  const itemStack = [...(formContext?.itemStack ?? []), entryValue];
 
   return (
     <div className="field-list-widget__entry padding-y-2 padding-bottom-3">
@@ -370,6 +375,19 @@ function FieldListEntry({
       </div>
 
       {groupDefinition.map((groupItem: FieldListGroupItem) => {
+        const conditionalState = resolveConditionalUiState(
+          groupItem.conditional,
+          {
+            rootData:
+              typeof formContext?.rootFormData === "object" &&
+              formContext.rootFormData !== null
+                ? formContext.rootFormData
+                : {},
+            itemStack,
+          },
+        );
+        const conditionDisables = conditionalState.interaction === "disabled";
+        const conditionReadOnly = conditionalState.interaction === "readOnly";
         const localGeneratedId = replaceFieldListIndexPlaceholder({
           baseId: groupItem.baseId,
           entryIndex,
@@ -403,7 +421,7 @@ function FieldListEntry({
               )
             : undefined;
 
-          return (
+          const nestedFieldList = (
             <FieldListWidget
               {...groupItem.fieldListProps}
               id={generatedId}
@@ -415,10 +433,10 @@ function FieldListEntry({
               fieldListPath={nestedFieldListPath}
               value={nestedValue}
               rawErrors={rawErrors}
-              disabled={isInteractionDisabled}
-              readOnly={isInteractionDisabled}
+              disabled={isInteractionDisabled || conditionDisables}
+              readOnly={isInteractionDisabled || conditionReadOnly}
               isFormLocked={isInteractionDisabled}
-              formContext={formContext}
+              formContext={{ ...formContext, itemStack }}
               onChange={(nextValue) => {
                 handleFieldChange({
                   entryId,
@@ -428,12 +446,23 @@ function FieldListEntry({
               }}
             />
           );
+          return conditionalState.visible ? (
+            nestedFieldList
+          ) : (
+            <div key={`${entryId}-${childKey}`} hidden aria-hidden="true">
+              {nestedFieldList}
+            </div>
+          );
         }
 
-        const isRequired = isFieldRequired(
-          groupItem.definition,
-          requiredFields ?? [],
-        );
+        const concreteChildPath = `${fieldListPath}[${entryIndex}].${groupItem.storagePath.join(".")}`;
+        const isRequired =
+          isFieldRequired(groupItem.definition, requiredFields ?? []) ||
+          Boolean(
+            formContext?.activeConditionalRequiredPaths?.includes(
+              concreteChildPath,
+            ),
+          );
 
         const childErrors = getFieldListChildErrors({
           rawErrors,
@@ -457,9 +486,14 @@ function FieldListEntry({
           updateOnInput: true,
           additionalDescribedById: entryHeadingId,
           disabled:
-            isInteractionDisabled || Boolean(groupItem.generalProps.disabled),
+            isInteractionDisabled ||
+            conditionDisables ||
+            (conditionReadOnly && !supportsNativeReadOnly(groupItem.widget)) ||
+            Boolean(groupItem.generalProps.disabled),
           readOnly:
-            isInteractionDisabled || Boolean(groupItem.generalProps.readOnly),
+            isInteractionDisabled ||
+            conditionReadOnly ||
+            Boolean(groupItem.generalProps.readOnly),
           isFormLocked:
             isInteractionDisabled ||
             Boolean(groupItem.generalProps.isFormLocked),
@@ -472,13 +506,20 @@ function FieldListEntry({
           },
         };
 
-        return (
+        const renderedChild = (
           <Fragment key={`${entryId}-${childKey}`}>
             {renderWidget({
               type: groupItem.widget,
               props: childWidgetProps,
             })}
           </Fragment>
+        );
+        return conditionalState.visible ? (
+          renderedChild
+        ) : (
+          <div key={`${entryId}-${childKey}`} hidden aria-hidden="true">
+            {renderedChild}
+          </div>
         );
       })}
 

@@ -2,7 +2,9 @@ import { ReadableStream as NodeReadableStream } from "stream/web";
 import { RJSFSchema } from "@rjsf/utils";
 import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import ApplyForm from "src/app/[locale]/(base)/workspace/applications/[applicationId]/form/[appFormId]/_components/ApplyForm";
+import ApplyForm, {
+  prepareServerValidationWarnings,
+} from "src/app/[locale]/(base)/workspace/applications/[applicationId]/form/[appFormId]/_components/ApplyForm";
 import { UiSchema } from "src/types/applyForm/types";
 import { Attachment } from "src/types/attachmentTypes";
 import {
@@ -201,6 +203,24 @@ const getHiddenInput = (container: HTMLElement, name: string) =>
   );
 
 describe("ApplyForm", () => {
+  it("rebases deleted rows before replacing managed conditional warnings", () => {
+    expect(
+      prepareServerValidationWarnings({
+        validationWarnings: [
+          {
+            type: "required",
+            field: "$.contacts[1].email",
+            message: "'email' is a required property",
+            value: null,
+          },
+        ],
+        deletedEntryIndexesByFieldListPath: { "$.contacts": [0] },
+        managedConditionalPaths: ["$.contacts[0].email"],
+        formChanged: true,
+      }),
+    ).toEqual([]);
+  });
+
   beforeEach(() => {
     pushMock.mockClear();
     mockHandleFormAction.mockClear();
@@ -264,6 +284,127 @@ describe("ApplyForm", () => {
     expect(screen.getByTestId("apply-form-return")).toBeInTheDocument();
     expect(screen.getByText("savingAndRefreshing")).toBeInTheDocument();
     expect(screen.getByText("returnToApplication")).toBeInTheDocument();
+  });
+
+  it("updates conditional visibility and requiredness from live form data", async () => {
+    const user = userEvent.setup();
+    const conditionalSchema: RJSFSchema = {
+      type: "object",
+      properties: {
+        includeDetails: { type: "boolean", title: "Include details" },
+        details: { type: "string", title: "Details" },
+      },
+    };
+    const conditionalUiSchema: UiSchema = [
+      { type: "field", definition: "/properties/includeDetails" },
+      {
+        type: "section",
+        name: "detailsSection",
+        label: "Details section",
+        conditional: {
+          when: {
+            op: "equals",
+            ref: { scope: "root", pointer: "/includeDetails" },
+            value: true,
+          },
+          then: { visible: true },
+          otherwise: { visible: false },
+        },
+        children: [{ type: "field", definition: "/properties/details" }],
+      },
+    ];
+    render(
+      <ApplyForm
+        applicationId="application-123"
+        formId="conditional-form"
+        formSchema={conditionalSchema}
+        savedFormData={{ includeDetails: false }}
+        uiSchema={conditionalUiSchema}
+        conditionalRequiredRules={[
+          {
+            scope: [],
+            schemaPointer: "#/allOf/0",
+            condition: {
+              properties: { includeDetails: { const: true } },
+              required: ["includeDetails"],
+            },
+            thenRequired: ["details"],
+            elseRequired: [],
+            order: 0,
+          },
+        ]}
+        validationWarnings={null}
+        attachments={[]}
+        applicationStatus="in_progress"
+      />,
+    );
+
+    expect(screen.getByTestId("details")).not.toBeVisible();
+    expect(screen.getByText("Details section")).not.toBeVisible();
+
+    await user.click(screen.getByRole("checkbox", { name: "Include details" }));
+
+    await waitFor(() => expect(screen.getByTestId("details")).toBeVisible());
+    expect(screen.getByTestId("details")).toBeRequired();
+    expect(screen.getByText("Details is required")).toBeInTheDocument();
+    expect(screen.getByTestId("InPageNavigation")).toHaveTextContent(
+      "Details section",
+    );
+  });
+
+  it("preserves conditionally disabled non-text values in the save payload", async () => {
+    const user = userEvent.setup();
+    mockHandleFormAction.mockResolvedValue({
+      applicationId: "application-123",
+      formId: "conditional-form",
+      saved: true,
+      error: false,
+      formData: { enabled: true, status: "approved" },
+    });
+    render(
+      <ApplyForm
+        applicationId="application-123"
+        formId="conditional-form"
+        formSchema={{
+          type: "object",
+          properties: {
+            enabled: { type: "boolean", title: "Enabled" },
+            status: {
+              type: "string",
+              title: "Status",
+              enum: ["approved", "pending"],
+            },
+          },
+        }}
+        savedFormData={{ enabled: true, status: "approved" }}
+        uiSchema={[
+          { type: "field", definition: "/properties/enabled" },
+          {
+            type: "field",
+            definition: "/properties/status",
+            widget: "Select",
+            conditional: {
+              when: {
+                op: "equals",
+                ref: { scope: "root", pointer: "/enabled" },
+                value: true,
+              },
+              then: { interaction: "disabled" },
+            },
+          },
+        ]}
+        validationWarnings={[]}
+        attachments={[]}
+        applicationStatus="in_progress"
+      />,
+    );
+
+    expect(screen.getByTestId("Select")).toBeDisabled();
+    await user.click(screen.getByTestId("apply-form-save"));
+    await waitFor(() => expect(mockHandleFormAction).toHaveBeenCalled());
+    expect(mockHandleFormAction.mock.calls.at(-1)?.[1].get("status")).toBe(
+      "approved",
+    );
   });
 
   it("recalculates typed monetary rules as a user edits the form", async () => {

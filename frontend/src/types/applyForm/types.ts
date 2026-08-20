@@ -6,6 +6,7 @@ import {
   StrictRJSFSchema,
   UIOptionsType,
 } from "@rjsf/utils";
+import type { ConditionalUi } from "src/types/applyForm/conditionalUiTypes";
 
 import { HTMLAttributes } from "react";
 
@@ -174,6 +175,8 @@ export type FieldListWidgetProps = {
   formContext?: {
     rootSchema?: RJSFSchema;
     rootFormData?: unknown;
+    itemStack?: GeneralRecord[];
+    activeConditionalRequiredPaths?: string[];
     widgetSupport?: {
       validationWarnings?:
         FormattedFormValidationWarning[] | FormValidationWarning[];
@@ -216,6 +219,7 @@ export type FieldListGroupItem =
       baseId: string;
       definition: string;
       storagePath: string[];
+      conditional?: ConditionalUi;
     }
   | {
       widget: "FieldList";
@@ -226,6 +230,7 @@ export type FieldListGroupItem =
       baseId: string;
       definition: string;
       storagePath: string[];
+      conditional?: ConditionalUi;
     };
 
 export type UiSchemaTableCellType = "input" | "readOnly" | "plainText";
@@ -293,6 +298,7 @@ type UiSchemaBasicField = {
   widget?: WidgetTypes;
   name?: string;
   printDescription?: boolean;
+  conditional?: ConditionalUi;
 } & (
   | {
       definition: DefinitionPath;
@@ -314,6 +320,7 @@ type UiSchemaMultiField = {
   type: "multiField";
   widget?: Exclude<WidgetTypes, "Table">;
   name?: string;
+  conditional?: ConditionalUi;
 } & (
   | {
       definition: DefinitionPath;
@@ -333,6 +340,7 @@ export type UiSchemaTableMultiField = {
   definition: PropertyPath[];
   children: UiSchemaTableChildren;
   schema?: undefined;
+  conditional?: ConditionalUi;
 };
 
 export type UiSchemaField =
@@ -344,6 +352,7 @@ export interface UiSchemaSection {
   name: string;
   children: UiSchema;
   description?: string;
+  conditional?: ConditionalUi;
 }
 
 /**
@@ -366,6 +375,7 @@ export interface UiSchemaFieldList {
   definition?: PropertyPath;
   description?: string;
   additionalDescribedById?: string;
+  conditional?: ConditionalUi;
   children: (
     Exclude<UiSchemaField, UiSchemaTableMultiField> | UiSchemaFieldList
   )[];
@@ -434,6 +444,8 @@ export interface UswdsWidgetProps<
   formContext?: {
     rootSchema?: RJSFSchema;
     rootFormData?: unknown;
+    itemStack?: GeneralRecord[];
+    activeConditionalRequiredPaths?: string[];
     widgetSupport?: {
       validationWarnings?:
         FormattedFormValidationWarning[] | FormValidationWarning[];
