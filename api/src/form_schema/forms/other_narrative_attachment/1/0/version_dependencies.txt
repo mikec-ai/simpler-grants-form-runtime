@@ -1,0 +1,7 @@
+# Shared authoring sources that determine this version's resolved artifacts.
+form_schema/families/__init__.py
+form_schema/families/form_definition.py
+form_schema/families/narrative_attachment.py
+form_schema/shared/__init__.py
+form_schema/shared/common_shared.py
+form_schema/shared/shared_schema.py
