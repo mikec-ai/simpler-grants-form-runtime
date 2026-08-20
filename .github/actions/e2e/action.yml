@@ -221,5 +221,5 @@ runs:
       uses: actions/upload-artifact@v7
       with:
         name: blob-report-shard-${{ inputs.target }}-${{ inputs.current_shard }}
-        path: /home/runner/work/simpler-grants-gov/simpler-grants-gov/frontend/blob-report
+        path: ${{ github.workspace }}/frontend/blob-report
         retention-days: 1
