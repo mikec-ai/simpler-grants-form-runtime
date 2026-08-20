@@ -48,7 +48,15 @@ class RecursiveXMLTransformer:
             # Extract attribute values from source data
             root_attr_values = {}
             for attr_name, source_field_or_value in root_attributes.items():
-                if isinstance(source_field_or_value, str):
+                if isinstance(source_field_or_value, dict):
+                    if source_field_or_value.get("kind") != "constant":
+                        raise ValueError(
+                            f"Unsupported typed root attribute source for {attr_name!r}"
+                        )
+                    if "value" not in source_field_or_value:
+                        raise ValueError(f"Constant root attribute {attr_name!r} requires a value")
+                    root_attr_values[attr_name] = source_field_or_value["value"]
+                elif isinstance(source_field_or_value, str):
                     # Determine if it's a field reference or static value
                     # Field references are snake_case identifiers (only lowercase, digits, underscores)
                     # Static values can have dots, hyphens, uppercase, or other characters
@@ -74,6 +82,29 @@ class RecursiveXMLTransformer:
         )
         return result
 
+    @staticmethod
+    def _scope_xml_value(value: Any, transform_rule: dict[str, Any]) -> Any:
+        """Carry a compiler-provided namespace with this exact value instance."""
+
+        namespace_scope = transform_rule.get("namespace_scope")
+        if namespace_scope is None or value is None:
+            return value
+        return {"__xml_value__": value, "__namespace__": namespace_scope}
+
+    @staticmethod
+    def _occurrence_count(value: Any, kind: str) -> int:
+        """Count source values using the XML node's declared structural kind."""
+
+        if value is None:
+            return 0
+        if kind == "array":
+            return len(value) if isinstance(value, list) else 0
+        if kind == "object":
+            return int(isinstance(value, dict))
+        if kind == "attachment":
+            return len(value) if isinstance(value, list) else 1
+        return 1
+
     def _process_transform_rules(
         self, source_data: dict[str, Any], rules: dict[str, Any], path: list[str]
     ) -> dict[str, Any]:
@@ -88,6 +119,10 @@ class RecursiveXMLTransformer:
             Transformed data at this level
         """
         result: dict[str, Any] = {}
+        current_data = get_nested_value(source_data, path) if path else source_data
+        if isinstance(current_data, dict):
+            self._validate_occurrences(current_data, rules, path)
+            self._validate_choice_groups(current_data, rules, path)
 
         # Iterate over rules at this level
         for key, rule_config in rules.items():
@@ -105,6 +140,91 @@ class RecursiveXMLTransformer:
 
         return result
 
+    def _validate_occurrences(
+        self, source_data: dict[str, Any], rules: dict[str, Any], path: list[str]
+    ) -> None:
+        """Enforce source-pinned min/max occurrence bounds at one rule level."""
+
+        location = ".".join(path) or "<root>"
+        for key, rule_config in rules.items():
+            if key.startswith("_") or not isinstance(rule_config, dict):
+                continue
+            occurs = rule_config.get("_occurs")
+            if occurs is None:
+                continue
+            if not isinstance(occurs, dict):
+                raise ValueError(f"XML occurrence metadata for {key!r} must be an object")
+            minimum = occurs.get("min_occurs")
+            maximum = occurs.get("max_occurs")
+            kind = occurs.get("kind", "simple")
+            if not isinstance(minimum, int) or isinstance(minimum, bool) or minimum < 0:
+                raise ValueError(f"XML occurrence metadata for {key!r} has invalid minimum")
+            if maximum != "unbounded" and (
+                not isinstance(maximum, int) or isinstance(maximum, bool) or maximum < minimum
+            ):
+                raise ValueError(f"XML occurrence metadata for {key!r} has invalid maximum")
+
+            transform = rule_config.get("xml_transform", {})
+            if "static_value" in transform:
+                count = 1
+            elif transform.get("conditional_transform", {}).get("type") == "compose_object":
+                fields = transform["conditional_transform"].get("field_mapping", {}).values()
+                count = int(any(source_data.get(field) is not None for field in fields))
+            else:
+                source_path = rule_config.get("_source_path", key)
+                value = get_nested_value(source_data, source_path.split("."))
+                count = self._occurrence_count(value, kind)
+            if count < minimum or (maximum != "unbounded" and count > maximum):
+                raise ValueError(
+                    f"XML field {key!r} at {location} requires {minimum}..{maximum} occurrences; "
+                    f"found {count}"
+                )
+
+    def _validate_choice_groups(
+        self, source_data: dict[str, Any], rules: dict[str, Any], path: list[str]
+    ) -> None:
+        """Enforce exclusive XSD choice bounds before transforming a rule set."""
+
+        groups: dict[str, dict[str, Any]] = {}
+        for key, rule_config in rules.items():
+            if key.startswith("_") or not isinstance(rule_config, dict):
+                continue
+            choice = rule_config.get("_choice_group")
+            if choice is None:
+                continue
+            if not isinstance(choice, dict):
+                raise ValueError(f"XML choice metadata for {key!r} must be an object")
+            group_id = choice.get("group_id")
+            minimum = choice.get("min_occurs")
+            maximum = choice.get("max_occurs")
+            if not isinstance(group_id, str) or not group_id:
+                raise ValueError(f"XML choice metadata for {key!r} requires a group_id")
+            if minimum not in {0, 1} or maximum != 1:
+                raise ValueError(f"XML choice group {group_id!r} has unsupported bounds")
+            group = groups.setdefault(
+                group_id,
+                {"minimum": minimum, "maximum": maximum, "present": [], "members": []},
+            )
+            if group["minimum"] != minimum or group["maximum"] != maximum:
+                raise ValueError(f"XML choice group {group_id!r} has inconsistent bounds")
+            group["members"].append(key)
+            transform = rule_config.get("xml_transform", {})
+            source_path = rule_config.get("_source_path", key)
+            value = get_nested_value(source_data, source_path.split("."))
+            kind = rule_config.get("_occurs", {}).get("kind", "simple")
+            if "static_value" in transform or self._occurrence_count(value, kind) > 0:
+                group["present"].append(key)
+
+        location = ".".join(path) or "<root>"
+        for group_id, group in groups.items():
+            count = len(group["present"])
+            if count < group["minimum"] or count > group["maximum"]:
+                raise ValueError(
+                    f"XML choice group {group_id!r} at {location} requires "
+                    f"{group['minimum']}..{group['maximum']} members; "
+                    f"present={group['present']!r}, members={group['members']!r}"
+                )
+
     def _process_xml_transform_rule(
         self,
         source_data: dict[str, Any],
@@ -115,13 +235,13 @@ class RecursiveXMLTransformer:
     ) -> None:
         """Process a single XML transformation rule."""
         transform_rule = rule_config["xml_transform"]
-        current_path = path + [key]
+        current_path = path + key.split(".")
 
         # Check if this is a static value (no source data needed)
         if "static_value" in transform_rule:
             target_field = transform_rule["target"]
             static_val = transform_rule["static_value"]
-            result[target_field] = static_val
+            result[target_field] = self._scope_xml_value(static_val, transform_rule)
 
             logger.debug(
                 f"Applied static value for {'.'.join(current_path)} -> {target_field}: {static_val}"
@@ -275,7 +395,7 @@ class RecursiveXMLTransformer:
             else:
                 # Standard field assignment for all other cases
                 target_field = transform_rule["target"]
-                result[target_field] = transformed_value
+                result[target_field] = self._scope_xml_value(transformed_value, transform_rule)
 
                 logger.debug(
                     f"Transformed {'.'.join(current_path)} -> {target_field}: {source_value}"
@@ -327,12 +447,14 @@ class RecursiveXMLTransformer:
             if not isinstance(source_value, dict):
                 return None
 
-            nested_result = {}
+            child_rules = {
+                key: value
+                for key, value in full_rule_config.items()
+                if key != "xml_transform" and not key.startswith("_")
+            }
+            nested_result = self._process_transform_rules(source_value, child_rules, [])
 
-            # Embed the namespace so the service can resolve the wrapper element's namespace
-            # per-instance rather than relying on the flat global namespace_fields dict.
-            # This prevents collisions when the same element name (e.g. "Address") appears in
-            # both the form's default namespace and the globLib namespace in different contexts.
+            # Preserve the legacy per-wrapper namespace marker for hand-authored transforms.
             if "namespace" in transform_rule:
                 nested_result["__namespace__"] = transform_rule["namespace"]
 
@@ -360,7 +482,7 @@ class RecursiveXMLTransformer:
                 if attributes:
                     nested_result["__attributes"] = attributes
 
-            # Check if nested_fields is defined in the transform_rule
+            # Legacy nested-field formats remain supported for hand-authored transforms.
             nested_fields = transform_rule.get("nested_fields")
 
             if nested_fields:
@@ -377,8 +499,10 @@ class RecursiveXMLTransformer:
                             )
 
                             if transformed_child is not None:
-                                nested_result[child_transform["target"]] = transformed_child
-            else:
+                                nested_result[child_transform["target"]] = self._scope_xml_value(
+                                    transformed_child, child_transform
+                                )
+            elif not child_rules:
                 # Nested fields may be siblings of xml_transform in full_rule_config
                 for child_key, child_config in full_rule_config.items():
                     if child_key == "xml_transform":
@@ -394,7 +518,9 @@ class RecursiveXMLTransformer:
                             )
 
                             if transformed_child is not None:
-                                nested_result[child_transform["target"]] = transformed_child
+                                nested_result[child_transform["target"]] = self._scope_xml_value(
+                                    transformed_child, child_transform
+                                )
 
             return nested_result if nested_result else None
 
@@ -406,8 +532,10 @@ class RecursiveXMLTransformer:
             if not items_config:
                 return source_value or None
             transformed_items = []
-            for item in source_value:
+            for index, item in enumerate(source_value):
                 if isinstance(item, dict):
+                    self._validate_occurrences(item, items_config, [*path, str(index)])
+                    self._validate_choice_groups(item, items_config, [*path, str(index)])
                     item_result = {}
                     for child_key, child_config in items_config.items():
                         if isinstance(child_config, dict) and "xml_transform" in child_config:
@@ -415,10 +543,15 @@ class RecursiveXMLTransformer:
                             child_value = item.get(child_key)
                             if child_value is not None:
                                 transformed_child = self._apply_transform_rule(
-                                    child_value, child_transform, child_config, path + [child_key]
+                                    child_value,
+                                    child_transform,
+                                    child_config,
+                                    [*path, str(index), child_key],
                                 )
                                 if transformed_child is not None:
-                                    item_result[child_transform["target"]] = transformed_child
+                                    item_result[child_transform["target"]] = self._scope_xml_value(
+                                        transformed_child, child_transform
+                                    )
                     if item_result:
                         transformed_items.append(item_result)
             return transformed_items if transformed_items else None
