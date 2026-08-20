@@ -6,6 +6,7 @@ const mockGetSession = jest.fn();
 const mockProcessFormSchema = jest.fn();
 const mockShapeFormData = jest.fn();
 const mockGetFormDetails = jest.fn();
+const mockHandleUpdateApplicationForm = jest.fn();
 const mockRevalidateTag = jest.fn();
 
 jest.mock("next/cache", () => ({
@@ -25,6 +26,11 @@ jest.mock("src/utils/applyForm/applyFormUtils", () => ({
 
 jest.mock("src/services/fetch/fetchers/formsFetcher", () => ({
   getFormDetails: (id: string) => mockGetFormDetails(id) as unknown,
+}));
+
+jest.mock("src/services/fetch/fetchers/applicationFetcher", () => ({
+  handleUpdateApplicationForm: (...args: unknown[]) =>
+    mockHandleUpdateApplicationForm(...args) as unknown,
 }));
 
 const genericPayload = {
@@ -60,6 +66,36 @@ describe("handleFormAction", () => {
     expect(result).toEqual({
       ...genericPayload,
       error: true,
+    });
+  });
+
+  it("returns the authoritative server-processed form data after save", async () => {
+    const submittedData = { amount: "1.00" };
+    const processedData = { amount: "1.00", total: "1.01" };
+    mockProcessFormSchema.mockReturnValue({ formSchema: { properties: {} } });
+    mockGetFormDetails.mockResolvedValue({
+      status_code: 200,
+      data: { form_json_schema: {} },
+    });
+    mockShapeFormData.mockReturnValue(submittedData);
+    mockHandleUpdateApplicationForm.mockResolvedValue({
+      status_code: 200,
+      data: { application_response: processedData },
+    });
+
+    const result = await handleFormAction(genericPayload, new FormData());
+
+    expect(mockHandleUpdateApplicationForm).toHaveBeenCalledWith(
+      submittedData,
+      "1",
+      "1",
+    );
+    expect(result).toEqual({
+      applicationId: "1",
+      error: false,
+      formData: processedData,
+      formId: "1",
+      saved: true,
     });
   });
 });

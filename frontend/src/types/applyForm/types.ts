@@ -182,6 +182,7 @@ export type FieldListWidgetProps = {
         fieldListPath: string,
         deletedEntryIndex: number,
       ) => void;
+      onFieldListChange?: () => void;
       markFormDirty?: () => void;
     };
   };
@@ -441,6 +442,7 @@ export interface UswdsWidgetProps<
         fieldListPath: string,
         deletedEntryIndex: number,
       ) => void;
+      onFieldListChange?: () => void;
       markFormDirty?: () => void;
       attachmentsUploadingCounter?: AttachmentsUploadingCounter;
     };

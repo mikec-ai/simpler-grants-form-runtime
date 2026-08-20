@@ -117,8 +117,12 @@ function TextWidget<
       {error && (
         <FieldErrors fieldName={id} rawErrors={rawErrors as string[]} />
       )}
+      {disabled ? (
+        <input type="hidden" name={id} value={inputValue ?? ""} />
+      ) : null}
       <TextInput
         data-testid={id}
+        data-disabled-value-mirrored={disabled ? "true" : undefined}
         className={inputClassName}
         minLength={minLength ?? undefined}
         maxLength={maxLength ?? undefined}

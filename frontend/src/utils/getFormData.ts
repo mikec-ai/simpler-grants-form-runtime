@@ -14,6 +14,7 @@ import { Attachment } from "src/types/attachmentTypes";
 import { FormDetail } from "src/types/formResponseTypes";
 
 import { processFormSchema } from "./applyForm/applyFormUtils";
+import type { ClientCalculationRuleSchema } from "./applyForm/clientCalculationRules";
 import { validateUiSchema } from "./applyForm/validateUiSchema";
 
 // either return error or data, not both
@@ -28,6 +29,7 @@ type FormDataResult =
         formName: string;
         formSchema: RJSFSchema;
         formUiSchema: UiSchema;
+        formRuleSchema: ClientCalculationRuleSchema | null;
         formValidationWarnings: FormValidationWarning[] | null;
         applicationAttachments: Attachment[];
         createdAt?: string;
@@ -121,6 +123,7 @@ export default async function getFormData({
     form_name: formName,
     form_json_schema,
     form_ui_schema: formUiSchema,
+    form_rule_schema: formRuleSchema,
   } = formData;
   const schemaErrors = validateUiSchema(formUiSchema);
   if (schemaErrors) {
@@ -143,6 +146,7 @@ export default async function getFormData({
         formName,
         formSchema: result.formSchema,
         formUiSchema,
+        formRuleSchema: formRuleSchema ?? null,
         formValidationWarnings,
         createdAt: applicationFormData.created_at,
         updatedAt: applicationFormData.updated_at,

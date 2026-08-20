@@ -11,7 +11,15 @@ import {
   UiSchema,
 } from "src/types/applyForm/types";
 import { Attachment } from "src/types/attachmentTypes";
-import { getFieldsForNav } from "src/utils/applyForm/applyFormUtils";
+import {
+  getFieldsForNav,
+  shapeFormData,
+} from "src/utils/applyForm/applyFormUtils";
+import {
+  ClientCalculationRuleSchema,
+  evaluateClientCalculations,
+  hasClientCalculationRules,
+} from "src/utils/applyForm/clientCalculationRules";
 import { rebaseFieldListWarningsAfterDelete } from "src/utils/applyForm/rebaseFieldListWarningsAfterDelete";
 import {
   formatTimestamp,
@@ -20,7 +28,15 @@ import {
 
 import { useTranslations } from "next-intl";
 import { useNavigationGuard } from "next-navigation-guard";
-import { ReactNode, useActionState, useEffect, useMemo, useState } from "react";
+import {
+  ReactNode,
+  useActionState,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Alert, FormGroup } from "@trussworks/react-uswds";
 
 import { FormFields } from "src/components/apply-form/FormFields";
@@ -60,6 +76,7 @@ const ApplyForm = ({
   applicationId,
   formId,
   formSchema,
+  formRuleSchema = null,
   savedFormData,
   validationWarnings,
   uiSchema,
@@ -72,6 +89,7 @@ const ApplyForm = ({
   applicationId: string;
   formId: string;
   formSchema: RJSFSchema;
+  formRuleSchema?: ClientCalculationRuleSchema | null;
   savedFormData: object;
   uiSchema: UiSchema;
   validationWarnings:
@@ -121,6 +139,94 @@ const ApplyForm = ({
     setDeletedEntryIndexesByFieldListPath,
   ] = useState<Record<string, number[]>>({});
   const [attachmentsUploading, setAttachmentsUploading] = useState<number>(0);
+  const formRef = useRef<HTMLFormElement>(null);
+  const recalculationFrameRef = useRef<number | null>(null);
+  const hasCalculations = useMemo(
+    () => hasClientCalculationRules(formRuleSchema),
+    [formRuleSchema],
+  );
+
+  const calculateFormData = useCallback(
+    (formData: object): object => {
+      const result = evaluateClientCalculations(formData, formRuleSchema);
+      if (result.errors.length > 0) {
+        console.error(
+          "Unable to evaluate client-side form calculations",
+          result.errors,
+        );
+      }
+      return result.formData;
+    },
+    [formRuleSchema],
+  );
+
+  const [liveFormData, setLiveFormData] = useState<object>(() =>
+    calculateFormData(savedFormData || {}),
+  );
+  const [lastSavedFormData, setLastSavedFormData] =
+    useState<object>(savedFormData);
+  const [lastFormState, setLastFormState] = useState(formState);
+
+  if (lastSavedFormData !== savedFormData) {
+    setLastSavedFormData(savedFormData);
+    setLiveFormData(calculateFormData(savedFormData || {}));
+  }
+
+  if (lastFormState !== formState) {
+    setLastFormState(formState);
+    if (formState.saved) {
+      setLiveFormData(formState.formData);
+    } else if (formState.error) {
+      setFormChanged(true);
+    }
+  }
+
+  const recalculateFromForm = useCallback(
+    (formElement: HTMLFormElement | null = formRef.current): void => {
+      if (!formElement) {
+        return;
+      }
+      const disabledControls = Array.from(
+        formElement.querySelectorAll<
+          HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+        >(
+          "input:disabled:not([data-disabled-value-mirrored]), select:disabled, textarea:disabled",
+        ),
+      );
+      disabledControls.forEach((control) => {
+        control.disabled = false;
+      });
+      let rawFormData: FormData;
+      try {
+        rawFormData = new FormData(formElement);
+      } finally {
+        disabledControls.forEach((control) => {
+          control.disabled = true;
+        });
+      }
+      const currentFormData = shapeFormData<object>(rawFormData, formSchema);
+      setLiveFormData(calculateFormData(currentFormData));
+    },
+    [calculateFormData, formSchema],
+  );
+
+  const scheduleRecalculation = useCallback((): void => {
+    if (!hasCalculations || recalculationFrameRef.current !== null) {
+      return;
+    }
+    recalculationFrameRef.current = requestAnimationFrame(() => {
+      recalculationFrameRef.current = null;
+      recalculateFromForm();
+    });
+  }, [hasCalculations, recalculateFromForm]);
+
+  useEffect(() => {
+    return () => {
+      if (recalculationFrameRef.current !== null) {
+        cancelAnimationFrame(recalculationFrameRef.current);
+      }
+    };
+  }, []);
 
   useNavigationGuard({
     enabled: formChanged || attachmentsChanged,
@@ -135,27 +241,24 @@ const ApplyForm = ({
    * Used by FieldList and other widgets to signal that local form state
    * has been modified, enabling unsaved-change indicators and navigation guards.
    */
-  const handleFormEdited = (): void => {
+  const handleFormEdited = useCallback((): void => {
     setFormChanged(true);
-  };
+  }, []);
 
-  const handleFieldListEntryDelete = (
-    fieldListPath: string,
-    deletedEntryIndex: number,
-  ): void => {
-    setDeletedEntryIndexesByFieldListPath((previousValue) => ({
-      ...previousValue,
-      [fieldListPath]: [
-        ...(previousValue[fieldListPath] ?? []),
-        deletedEntryIndex,
-      ],
-    }));
-  };
-
-  const formObject = useMemo(
-    () => savedFormData || new FormData(),
-    [savedFormData],
+  const handleFieldListEntryDelete = useCallback(
+    (fieldListPath: string, deletedEntryIndex: number): void => {
+      setDeletedEntryIndexesByFieldListPath((previousValue) => ({
+        ...previousValue,
+        [fieldListPath]: [
+          ...(previousValue[fieldListPath] ?? []),
+          deletedEntryIndex,
+        ],
+      }));
+    },
+    [],
   );
+
+  const formObject = liveFormData;
 
   const navFields = useMemo(() => getFieldsForNav(uiSchema), [uiSchema]);
 
@@ -199,6 +302,7 @@ const ApplyForm = ({
         validationWarnings: displayValidationWarnings ?? [],
         deletedEntryIndexesByFieldListPath,
         onFieldListEntryDelete: handleFieldListEntryDelete,
+        onFieldListChange: scheduleRecalculation,
         markFormDirty: handleFormEdited,
         attachmentsUploadingCounter,
       },
@@ -209,6 +313,9 @@ const ApplyForm = ({
       formObject,
       formSchema,
       attachmentsUploadingCounter,
+      handleFieldListEntryDelete,
+      handleFormEdited,
+      scheduleRecalculation,
     ],
   );
 
@@ -228,10 +335,14 @@ const ApplyForm = ({
 
   return (
     <form
+      ref={formRef}
       className="flex-1 margin-top-2 simpler-apply-form"
       action={formAction}
-      onChange={() => {
+      onChange={(event) => {
         setFormChanged(true);
+        if (hasCalculations || formState.saved) {
+          recalculateFromForm(event.currentTarget);
+        }
       }}
       noValidate
     >
