@@ -146,6 +146,17 @@ export type FieldListWidgetProps = {
   description?: string;
   additionalDescribedById?: string;
   name: string;
+  /**
+   * Validation path for this array in the current form data. Root lists infer
+   * `$.${name}`; nested lists receive an indexed path from their parent.
+   */
+  fieldListPath?: string;
+  /** Prefix applied to descendant input ids to keep nested list ids unique. */
+  idPrefix?: string;
+  /** Heading level used for the list label; nested lists advance this level. */
+  headingLevel?: number;
+  /** Human-readable ancestor entry context used to disambiguate controls. */
+  ancestorContextLabel?: string;
   minItems?: number;
   minItemsHeading?: string;
   minItemsHelperText?: string;
@@ -197,13 +208,24 @@ export type FieldListChildWidgetTypes = Exclude<
  *     address.country
  */
 
-export type FieldListGroupItem = {
-  widget: FieldListChildWidgetTypes;
-  generalProps: Omit<UswdsWidgetProps, "id" | "value" | "key">;
-  baseId: string;
-  definition: string;
-  storagePath: string[];
-};
+export type FieldListGroupItem =
+  | {
+      widget: FieldListChildWidgetTypes;
+      generalProps: Omit<UswdsWidgetProps, "id" | "value" | "key">;
+      baseId: string;
+      definition: string;
+      storagePath: string[];
+    }
+  | {
+      widget: "FieldList";
+      fieldListProps: Omit<
+        FieldListWidgetProps,
+        "id" | "key" | "value" | "onChange" | "formContext"
+      >;
+      baseId: string;
+      definition: string;
+      storagePath: string[];
+    };
 
 export type UiSchemaTableCellType = "input" | "readOnly" | "plainText";
 
@@ -336,9 +358,16 @@ export interface UiSchemaFieldList {
   maxItemsHeading?: string;
   maxItemsHelperText?: string;
   name: string;
+  /**
+   * JSON Schema pointer to the array. It is optional for backward-compatible
+   * root lists and required when a FieldList is nested in another FieldList.
+   */
+  definition?: PropertyPath;
   description?: string;
   additionalDescribedById?: string;
-  children: Exclude<UiSchemaField, UiSchemaTableMultiField>[];
+  children: (
+    Exclude<UiSchemaField, UiSchemaTableMultiField> | UiSchemaFieldList
+  )[];
 }
 
 export type UiSchemaNode = UiSchemaField | UiSchemaSection | UiSchemaFieldList;

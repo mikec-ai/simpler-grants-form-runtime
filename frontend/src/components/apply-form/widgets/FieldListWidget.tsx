@@ -14,7 +14,15 @@ import {
 } from "src/utils/applyForm/fieldListHelpers";
 
 import { useTranslations } from "next-intl";
-import { useCallback, useMemo, useRef, useState } from "react";
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { Button } from "@trussworks/react-uswds";
 
 import { USWDSIcon } from "src/components/core/USWDSIcon";
@@ -48,6 +56,48 @@ type FieldListEntry = {
 };
 
 const FIELD_LIST_INDEX_TOKEN = "~~index~~";
+const FIELD_LIST_HEADING_ELEMENTS = {
+  1: "h1",
+  2: "h2",
+  3: "h3",
+  4: "h4",
+  5: "h5",
+  6: "h6",
+} as const;
+
+function FieldListHeading({
+  level,
+  id,
+  className,
+  children,
+}: {
+  level: number;
+  id: string;
+  className?: string;
+  children: ReactNode;
+}) {
+  const boundedLevel = Math.max(level, 1);
+  const Heading =
+    boundedLevel <= 6
+      ? FIELD_LIST_HEADING_ELEMENTS[
+          boundedLevel as keyof typeof FIELD_LIST_HEADING_ELEMENTS
+        ]
+      : undefined;
+
+  if (Heading) {
+    return (
+      <Heading id={id} className={className}>
+        {children}
+      </Heading>
+    );
+  }
+
+  return (
+    <div id={id} className={className} role="heading" aria-level={boundedLevel}>
+      {children}
+    </div>
+  );
+}
 
 /**
  * Builds the initial entries rendered by FieldList.
@@ -115,28 +165,19 @@ const replaceFieldListIndexPlaceholder = ({
 };
 
 /**
- * Extracts the final field name from a FieldList base id.
- *
- * This is only used to build a stable React key for the rendered child widget.
- * Field values are read and written using `storagePath`.
- */
-const getFieldListChildKey = ({ baseId }: { baseId: string }): string => {
-  const baseIdParts = baseId.split("--");
-  return baseIdParts[baseIdParts.length - 1];
-};
-
-/**
  * Returns a new entry array with one additional empty entry appended.
  */
 const addFieldListEntry = ({
   entries,
+  entryId,
 }: {
   entries: FieldListEntry[];
+  entryId: string;
 }): FieldListEntry[] => {
   return [
     ...entries,
     {
-      entryId: `field-list-entry-${entries.length}`,
+      entryId,
       value: {},
     },
   ];
@@ -173,6 +214,16 @@ const toBroadlyDefinedWidgetValue = (
 
   if (Array.isArray(value) && value.every((item) => typeof item === "string")) {
     return value;
+  }
+
+  if (
+    Array.isArray(value) &&
+    value.every(
+      (item) =>
+        typeof item === "object" && item !== null && !Array.isArray(item),
+    )
+  ) {
+    return value as GeneralRecord[];
   }
 
   if (typeof value === "object" && value !== null && !Array.isArray(value)) {
@@ -275,6 +326,10 @@ function FieldListEntry({
   requiredFields,
   minItemsHeading,
   minItemsHelperText,
+  idPrefix,
+  formContext,
+  headingLevel,
+  ancestorContextLabel,
 }: {
   entryId: string;
   entryIndex: number;
@@ -290,33 +345,95 @@ function FieldListEntry({
   requiredFields?: string[];
   minItemsHeading?: string;
   minItemsHelperText?: string;
+  idPrefix?: string;
+  formContext?: FieldListWidgetProps["formContext"];
+  headingLevel: number;
+  ancestorContextLabel?: string;
 }) {
   const t = useTranslations("Application.applyForm.fieldListWidget");
   const fieldListId = fieldListPath.replace("$.", "").replace(/\W/g, "-");
   const entryHeadingId = `${fieldListId}-entry-${entryIndex + 1}-heading`;
+  const entryContextLabel = ancestorContextLabel
+    ? `${ancestorContextLabel}, ${entryLabel} ${entryIndex + 1}`
+    : `${entryLabel} ${entryIndex + 1}`;
 
   return (
     <div className="field-list-widget__entry padding-y-2 padding-bottom-3">
       <div className="field-list-widget__entry-header margin-bottom-2">
-        <h4 id={entryHeadingId} className="margin-bottom-2">
+        <FieldListHeading
+          level={headingLevel + 1}
+          id={entryHeadingId}
+          className="margin-bottom-2"
+        >
           {entryLabel} {entryIndex + 1}
-        </h4>
+        </FieldListHeading>
       </div>
 
       {groupDefinition.map((groupItem: FieldListGroupItem) => {
+        const localGeneratedId = replaceFieldListIndexPlaceholder({
+          baseId: groupItem.baseId,
+          entryIndex,
+        });
+        const generatedId = idPrefix
+          ? `${idPrefix}--${localGeneratedId}`
+          : localGeneratedId;
+
+        // The full schema-derived id is required here. Sibling branches can
+        // legitimately end in the same property name (for example,
+        // direct_costs.periods and indirect_costs.periods).
+        const childKey = groupItem.baseId;
+
+        const currentRawValue = getValueAtPath({
+          value: entryValue,
+          path: groupItem.storagePath,
+        });
+
+        if (groupItem.widget === "FieldList") {
+          const nestedFieldListPath = `${fieldListPath}[${entryIndex}].${groupItem.storagePath.join(".")}`;
+          const nestedListIdSuffix = `--${groupItem.storagePath.at(-1) ?? groupItem.fieldListProps.name}`;
+          const nestedIdPrefix = generatedId.endsWith(nestedListIdSuffix)
+            ? generatedId.slice(0, -nestedListIdSuffix.length)
+            : generatedId;
+          const nestedValue = Array.isArray(currentRawValue)
+            ? currentRawValue.filter(
+                (item): item is GeneralRecord =>
+                  typeof item === "object" &&
+                  item !== null &&
+                  !Array.isArray(item),
+              )
+            : undefined;
+
+          return (
+            <FieldListWidget
+              {...groupItem.fieldListProps}
+              id={generatedId}
+              key={`${entryId}-${childKey}`}
+              idPrefix={nestedIdPrefix}
+              headingLevel={headingLevel + 2}
+              ancestorContextLabel={entryContextLabel}
+              additionalDescribedById={entryHeadingId}
+              fieldListPath={nestedFieldListPath}
+              value={nestedValue}
+              rawErrors={rawErrors}
+              disabled={isInteractionDisabled}
+              readOnly={isInteractionDisabled}
+              isFormLocked={isInteractionDisabled}
+              formContext={formContext}
+              onChange={(nextValue) => {
+                handleFieldChange({
+                  entryId,
+                  storagePath: groupItem.storagePath,
+                  nextValue,
+                });
+              }}
+            />
+          );
+        }
+
         const isRequired = isFieldRequired(
           groupItem.definition,
           requiredFields ?? [],
         );
-
-        const generatedId = replaceFieldListIndexPlaceholder({
-          baseId: groupItem.baseId,
-          entryIndex,
-        });
-
-        const childKey = getFieldListChildKey({
-          baseId: groupItem.baseId,
-        });
 
         const childErrors = getFieldListChildErrors({
           rawErrors,
@@ -326,12 +443,7 @@ function FieldListEntry({
           childDefinition: groupItem.definition,
         });
 
-        const currentValue = toBroadlyDefinedWidgetValue(
-          getValueAtPath({
-            value: entryValue,
-            path: groupItem.storagePath,
-          }),
-        );
+        const currentValue = toBroadlyDefinedWidgetValue(currentRawValue);
 
         const childWidgetProps: UswdsWidgetProps = {
           ...groupItem.generalProps,
@@ -356,10 +468,14 @@ function FieldListEntry({
           },
         };
 
-        return renderWidget({
-          type: groupItem.widget,
-          props: childWidgetProps,
-        });
+        return (
+          <Fragment key={`${entryId}-${childKey}`}>
+            {renderWidget({
+              type: groupItem.widget,
+              props: childWidgetProps,
+            })}
+          </Fragment>
+        );
       })}
 
       <div className="field-list-widget__entry-controls margin-top-2 padding-top-2 display-flex flex-align-start flex-justify-between">
@@ -384,7 +500,7 @@ function FieldListEntry({
           disabled={!canDeleteEntry}
           className="button--danger margin-left-auto"
           outline
-          aria-label={`${t("deleteEntry")} ${entryLabel} ${entryIndex + 1}`}
+          aria-label={`${t("deleteEntry")}: ${entryContextLabel}`}
         >
           <USWDSIcon name="delete" />
           {t("deleteEntry")}
@@ -399,6 +515,7 @@ function FieldListWidget(widgetProps: FieldListWidgetProps) {
     id,
     label,
     description,
+    additionalDescribedById,
     name,
     minItems,
     minItemsHeading,
@@ -413,9 +530,13 @@ function FieldListWidget(widgetProps: FieldListWidgetProps) {
     readOnly,
     isFormLocked,
     rawErrors,
+    fieldListPath: suppliedFieldListPath,
+    idPrefix,
+    headingLevel = 3,
+    ancestorContextLabel,
   } = widgetProps;
   const t = useTranslations("Application.applyForm.fieldListWidget");
-  const fieldListPath = `$.${name}`;
+  const fieldListPath = suppliedFieldListPath ?? `$.${name}`;
   const groupErrors = getFieldListGroupErrors({
     rawErrors,
     fieldListPath,
@@ -441,6 +562,32 @@ function FieldListWidget(widgetProps: FieldListWidgetProps) {
     initialFieldListEntries,
   );
   const entriesRef = useRef<FieldListEntry[]>(initialFieldListEntries);
+  const nextEntryIdRef = useRef(initialFieldListEntries.length);
+  const externalValueSnapshotRef = useRef(
+    JSON.stringify({ value: value ?? [], minItems }),
+  );
+
+  useEffect(() => {
+    const externalValueSnapshot = JSON.stringify({
+      value: value ?? [],
+      minItems,
+    });
+    if (externalValueSnapshot === externalValueSnapshotRef.current) {
+      return;
+    }
+    externalValueSnapshotRef.current = externalValueSnapshot;
+    const currentEntries = entriesRef.current;
+    const synchronizedEntries = initialFieldListEntries.map(
+      (incomingEntry, entryIndex) => ({
+        entryId:
+          currentEntries[entryIndex]?.entryId ??
+          `field-list-entry-${nextEntryIdRef.current++}`,
+        value: incomingEntry.value,
+      }),
+    );
+    entriesRef.current = synchronizedEntries;
+    setEntries(synchronizedEntries);
+  }, [initialFieldListEntries, minItems, value]);
 
   const onFieldListEntryDelete =
     widgetProps.formContext?.widgetSupport?.onFieldListEntryDelete;
@@ -510,6 +657,7 @@ function FieldListWidget(widgetProps: FieldListWidgetProps) {
     handleEntriesChange((previousEntries) =>
       addFieldListEntry({
         entries: previousEntries,
+        entryId: `field-list-entry-${nextEntryIdRef.current++}`,
       }),
     );
   }, [handleEntriesChange, maximumEntryCount]);
@@ -578,9 +726,16 @@ function FieldListWidget(widgetProps: FieldListWidgetProps) {
   return (
     <div
       id={id}
+      role="group"
+      aria-labelledby={label ? `${id}-heading` : undefined}
+      aria-describedby={additionalDescribedById}
       className="field-list-widget border border-base-lighter radius-md padding-2 margin-y-2"
     >
-      {label ? <h3>{label}</h3> : null}
+      {label ? (
+        <FieldListHeading level={headingLevel} id={`${id}-heading`}>
+          {label}
+        </FieldListHeading>
+      ) : null}
       {description ? <p>{description}</p> : null}
 
       {groupErrors.length > 0 ? (
@@ -611,6 +766,10 @@ function FieldListWidget(widgetProps: FieldListWidgetProps) {
             requiredFields={widgetProps.requiredFields}
             minItemsHeading={resolvedMinItemsHeading}
             minItemsHelperText={resolvedMinItemsHelperText}
+            idPrefix={idPrefix}
+            formContext={widgetProps.formContext}
+            headingLevel={headingLevel}
+            ancestorContextLabel={ancestorContextLabel}
           />
         );
       })}
@@ -648,6 +807,7 @@ function FieldListWidget(widgetProps: FieldListWidgetProps) {
           onClick={handleAddEntry}
           disabled={!canAddEntry}
           outline
+          aria-label={`${t("addEntry")}: ${resolvedEntryLabel}${ancestorContextLabel ? ` — ${ancestorContextLabel}` : ""}`}
         >
           <USWDSIcon name="add" />
           {t("addEntry")}

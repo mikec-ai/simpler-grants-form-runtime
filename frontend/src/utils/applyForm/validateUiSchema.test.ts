@@ -504,6 +504,63 @@ describe("validateFormData", () => {
       expect(hasFieldListChildrenError).toBe(true);
     });
 
+    it("accepts a nested fieldList with an explicit definition", () => {
+      const nestedUiSchema: UiSchema = [
+        {
+          type: "fieldList",
+          label: "Projects",
+          name: "projects",
+          children: [
+            {
+              type: "fieldList",
+              label: "Budget periods",
+              name: "periods",
+              definition: "/properties/projects/items/properties/periods",
+              children: [
+                {
+                  type: "field",
+                  definition:
+                    "/properties/projects/items/properties/periods/items/properties/amount",
+                },
+              ],
+            },
+          ],
+        },
+      ];
+
+      expect(validateUiSchema(nestedUiSchema)).toBe(false);
+    });
+
+    it("rejects a nested fieldList without an explicit definition", () => {
+      const nestedUiSchema = [
+        {
+          type: "fieldList",
+          label: "Projects",
+          name: "projects",
+          children: [
+            {
+              type: "fieldList",
+              label: "Budget periods",
+              name: "periods",
+              children: [],
+            },
+          ],
+        },
+      ] as unknown as UiSchema;
+
+      const errors = validateUiSchema(nestedUiSchema);
+      if (!Array.isArray(errors)) {
+        throw new Error("Expected nested FieldList validation errors");
+      }
+      expect(
+        errors.some(
+          (error) =>
+            error.instancePath === "/0/children/0" &&
+            error.message?.includes("definition"),
+        ),
+      ).toBe(true);
+    });
+
     it("should invalidate fieldList with a Table child", () => {
       const invalidUiSchema = [
         {

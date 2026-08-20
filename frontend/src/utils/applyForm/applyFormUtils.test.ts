@@ -486,6 +486,13 @@ describe("isFieldRequired", () => {
       isFieldRequired(["/properties/foo", "/properties/bar"], ["bar"]),
     ).toBe(true);
   });
+  it("preserves a property literally named items", () => {
+    expect(
+      isFieldRequired("/properties/items/items/properties/items", [
+        "items/items",
+      ]),
+    ).toBe(true);
+  });
 });
 
 describe("buildWarningTree", () => {
@@ -789,6 +796,147 @@ describe("buildWarningTree", () => {
         formatted: "First Name is required",
       }),
     ]);
+  });
+
+  it("does not duplicate warnings for a nested FieldList child", () => {
+    const definition =
+      "/properties/projects/items/properties/periods/items/properties/amount";
+    const uiSchema: UiSchema = [
+      {
+        type: "fieldList",
+        name: "projects",
+        label: "Projects",
+        children: [
+          {
+            type: "fieldList",
+            name: "periods",
+            label: "Budget periods",
+            definition: "/properties/projects/items/properties/periods",
+            children: [
+              {
+                type: "field",
+                definition,
+                schema: { title: "Amount", type: "number" },
+              },
+            ],
+          },
+        ],
+      },
+    ];
+    const warnings = [
+      {
+        field: "$.projects[0].periods[1].amount",
+        message: "'amount' is a required property",
+        type: "required",
+        value: null,
+      },
+    ];
+    const formSchema: RJSFSchema = {
+      type: "object",
+      properties: {
+        projects: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              periods: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    amount: { type: "number", title: "Amount" },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    };
+
+    const result = buildWarningTree(uiSchema, null, warnings, formSchema);
+
+    expect(result).toEqual([
+      expect.objectContaining({
+        field: "$.projects[0].periods[1].amount",
+        htmlField: "projects[0]--periods[1]--amount",
+      }),
+    ]);
+  });
+
+  it("preserves nested FieldList group and missing-list warnings", () => {
+    const uiSchema: UiSchema = [
+      {
+        type: "fieldList",
+        name: "projects",
+        label: "Projects",
+        children: [
+          {
+            type: "fieldList",
+            name: "periods",
+            label: "Budget periods",
+            definition: "/properties/projects/items/properties/periods",
+            children: [],
+          },
+        ],
+      },
+    ];
+    const formSchema: RJSFSchema = {
+      type: "object",
+      properties: {
+        projects: {
+          type: "array",
+          items: {
+            type: "object",
+            required: ["periods"],
+            properties: {
+              periods: {
+                type: "array",
+                title: "Budget periods",
+                minItems: 1,
+                items: { type: "object", properties: {} },
+              },
+            },
+          },
+        },
+      },
+    };
+    const warnings = [
+      {
+        field: "$.projects[0].periods",
+        message: "[] should NOT have fewer than 1 items",
+        type: "minItems",
+        value: null,
+      },
+      {
+        field: "$.projects[1]",
+        message: "'periods' is a required property",
+        type: "required",
+        value: null,
+      },
+      {
+        field: "$.projects[2]",
+        message: "'periods_notes' is a required property",
+        type: "required",
+        value: null,
+      },
+    ];
+
+    const result = buildWarningTree(uiSchema, null, warnings, formSchema);
+
+    expect(result).toEqual([
+      expect.objectContaining({
+        field: "$.projects[0].periods",
+        htmlField: "projects[0]--periods",
+        fieldListLabel: "Budget periods",
+      }),
+      expect.objectContaining({
+        field: "$.projects[1].periods",
+        htmlField: "projects[1]--periods",
+        formatted: "Budget periods is required",
+      }),
+    ]);
+    expect(result.every((warning) => !("definition" in warning))).toBe(true);
   });
 });
 
@@ -1254,6 +1402,38 @@ describe("addPrintWidgetToFields", () => {
       ).toBe("contact_people_test[0]--first_name");
     });
 
+    it("builds an html field containing every nested FieldList index", () => {
+      expect(
+        getHtmlFieldForWarning({
+          definition:
+            "/properties/projects/items/properties/periods/items/properties/amount",
+          field: "$.projects[2].periods[4].amount",
+          schema: { title: "Amount", type: "number" },
+        }),
+      ).toBe("projects[2]--periods[4]--amount");
+    });
+
+    it("distinguishes array items from properties named items", () => {
+      expect(
+        getHtmlFieldForWarning({
+          definition: "/properties/items/items/properties/items",
+          field: "$.items[2].items",
+          schema: { title: "Items", type: "string" },
+        }),
+      ).toBe("items[2]--items");
+    });
+
+    it("falls back to entry 0 at every nested FieldList level", () => {
+      expect(
+        getHtmlFieldForWarning({
+          definition:
+            "/properties/projects/items/properties/periods/items/properties/amount",
+          field: "$.projects",
+          schema: { title: "Amount", type: "number" },
+        }),
+      ).toBe("projects[0]--periods[0]--amount");
+    });
+
     it("falls back to standard html field generation for non-FieldList definitions", () => {
       expect(
         getHtmlFieldForWarning({
@@ -1312,6 +1492,33 @@ describe("addPrintWidgetToFields", () => {
           uiSchema,
         }),
       ).toBe("Contact People");
+    });
+
+    it("finds the innermost FieldList label for nested repeating groups", () => {
+      const uiSchema: UiSchema = [
+        {
+          type: "fieldList",
+          name: "projects",
+          label: "Projects",
+          children: [
+            {
+              type: "fieldList",
+              name: "periods",
+              label: "Budget periods",
+              definition: "/properties/projects/items/properties/periods",
+              children: [],
+            },
+          ],
+        },
+      ];
+
+      expect(
+        getFieldListLabelFromDefinition({
+          definition:
+            "/properties/projects/items/properties/periods/items/properties/amount",
+          uiSchema,
+        }),
+      ).toBe("Budget periods");
     });
 
     it("returns undefined when no matching FieldList exists", () => {
@@ -1389,6 +1596,72 @@ describe("addPrintWidgetToFields", () => {
           htmlField: "contact_people_test[2]--first_name",
           formatted: "First Name is required",
           fieldListLabel: "Contact People",
+        }),
+      ]);
+    });
+
+    it("matches warnings with multiple FieldList indexes", () => {
+      const warnings = [
+        {
+          field: "$.projects[1].periods[3].amount",
+          message: "'amount' is a required property",
+          type: "required",
+          value: null,
+        },
+      ];
+      const formSchema: RJSFSchema = {
+        type: "object",
+        properties: {
+          projects: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                periods: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      amount: { type: "number", title: "Amount" },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+      const uiSchema: UiSchema = [
+        {
+          type: "fieldList",
+          name: "projects",
+          label: "Projects",
+          children: [
+            {
+              type: "fieldList",
+              name: "periods",
+              label: "Budget periods",
+              definition: "/properties/projects/items/properties/periods",
+              children: [],
+            },
+          ],
+        },
+      ];
+
+      expect(
+        findValidationErrors(
+          warnings,
+          "/properties/projects/items/properties/periods/items/properties/amount",
+          { title: "Amount", type: "number" },
+          formSchema,
+          uiSchema,
+        ),
+      ).toEqual([
+        expect.objectContaining({
+          field: "$.projects[1].periods[3].amount",
+          htmlField: "projects[1]--periods[3]--amount",
+          fieldListLabel: "Budget periods",
+          formatted: "Amount is required",
         }),
       ]);
     });

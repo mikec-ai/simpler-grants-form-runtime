@@ -59,7 +59,7 @@ export const rebaseFieldListWarningsAfterDelete = ({
     const nextField = `${fieldListPath}[${nextEntryIndex}].${storageKey}`;
 
     const nextHtmlField = warning.htmlField
-      ? warning.htmlField.replace(/\[(\d+)\]--/, `[${nextEntryIndex}]--`)
+      ? nextField.replace(/^\$\./, "").replace(/\./g, "--")
       : warning.htmlField;
 
     return [
