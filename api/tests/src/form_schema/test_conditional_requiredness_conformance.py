@@ -5,7 +5,6 @@ import pytest
 
 from src.form_schema.jsonschema_validator import validate_json_schema
 
-
 FIXTURE_PATH = (
     Path(__file__).parents[2] / "fixtures" / "form_conditional_requiredness_conformance.json"
 )
