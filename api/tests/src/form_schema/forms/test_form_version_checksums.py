@@ -27,6 +27,14 @@ def get_locked_versions() -> list[tuple[Path, Path, str, str]]:
     return locked
 
 
+def get_versions_with_dependencies() -> list[tuple[Path, Path]]:
+    versions = []
+    for manifest_path in sorted(_FORMS_ROOT.rglob("version_dependencies.txt")):
+        version_dir = manifest_path.parent
+        versions.append((version_dir.parents[1], version_dir))
+    return versions
+
+
 def test_locked_form_versions_unchanged() -> None:
     """Any version directory with a checksum file must still match its current sources.
 
@@ -48,6 +56,31 @@ def test_locked_form_versions_unchanged() -> None:
 
     if failures:
         pytest.fail("Locked form versions have been modified:\n" + "\n".join(failures))
+
+
+@pytest.mark.parametrize(
+    ("form_dir", "version_dir"),
+    get_versions_with_dependencies(),
+)
+def test_declared_version_dependencies_resolve(form_dir: Path, version_dir: Path) -> None:
+    checksum_path = version_dir / "checksum"
+    assert (
+        checksum_path.exists()
+    ), f"{version_dir} declares shared dependencies but is not version-locked"
+    assert checksum_path.read_text().strip() == compute_version_hash(form_dir, version_dir)
+
+
+def test_family_based_forms_declare_version_dependencies() -> None:
+    missing_manifests = []
+    for form_json_path in sorted(_FORMS_ROOT.rglob("form_json.py")):
+        if "src.form_schema.families" not in form_json_path.read_text():
+            continue
+        if not (form_json_path.parent / "version_dependencies.txt").exists():
+            missing_manifests.append(str(form_json_path))
+
+    assert (
+        not missing_manifests
+    ), "Family-based forms must declare version_dependencies.txt: " + ", ".join(missing_manifests)
 
 
 def test_compute_version_hash_is_stable(tmp_path: Path) -> None:
@@ -97,25 +130,60 @@ def test_compute_version_hash_changes_when_declared_package_file_changes(tmp_pat
     package_dir.mkdir(parents=True)
     (form_dir / "config.py").write_text("FORM_ID = 'abc'\n")
     (version_dir / "form_json.py").write_text("SCHEMA = {}\n")
-    (version_dir / "version_dependencies.txt").write_text("resolved_package\n")
+    (version_dir / "version_dependencies.txt").write_text("./resolved_package\n")
     artifact = package_dir / "json-schema.json"
     artifact.write_text("{}\n")
 
     original = compute_version_hash(form_dir, version_dir)
     artifact.write_text('{"changed": true}\n')
 
+
+def test_compute_version_hash_changes_when_declared_dependency_changes(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    src_dir = tmp_path / "src"
+    form_dir = src_dir / "form_schema" / "forms" / "my_form"
+    version_dir = form_dir / "1" / "0"
+    family_path = src_dir / "form_schema" / "families" / "example.py"
+    version_dir.mkdir(parents=True)
+    family_path.parent.mkdir(parents=True)
+    (form_dir / "config.py").write_text("FORM_ID = 'abc'\n")
+    (version_dir / "form_json.py").write_text("SCHEMA = {}\n")
+    (version_dir / "version_dependencies.txt").write_text("form_schema/families/example.py\n")
+    family_path.write_text("SHARED_VALUE = 1\n")
+    monkeypatch.setattr("src.task.forms.lock_form_version_task.SRC_DIR", src_dir)
+
+    original = compute_version_hash(form_dir, version_dir)
+    family_path.write_text("SHARED_VALUE = 2\n")
+
     assert compute_version_hash(form_dir, version_dir) != original
 
 
-def test_compute_version_hash_rejects_dependency_path_escape(tmp_path: Path) -> None:
+def test_compute_version_hash_rejects_dependency_outside_src(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    src_dir = tmp_path / "src"
+    form_dir = src_dir / "form_schema" / "forms" / "my_form"
+    version_dir = form_dir / "1" / "0"
+    version_dir.mkdir(parents=True)
+    (form_dir / "config.py").write_text("FORM_ID = 'abc'\n")
+    (version_dir / "form_json.py").write_text("SCHEMA = {}\n")
+    (version_dir / "version_dependencies.txt").write_text("../outside.py\n")
+    monkeypatch.setattr("src.task.forms.lock_form_version_task.SRC_DIR", src_dir)
+
+    with pytest.raises(ValueError, match="escapes its allowed root"):
+        compute_version_hash(form_dir, version_dir)
+
+
+def test_compute_version_hash_rejects_version_local_path_escape(tmp_path: Path) -> None:
     form_dir = tmp_path / "my_form"
     version_dir = form_dir / "1" / "0"
     version_dir.mkdir(parents=True)
     (form_dir / "config.py").write_text("FORM_ID = 'abc'\n")
     (version_dir / "form_json.py").write_text("SCHEMA = {}\n")
-    (version_dir / "version_dependencies.txt").write_text("../outside.json\n")
+    (version_dir / "version_dependencies.txt").write_text("./../outside.json\n")
 
-    with pytest.raises(ValueError, match="inside the version directory"):
+    with pytest.raises(ValueError, match="escapes its allowed root"):
         compute_version_hash(form_dir, version_dir)
 
 

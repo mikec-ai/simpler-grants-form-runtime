@@ -11,55 +11,74 @@ from src.task.task_blueprint import task_blueprint
 logger = logging.getLogger(__name__)
 
 FORMS_DIR = Path(__file__).parents[2] / "form_schema" / "forms"
+SRC_DIR = Path(__file__).parents[2]
 VERSION_DEPENDENCIES_FILE = "version_dependencies.txt"
 
 
-def _version_dependency_paths(version_dir: Path) -> list[Path]:
-    """Resolve optional version-owned files that participate in the immutable lock."""
+def _get_version_dependencies(version_dir: Path) -> list[tuple[str, Path]]:
+    """Resolve shared source files and version-local package files for a form lock."""
 
     manifest_path = version_dir / VERSION_DEPENDENCIES_FILE
     if not manifest_path.exists():
         return []
 
+    src_dir = SRC_DIR.resolve()
     resolved_version_dir = version_dir.resolve()
-    dependencies: list[Path] = [manifest_path.resolve()]
+    dependencies: list[tuple[str, Path]] = [
+        (f"version:{VERSION_DEPENDENCIES_FILE}", manifest_path.resolve())
+    ]
     seen: set[Path] = set()
+
     for line_number, raw_line in enumerate(
         manifest_path.read_text(encoding="utf-8").splitlines(), start=1
     ):
-        value = raw_line.strip()
-        if not value or value.startswith("#"):
+        dependency_ref = raw_line.strip()
+        if not dependency_ref or dependency_ref.startswith("#"):
             continue
-        relative = Path(value)
+
+        is_version_local = dependency_ref.startswith("./")
+        root = resolved_version_dir if is_version_local else src_dir
+        relative = Path(dependency_ref[2:] if is_version_local else dependency_ref)
         if relative.is_absolute() or ".." in relative.parts:
             raise ValueError(
-                f"{manifest_path}:{line_number} must identify a path inside the version directory"
+                f"version dependency escapes its allowed root at "
+                f"{manifest_path}:{line_number}: {dependency_ref!r}"
             )
-        candidate = (version_dir / relative).resolve()
-        if not candidate.is_relative_to(resolved_version_dir):
-            raise ValueError(f"{manifest_path}:{line_number} escapes the version directory")
+        candidate = (root / relative).resolve()
+        if not candidate.is_relative_to(root):
+            raise ValueError(
+                f"version dependency escapes its allowed root at "
+                f"{manifest_path}:{line_number}: {dependency_ref!r}"
+            )
         if not candidate.exists():
-            raise FileNotFoundError(f"version dependency not found: {candidate}")
-        files = sorted(path.resolve() for path in candidate.rglob("*") if path.is_file())
-        if candidate.is_file():
-            files = [candidate]
+            raise FileNotFoundError(
+                f"version dependency not found at "
+                f"{manifest_path}:{line_number}: {candidate}"
+            )
+
+        files = [candidate] if candidate.is_file() else sorted(
+            path.resolve() for path in candidate.rglob("*") if path.is_file()
+        )
         for path in files:
-            if not path.is_relative_to(resolved_version_dir):
-                raise ValueError(f"version dependency escapes the version directory: {path}")
+            if not path.is_relative_to(root):
+                raise ValueError(f"version dependency escapes its allowed root: {path}")
             if path in seen:
                 raise ValueError(f"duplicate version dependency: {path}")
             seen.add(path)
-            dependencies.append(path)
+            scope = "version" if is_version_local else "src"
+            dependencies.append((f"{scope}:{path.relative_to(root).as_posix()}", path))
+
     return dependencies
 
 
 def compute_version_hash(form_dir: Path, version_dir: Path) -> str:
-    """Return the SHA-256 digest of a form version and its declared dependencies.
+    """Return the SHA-256 digest of a version and its declared dependencies.
 
-    The legacy form_json.py + config.py order remains unchanged. Versions with a
-    dependency manifest additionally hash that manifest and every declared file
-    in stable repository-relative path order.
+    The legacy form_json.py + config.py order remains unchanged. A dependency
+    manifest may name shared files relative to ``src`` or version-local files and
+    directories with an explicit ``./`` prefix.
     """
+
     form_json_path = version_dir / "form_json.py"
     config_path = form_dir / "config.py"
 
@@ -71,11 +90,10 @@ def compute_version_hash(form_dir: Path, version_dir: Path) -> str:
     h = hashlib.sha256()
     h.update(form_json_path.read_bytes())
     h.update(config_path.read_bytes())
-    for dependency in _version_dependency_paths(version_dir):
-        relative_path = dependency.relative_to(version_dir.resolve()).as_posix()
-        h.update(relative_path.encode("utf-8"))
+    for label, dependency_path in _get_version_dependencies(version_dir):
+        h.update(label.encode("utf-8"))
         h.update(b"\0")
-        h.update(dependency.read_bytes())
+        h.update(dependency_path.read_bytes())
     return h.hexdigest()
 
 
@@ -98,7 +116,7 @@ def get_version_dir(form_name: str, version: str) -> tuple[Path, Path]:
 
 @task_blueprint.cli.command(
     "lock-form-version",
-    help="Hash a form version and its declared dependencies and write a checksum file.",
+    help="Hash a form version and its declared dependencies, then write a checksum file.",
 )
 @click.option("--form", required=True, help="Form directory name, e.g. sf424")
 @click.option("--version", required=True, help="Version in MAJOR.MINOR format, e.g. 1.0")

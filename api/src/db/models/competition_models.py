@@ -197,7 +197,7 @@ class Form:
     form_version: str
     agency_code: str
     form_json_schema: dict
-    form_ui_schema: dict
+    form_ui_schema: list[dict]
     omb_number: str | None = None
     legacy_form_id: int | None = None
     active_at: datetime | None = None

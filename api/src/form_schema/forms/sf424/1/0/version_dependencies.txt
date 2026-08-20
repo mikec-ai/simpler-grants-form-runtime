@@ -1,2 +1,2 @@
 # The resolved package is the active SF-424 runtime definition.
-resolved_package
+./resolved_package
