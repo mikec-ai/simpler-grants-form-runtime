@@ -4,16 +4,16 @@ import uuid
 import pytest
 
 from src.constants.lookup_constants import FormType
-from src.form_schema.families import (
-    NarrativeAttachmentFamilyConfig,
-    build_narrative_attachment_form,
-)
 from src.form_schema.forms.budget_narrative_attachment import BudgetNarrativeAttachment_v1_2
 from src.form_schema.forms.other_narrative_attachment import OtherNarrativeAttachment_v1_2
 from src.form_schema.forms.project_narrative_attachment import ProjectNarrativeAttachment_v1_2
+from src.form_schema.templates import (
+    NarrativeAttachmentTemplateConfig,
+    build_narrative_attachment_form,
+)
 
 
-def _config(**overrides) -> NarrativeAttachmentFamilyConfig:
+def _config(**overrides) -> NarrativeAttachmentTemplateConfig:
     values = {
         "form_id": uuid.UUID("11111111-1111-4111-8111-111111111111"),
         "legacy_form_id": 123,
@@ -31,7 +31,7 @@ def _config(**overrides) -> NarrativeAttachmentFamilyConfig:
         "xsd_url": "https://example.gov/schemas/ExampleNarrativeAttachments_1_2-V1.2.xsd",
     }
     values.update(overrides)
-    return NarrativeAttachmentFamilyConfig(**values)
+    return NarrativeAttachmentTemplateConfig(**values)
 
 
 def test_builds_all_runtime_artifacts_from_explicit_parameters() -> None:

@@ -3,13 +3,13 @@ import uuid
 
 from src.constants.lookup_constants import FormType
 from src.db.models.competition_models import Form
-from src.form_schema.families.form_definition import FormDefinition
 from src.form_schema.shared import COMMON_SHARED_V1
+from src.form_schema.templates.form_definition import FormDefinition
 
 
 @dataclasses.dataclass(frozen=True)
-class NarrativeAttachmentFamilyConfig:
-    """Exact per-form parameters for the narrative attachment family."""
+class NarrativeAttachmentTemplateConfig:
+    """Exact per-form parameters for the shared narrative attachment template."""
 
     form_id: uuid.UUID
     legacy_form_id: int
@@ -29,7 +29,7 @@ class NarrativeAttachmentFamilyConfig:
 
 
 def build_narrative_attachment_form(
-    config: NarrativeAttachmentFamilyConfig,
+    config: NarrativeAttachmentTemplateConfig,
 ) -> FormDefinition:
     """Build one narrative attachment form from shared behavior and explicit deltas."""
 
