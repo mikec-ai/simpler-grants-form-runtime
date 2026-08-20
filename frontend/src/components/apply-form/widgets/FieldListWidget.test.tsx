@@ -140,6 +140,44 @@ const deeplyNestedGroupDefinition = [
 ] satisfies FieldListGroupItem[];
 
 describe("FieldListWidget", () => {
+  it("evaluates child visibility independently for each row", () => {
+    const conditionalGroupDefinition: FieldListGroupItem[] = [
+      {
+        ...baseGroupDefinition[0],
+        conditional: {
+          when: {
+            op: "equals",
+            ref: { scope: "item", pointer: "/show_name" },
+            value: true,
+          },
+          then: { visible: true },
+          otherwise: { visible: false },
+        },
+      },
+    ];
+    render(
+      <FieldListWidget
+        id="contacts"
+        key="contacts"
+        schema={{ type: "array", title: "Contacts" }}
+        label="Contacts"
+        minItems={2}
+        value={[
+          { show_name: true, first_name: "Visible" },
+          { show_name: false, first_name: "Hidden" },
+        ]}
+        groupDefinition={conditionalGroupDefinition}
+        rawErrors={[]}
+        requiredFields={[]}
+        name="contacts"
+        formContext={{ rootFormData: {} }}
+      />,
+    );
+
+    expect(screen.getByLabelText("contacts[0]--first_name")).toBeVisible();
+    expect(screen.getByLabelText("contacts[1]--first_name")).not.toBeVisible();
+  });
+
   it("renders label, description, and minimum entry widgets", () => {
     render(
       <FieldListWidget

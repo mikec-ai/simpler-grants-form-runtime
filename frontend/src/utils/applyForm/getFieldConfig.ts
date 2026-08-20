@@ -639,6 +639,7 @@ const getFieldListConfig = ({
           storagePath,
           definition: childNode.definition,
           fieldListProps,
+          conditional: childNode.conditional,
         };
       }
 
@@ -686,6 +687,7 @@ const getFieldListConfig = ({
         storagePath,
         generalProps: rest,
         definition: childNode.definition,
+        conditional: childNode.conditional,
       };
     },
   );

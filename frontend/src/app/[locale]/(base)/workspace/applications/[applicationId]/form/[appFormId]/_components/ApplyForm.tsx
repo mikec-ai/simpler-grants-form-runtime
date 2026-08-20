@@ -12,6 +12,7 @@ import {
 } from "src/types/applyForm/types";
 import { Attachment } from "src/types/attachmentTypes";
 import {
+  buildWarningTree,
   getFieldsForNav,
   shapeFormData,
 } from "src/utils/applyForm/applyFormUtils";
@@ -20,6 +21,14 @@ import {
   evaluateClientCalculations,
   hasClientCalculationRules,
 } from "src/utils/applyForm/clientCalculationRules";
+import {
+  ConditionalRequiredRule,
+  evaluateConditionalRequiredRules,
+} from "src/utils/applyForm/conditionalRequiredRules";
+import {
+  filterVisibleUiSchema,
+  hasConditionalUi,
+} from "src/utils/applyForm/evaluateConditionalUi";
 import { rebaseFieldListWarningsAfterDelete } from "src/utils/applyForm/rebaseFieldListWarningsAfterDelete";
 import {
   formatTimestamp,
@@ -69,14 +78,54 @@ interface WidgetSupport {
 interface ApplyFormFormContext {
   rootSchema: RJSFSchema;
   rootFormData: unknown;
+  activeConditionalRequiredPaths?: string[];
   widgetSupport: WidgetSupport;
 }
+
+export const prepareServerValidationWarnings = ({
+  validationWarnings,
+  deletedEntryIndexesByFieldListPath,
+  managedConditionalPaths,
+  formChanged,
+}: {
+  validationWarnings:
+    FormattedFormValidationWarning[] | FormValidationWarning[];
+  deletedEntryIndexesByFieldListPath: Record<string, number[]>;
+  managedConditionalPaths: string[];
+  formChanged: boolean;
+}): FormattedFormValidationWarning[] | FormValidationWarning[] | null => {
+  const rebasedWarnings = Object.entries(
+    deletedEntryIndexesByFieldListPath,
+  ).reduce<FormattedFormValidationWarning[] | FormValidationWarning[] | null>(
+    (currentWarnings, [fieldListPath, deletedEntryIndexes]) =>
+      deletedEntryIndexes.reduce<
+        FormattedFormValidationWarning[] | FormValidationWarning[] | null
+      >(
+        (warnings, deletedEntryIndex) =>
+          rebaseFieldListWarningsAfterDelete({
+            rawErrors: warnings,
+            fieldListPath,
+            deletedEntryIndex,
+          }),
+        currentWarnings,
+      ),
+    validationWarnings,
+  );
+  return formChanged
+    ? (rebasedWarnings ?? []).filter(
+        (warning) =>
+          warning.type !== "required" ||
+          !managedConditionalPaths.includes(warning.field),
+      )
+    : rebasedWarnings;
+};
 
 const ApplyForm = ({
   applicationId,
   formId,
   formSchema,
   formRuleSchema = null,
+  conditionalRequiredRules = [],
   savedFormData,
   validationWarnings,
   uiSchema,
@@ -90,6 +139,7 @@ const ApplyForm = ({
   formId: string;
   formSchema: RJSFSchema;
   formRuleSchema?: ClientCalculationRuleSchema | null;
+  conditionalRequiredRules?: ConditionalRequiredRule[];
   savedFormData: object;
   uiSchema: UiSchema;
   validationWarnings:
@@ -145,6 +195,11 @@ const ApplyForm = ({
     () => hasClientCalculationRules(formRuleSchema),
     [formRuleSchema],
   );
+  const hasConditionalBehavior = useMemo(
+    () => hasConditionalUi(uiSchema),
+    [uiSchema],
+  );
+  const hasConditionalRequiredness = conditionalRequiredRules.length > 0;
 
   const calculateFormData = useCallback(
     (formData: object): object => {
@@ -211,14 +266,24 @@ const ApplyForm = ({
   );
 
   const scheduleRecalculation = useCallback((): void => {
-    if (!hasCalculations || recalculationFrameRef.current !== null) {
+    if (
+      (!hasCalculations &&
+        !hasConditionalBehavior &&
+        !hasConditionalRequiredness) ||
+      recalculationFrameRef.current !== null
+    ) {
       return;
     }
     recalculationFrameRef.current = requestAnimationFrame(() => {
       recalculationFrameRef.current = null;
       recalculateFromForm();
     });
-  }, [hasCalculations, recalculateFromForm]);
+  }, [
+    hasCalculations,
+    hasConditionalBehavior,
+    hasConditionalRequiredness,
+    recalculateFromForm,
+  ]);
 
   useEffect(() => {
     return () => {
@@ -260,27 +325,46 @@ const ApplyForm = ({
 
   const formObject = liveFormData;
 
-  const navFields = useMemo(() => getFieldsForNav(uiSchema), [uiSchema]);
+  const conditionalRequiredEvaluation = useMemo(
+    () =>
+      evaluateConditionalRequiredRules(conditionalRequiredRules, liveFormData),
+    [conditionalRequiredRules, liveFormData],
+  );
+
+  const navFields = useMemo(
+    () => getFieldsForNav(filterVisibleUiSchema(uiSchema, liveFormData)),
+    [liveFormData, uiSchema],
+  );
 
   const displayValidationWarnings = useMemo(() => {
-    if (!validationWarnings) {
-      return null;
-    }
+    if (!validationWarnings && !formChanged) return null;
 
-    return Object.entries(deletedEntryIndexesByFieldListPath).reduce<
-      FormattedFormValidationWarning[] | FormValidationWarning[] | null
-    >((currentWarnings, [fieldListPath, deletedEntryIndexes]) => {
-      return deletedEntryIndexes.reduce<
-        FormattedFormValidationWarning[] | FormValidationWarning[] | null
-      >((rebasedWarnings, deletedEntryIndex) => {
-        return rebaseFieldListWarningsAfterDelete({
-          rawErrors: rebasedWarnings,
-          fieldListPath,
-          deletedEntryIndex,
-        });
-      }, currentWarnings);
-    }, validationWarnings);
-  }, [validationWarnings, deletedEntryIndexesByFieldListPath]);
+    const retainedServerWarnings = prepareServerValidationWarnings({
+      validationWarnings: validationWarnings ?? [],
+      deletedEntryIndexesByFieldListPath,
+      managedConditionalPaths: conditionalRequiredEvaluation.managedPaths,
+      formChanged,
+    });
+
+    return formChanged
+      ? [
+          ...(retainedServerWarnings ?? []),
+          ...buildWarningTree(
+            uiSchema,
+            null,
+            conditionalRequiredEvaluation.warnings,
+            formSchema,
+          ),
+        ]
+      : retainedServerWarnings;
+  }, [
+    conditionalRequiredEvaluation,
+    deletedEntryIndexesByFieldListPath,
+    formChanged,
+    formSchema,
+    uiSchema,
+    validationWarnings,
+  ]);
 
   const attachmentsUploadingCounter: AttachmentsUploadingCounter = useMemo(
     () => ({
@@ -298,6 +382,8 @@ const ApplyForm = ({
     () => ({
       rootSchema: formSchema,
       rootFormData: formObject,
+      activeConditionalRequiredPaths:
+        conditionalRequiredEvaluation.activeRequiredPaths,
       widgetSupport: {
         validationWarnings: displayValidationWarnings ?? [],
         deletedEntryIndexesByFieldListPath,
@@ -313,6 +399,7 @@ const ApplyForm = ({
       formObject,
       formSchema,
       attachmentsUploadingCounter,
+      conditionalRequiredEvaluation.activeRequiredPaths,
       handleFieldListEntryDelete,
       handleFormEdited,
       scheduleRecalculation,
@@ -340,9 +427,31 @@ const ApplyForm = ({
       action={formAction}
       onChange={(event) => {
         setFormChanged(true);
-        if (hasCalculations || formState.saved) {
+        if (
+          hasCalculations ||
+          hasConditionalBehavior ||
+          hasConditionalRequiredness ||
+          formState.saved
+        ) {
           recalculateFromForm(event.currentTarget);
         }
+      }}
+      onSubmit={(event) => {
+        const disabledControls = Array.from(
+          event.currentTarget.querySelectorAll<
+            HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+          >(
+            "input:disabled:not([data-disabled-value-mirrored]), select:disabled, textarea:disabled",
+          ),
+        );
+        disabledControls.forEach((control) => {
+          control.disabled = false;
+        });
+        window.setTimeout(() => {
+          disabledControls.forEach((control) => {
+            control.disabled = true;
+          });
+        }, 0);
       }}
       noValidate
     >
@@ -385,7 +494,7 @@ const ApplyForm = ({
           >
             <FormFields
               key={saved ? "after-save" : "before-save"}
-              errors={saved ? displayValidationWarnings : null}
+              errors={saved || formChanged ? displayValidationWarnings : null}
               formData={formObject}
               schema={formSchema}
               uiSchema={uiSchema}

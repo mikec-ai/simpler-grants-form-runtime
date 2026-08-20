@@ -85,6 +85,7 @@ async function FormPage({ params }: formPageProps) {
     formSchema,
     formUiSchema,
     formRuleSchema,
+    conditionalRequiredRules,
     formValidationWarnings,
     createdAt,
     updatedAt,
@@ -132,6 +133,7 @@ async function FormPage({ params }: formPageProps) {
           formSchema={formSchema}
           uiSchema={formUiSchema}
           formRuleSchema={formRuleSchema}
+          conditionalRequiredRules={conditionalRequiredRules}
           formId={formId}
           attachments={applicationAttachments}
           isBudgetForm={isBudgetForm}
