@@ -37,5 +37,11 @@ congressional districts, attachment extensions, requiredness, and section
 placement remain form-owned. The one observed date-help-text whitespace delta
 is explicit configuration so composition preserves exact runtime parity.
 
+The contact-profile component captures the repeated person-name, address, and
+contact-method core used by Key Contacts and EPA Key Contacts. Its two profiles
+are closed, proven native shapes. Role semantics, organizational affiliation,
+repeated versus fixed containers, section placement, and outer XML wrappers
+remain form-owned.
+
 Optional source-question bindings are build provenance only. They do not assert
 semantic equivalence or make a component eligible for published coverage.

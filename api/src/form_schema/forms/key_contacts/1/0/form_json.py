@@ -2,7 +2,12 @@ import uuid
 
 from src.constants.lookup_constants import FormType
 from src.db.models.competition_models import Form
-from src.form_schema.shared import ADDRESS_SHARED_V1, COMMON_SHARED_V1
+from src.form_schema.components.contact_profile import build_contact_profile_component
+from src.form_schema.shared import COMMON_SHARED_V1
+
+_CONTACT_PROFILE = build_contact_profile_component("key_contacts").mount(
+    "/properties/key_contacts/items"
+)
 
 FORM_JSON_SCHEMA = {
     "type": "object",
@@ -28,7 +33,7 @@ FORM_JSON_SCHEMA = {
     "$defs": {
         "key_contact_person": {
             "type": "object",
-            "required": ["project_role", "name", "address", "phone", "email"],
+            "required": ["project_role", *_CONTACT_PROFILE.json_schema_definition["required"]],
             "properties": {
                 "project_role": {
                     "type": "string",
@@ -37,36 +42,18 @@ FORM_JSON_SCHEMA = {
                     "minLength": 1,
                     "maxLength": 45,
                 },
-                "name": {
-                    "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("person_name")}],
-                    "title": "Name",
-                },
-                "title": {
-                    "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("contact_person_title")}],
-                    "title": "Title",
-                },
+                "name": _CONTACT_PROFILE.json_schema_definition["properties"]["name"],
+                "title": _CONTACT_PROFILE.json_schema_definition["properties"]["title"],
                 "organizational_affiliation": {
                     "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("organization_name")}],
                     "title": "Organizational Affiliation",
                     "description": "Enter the contact's organizational affiliation.",
                 },
-                "address": {
-                    # Use the full address (with county/province) per the epic:
-                    # the Province field is shown at all times on this form.
-                    "allOf": [{"$ref": ADDRESS_SHARED_V1.field_ref("address")}],
-                },
-                "phone": {
-                    "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("phone_number")}],
-                    "title": "Telephone Number",
-                },
-                "fax": {
-                    "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("phone_number")}],
-                    "title": "Fax Number",
-                },
-                "email": {
-                    "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("contact_email")}],
-                    "title": "Email",
-                },
+                # Full county/province address is the proven Key Contacts profile.
+                "address": _CONTACT_PROFILE.json_schema_definition["properties"]["address"],
+                "phone": _CONTACT_PROFILE.json_schema_definition["properties"]["phone"],
+                "fax": _CONTACT_PROFILE.json_schema_definition["properties"]["fax"],
+                "email": _CONTACT_PROFILE.json_schema_definition["properties"]["email"],
             },
         }
     },
@@ -94,78 +81,16 @@ FORM_UI_SCHEMA = [
                         "type": "field",
                         "definition": "/properties/key_contacts/items/properties/project_role",
                     },
-                    {
-                        "type": "field",
-                        "definition": "/properties/key_contacts/items/properties/name/properties/prefix",
-                    },
-                    {
-                        "type": "field",
-                        "definition": "/properties/key_contacts/items/properties/name/properties/first_name",
-                    },
-                    {
-                        "type": "field",
-                        "definition": "/properties/key_contacts/items/properties/name/properties/middle_name",
-                    },
-                    {
-                        "type": "field",
-                        "definition": "/properties/key_contacts/items/properties/name/properties/last_name",
-                    },
-                    {
-                        "type": "field",
-                        "definition": "/properties/key_contacts/items/properties/name/properties/suffix",
-                    },
-                    {
-                        "type": "field",
-                        "definition": "/properties/key_contacts/items/properties/title",
-                    },
+                    *_CONTACT_PROFILE.ui_fields["name"],
+                    *_CONTACT_PROFILE.ui_fields["title"],
                     {
                         "type": "field",
                         "definition": "/properties/key_contacts/items/properties/organizational_affiliation",
                     },
-                    {
-                        "type": "field",
-                        "definition": "/properties/key_contacts/items/properties/address/properties/street1",
-                    },
-                    {
-                        "type": "field",
-                        "definition": "/properties/key_contacts/items/properties/address/properties/street2",
-                    },
-                    {
-                        "type": "field",
-                        "definition": "/properties/key_contacts/items/properties/address/properties/city",
-                    },
-                    {
-                        "type": "field",
-                        "definition": "/properties/key_contacts/items/properties/address/properties/county",
-                    },
-                    {
-                        "type": "field",
-                        "definition": "/properties/key_contacts/items/properties/address/properties/state",
-                    },
-                    {
-                        "type": "field",
-                        "definition": "/properties/key_contacts/items/properties/address/properties/province",
-                    },
-                    {
-                        "type": "field",
-                        "definition": "/properties/key_contacts/items/properties/address/properties/country",
-                    },
-                    {
-                        "type": "field",
-                        "definition": "/properties/key_contacts/items/properties/address/properties/zip_code",
-                    },
-                    {
-                        "type": "field",
-                        "definition": "/properties/key_contacts/items/properties/phone",
-                    },
-                    {
-                        "type": "field",
-                        "definition": "/properties/key_contacts/items/properties/fax",
-                    },
-                    {
-                        "type": "field",
-                        "definition": "/properties/key_contacts/items/properties/email",
-                    },
+                    *_CONTACT_PROFILE.ui_fields["address"],
+                    *_CONTACT_PROFILE.ui_fields["phone"],
+                    *_CONTACT_PROFILE.ui_fields["fax"],
+                    *_CONTACT_PROFILE.ui_fields["email"],
                 ],
             },
         ],
@@ -186,123 +111,18 @@ def _key_contact_xml_fields() -> dict:
                 "target": "ContactProjectRole",
             }
         },
-        "name": {
-            "xml_transform": {
-                "target": "ContactName",
-                "type": "nested_object",
-            },
-            "prefix": {
-                "xml_transform": {
-                    "target": "PrefixName",
-                    "namespace": "globLib",
-                }
-            },
-            "first_name": {
-                "xml_transform": {
-                    "target": "FirstName",
-                    "namespace": "globLib",
-                }
-            },
-            "middle_name": {
-                "xml_transform": {
-                    "target": "MiddleName",
-                    "namespace": "globLib",
-                }
-            },
-            "last_name": {
-                "xml_transform": {
-                    "target": "LastName",
-                    "namespace": "globLib",
-                }
-            },
-            "suffix": {
-                "xml_transform": {
-                    "target": "SuffixName",
-                    "namespace": "globLib",
-                }
-            },
-        },
-        "title": {
-            "xml_transform": {
-                "target": "ContactTitle",
-            }
-        },
+        "name": _CONTACT_PROFILE.xml_fields["name"],
+        "title": _CONTACT_PROFILE.xml_fields["title"],
         "organizational_affiliation": {
             "xml_transform": {
                 "target": "ContactOrganizationalAffiliation",
             }
         },
-        "address": {
-            "xml_transform": {
-                "target": "ContactAddress",
-                "type": "nested_object",
-            },
-            # Order matches AddressDataTypeV3 XSD sequence: Street1, Street2, City,
-            # County, State|Province, ZipPostalCode, Country
-            "street1": {
-                "xml_transform": {
-                    "target": "Street1",
-                    "namespace": "globLib",
-                }
-            },
-            "street2": {
-                "xml_transform": {
-                    "target": "Street2",
-                    "namespace": "globLib",
-                }
-            },
-            "city": {
-                "xml_transform": {
-                    "target": "City",
-                    "namespace": "globLib",
-                }
-            },
-            "county": {
-                "xml_transform": {
-                    "target": "County",
-                    "namespace": "globLib",
-                }
-            },
-            "state": {
-                "xml_transform": {
-                    "target": "State",
-                    "namespace": "globLib",
-                }
-            },
-            "province": {
-                "xml_transform": {
-                    "target": "Province",
-                    "namespace": "globLib",
-                }
-            },
-            "zip_code": {
-                "xml_transform": {
-                    "target": "ZipPostalCode",
-                    "namespace": "globLib",
-                }
-            },
-            "country": {
-                "xml_transform": {
-                    "target": "Country",
-                    "namespace": "globLib",
-                }
-            },
-        },
-        "phone": {
-            "xml_transform": {
-                "target": "ContactPhone",
-            }
-        },
-        "fax": {
-            "xml_transform": {
-                "target": "ContactFax",
-            }
-        },
-        "email": {
-            "xml_transform": {
-                "target": "ContactEmail",
-            }
-        },
+        # Order matches AddressDataTypeV3 XSD sequence.
+        "address": _CONTACT_PROFILE.xml_fields["address"],
+        "phone": _CONTACT_PROFILE.xml_fields["phone"],
+        "fax": _CONTACT_PROFILE.xml_fields["fax"],
+        "email": _CONTACT_PROFILE.xml_fields["email"],
     }
 
 

@@ -2,7 +2,11 @@ import uuid
 
 from src.constants.lookup_constants import FormType
 from src.db.models.competition_models import Form
-from src.form_schema.shared import ADDRESS_SHARED_V1, COMMON_SHARED_V1
+from src.form_schema.components.contact_profile import build_contact_profile_component
+
+_CONTACT_PROFILE = build_contact_profile_component("global_contact_person_v3").mount(
+    "/properties/authorized_representative"
+)
 
 FORM_JSON_SCHEMA = {
     "type": "object",
@@ -16,37 +20,7 @@ FORM_JSON_SCHEMA = {
         "administrative_contact": {"$ref": "#/$defs/key_contact_person"},
         "project_manager": {"$ref": "#/$defs/key_contact_person"},
     },
-    "$defs": {
-        "key_contact_person": {
-            "type": "object",
-            "required": ["name", "address", "phone"],
-            "properties": {
-                "name": {
-                    "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("person_name")}],
-                    "title": "Name",
-                },
-                "title": {
-                    "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("contact_person_title")}],
-                    "title": "Title",
-                },
-                "address": {
-                    "allOf": [{"$ref": ADDRESS_SHARED_V1.field_ref("simple_address_with_country")}],
-                },
-                "phone": {
-                    "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("phone_number")}],
-                    "title": "Phone Number",
-                },
-                "fax": {
-                    "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("phone_number")}],
-                    "title": "Fax Number",
-                },
-                "email": {
-                    "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("contact_email")}],
-                    "title": "E-mail Address",
-                },
-            },
-        }
-    },
+    "$defs": {"key_contact_person": _CONTACT_PROFILE.json_schema_definition},
 }
 
 FORM_UI_SCHEMA = [
@@ -284,110 +258,7 @@ def _create_contact_person_transform(target_element: str) -> dict:
             "target": target_element,
             "type": "nested_object",
         },
-        "name": {
-            "xml_transform": {
-                "target": "Name",
-                "type": "nested_object",
-                "namespace": "globLib",
-            },
-            "prefix": {
-                "xml_transform": {
-                    "target": "PrefixName",
-                    "namespace": "globLib",
-                }
-            },
-            "first_name": {
-                "xml_transform": {
-                    "target": "FirstName",
-                    "namespace": "globLib",
-                }
-            },
-            "middle_name": {
-                "xml_transform": {
-                    "target": "MiddleName",
-                    "namespace": "globLib",
-                }
-            },
-            "last_name": {
-                "xml_transform": {
-                    "target": "LastName",
-                    "namespace": "globLib",
-                }
-            },
-            "suffix": {
-                "xml_transform": {
-                    "target": "SuffixName",
-                    "namespace": "globLib",
-                }
-            },
-        },
-        "title": {
-            "xml_transform": {
-                "target": "Title",
-                "namespace": "globLib",
-            }
-        },
-        "address": {
-            "xml_transform": {
-                "target": "Address",
-                "type": "nested_object",
-                "namespace": "globLib",
-            },
-            "street1": {
-                "xml_transform": {
-                    "target": "Street1",
-                    "namespace": "globLib",
-                }
-            },
-            "street2": {
-                "xml_transform": {
-                    "target": "Street2",
-                    "namespace": "globLib",
-                }
-            },
-            "city": {
-                "xml_transform": {
-                    "target": "City",
-                    "namespace": "globLib",
-                }
-            },
-            "state": {
-                "xml_transform": {
-                    "target": "State",
-                    "namespace": "globLib",
-                }
-            },
-            "zip_code": {
-                "xml_transform": {
-                    "target": "ZipPostalCode",
-                    "namespace": "globLib",
-                }
-            },
-            "country": {
-                "xml_transform": {
-                    "target": "Country",
-                    "namespace": "globLib",
-                }
-            },
-        },
-        "phone": {
-            "xml_transform": {
-                "target": "Phone",
-                "namespace": "globLib",
-            }
-        },
-        "fax": {
-            "xml_transform": {
-                "target": "Fax",
-                "namespace": "globLib",
-            }
-        },
-        "email": {
-            "xml_transform": {
-                "target": "Email",
-                "namespace": "globLib",
-            }
-        },
+        **_CONTACT_PROFILE.xml_fields,
     }
 
 
