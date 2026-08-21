@@ -7,6 +7,9 @@ cd api
 uv run form-analysis-export export --out ../documentation/form-analysis
 ```
 
+`form-analysis.xlsx` combines the generated tables into one filterable workbook. Its `Start Here`
+sheet summarizes the current scope and explains where to answer each analytical question.
+
 The primary analysis tables are:
 
 - `form_pairs.csv`: every implemented form pair, with Jaccard similarity, shared-question count,
