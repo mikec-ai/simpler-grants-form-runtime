@@ -7,6 +7,7 @@ from src.form_schema.rule_processing.json_rule_context import JsonRule
 from src.form_schema.rule_processing.json_rule_field_population import (
     POST_POPULATION_MAPPER,
     PRE_POPULATION_MAPPER,
+    clear_unless_all_equal,
     get_default_value,
     handle_field_population,
 )
@@ -129,6 +130,94 @@ def test_default_value_only_fills_a_missing_target() -> None:
                 path=["address", "country"],
             ),
         )
+    with pytest.raises(ValueError, match="JSON scalar"):
+        get_default_value(
+            missing_context,
+            JsonRule(
+                handler="gg_pre_population",
+                rule={"rule": "default_value", "value": ("not", "json")},
+                path=["address", "country"],
+            ),
+        )
+
+
+@pytest.mark.parametrize(
+    "application_type,revision_code,expected_application_type",
+    [
+        (
+            "Revision",
+            "E",
+            {
+                "ApplicationTypeCode": "Revision",
+                "RevisionCode": "E",
+                "RevisionCodeOtherExplanation": "Equipment rebudgeting",
+            },
+        ),
+        (
+            "New",
+            "E",
+            {"ApplicationTypeCode": "New", "RevisionCode": "E"},
+        ),
+        (
+            "Revision",
+            "AC",
+            {"ApplicationTypeCode": "Revision", "RevisionCode": "AC"},
+        ),
+    ],
+)
+def test_clear_unless_all_equal_removes_only_stale_dependent_values(
+    application_type: str,
+    revision_code: str,
+    expected_application_type: dict,
+) -> None:
+    json_data = {
+        "ApplicationType": {
+            "ApplicationTypeCode": application_type,
+            "RevisionCode": revision_code,
+            "RevisionCodeOtherExplanation": "Equipment rebudgeting",
+        }
+    }
+    context = SimpleNamespace(json_data=json_data, get_log_context=lambda: {})
+    rule = {
+        "rule": "clear_unless_all_equal",
+        "conditions": [
+            {"field": "ApplicationType.ApplicationTypeCode", "value": "Revision"},
+            {"field": "ApplicationType.RevisionCode", "value": "E"},
+        ],
+    }
+    json_rule = JsonRule(
+        handler="gg_pre_population",
+        rule=rule,
+        path=["ApplicationType", "RevisionCodeOtherExplanation"],
+    )
+
+    assert PRE_POPULATION_MAPPER["clear_unless_all_equal"] is clear_unless_all_equal
+    handle_field_population(context, json_rule, PRE_POPULATION_MAPPER)
+
+    assert context.json_data == {"ApplicationType": expected_application_type}
+
+
+@pytest.mark.parametrize(
+    "conditions",
+    [
+        [],
+        [{"field": "@THIS.relative", "value": "Revision"}],
+        [{"field": "ApplicationType..ApplicationTypeCode", "value": "Revision"}],
+        [{"field": "ApplicationType.ApplicationTypeCode"}],
+        [{"field": "ApplicationType.ApplicationTypeCode", "value": {}}],
+        [{"field": "ApplicationType.ApplicationTypeCode", "value": ("not", "json")}],
+    ],
+)
+def test_clear_unless_all_equal_rejects_invalid_contracts(conditions: list[dict]) -> None:
+    context = SimpleNamespace(json_data={}, get_log_context=lambda: {})
+    json_rule = JsonRule(
+        handler="gg_pre_population",
+        rule={"rule": "clear_unless_all_equal", "conditions": conditions},
+        path=["target"],
+    )
+
+    with pytest.raises(ValueError):
+        clear_unless_all_equal(context, json_rule)
 
 
 @pytest.mark.parametrize(

@@ -91,7 +91,7 @@
   },
   "executed_behavior_slice": {
     "evidence_file": "behavior-evidence.json",
-    "evidence_sha256": "1927d28a9b7568fc863eb4079abfb7a12a99827b746b34cb2ddc3b473bb3a025",
+    "evidence_sha256": "03c60d0a0de81dec237ce7341101c5cb30001a01a84fe574df7f433265000cb1",
     "review_status": "agent_full_source_review",
     "published_coverage_eligible": false,
     "conditional_required_paths": [
@@ -107,7 +107,9 @@
       "RR_SF424_5_0.PDPIContactInfo.Address.State",
       "RR_SF424_5_0.PDPIContactInfo.Address.ZipPostalCode",
       "RR_SF424_5_0.AORInfo.Address.State",
-      "RR_SF424_5_0.AORInfo.Address.ZipPostalCode"
+      "RR_SF424_5_0.AORInfo.Address.ZipPostalCode",
+      "RR_SF424_5_0.ApplicationType.RevisionCode",
+      "RR_SF424_5_0.ApplicationType.RevisionCodeOtherExplanation"
     ],
     "conditional_presentation_paths": [
       "RR_SF424_5_0.GGTrackingID",
@@ -127,7 +129,16 @@
       "RR_SF424_5_0.PDPIContactInfo.Address.ZipPostalCode",
       "RR_SF424_5_0.AORInfo.Address.State",
       "RR_SF424_5_0.AORInfo.Address.Province",
-      "RR_SF424_5_0.AORInfo.Address.ZipPostalCode"
+      "RR_SF424_5_0.AORInfo.Address.ZipPostalCode",
+      "RR_SF424_5_0.ApplicationType.RevisionCode",
+      "RR_SF424_5_0.ApplicationType.RevisionCodeOtherExplanation"
+    ],
+    "encoded_checkbox_paths": [
+      "RR_SF424_5_0.ApplicationType.RevisionCode"
+    ],
+    "stale_clear_paths": [
+      "RR_SF424_5_0.ApplicationType.RevisionCode",
+      "RR_SF424_5_0.ApplicationType.RevisionCodeOtherExplanation"
     ],
     "population_paths": [
       "RR_SF424_5_0.FederalAgencyName",

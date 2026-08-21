@@ -81,15 +81,13 @@ def test_shared_person_name_composition_preserves_resolved_artifacts() -> None:
         for section in RRSF424_v5_0.form_ui_schema
         for child in section["children"]
         if (definition := child.get("definition", ""))
-        and definition.endswith(
-            (
-                "/PrefixName",
-                "/FirstName",
-                "/MiddleName",
-                "/LastName",
-                "/SuffixName",
-            )
-        )
+        and definition.endswith((
+            "/PrefixName",
+            "/FirstName",
+            "/MiddleName",
+            "/LastName",
+            "/SuffixName",
+        ))
     }
     assert resolved_name_paths == expected_name_paths
 
@@ -151,25 +149,21 @@ def test_all_four_addresses_execute_us_and_non_us_rules() -> None:
         address_schema = _resolve_schema_pointer(RRSF424_v5_0.form_json_schema, address_path)
         validator = Draft202012Validator(address_schema)
         us_errors = list(
-            validator.iter_errors(
-                {
-                    "Country": "USA: UNITED STATES",
-                    "City": "Washington",
-                    "Street1": "1 Main St",
-                    "ZipPostalCode": "12345",
-                }
-            )
+            validator.iter_errors({
+                "Country": "USA: UNITED STATES",
+                "City": "Washington",
+                "Street1": "1 Main St",
+                "ZipPostalCode": "12345",
+            })
         )
         assert any("State" in error.message for error in us_errors)
         assert any(error.validator == "minLength" for error in us_errors)
         assert not list(
-            validator.iter_errors(
-                {
-                    "Country": "CAN: CANADA",
-                    "City": "Ottawa",
-                    "Street1": "1 Main St",
-                }
-            )
+            validator.iter_errors({
+                "Country": "CAN: CANADA",
+                "City": "Ottawa",
+                "Street1": "1 Main St",
+            })
         )
 
 
@@ -218,6 +212,19 @@ def test_rr_sf424_source_conditions_are_live_validation_rules() -> None:
             {"StateReview": {"StateReviewCodeType": "Y: Yes"}},
             "StateReviewDate",
         ),
+        (
+            {"ApplicationType": {"ApplicationTypeCode": "Revision"}},
+            "RevisionCode",
+        ),
+        (
+            {
+                "ApplicationType": {
+                    "ApplicationTypeCode": "Revision",
+                    "RevisionCode": "E",
+                }
+            },
+            "RevisionCodeOtherExplanation",
+        ),
     ]
     for instance, expected_missing_field in cases:
         messages = [error.message for error in validator.iter_errors(instance)]
@@ -238,6 +245,45 @@ def test_rr_sf424_source_conditions_control_ui_and_lifecycle_fields() -> None:
         "op": "equals",
         "ref": {"scope": "root", "pointer": "/SubmissionTypeCode"},
         "value": "Change/Corrected Application",
+    }
+    revision_definition = "/properties/ApplicationType/properties/RevisionCode"
+    revision_other_definition = (
+        "/properties/ApplicationType/properties/RevisionCodeOtherExplanation"
+    )
+    assert ui_by_definition[revision_definition] == {
+        "type": "field",
+        "definition": revision_definition,
+        "widget": "EncodedCheckboxGroup",
+        "conditional": {
+            "when": {
+                "op": "equals",
+                "ref": {
+                    "scope": "root",
+                    "pointer": "/ApplicationType/ApplicationTypeCode",
+                },
+                "value": "Revision",
+            },
+            "then": {"visible": True},
+            "otherwise": {"visible": False},
+        },
+    }
+    assert ui_by_definition[revision_other_definition]["conditional"]["when"] == {
+        "op": "all",
+        "predicates": [
+            {
+                "op": "equals",
+                "ref": {
+                    "scope": "root",
+                    "pointer": "/ApplicationType/ApplicationTypeCode",
+                },
+                "value": "Revision",
+            },
+            {
+                "op": "equals",
+                "ref": {"scope": "root", "pointer": "/ApplicationType/RevisionCode"},
+                "value": "E",
+            },
+        ],
     }
     for definition in (
         "/properties/FederalAgencyName",
@@ -264,6 +310,31 @@ def test_rr_sf424_source_conditions_control_ui_and_lifecycle_fields() -> None:
     }
     assert rules["ApplicantInfo"]["OrganizationInfo"]["Address"]["Country"] == country_default
     assert rules["ApplicantInfo"]["ContactPersonInfo"]["Address"]["Country"] == country_default
+    assert rules["ApplicationType"]["RevisionCode"] == {
+        "gg_pre_population": {
+            "rule": "clear_unless_all_equal",
+            "conditions": [{"field": "ApplicationType.ApplicationTypeCode", "value": "Revision"}],
+            "order": 1,
+        }
+    }
+    assert rules["ApplicationType"]["RevisionCodeOtherExplanation"] == {
+        "gg_pre_population": {
+            "rule": "clear_unless_all_equal",
+            "conditions": [
+                {"field": "ApplicationType.ApplicationTypeCode", "value": "Revision"},
+                {"field": "ApplicationType.RevisionCode", "value": "E"},
+            ],
+            "order": 2,
+        }
+    }
+
+    revision_schema = RRSF424_v5_0.form_json_schema["properties"]["ApplicationType"]["properties"][
+        "RevisionCode"
+    ]
+    assert revision_schema["enum"] == ["A", "B", "C", "D", "E", "AC", "AD", "BC", "BD"]
+    assert revision_schema["x-encoded-checkbox-group"]["combinations"] == [
+        {"value": value, "members": list(value)} for value in revision_schema["enum"]
+    ]
 
     sam_uei = RRSF424_v5_0.form_json_schema["properties"]["ApplicantInfo"]["properties"][
         "OrganizationInfo"
@@ -342,6 +413,8 @@ def test_rr_sf424_draft_review_boundary_fails_closed() -> None:
         "RR_SF424_5_0.PDPIContactInfo.Address.ZipPostalCode",
         "RR_SF424_5_0.AORInfo.Address.State",
         "RR_SF424_5_0.AORInfo.Address.ZipPostalCode",
+        "RR_SF424_5_0.ApplicationType.RevisionCode",
+        "RR_SF424_5_0.ApplicationType.RevisionCodeOtherExplanation",
     }
     assert set(behavior_slice["population_paths"]) == {
         "RR_SF424_5_0.FederalAgencyName",
@@ -352,6 +425,11 @@ def test_rr_sf424_draft_review_boundary_fails_closed() -> None:
         "RR_SF424_5_0.AOR_SignedDate",
         "RR_SF424_5_0.ApplicantInfo.OrganizationInfo.Address.Country",
         "RR_SF424_5_0.ApplicantInfo.ContactPersonInfo.Address.Country",
+    }
+    assert behavior_slice["encoded_checkbox_paths"] == ["RR_SF424_5_0.ApplicationType.RevisionCode"]
+    assert set(behavior_slice["stale_clear_paths"]) == {
+        "RR_SF424_5_0.ApplicationType.RevisionCode",
+        "RR_SF424_5_0.ApplicationType.RevisionCodeOtherExplanation",
     }
     assert set(behavior_slice["validation_paths"]) == {
         "RR_SF424_5_0.TrustAgree",
@@ -366,8 +444,8 @@ def test_rr_sf424_draft_review_boundary_fails_closed() -> None:
     )
     evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
     assert evidence["published_coverage_eligible"] is False
-    assert len(evidence["records"]) == 33
-    assert len({record["evidence_id"] for record in evidence["records"]}) == 33
+    assert len(evidence["records"]) == 39
+    assert len({record["evidence_id"] for record in evidence["records"]}) == 39
     assert all(
         record["source_artifact"] in evidence["source_artifacts"] for record in evidence["records"]
     )

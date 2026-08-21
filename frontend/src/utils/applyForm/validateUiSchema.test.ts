@@ -661,6 +661,18 @@ describe("conditional UI schema validation", () => {
     expect(validateUiSchema(schema)).toBeFalsy();
   });
 
+  it("accepts the source-backed encoded checkbox group widget", () => {
+    expect(
+      validateUiSchema([
+        {
+          type: "field",
+          definition: "/properties/revision_code",
+          widget: "EncodedCheckboxGroup",
+        },
+      ]),
+    ).toBeFalsy();
+  });
+
   it.each([
     {
       when: {

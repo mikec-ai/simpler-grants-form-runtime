@@ -37,6 +37,10 @@ def _show_when(predicate: dict) -> dict:
     }
 
 
+def _all(*predicates: dict) -> dict:
+    return {"op": "all", "predicates": list(predicates)}
+
+
 def apply_source_reviewed_behaviors(artifacts: dict[str, Any]) -> None:
     """Apply the exact behavior subset supported by the current Simpler runtime.
 
@@ -49,64 +53,86 @@ def apply_source_reviewed_behaviors(artifacts: dict[str, Any]) -> None:
     rules = artifacts["rule-schema.json"]
 
     application_type = schema["properties"]["ApplicationType"]
-    application_type.setdefault("allOf", []).append(
+    application_type.setdefault("allOf", []).append({
+        "if": {
+            "properties": {
+                "isOtherAgencySubmission": {"const": "Y: Yes"},
+            },
+            "required": ["isOtherAgencySubmission"],
+        },
+        "then": {"required": ["OtherAgencySubmissionExplanation"]},
+    })
+    application_type["allOf"].extend([
+        {
+            "if": {
+                "properties": {"ApplicationTypeCode": {"const": "Revision"}},
+                "required": ["ApplicationTypeCode"],
+            },
+            "then": {"required": ["RevisionCode"]},
+        },
         {
             "if": {
                 "properties": {
-                    "isOtherAgencySubmission": {"const": "Y: Yes"},
+                    "ApplicationTypeCode": {"const": "Revision"},
+                    "RevisionCode": {"const": "E"},
                 },
-                "required": ["isOtherAgencySubmission"],
+                "required": ["ApplicationTypeCode", "RevisionCode"],
             },
-            "then": {"required": ["OtherAgencySubmissionExplanation"]},
-        }
-    )
+            "then": {"required": ["RevisionCodeOtherExplanation"]},
+        },
+    ])
+    revision_code = application_type["properties"]["RevisionCode"]
+    revision_code["x-encoded-checkbox-group"] = {
+        "choices": [
+            {"code": "A", "label": "A. Increase Award"},
+            {"code": "B", "label": "B. Decrease Award"},
+            {"code": "C", "label": "C. Increase Duration"},
+            {"code": "D", "label": "D. Decrease Duration"},
+            {"code": "E", "label": "E. Other"},
+        ],
+        "combinations": [
+            {"value": value, "members": list(value)} for value in revision_code["enum"]
+        ],
+    }
     applicant_type = schema["properties"]["ApplicantType"]
-    applicant_type.setdefault("allOf", []).append(
-        {
-            "if": {
-                "properties": {"ApplicantTypeCode": {"const": "X: Other (specify)"}},
-                "required": ["ApplicantTypeCode"],
-            },
-            "then": {"required": ["ApplicantTypeCodeOtherExplanation"]},
-        }
-    )
+    applicant_type.setdefault("allOf", []).append({
+        "if": {
+            "properties": {"ApplicantTypeCode": {"const": "X: Other (specify)"}},
+            "required": ["ApplicantTypeCode"],
+        },
+        "then": {"required": ["ApplicantTypeCodeOtherExplanation"]},
+    })
     state_review = schema["properties"]["StateReview"]
-    state_review.setdefault("allOf", []).append(
+    state_review.setdefault("allOf", []).append({
+        "if": {
+            "properties": {"StateReviewCodeType": {"const": "Y: Yes"}},
+            "required": ["StateReviewCodeType"],
+        },
+        "then": {"required": ["StateReviewDate"]},
+    })
+    schema.setdefault("allOf", []).extend([
         {
             "if": {
-                "properties": {"StateReviewCodeType": {"const": "Y: Yes"}},
-                "required": ["StateReviewCodeType"],
-            },
-            "then": {"required": ["StateReviewDate"]},
-        }
-    )
-    schema.setdefault("allOf", []).extend(
-        [
-            {
-                "if": {
-                    "properties": {
-                        "ApplicationType": {
-                            "properties": {
-                                "ApplicationTypeCode": {
-                                    "enum": ["Renewal", "Continuation", "Revision"]
-                                }
-                            },
-                            "required": ["ApplicationTypeCode"],
-                        }
-                    },
-                    "required": ["ApplicationType"],
+                "properties": {
+                    "ApplicationType": {
+                        "properties": {
+                            "ApplicationTypeCode": {"enum": ["Renewal", "Continuation", "Revision"]}
+                        },
+                        "required": ["ApplicationTypeCode"],
+                    }
                 },
-                "then": {"required": ["FederalID"]},
+                "required": ["ApplicationType"],
             },
-            {
-                "if": {
-                    "properties": {"SubmissionTypeCode": {"const": "Change/Corrected Application"}},
-                    "required": ["SubmissionTypeCode"],
-                },
-                "then": {"required": ["GGTrackingID"]},
+            "then": {"required": ["FederalID"]},
+        },
+        {
+            "if": {
+                "properties": {"SubmissionTypeCode": {"const": "Change/Corrected Application"}},
+                "required": ["SubmissionTypeCode"],
             },
-        ]
-    )
+            "then": {"required": ["GGTrackingID"]},
+        },
+    ])
 
     schema["properties"]["TrustAgree"]["enum"] = ["Y: Yes"]
     schema["properties"]["TrustAgree"]["const"] = "Y: Yes"
@@ -149,9 +175,20 @@ def apply_source_reviewed_behaviors(artifacts: dict[str, Any]) -> None:
         "/properties/ApplicantType/properties/SmallBusinessOrganizationType/properties/isWomenOwned": _root_equals(
             "/ApplicantType/ApplicantTypeCode", "R: Small Business"
         ),
+        "/properties/ApplicationType/properties/RevisionCode": _root_equals(
+            "/ApplicationType/ApplicationTypeCode", "Revision"
+        ),
+        "/properties/ApplicationType/properties/RevisionCodeOtherExplanation": _all(
+            _root_equals("/ApplicationType/ApplicationTypeCode", "Revision"),
+            _root_equals("/ApplicationType/RevisionCode", "E"),
+        ),
     }
     for definition, predicate in conditions.items():
         _field(ui_schema, definition)["conditional"] = _show_when(predicate)
+    _field(
+        ui_schema,
+        "/properties/ApplicationType/properties/RevisionCode",
+    )["widget"] = "EncodedCheckboxGroup"
 
     _remove_field(
         ui_schema,
@@ -167,18 +204,14 @@ def apply_source_reviewed_behaviors(artifacts: dict[str, Any]) -> None:
     ):
         _field(ui_schema, definition)["type"] = "null"
 
-    rules.update(
-        {
-            "FederalAgencyName": {"gg_pre_population": {"rule": "agency_name"}},
-            "CFDANumber": {"gg_pre_population": {"rule": "assistance_listing_number"}},
-            "ActivityTitle": {"gg_pre_population": {"rule": "assistance_listing_program_title"}},
-            "ApplicantInfo": {
-                "OrganizationInfo": {"SAMUEI": {"gg_pre_population": {"rule": "uei"}}}
-            },
-            "AOR_Signature": {"gg_post_population": {"rule": "signature"}},
-            "AOR_SignedDate": {"gg_post_population": {"rule": "current_date"}},
-        }
-    )
+    rules.update({
+        "FederalAgencyName": {"gg_pre_population": {"rule": "agency_name"}},
+        "CFDANumber": {"gg_pre_population": {"rule": "assistance_listing_number"}},
+        "ActivityTitle": {"gg_pre_population": {"rule": "assistance_listing_program_title"}},
+        "ApplicantInfo": {"OrganizationInfo": {"SAMUEI": {"gg_pre_population": {"rule": "uei"}}}},
+        "AOR_Signature": {"gg_post_population": {"rule": "signature"}},
+        "AOR_SignedDate": {"gg_post_population": {"rule": "current_date"}},
+    })
     applicant_rules = rules.setdefault("ApplicantInfo", {})
     applicant_rules.setdefault("OrganizationInfo", {}).setdefault("Address", {})["Country"] = {
         "gg_pre_population": {
@@ -190,5 +223,23 @@ def apply_source_reviewed_behaviors(artifacts: dict[str, Any]) -> None:
         "gg_pre_population": {
             "rule": "default_value",
             "value": "USA: UNITED STATES",
+        }
+    }
+    application_type_rules = rules.setdefault("ApplicationType", {})
+    application_type_rules["RevisionCode"] = {
+        "gg_pre_population": {
+            "rule": "clear_unless_all_equal",
+            "conditions": [{"field": "ApplicationType.ApplicationTypeCode", "value": "Revision"}],
+            "order": 1,
+        }
+    }
+    application_type_rules["RevisionCodeOtherExplanation"] = {
+        "gg_pre_population": {
+            "rule": "clear_unless_all_equal",
+            "conditions": [
+                {"field": "ApplicationType.ApplicationTypeCode", "value": "Revision"},
+                {"field": "ApplicationType.RevisionCode", "value": "E"},
+            ],
+            "order": 2,
         }
     }

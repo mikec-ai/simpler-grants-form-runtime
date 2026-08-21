@@ -130,6 +130,16 @@ describe("determineFieldType", () => {
 
     expect(
       determineFieldType({
+        uiFieldObject: {
+          ...uiFieldObject,
+          widget: "EncodedCheckboxGroup",
+        },
+        fieldSchema: { ...fieldSchema, enum: ["A", "B", "AB"] },
+      }),
+    ).toEqual("EncodedCheckboxGroup");
+
+    expect(
+      determineFieldType({
         uiFieldObject,
         fieldSchema: {
           ...fieldSchema,

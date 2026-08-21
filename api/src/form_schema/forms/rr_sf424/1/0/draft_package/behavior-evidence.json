@@ -215,6 +215,42 @@
       "effects": ["conditional_required", "conditional_presentation", "us_min_length_9"],
       "evidence_id": "behavior:sha256:4cd93b0537ad36cec85690dbdbcae646d25cc572823e94737d68126b3c81df5e",
       "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicationType.RevisionCode",
+      "effects": ["conditional_required", "conditional_presentation", "encoded_checkbox_member_a", "valid_encoded_combination", "stale_value_clearing"],
+      "evidence_id": "behavior:sha256:06ccaeb693cd8d276d03659aa119cdb835bd27feecee1bd6620c615d075d5c28",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicationType.RevisionCode",
+      "effects": ["conditional_required", "conditional_presentation", "encoded_checkbox_member_b", "valid_encoded_combination", "stale_value_clearing"],
+      "evidence_id": "behavior:sha256:4eff117e9a93b44618022c00053a383307d0e1e7621046607906e0b11d5f125e",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicationType.RevisionCode",
+      "effects": ["conditional_required", "conditional_presentation", "encoded_checkbox_member_c", "valid_encoded_combination", "stale_value_clearing"],
+      "evidence_id": "behavior:sha256:943fb4cc51a6b9a9be80aaaae49d3692b71a13382e55b0e3464ff6f5cc064a67",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicationType.RevisionCode",
+      "effects": ["conditional_required", "conditional_presentation", "encoded_checkbox_member_d", "valid_encoded_combination", "stale_value_clearing"],
+      "evidence_id": "behavior:sha256:590e33838b7d6e2cda2809c1b169a379acd59db4911230b9d4f48a34a0e8d48f",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicationType.RevisionCode",
+      "effects": ["conditional_required", "conditional_presentation", "encoded_checkbox_member_e", "valid_encoded_combination", "stale_value_clearing"],
+      "evidence_id": "behavior:sha256:3380fc8d8a0cd1bf4e9a4f00a57d4148d282eea03dd37321c7afef87c1f2d95c",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicationType.RevisionCodeOtherExplanation",
+      "effects": ["conditional_required", "conditional_presentation", "stale_value_clearing"],
+      "evidence_id": "behavior:sha256:9158508f1fbc79dfcd776303f6592a81c2cc5d4dfbde18dafe80531adcb898b6",
+      "source_artifact": "dat"
     }
   ],
   "review_status": "agent_full_source_review"

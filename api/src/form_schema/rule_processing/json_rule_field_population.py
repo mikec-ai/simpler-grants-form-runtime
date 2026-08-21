@@ -17,6 +17,10 @@ EXCLUDE_VALUE = "exclude_value"
 UNKNOWN_VALUE = "unknown"
 
 
+def _is_json_scalar(value: Any) -> bool:
+    return value is None or isinstance(value, (str, int, float, bool))
+
+
 def get_opportunity_number(context: JsonRuleContext, json_rule: JsonRule) -> str:
     """Get the opportunity number"""
     opportunity_number = context.opportunity.opportunity_number
@@ -137,11 +141,49 @@ def get_default_value(context: JsonRuleContext, json_rule: JsonRule) -> Any:
     if "value" not in json_rule.rule:
         raise ValueError("default_value requires a 'value'")
     default = json_rule.rule["value"]
-    if default is None or isinstance(default, (dict, list)):
+    if default is None or not _is_json_scalar(default):
         raise ValueError("default_value only supports JSON scalar values")
 
     current = get_nested_value(context.json_data, json_rule.path)
     return default if current is None else current
+
+
+def clear_unless_all_equal(context: JsonRuleContext, json_rule: JsonRule) -> Any:
+    """Preserve a target only while every reviewed scalar condition matches.
+
+    This intentionally supports a very small declarative contract. It is used for
+    stale dependent values that must disappear when their controlling answers
+    change, without interpreting prose or executing arbitrary expressions.
+    """
+
+    conditions = json_rule.rule.get("conditions")
+    if not isinstance(conditions, list) or not conditions:
+        raise ValueError("clear_unless_all_equal requires a non-empty 'conditions' list")
+
+    for condition in conditions:
+        if not isinstance(condition, dict) or set(condition) != {"field", "value"}:
+            raise ValueError(
+                "clear_unless_all_equal conditions require exactly 'field' and 'value'"
+            )
+        field = condition["field"]
+        expected = condition["value"]
+        if (
+            not isinstance(field, str)
+            or not field
+            or not all(segment.isidentifier() for segment in field.split("."))
+        ):
+            raise ValueError(
+                "clear_unless_all_equal condition field must be an absolute dotted path"
+            )
+        if not _is_json_scalar(expected):
+            raise ValueError("clear_unless_all_equal condition value must be a JSON scalar")
+
+        values = get_field_values(context.json_data, [field], json_rule.path)
+        actual = values[0] if values else None
+        if type(actual) is not type(expected) or actual != expected:
+            return None
+
+    return get_nested_value(context.json_data, json_rule.path)
 
 
 def get_signature(context: JsonRuleContext, json_rule: JsonRule) -> str | None:
@@ -307,6 +349,7 @@ PRE_POPULATION_MAPPER: dict[str, population_func] = {
     "public_competition_id": get_public_competition_id,
     "competition_title": get_competition_title,
     "default_value": get_default_value,
+    "clear_unless_all_equal": clear_unless_all_equal,
     "sum_monetary": sum_monetary_values,
     "multiply_by_percentage": multiply_by_percentage,
     "subtract_monetary": subtract_monetary_values,

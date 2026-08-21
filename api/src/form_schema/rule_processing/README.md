@@ -94,6 +94,8 @@ rules currently implemented:
 * `assistance_listing_program_title` - from the competition
 * `public_competition_id` - from the competition
 * `competition_title` - from the competition
+* `default_value` - a reviewed scalar default used only while the target is missing
+* `clear_unless_all_equal` - removes a stale dependent target unless every configured scalar condition matches
 * `sum_monetary` - calculated based on other fields in the JSON, see Monetary Summation section below for further details
 * `multiply_by_percentage` - a monetary amount multiplied by a whole-number percentage, see Multiply by Percentage section below for further details
 * `subtract_monetary` - calculated based on other fields in the JSON, see Monetary Subtraction section below for further details
@@ -196,6 +198,31 @@ This mirrors `sum_monetary`, but every subsequent field is subtracted from the f
 The example above produces `a - b`, and fields of `["a", "b", "c"]` would produce `a - b - c`.
 
 For details on how the fields parameter works, see the Fields section below.
+
+## Conditional stale-value clearing
+
+`clear_unless_all_equal` preserves the current target while every configured
+absolute field has the exact typed scalar value shown. Otherwise it returns null,
+which removes the target under the default `exclude_value` null behavior. This is
+intended for source-reviewed dependent values, not as a general expression language.
+
+```json
+{
+  "dependent_field": {
+    "gg_pre_population": {
+      "rule": "clear_unless_all_equal",
+      "conditions": [
+        {"field": "application.type", "value": "Revision"},
+        {"field": "application.revision_code", "value": "E"}
+      ]
+    }
+  }
+}
+```
+
+The conditions list must be non-empty. Each item must contain exactly `field`
+and `value`; fields are absolute dotted paths and values are JSON scalars. Equality
+is strict, so boolean `true` does not equal integer `1`.
 
 ## Fields
 Some rules like our `sum_monetary` rule allow you to specify fields that
