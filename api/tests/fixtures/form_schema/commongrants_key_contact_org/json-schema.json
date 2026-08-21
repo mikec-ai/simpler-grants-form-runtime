@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "CommonGrantsKeyContactOrganizationCanary.json",
+  "type": "object",
+  "properties": {
+    "org": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The organization's legal name"
+        }
+      },
+      "required": ["name"],
+      "description": "The legal name of the applicant organization",
+      "x-question-id": "QuestionOrgName",
+      "x-entity": ["primaryOrg"],
+      "x-tags": ["organization", "name"]
+    }
+  },
+  "required": ["org"]
+}
