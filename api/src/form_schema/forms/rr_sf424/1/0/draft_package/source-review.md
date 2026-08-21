@@ -14,10 +14,13 @@ make this draft eligible for published coverage.
 - Canonical XFA sample SHA-256:
   `06dd92da28b4afb8190fd0edaeb7a0dac3ae2d601adcc1ab9a5e0fc93c09f523`
 
-## Verified implementation gap
+## Verified PR14 baseline gap
 
-The draft preserves 107 leaves and 145 DAT behavior records, but executes only the
-three attachment-type checks. The XFA contains 97 validations, 137 tooltips, 186
+The PR14 baseline preserved 107 leaves and 145 DAT behavior records, but executed only
+the three attachment-type checks. Later behavior slices are tracked against this queue.
+The executed slice is reconciled one-to-one to exact DAT behavior keys and pinned
+PDF/XFA findings in `behavior-evidence.json`; every record remains coverage-ineligible.
+The XFA contains 97 validations, 137 tooltips, 186
 events, 196 scripts, and four calculation nodes. Those four cover UEI/population,
 Assistance Listing number/title, and an internal email-match helper. The XFA does not
 calculate the four funding totals.

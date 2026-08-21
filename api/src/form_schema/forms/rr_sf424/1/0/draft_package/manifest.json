@@ -61,6 +61,47 @@
     "open_behavior_queue": true,
     "open_source_conflicts": true
   },
+  "executed_behavior_slice": {
+    "evidence_file": "behavior-evidence.json",
+    "evidence_sha256": "36daea86f901c83a76d74959a09ee955d93404c174ba055fdb8b66f51a4d37b1",
+    "review_status": "agent_full_source_review",
+    "published_coverage_eligible": false,
+    "conditional_required_paths": [
+      "RR_SF424_5_0.FederalID",
+      "RR_SF424_5_0.GGTrackingID",
+      "RR_SF424_5_0.ApplicationType.OtherAgencySubmissionExplanation",
+      "RR_SF424_5_0.ApplicantType.ApplicantTypeCodeOtherExplanation",
+      "RR_SF424_5_0.StateReview.StateReviewDate"
+    ],
+    "conditional_presentation_paths": [
+      "RR_SF424_5_0.GGTrackingID",
+      "RR_SF424_5_0.ApplicationType.OtherAgencySubmissionExplanation",
+      "RR_SF424_5_0.ApplicantType.ApplicantTypeCodeOtherExplanation",
+      "RR_SF424_5_0.StateReview.StateReviewDate",
+      "RR_SF424_5_0.ApplicantType.SmallBusinessOrganizationType.isSociallyEconomicallyDisadvantaged",
+      "RR_SF424_5_0.ApplicantType.SmallBusinessOrganizationType.isWomenOwned"
+    ],
+    "population_paths": [
+      "RR_SF424_5_0.FederalAgencyName",
+      "RR_SF424_5_0.CFDANumber",
+      "RR_SF424_5_0.ActivityTitle",
+      "RR_SF424_5_0.ApplicantInfo.OrganizationInfo.SAMUEI",
+      "RR_SF424_5_0.AOR_Signature",
+      "RR_SF424_5_0.AOR_SignedDate"
+    ],
+    "validation_paths": [
+      "RR_SF424_5_0.TrustAgree",
+      "RR_SF424_5_0.ApplicantInfo.OrganizationInfo.SAMUEI",
+      "RR_SF424_5_0.ApplicantInfo.ContactPersonInfo.Email",
+      "RR_SF424_5_0.PDPIContactInfo.Email",
+      "RR_SF424_5_0.AORInfo.Email"
+    ],
+    "presentation_dispositions": {
+      "RR_SF424_5_0.ApplicantInfo.OrganizationInfo.EIN": "hidden_unbound_xsd_leaf",
+      "RR_SF424_5_0.AOR_Signature": "submission_managed",
+      "RR_SF424_5_0.AOR_SignedDate": "submission_managed"
+    }
+  },
   "artifacts": {
     "json-schema.json": "085c292acf2390c40789a29c5e6f8137a5da0766a82c447abb760371e6a5977a",
     "projection-report.json": "233d7d1f4a4c4acd1ea329502e590b325fc1d308e2e8e44936d43b837df206e8",

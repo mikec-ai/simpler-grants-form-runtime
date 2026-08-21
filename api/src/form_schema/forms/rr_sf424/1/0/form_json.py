@@ -10,6 +10,7 @@ from src.form_schema.components.person_name import (
     PersonNameComponentConfig,
     build_person_name_component,
 )
+from src.form_schema.forms.rr_sf424.behaviors import apply_source_reviewed_behaviors
 
 _PACKAGE_DIR = Path(__file__).with_name("draft_package")
 _MANIFEST_PATH = _PACKAGE_DIR / "manifest.json"
@@ -128,6 +129,7 @@ for _schema_path, _ui_base, _xml_path in (
         ui_base_definition=_ui_base,
         xml_path=_xml_path[1:],
     )
+apply_source_reviewed_behaviors(_ARTIFACTS)
 FORM_JSON_SCHEMA = _ARTIFACTS["json-schema.json"]
 FORM_UI_SCHEMA = _ARTIFACTS["ui-schema.json"]
 FORM_RULE_SCHEMA = _ARTIFACTS["rule-schema.json"]

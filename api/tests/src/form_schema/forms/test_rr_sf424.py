@@ -1,6 +1,8 @@
+import hashlib
 import json
 from pathlib import Path
 
+from jsonschema import Draft202012Validator
 from lxml import etree as lxml_etree
 
 from src.constants.lookup_constants import FormType
@@ -39,19 +41,15 @@ def test_rr_sf424_draft_is_a_complete_renderable_projection() -> None:
     definitions = [child["definition"] for section in ui_schema for child in section["children"]]
 
     assert len(schema["properties"]) == 28
-    assert len(definitions) == 107
-    assert len(set(definitions)) == 107
+    assert len(definitions) == 106
+    assert len(set(definitions)) == 106
     for definition in definitions:
         assert isinstance(_resolve_schema_pointer(schema, definition), dict)
 
 
 def test_shared_person_name_composition_preserves_resolved_artifacts() -> None:
-    assert RRSF424_v5_0.form_json_schema == json.loads(
-        (_PACKAGE_DIR / "json-schema.json").read_text(encoding="utf-8")
-    )
-    assert RRSF424_v5_0.form_ui_schema == json.loads(
-        (_PACKAGE_DIR / "ui-schema.json").read_text(encoding="utf-8")
-    )
+    baseline_schema = json.loads((_PACKAGE_DIR / "json-schema.json").read_text(encoding="utf-8"))
+    baseline_ui = json.loads((_PACKAGE_DIR / "ui-schema.json").read_text(encoding="utf-8"))
     assert RRSF424_v5_0.json_to_xml_schema == json.loads(
         (_PACKAGE_DIR / "xml-transform.json").read_text(encoding="utf-8")
     )
@@ -61,6 +59,23 @@ def test_shared_person_name_composition_preserves_resolved_artifacts() -> None:
         "/properties/PDPIContactInfo/properties/Name",
         "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Name",
     }
+    for name_path in expected_name_paths:
+        assert _resolve_schema_pointer(
+            RRSF424_v5_0.form_json_schema, name_path
+        ) == _resolve_schema_pointer(baseline_schema, name_path)
+        runtime_name_fields = [
+            child
+            for section in RRSF424_v5_0.form_ui_schema
+            for child in section["children"]
+            if child.get("definition", "").startswith(f"{name_path}/properties/")
+        ]
+        baseline_name_fields = [
+            child
+            for section in baseline_ui
+            for child in section["children"]
+            if child.get("definition", "").startswith(f"{name_path}/properties/")
+        ]
+        assert runtime_name_fields == baseline_name_fields
     resolved_name_paths = {
         definition.rsplit("/properties/", 1)[0]
         for section in RRSF424_v5_0.form_ui_schema
@@ -103,11 +118,96 @@ def test_rr_sf424_draft_preserves_wire_identity_and_attachment_rules() -> None:
         "PreApplicationAttachment",
         "SFLLLAttachment",
     }
-    assert set(RRSF424_v5_0.form_rule_schema) == {
+    assert {
         "CoverLetterAttachment",
         "PreApplicationAttachment",
         "SFLLLAttachment",
+    } < set(RRSF424_v5_0.form_rule_schema)
+
+
+def test_rr_sf424_source_conditions_are_live_validation_rules() -> None:
+    validator = Draft202012Validator(RRSF424_v5_0.form_json_schema)
+
+    cases = [
+        (
+            {"ApplicationType": {"ApplicationTypeCode": "Renewal"}},
+            "FederalID",
+        ),
+        (
+            {"SubmissionTypeCode": "Change/Corrected Application"},
+            "GGTrackingID",
+        ),
+        (
+            {"ApplicantType": {"ApplicantTypeCode": "X: Other (specify)"}},
+            "ApplicantTypeCodeOtherExplanation",
+        ),
+        (
+            {"ApplicationType": {"isOtherAgencySubmission": "Y: Yes"}},
+            "OtherAgencySubmissionExplanation",
+        ),
+        (
+            {"StateReview": {"StateReviewCodeType": "Y: Yes"}},
+            "StateReviewDate",
+        ),
+    ]
+    for instance, expected_missing_field in cases:
+        messages = [error.message for error in validator.iter_errors(instance)]
+        assert any(expected_missing_field in message for message in messages)
+
+    trust_errors = [error.message for error in validator.iter_errors({"TrustAgree": "N: No"})]
+    assert any("Y: Yes" in message for message in trust_errors)
+
+
+def test_rr_sf424_source_conditions_control_ui_and_lifecycle_fields() -> None:
+    ui_by_definition = {
+        child["definition"]: child
+        for section in RRSF424_v5_0.form_ui_schema
+        for child in section["children"]
     }
+    assert "conditional" not in ui_by_definition["/properties/FederalID"]
+    assert ui_by_definition["/properties/GGTrackingID"]["conditional"]["when"] == {
+        "op": "equals",
+        "ref": {"scope": "root", "pointer": "/SubmissionTypeCode"},
+        "value": "Change/Corrected Application",
+    }
+    for definition in (
+        "/properties/FederalAgencyName",
+        "/properties/CFDANumber",
+        "/properties/ActivityTitle",
+        "/properties/ApplicantInfo/properties/OrganizationInfo/properties/SAMUEI",
+        "/properties/AOR_Signature",
+        "/properties/AOR_SignedDate",
+    ):
+        assert ui_by_definition[definition]["type"] == "null"
+
+    rules = RRSF424_v5_0.form_rule_schema
+    assert rules["FederalAgencyName"] == {"gg_pre_population": {"rule": "agency_name"}}
+    assert rules["ApplicantInfo"]["OrganizationInfo"]["SAMUEI"] == {
+        "gg_pre_population": {"rule": "uei"}
+    }
+    assert rules["AOR_Signature"] == {"gg_post_population": {"rule": "signature"}}
+    assert rules["AOR_SignedDate"] == {"gg_post_population": {"rule": "current_date"}}
+
+    sam_uei = RRSF424_v5_0.form_json_schema["properties"]["ApplicantInfo"]["properties"][
+        "OrganizationInfo"
+    ]["properties"]["SAMUEI"]
+    assert {key: sam_uei[key] for key in ("minLength", "maxLength")} == {
+        "minLength": 12,
+        "maxLength": 12,
+    }
+    assert "pattern" not in sam_uei
+    assert (
+        "/properties/ApplicantInfo/properties/OrganizationInfo/properties/EIN"
+        not in ui_by_definition
+    )
+    assert "AOR_Signature" not in RRSF424_v5_0.form_json_schema["required"]
+    assert "AOR_SignedDate" not in RRSF424_v5_0.form_json_schema["required"]
+    for pointer in (
+        "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Email",
+        "/properties/PDPIContactInfo/properties/Email",
+        "/properties/AORInfo/properties/Email",
+    ):
+        assert _resolve_schema_pointer(RRSF424_v5_0.form_json_schema, pointer)["format"] == "email"
 
 
 def test_rr_sf424_draft_review_boundary_fails_closed() -> None:
@@ -139,8 +239,49 @@ def test_rr_sf424_draft_review_boundary_fails_closed() -> None:
         "open_behavior_queue": True,
         "open_source_conflicts": True,
     }
+    behavior_slice = manifest["executed_behavior_slice"]
+    assert behavior_slice["review_status"] == "agent_full_source_review"
+    assert behavior_slice["published_coverage_eligible"] is False
+    assert set(behavior_slice["conditional_required_paths"]) == {
+        "RR_SF424_5_0.FederalID",
+        "RR_SF424_5_0.GGTrackingID",
+        "RR_SF424_5_0.ApplicationType.OtherAgencySubmissionExplanation",
+        "RR_SF424_5_0.ApplicantType.ApplicantTypeCodeOtherExplanation",
+        "RR_SF424_5_0.StateReview.StateReviewDate",
+    }
+    assert set(behavior_slice["population_paths"]) == {
+        "RR_SF424_5_0.FederalAgencyName",
+        "RR_SF424_5_0.CFDANumber",
+        "RR_SF424_5_0.ActivityTitle",
+        "RR_SF424_5_0.ApplicantInfo.OrganizationInfo.SAMUEI",
+        "RR_SF424_5_0.AOR_Signature",
+        "RR_SF424_5_0.AOR_SignedDate",
+    }
+    assert set(behavior_slice["validation_paths"]) == {
+        "RR_SF424_5_0.TrustAgree",
+        "RR_SF424_5_0.ApplicantInfo.OrganizationInfo.SAMUEI",
+        "RR_SF424_5_0.ApplicantInfo.ContactPersonInfo.Email",
+        "RR_SF424_5_0.PDPIContactInfo.Email",
+        "RR_SF424_5_0.AORInfo.Email",
+    }
+    evidence_path = _PACKAGE_DIR / behavior_slice["evidence_file"]
+    assert (
+        hashlib.sha256(evidence_path.read_bytes()).hexdigest() == behavior_slice["evidence_sha256"]
+    )
+    evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
+    assert evidence["published_coverage_eligible"] is False
+    assert len(evidence["records"]) == 19
+    assert len({record["evidence_id"] for record in evidence["records"]}) == 19
+    assert all(
+        record["source_artifact"] in evidence["source_artifacts"] for record in evidence["records"]
+    )
+    assert {
+        record["target_path"]
+        for record in evidence["records"]
+        if "conditional_required" in record["effects"]
+    } == set(behavior_slice["conditional_required_paths"])
     review_note = (_PACKAGE_DIR / "source-review.md").read_text(encoding="utf-8")
-    assert "executes only the\nthree attachment-type checks" in review_note
+    assert "executed only\nthe three attachment-type checks" in review_note
     assert "Do not add a 15c funding calculation" in review_note
 
 

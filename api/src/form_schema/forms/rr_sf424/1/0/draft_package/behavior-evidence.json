@@ -1,0 +1,137 @@
+{
+  "contract": "simpler-reviewed-behavior-evidence/v1",
+  "form_id": "RRSF424",
+  "form_version": "5.0",
+  "published_coverage_eligible": false,
+  "source_artifacts": {
+    "dat": {
+      "source_ref": "https://apply07.grants.gov/apply/forms/sample/RR_SF424_5_0-V5.0_F768.xls",
+      "sha256": "532938a75c587bdc8813fd3af625be4338281d0491999fc39aeaaac51b79c9c1"
+    },
+    "instructions_pdf": {
+      "source_ref": "grants.gov:RRSF424:V5.0:instructions",
+      "sha256": "666647fdeb7d9d69f2d36dedc74f09ff6a9540776f87c5a5c5b0593219736bd1"
+    },
+    "xfa_sample": {
+      "source_ref": "grants.gov:RRSF424:V5.0:canonical-xfa-sample",
+      "sha256": "06dd92da28b4afb8190fd0edaeb7a0dac3ae2d601adcc1ab9a5e0fc93c09f523"
+    }
+  },
+  "records": [
+    {
+      "target_path": "RR_SF424_5_0.FederalID",
+      "effects": ["conditional_required"],
+      "evidence_id": "behavior:sha256:eab485a61d5d632b299cff52c1b355498cdc51d3acdba95268026f2265ac046b",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.GGTrackingID",
+      "effects": ["conditional_required", "conditional_presentation"],
+      "evidence_id": "behavior:sha256:03e08a59073625347a064757c479000975ae802ff186e15109f21d790f9db986",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicationType.OtherAgencySubmissionExplanation",
+      "effects": ["conditional_required", "conditional_presentation"],
+      "evidence_id": "behavior:sha256:208acf6f9540aee41c8507bda379dd186b888ad21c4f56fa636bf7d349302a3b",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicantType.ApplicantTypeCodeOtherExplanation",
+      "effects": ["conditional_required", "conditional_presentation"],
+      "evidence_id": "behavior:sha256:a85cf86de5d934b295fffb5d559724f48940af54c4c10104f4c7efc4384eb21b",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.StateReview.StateReviewDate",
+      "effects": ["conditional_required", "conditional_presentation"],
+      "evidence_id": "behavior:sha256:e33fd1a35eaecb4abdc599ad58dbd3c0543aa70c5b6e80696b1054d24e3db611",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicantType.SmallBusinessOrganizationType.isSociallyEconomicallyDisadvantaged",
+      "effects": ["conditional_presentation"],
+      "evidence_id": "behavior:sha256:6228eae0acc3a08752ff1cd6662008b366612c696832fc09908922f81ad18134",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicantType.SmallBusinessOrganizationType.isWomenOwned",
+      "effects": ["conditional_presentation"],
+      "evidence_id": "behavior:sha256:c88711ad91625063833df9480b05b053a1c7634233ca2bc774839cb3fbc334b2",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicantInfo.OrganizationInfo.SAMUEI",
+      "effects": ["exact_length_12"],
+      "evidence_id": "behavior:sha256:5ab1758bd08af29046b75862472a6c36baa1e952cdef871a66da603be56f4b17",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicantInfo.ContactPersonInfo.Email",
+      "effects": ["email_format"],
+      "evidence_id": "behavior:sha256:ae66258a3f195e8e3455a6590463cd49e0bebc471de79ed210d8b8a4f6c12e59",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.PDPIContactInfo.Email",
+      "effects": ["email_format"],
+      "evidence_id": "behavior:sha256:d3254314283bfa26190decc84e610039c7228aa711708f3e4d4af63041a56128",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.AORInfo.Email",
+      "effects": ["email_format"],
+      "evidence_id": "behavior:sha256:b336e1bb354579e56f7c83a65fb968442473003dd864fe4016634779415b27fc",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.TrustAgree",
+      "effects": ["affirmative_required"],
+      "evidence_id": "review-finding:instructions-certification-affirmative",
+      "source_artifact": "instructions_pdf"
+    },
+    {
+      "target_path": "RR_SF424_5_0.FederalAgencyName",
+      "effects": ["opportunity_population", "read_only"],
+      "evidence_id": "review-finding:xfa-opportunity-federal-agency",
+      "source_artifact": "xfa_sample"
+    },
+    {
+      "target_path": "RR_SF424_5_0.CFDANumber",
+      "effects": ["opportunity_population", "read_only"],
+      "evidence_id": "review-finding:xfa-assistance-listing-number",
+      "source_artifact": "xfa_sample"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ActivityTitle",
+      "effects": ["opportunity_population", "read_only"],
+      "evidence_id": "review-finding:xfa-assistance-listing-title",
+      "source_artifact": "xfa_sample"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicantInfo.OrganizationInfo.SAMUEI",
+      "effects": ["organization_population", "read_only"],
+      "evidence_id": "review-finding:xfa-sam-uei-population-protection",
+      "source_artifact": "xfa_sample"
+    },
+    {
+      "target_path": "RR_SF424_5_0.AOR_Signature",
+      "effects": ["submission_population", "submission_managed", "not_authoring_required"],
+      "evidence_id": "review-finding:xfa-submission-signature",
+      "source_artifact": "xfa_sample"
+    },
+    {
+      "target_path": "RR_SF424_5_0.AOR_SignedDate",
+      "effects": ["submission_population", "submission_managed", "not_authoring_required"],
+      "evidence_id": "review-finding:xfa-submission-date",
+      "source_artifact": "xfa_sample"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicantInfo.OrganizationInfo.EIN",
+      "effects": ["remove_unbound_ui_leaf"],
+      "evidence_id": "review-finding:xfa-no-binding-nested-ein",
+      "source_artifact": "xfa_sample"
+    }
+  ],
+  "review_status": "agent_full_source_review"
+}
