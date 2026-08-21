@@ -1,0 +1,2367 @@
+{
+  "accounting": {
+    "base_executable_rules": 45,
+    "blocked_records": 0,
+    "complete_source_container_partition": true,
+    "executable_rules": 45,
+    "mechanism_counts": {
+      "calculation": 2,
+      "condition": 43
+    },
+    "multi_level_coordinate_rules": 0,
+    "normalized_records": 45,
+    "overlay_promoted_rules": 0,
+    "preserved_records": 0,
+    "working_records": 45,
+    "working_rules_needing_path_resolution": 0
+  },
+  "base_runtime_ast": {
+    "path": "artifacts/authoring/runtime-rule-ast-v1/forms/PHSFellowshipSupplemental.json",
+    "sha256": "a2bc2c91a3de230621ce73f7bc64eaecc787580913613059acce8fdde92bb4b0"
+  },
+  "contract": "source-bound-runtime-rule-ast/resolved-v1",
+  "form_id": "PHSFellowshipSupplemental",
+  "hierarchical_coordinates": {
+    "coordinate_model": "ordered_repeat_ancestor_indices",
+    "maximum_repeat_depth": 1,
+    "repeating_source_paths": [
+      "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupport",
+      "PHS_Fellowship_Supplemental_8_0.Appendix.AttachedFile",
+      "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.StemCells.CellLines"
+    ]
+  },
+  "production_ready": false,
+  "published_coverage_eligible": false,
+  "resolution_overlay": {
+    "promoted_rule_ids": [],
+    "published_coverage_eligible": false,
+    "review_status": "agent_proposed"
+  },
+  "review_status": "agent_proposed",
+  "rules": [
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.VertebrateAnimalsUsed",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:7d3b7236fe7af6752d1b7eb91fb9c556a1678c428b21f652669f6542d7c0ec75",
+      "source_collection": "conditions",
+      "source_index": 0,
+      "source_rule": "Enabled and REQUIRED, only if response E-0-04 above (VertebrateAnimalsUsed \"yes\") is checked. Otherwise this question is disabled.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.VertebrateAnimalsUsed"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:a3901b86cce60547d1cbc37e71d048b094ba0fce0756ae82dec62943f8d93ca3"
+        ],
+        "source_rule": "Enabled and REQUIRED, only if response E-0-04 above (VertebrateAnimalsUsed \"yes\") is checked. Otherwise this question is disabled.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.AreAnimalsEuthanized",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.AreAnimalsEuthanized",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.VertebrateAnimalsUsed",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "required",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:999a544958bc19b94c419439f53334723a4c3f6d9e60bed1c8b9879f47019a90",
+      "source_collection": "conditions",
+      "source_index": 1,
+      "source_rule": "Enabled and REQUIRED, only if response E-0-04 above (VertebrateAnimalsUsed \"yes\") is checked. Otherwise this question is disabled.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.VertebrateAnimalsUsed"
+        ],
+        "effect": "required",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:a3901b86cce60547d1cbc37e71d048b094ba0fce0756ae82dec62943f8d93ca3"
+        ],
+        "source_rule": "Enabled and REQUIRED, only if response E-0-04 above (VertebrateAnimalsUsed \"yes\") is checked. Otherwise this question is disabled.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.AreAnimalsEuthanized",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.AreAnimalsEuthanized",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.AreAnimalsEuthanized",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:dc3e0a53db81b1e68ac8fd0cd120597a08068e2e11ad315e0b1b2f1729984069",
+      "source_collection": "conditions",
+      "source_index": 2,
+      "source_rule": "Enabled and REQUIRED, only if response E-0-10 above (AreAnimalsEuthanized \"yes\") is checked. Otherwise this question is disabled.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.AreAnimalsEuthanized"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:a45889b44e8b372d322de1f282ef696d138cf10248d5314858d54be6158c039a"
+        ],
+        "source_rule": "Enabled and REQUIRED, only if response E-0-10 above (AreAnimalsEuthanized \"yes\") is checked. Otherwise this question is disabled.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.AVMAConsistentIndicator",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.AVMAConsistentIndicator",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.AreAnimalsEuthanized",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "required",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:7595bf01123cc1e8b5a7edaa0158bb3c52ea133af675814ddc75a11fdaa97029",
+      "source_collection": "conditions",
+      "source_index": 3,
+      "source_rule": "Enabled and REQUIRED, only if response E-0-10 above (AreAnimalsEuthanized \"yes\") is checked. Otherwise this question is disabled.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.AreAnimalsEuthanized"
+        ],
+        "effect": "required",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:a45889b44e8b372d322de1f282ef696d138cf10248d5314858d54be6158c039a"
+        ],
+        "source_rule": "Enabled and REQUIRED, only if response E-0-10 above (AreAnimalsEuthanized \"yes\") is checked. Otherwise this question is disabled.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.AVMAConsistentIndicator",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.AVMAConsistentIndicator",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.AVMAConsistentIndicator",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:940bf65d3f25dd52646e33b3258c6d42b8091ac284a13b4af2c1a24ae395f190",
+      "source_collection": "conditions",
+      "source_index": 4,
+      "source_rule": "Enabled and REQUIRED, only if response E-0-15 above (AVMAConsistentIndicator \"no\") is checked. Otherwise this question is disabled.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.AVMAConsistentIndicator"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:f2fc3327be332f40f0c334f432f7a001de53c1fb7269741022e31dea0650e314"
+        ],
+        "source_rule": "Enabled and REQUIRED, only if response E-0-15 above (AVMAConsistentIndicator \"no\") is checked. Otherwise this question is disabled.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.EuthanasiaMethodDescription",
+        "value": "No"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.EuthanasiaMethodDescription",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "No"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.AVMAConsistentIndicator",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "required",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:6974ff833dfa47a8f40c8fb8076fad8473b030b86fcb57cc221f4b8856480b09",
+      "source_collection": "conditions",
+      "source_index": 5,
+      "source_rule": "Enabled and REQUIRED, only if response E-0-15 above (AVMAConsistentIndicator \"no\") is checked. Otherwise this question is disabled.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.AVMAConsistentIndicator"
+        ],
+        "effect": "required",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:f2fc3327be332f40f0c334f432f7a001de53c1fb7269741022e31dea0650e314"
+        ],
+        "source_rule": "Enabled and REQUIRED, only if response E-0-15 above (AVMAConsistentIndicator \"no\") is checked. Otherwise this question is disabled.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.EuthanasiaMethodDescription",
+        "value": "No"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.OtherResearchTrainingPlan.EuthanasiaMethodDescription",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "No"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.StemCells.isHumanStemCellsInvolved",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:b1572ee8c8ade8b27097b612189d41c4f827c46bc533e39b0f0c4d5ecb10fb16",
+      "source_collection": "conditions",
+      "source_index": 6,
+      "source_rule": "If answer to G-1-02 is \"yes\" then this field is ENABLED. If answer to G-1-02 is \"no\" then this field is DISABLED and cleared. If this box is checked, then G-1-09 below is DISABLED and cleared. Also automatically un-checked if one or more specific stem cell lines are listed below.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.StemCells.isHumanStemCellsInvolved"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:db4a0e3f3e8ff9fc41761007255e02281daecb084ee625cd3855878e24355a25",
+          "behavior:sha256:1eead00017453733bbfec7f418cf6b7b9838126e553ac118c51a4349c414692f"
+        ],
+        "source_rule": "If answer to G-1-02 is \"yes\" then this field is ENABLED. If answer to G-1-02 is \"no\" then this field is DISABLED and cleared. If this box is checked, then G-1-09 below is DISABLED and cleared. Also automatically un-checked if one or more specific stem cell lines are listed below.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.StemCells.StemCellsIndicator",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.StemCells.StemCellsIndicator",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.StemCells.isHumanStemCellsInvolved",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:494828701324632e3002c939ede9d3e8b5f924a511baf8122d06818bd689ce22",
+      "source_collection": "conditions",
+      "source_index": 7,
+      "source_rule": "If answer to G-1-02 is \"yes\" then this field is ENABLED. If answer to G-1-02 is \"no\" then this field is DISABLED and cleared. If this box is checked, then G-1-09 below is DISABLED and cleared. Also automatically un-checked if one or more specific stem cell lines are listed below.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.StemCells.isHumanStemCellsInvolved"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:db4a0e3f3e8ff9fc41761007255e02281daecb084ee625cd3855878e24355a25",
+          "behavior:sha256:1eead00017453733bbfec7f418cf6b7b9838126e553ac118c51a4349c414692f"
+        ],
+        "source_rule": "If answer to G-1-02 is \"yes\" then this field is ENABLED. If answer to G-1-02 is \"no\" then this field is DISABLED and cleared. If this box is checked, then G-1-09 below is DISABLED and cleared. Also automatically un-checked if one or more specific stem cell lines are listed below.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.StemCells.CellLines",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.StemCells.CellLines",
+        "path_resolved": true,
+        "repeat_ancestors": [
+          {
+            "coordinate_variable": "$index0",
+            "depth": 0,
+            "group_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.StemCells.CellLines"
+          }
+        ],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.GraduateDegreeSought.DegreeType",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "present",
+      "rule_id": "runtime-rule:sha256:fbfdca07800403a2e9866bb867076c9ecd7fcf6bea470e0b7e31cd166a7c72b3",
+      "source_collection": "conditions",
+      "source_index": 8,
+      "source_rule": "If one of the \"other\" degree types is selected under degree sought (G-3-1), then this field (G-3-2) is ENABLED and REQUIRED. If one of the \"other\" degree types is NOT selected in G-3-1, then this field (G-3-2) is DISABLED and CLEARED.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.GraduateDegreeSought.DegreeType"
+        ],
+        "effect": "visible",
+        "operator": "present",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:e03225a24a3b6fedb1103a502afef136f31e7da6c973b287b05b07cdeb104b57"
+        ],
+        "source_rule": "If one of the \"other\" degree types is selected under degree sought (G-3-1), then this field (G-3-2) is ENABLED and REQUIRED. If one of the \"other\" degree types is NOT selected in G-3-1, then this field (G-3-2) is DISABLED and CLEARED.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.GraduateDegreeSought.OtherDegreeTypeText"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.GraduateDegreeSought.OtherDegreeTypeText",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.GraduateDegreeSought.DegreeType",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "present",
+      "rule_id": "runtime-rule:sha256:d297a9672e9f4b4082ec0b8834a551363ad06d7c1ef2a7ba42c6b7db6a611587",
+      "source_collection": "conditions",
+      "source_index": 9,
+      "source_rule": "Date format is MM/YYYY. Do NOT accept or require a specific day of the month. If an option has been selected for degree sought (G-3-1), then this field is both ENABLED and REQUIRED. If no entry is provided for degree-sought, then this field is DISABLED.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.GraduateDegreeSought.DegreeType"
+        ],
+        "effect": "visible",
+        "operator": "present",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:e09783b03ce7cf286587d51a82fe5987dccd16ccbf4a0e1c2fca3f53cd75fbb3"
+        ],
+        "source_rule": "Date format is MM/YYYY. Do NOT accept or require a specific day of the month. If an option has been selected for degree sought (G-3-1), then this field is both ENABLED and REQUIRED. If no entry is provided for degree-sought, then this field is DISABLED.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.GraduateDegreeSought.DegreeDate"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.GraduateDegreeSought.DegreeDate",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.GraduateDegreeSought.DegreeType",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "required",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "present",
+      "rule_id": "runtime-rule:sha256:19e85701f0e26f359ea6a4f41417abdf7e90cea4abc1819c1dbfb93f876db71a",
+      "source_collection": "conditions",
+      "source_index": 10,
+      "source_rule": "Date format is MM/YYYY. Do NOT accept or require a specific day of the month. If an option has been selected for degree sought (G-3-1), then this field is both ENABLED and REQUIRED. If no entry is provided for degree-sought, then this field is DISABLED.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.GraduateDegreeSought.DegreeType"
+        ],
+        "effect": "required",
+        "operator": "present",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:e09783b03ce7cf286587d51a82fe5987dccd16ccbf4a0e1c2fca3f53cd75fbb3"
+        ],
+        "source_rule": "Date format is MM/YYYY. Do NOT accept or require a specific day of the month. If an option has been selected for degree sought (G-3-1), then this field is both ENABLED and REQUIRED. If no entry is provided for degree-sought, then this field is DISABLED.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.GraduateDegreeSought.DegreeDate"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.GraduateDegreeSought.DegreeDate",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupportIndicator",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:6041737b4c18ab3edd1cba3f92a20873704997939fb6855439bd9e3e697c6837",
+      "source_collection": "conditions",
+      "source_index": 11,
+      "source_rule": "If \"yes\" is selected, then the support detail entries (G-5-04 through G-5-08 below) are enabled, and first occurrence of G-5-04 and G-5-05 must be entered.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupportIndicator"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:09f6f14b171de61c6c8f4d3c6c0cafbd384a1a534a2e456389b475b0587a527e"
+        ],
+        "source_rule": "If \"yes\" is selected, then the support detail entries (G-5-04 through G-5-08 below) are enabled, and first occurrence of G-5-04 and G-5-05 must be entered.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupport.Level",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupport.Level",
+        "path_resolved": true,
+        "repeat_ancestors": [
+          {
+            "coordinate_variable": "$index0",
+            "depth": 0,
+            "group_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupport"
+          }
+        ],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupportIndicator",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:cb85b7809475082ff491883d8f86790d365c2bbdcc49937b16e19c0a539944b1",
+      "source_collection": "conditions",
+      "source_index": 12,
+      "source_rule": "If \"yes\" is selected, then the support detail entries (G-5-04 through G-5-08 below) are enabled, and first occurrence of G-5-04 and G-5-05 must be entered.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupportIndicator"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:09f6f14b171de61c6c8f4d3c6c0cafbd384a1a534a2e456389b475b0587a527e"
+        ],
+        "source_rule": "If \"yes\" is selected, then the support detail entries (G-5-04 through G-5-08 below) are enabled, and first occurrence of G-5-04 and G-5-05 must be entered.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupport.Type",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupport.Type",
+        "path_resolved": true,
+        "repeat_ancestors": [
+          {
+            "coordinate_variable": "$index0",
+            "depth": 0,
+            "group_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupport"
+          }
+        ],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupportIndicator",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:95ccb10e7275a0cd568e2abd7aef097d8fc5183b75b4b2131dd89b8fd6113492",
+      "source_collection": "conditions",
+      "source_index": 13,
+      "source_rule": "If \"yes\" is selected, then the support detail entries (G-5-04 through G-5-08 below) are enabled, and first occurrence of G-5-04 and G-5-05 must be entered.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupportIndicator"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:09f6f14b171de61c6c8f4d3c6c0cafbd384a1a534a2e456389b475b0587a527e"
+        ],
+        "source_rule": "If \"yes\" is selected, then the support detail entries (G-5-04 through G-5-08 below) are enabled, and first occurrence of G-5-04 and G-5-05 must be entered.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupport.StartDate",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupport.StartDate",
+        "path_resolved": true,
+        "repeat_ancestors": [
+          {
+            "coordinate_variable": "$index0",
+            "depth": 0,
+            "group_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupport"
+          }
+        ],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupportIndicator",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:b4d90a33e41700751e1665e8325294909e1041324fb6967178a925fdf778ca7a",
+      "source_collection": "conditions",
+      "source_index": 14,
+      "source_rule": "If \"yes\" is selected, then the support detail entries (G-5-04 through G-5-08 below) are enabled, and first occurrence of G-5-04 and G-5-05 must be entered.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupportIndicator"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:09f6f14b171de61c6c8f4d3c6c0cafbd384a1a534a2e456389b475b0587a527e"
+        ],
+        "source_rule": "If \"yes\" is selected, then the support detail entries (G-5-04 through G-5-08 below) are enabled, and first occurrence of G-5-04 and G-5-05 must be entered.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupport.EndDate",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupport.EndDate",
+        "path_resolved": true,
+        "repeat_ancestors": [
+          {
+            "coordinate_variable": "$index0",
+            "depth": 0,
+            "group_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupport"
+          }
+        ],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupportIndicator",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:d9d2d66f0010a873f089f7ccbc9ffc300fd8ce754321996ea44908c473d321b2",
+      "source_collection": "conditions",
+      "source_index": 15,
+      "source_rule": "If \"yes\" is selected, then the support detail entries (G-5-04 through G-5-08 below) are enabled, and first occurrence of G-5-04 and G-5-05 must be entered.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupportIndicator"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:09f6f14b171de61c6c8f4d3c6c0cafbd384a1a534a2e456389b475b0587a527e"
+        ],
+        "source_rule": "If \"yes\" is selected, then the support detail entries (G-5-04 through G-5-08 below) are enabled, and first occurrence of G-5-04 and G-5-05 must be entered.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupport.GrantNumber",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupport.GrantNumber",
+        "path_resolved": true,
+        "repeat_ancestors": [
+          {
+            "coordinate_variable": "$index0",
+            "depth": 0,
+            "group_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.CurrentPriorNRSASupport"
+          }
+        ],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.ConcurrentSupport",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:303ceac5b71cbd044ca82f08c0b974a4c2f9fbfd463d9259e6aa60eadb36abe5",
+      "source_collection": "conditions",
+      "source_index": 16,
+      "source_rule": "If \"Yes\" is checked as the answer to \"Applications for Concurrent Support\" above (G-6-1) then this field is ENABLED and REQUIRED. Otherwise, this field is DISABLED. Provide standard \"Add\", \"Delete\" and \"View\" features",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.ConcurrentSupport"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:c53deeae4a961185684d66bc8eac4650ddee9b5bf1bb15639de697505d135d24"
+        ],
+        "source_rule": "If \"Yes\" is checked as the answer to \"Applications for Concurrent Support\" above (G-6-1) then this field is ENABLED and REQUIRED. Otherwise, this field is DISABLED. Provide standard \"Add\", \"Delete\" and \"View\" features",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.ConcurrentSupportDescription.attFile",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.ConcurrentSupportDescription.attFile",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.ConcurrentSupport",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "required",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:dab764ce32af121030588268db1f7eac2cb8367bd36bfe1619cd97dfe1a62237",
+      "source_collection": "conditions",
+      "source_index": 17,
+      "source_rule": "If \"Yes\" is checked as the answer to \"Applications for Concurrent Support\" above (G-6-1) then this field is ENABLED and REQUIRED. Otherwise, this field is DISABLED. Provide standard \"Add\", \"Delete\" and \"View\" features",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.ConcurrentSupport"
+        ],
+        "effect": "required",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:c53deeae4a961185684d66bc8eac4650ddee9b5bf1bb15639de697505d135d24"
+        ],
+        "source_rule": "If \"Yes\" is checked as the answer to \"Applications for Concurrent Support\" above (G-6-1) then this field is ENABLED and REQUIRED. Otherwise, this field is DISABLED. Provide standard \"Add\", \"Delete\" and \"View\" features",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.ConcurrentSupportDescription.attFile",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.ConcurrentSupportDescription.attFile",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.USCitizen",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:d7753a3d45d689e456e71fee249232bfc3a3146ebf08bd1546197ce6eda68ff8",
+      "source_collection": "conditions",
+      "source_index": 18,
+      "source_rule": "Radio group disabled by default. Enabled and REQUIRED only when answer to USCitizen (G-7-2) is 'No'.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.USCitizen"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:da96bbe2eb335909980ad6822d83e7ad2677267bf567320bffd62a783e30728e"
+        ],
+        "source_rule": "Radio group disabled by default. Enabled and REQUIRED only when answer to USCitizen (G-7-2) is 'No'.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.NonUSCitizen",
+        "value": "No"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.NonUSCitizen",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "No"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.USCitizen",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "required",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:48162191c8b36a3807c68ecb8b4ae7ed3919ef17270f62b52a5d8dc285bbba63",
+      "source_collection": "conditions",
+      "source_index": 19,
+      "source_rule": "Radio group disabled by default. Enabled and REQUIRED only when answer to USCitizen (G-7-2) is 'No'.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.USCitizen"
+        ],
+        "effect": "required",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:da96bbe2eb335909980ad6822d83e7ad2677267bf567320bffd62a783e30728e"
+        ],
+        "source_rule": "Radio group disabled by default. Enabled and REQUIRED only when answer to USCitizen (G-7-2) is 'No'.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.NonUSCitizen",
+        "value": "No"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.NonUSCitizen",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "No"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.NonUSCitizen",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:c4c8f3a33ab6a9c514f53a5a47c4b32e198e801b3aa5da0973629ead9c914a4a",
+      "source_collection": "conditions",
+      "source_index": 20,
+      "source_rule": "Checkbox disabled by default. Enabled only when answer to NonUSCitizen (G-7-3) is 'With a Temporary U.S. Visa'.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.NonUSCitizen"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:8a3a1848eb6873e8b38a1c87b78666f19d1da5c728ef14a860df0022932f9184"
+        ],
+        "source_rule": "Checkbox disabled by default. Enabled only when answer to NonUSCitizen (G-7-3) is 'With a Temporary U.S. Visa'.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.PermanentResidentByAwardIndicator",
+        "value": "With a Temporary U.S. Visa"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.PermanentResidentByAwardIndicator",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "With a Temporary U.S. Visa"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.ChangeOfInstitution",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "present",
+      "rule_id": "runtime-rule:sha256:bbeab1aa035f06d244406375fa73d0fa31bc110fe5d6fb63edc9f4f718076cde",
+      "source_collection": "conditions",
+      "source_index": 21,
+      "source_rule": "If box is checked, then the \"Name of Former Institution\" field (G-7-8) is ENABLED. Otherwise the \"Name of Former Institution\" field is DISABLED and CLEARED.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.ChangeOfInstitution"
+        ],
+        "effect": "visible",
+        "operator": "present",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:865f8fe09f206bb604010c7e8c57a635bb09486a3e6af4be1277e9b48784e159"
+        ],
+        "source_rule": "If box is checked, then the \"Name of Former Institution\" field (G-7-8) is ENABLED. Otherwise the \"Name of Former Institution\" field is DISABLED and CLEARED.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.FormerInstitution"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.FormerInstitution",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionAndFeesRequested",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:287a5b5460fd278ef640129f91e7ccf5c28360679a4e101df2922bdff429c04d",
+      "source_collection": "conditions",
+      "source_index": 22,
+      "source_rule": "Enabled only if \"Funds Requested\" (H-1-03 above) is checked.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.TuitionAndFeesRequested"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:1401772966a7bad86b884e8f14bf52bc7136c90393ee856b167a8990c0b7d590"
+        ],
+        "source_rule": "Enabled only if \"Funds Requested\" (H-1-03 above) is checked.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear1",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear1",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionAndFeesRequested",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:7adaac88d4da697a56d42fe69f04d8e751e11ee41c02e39ad995655bfc60a54e",
+      "source_collection": "conditions",
+      "source_index": 23,
+      "source_rule": "Enabled only if \"Funds Requested\" (H-1-03 above) is checked.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.TuitionAndFeesRequested"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:1401772966a7bad86b884e8f14bf52bc7136c90393ee856b167a8990c0b7d590"
+        ],
+        "source_rule": "Enabled only if \"Funds Requested\" (H-1-03 above) is checked.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear2",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear2",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionAndFeesRequested",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:c64917a8ee20af0385b66eeda234baedd9dbdbe1b1a22b66401a05e369243d9e",
+      "source_collection": "conditions",
+      "source_index": 24,
+      "source_rule": "Enabled only if \"Funds Requested\" (H-1-03 above) is checked.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.TuitionAndFeesRequested"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:1401772966a7bad86b884e8f14bf52bc7136c90393ee856b167a8990c0b7d590"
+        ],
+        "source_rule": "Enabled only if \"Funds Requested\" (H-1-03 above) is checked.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear3",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear3",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionAndFeesRequested",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:ce8be39f94b7512ff79fd3b268c6d705c7ae0d1c2ad515d38992bf4426592c30",
+      "source_collection": "conditions",
+      "source_index": 25,
+      "source_rule": "Enabled only if \"Funds Requested\" (H-1-03 above) is checked.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.TuitionAndFeesRequested"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:1401772966a7bad86b884e8f14bf52bc7136c90393ee856b167a8990c0b7d590"
+        ],
+        "source_rule": "Enabled only if \"Funds Requested\" (H-1-03 above) is checked.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear4",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear4",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionAndFeesRequested",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:47ea1e74b384ba278072ecdc406e559604c8c8527dfd8b845ba293e6234f835c",
+      "source_collection": "conditions",
+      "source_index": 26,
+      "source_rule": "Enabled only if \"Funds Requested\" (H-1-03 above) is checked.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.TuitionAndFeesRequested"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:1401772966a7bad86b884e8f14bf52bc7136c90393ee856b167a8990c0b7d590"
+        ],
+        "source_rule": "Enabled only if \"Funds Requested\" (H-1-03 above) is checked.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear5",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear5",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionAndFeesRequested",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:e7dfc378b362f3c0c180bb1023ad65970a6d615d05a32bbf325f1a998bb6e1e2",
+      "source_collection": "conditions",
+      "source_index": 27,
+      "source_rule": "Enabled only if \"Funds Requested\" (H-1-03 above) is checked.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.TuitionAndFeesRequested"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:1401772966a7bad86b884e8f14bf52bc7136c90393ee856b167a8990c0b7d590"
+        ],
+        "source_rule": "Enabled only if \"Funds Requested\" (H-1-03 above) is checked.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear6",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear6",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareCostsRequested",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:bebaf67f8728aedcaebef66a5f4908929873cb94aa56be3ff785134adf9ed0f1",
+      "source_collection": "conditions",
+      "source_index": 28,
+      "source_rule": "Enabled only if \"Funds Requested\" (H-1a-03 above) is checked.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareCostsRequested"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:808e38963d715ea653b4429d30b2a2b824d6ff98074135fc8f76971133a0e078"
+        ],
+        "source_rule": "Enabled only if \"Funds Requested\" (H-1a-03 above) is checked.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear1",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear1",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareCostsRequested",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:29d756f1318e3e61cd5fa9ca58cad02f5134c85dac9fd897af496894b42e3259",
+      "source_collection": "conditions",
+      "source_index": 29,
+      "source_rule": "Enabled only if \"Funds Requested\" (H-1a-03 above) is checked.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareCostsRequested"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:808e38963d715ea653b4429d30b2a2b824d6ff98074135fc8f76971133a0e078"
+        ],
+        "source_rule": "Enabled only if \"Funds Requested\" (H-1a-03 above) is checked.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear2",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear2",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareCostsRequested",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:29cb2f8d54346123beca664de5a0bc0f33426f0563d0f8953e0862321f304a04",
+      "source_collection": "conditions",
+      "source_index": 30,
+      "source_rule": "Enabled only if \"Funds Requested\" (H-1a-03 above) is checked.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareCostsRequested"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:808e38963d715ea653b4429d30b2a2b824d6ff98074135fc8f76971133a0e078"
+        ],
+        "source_rule": "Enabled only if \"Funds Requested\" (H-1a-03 above) is checked.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear3",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear3",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareCostsRequested",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:07f1c5f9d71cb85f26339673156f84d70fad7ec20d409a3e7b67f91f3a480710",
+      "source_collection": "conditions",
+      "source_index": 31,
+      "source_rule": "Enabled only if \"Funds Requested\" (H-1a-03 above) is checked.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareCostsRequested"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:808e38963d715ea653b4429d30b2a2b824d6ff98074135fc8f76971133a0e078"
+        ],
+        "source_rule": "Enabled only if \"Funds Requested\" (H-1a-03 above) is checked.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear4",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear4",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareCostsRequested",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:c63ef3fec729b01d30a21e49d28035c6480906e9cc04ef6b8e4595cd6ecf7cda",
+      "source_collection": "conditions",
+      "source_index": 32,
+      "source_rule": "Enabled only if \"Funds Requested\" (H-1a-03 above) is checked.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareCostsRequested"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:808e38963d715ea653b4429d30b2a2b824d6ff98074135fc8f76971133a0e078"
+        ],
+        "source_rule": "Enabled only if \"Funds Requested\" (H-1a-03 above) is checked.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear5",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear5",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareCostsRequested",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:863f1a7bed9f481049a4812dee7f233cf3d623c81a031fed332b97b5321d9201",
+      "source_collection": "conditions",
+      "source_index": 33,
+      "source_rule": "Enabled only if \"Funds Requested\" (H-1a-03 above) is checked.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareCostsRequested"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:808e38963d715ea653b4429d30b2a2b824d6ff98074135fc8f76971133a0e078"
+        ],
+        "source_rule": "Enabled only if \"Funds Requested\" (H-1a-03 above) is checked.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear6",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear6",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.InstitutionalBaseSalary.AcademicPeriod",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        },
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.InstitutionalBaseSalary.NumberOfMonths",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "required",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "any_present",
+      "rule_id": "runtime-rule:sha256:fcd3fe6ba50e68974ddc160835fb7a7944ce614fc937719807e987e58b721743",
+      "source_collection": "conditions",
+      "source_index": 34,
+      "source_rule": "If any of these three fields (H-2-2 through H-2-4) is entered, all three fields are required.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.InstitutionalBaseSalary.AcademicPeriod",
+          "PHS_Fellowship_Supplemental_8_0.Budget.InstitutionalBaseSalary.NumberOfMonths"
+        ],
+        "effect": "required",
+        "operator": "any_present",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:7ad99fe9587d6799393d091d0fc529ffc3133f8e107973ace784b552bef71bb2"
+        ],
+        "source_rule": "If any of these three fields (H-2-2 through H-2-4) is entered, all three fields are required.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.InstitutionalBaseSalary.Amount"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.InstitutionalBaseSalary.Amount",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.InstitutionalBaseSalary.Amount",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        },
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.InstitutionalBaseSalary.NumberOfMonths",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "required",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "any_present",
+      "rule_id": "runtime-rule:sha256:91db6f344e668756850f81134f61dd3ec3fe39001377e17cb40ed97cdecfa3e1",
+      "source_collection": "conditions",
+      "source_index": 35,
+      "source_rule": "If any of these three fields (H-2-2 through H-2-4) is entered, all three fields are required.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.InstitutionalBaseSalary.Amount",
+          "PHS_Fellowship_Supplemental_8_0.Budget.InstitutionalBaseSalary.NumberOfMonths"
+        ],
+        "effect": "required",
+        "operator": "any_present",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:7ad99fe9587d6799393d091d0fc529ffc3133f8e107973ace784b552bef71bb2"
+        ],
+        "source_rule": "If any of these three fields (H-2-2 through H-2-4) is entered, all three fields are required.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.InstitutionalBaseSalary.AcademicPeriod"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.InstitutionalBaseSalary.AcademicPeriod",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.InstitutionalBaseSalary.Amount",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        },
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.InstitutionalBaseSalary.AcademicPeriod",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "required",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "any_present",
+      "rule_id": "runtime-rule:sha256:e9a6b236e23bf54e0679d0a729501897a0130fcd6dd9625b38685ef402a9c2cd",
+      "source_collection": "conditions",
+      "source_index": 36,
+      "source_rule": "If any of these three fields (H-2-2 through H-2-4) is entered, all three fields are required.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.InstitutionalBaseSalary.Amount",
+          "PHS_Fellowship_Supplemental_8_0.Budget.InstitutionalBaseSalary.AcademicPeriod"
+        ],
+        "effect": "required",
+        "operator": "any_present",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:7ad99fe9587d6799393d091d0fc529ffc3133f8e107973ace784b552bef71bb2"
+        ],
+        "source_rule": "If any of these three fields (H-2-2 through H-2-4) is entered, all three fields are required.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.InstitutionalBaseSalary.NumberOfMonths"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.InstitutionalBaseSalary.NumberOfMonths",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.FederalStipendRequested.NumberOfMonths",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "required",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "any_present",
+      "rule_id": "runtime-rule:sha256:301bd1e0bf07fd7a1bccccf832acc55f671bc8417dffd2c8bb17cced8085c8c2",
+      "source_collection": "conditions",
+      "source_index": 37,
+      "source_rule": "If either of these two fields (H-2-6-a-1 or H-2-6-a-2) is entered, then both are required.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.FederalStipendRequested.NumberOfMonths"
+        ],
+        "effect": "required",
+        "operator": "any_present",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:8da205f6c7f99ed4168d9104133c7c49d72013994b26fc0f5d75627205e53995"
+        ],
+        "source_rule": "If either of these two fields (H-2-6-a-1 or H-2-6-a-2) is entered, then both are required.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.FederalStipendRequested.Amount"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.FederalStipendRequested.Amount",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.FederalStipendRequested.Amount",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "required",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "any_present",
+      "rule_id": "runtime-rule:sha256:4682a7c29009c286017b9cb6298ae72592b155ff0b0927187a2407fb75d8e650",
+      "source_collection": "conditions",
+      "source_index": 38,
+      "source_rule": "If either of these two fields (H-2-6-a-1 or H-2-6-a-2) is entered, then both are required.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.FederalStipendRequested.Amount"
+        ],
+        "effect": "required",
+        "operator": "any_present",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:8da205f6c7f99ed4168d9104133c7c49d72013994b26fc0f5d75627205e53995"
+        ],
+        "source_rule": "If either of these two fields (H-2-6-a-1 or H-2-6-a-2) is entered, then both are required.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.FederalStipendRequested.NumberOfMonths"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.FederalStipendRequested.NumberOfMonths",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.NumberOfMonths",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        },
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Type",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        },
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Source",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "required",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "any_present",
+      "rule_id": "runtime-rule:sha256:3e879cb43f43a87ff7f3de4a9fd1b2fc1255f098d18c6ea829b70bb2ef1b8a20",
+      "source_collection": "conditions",
+      "source_index": 39,
+      "source_rule": "If any of these four fields (H-2-6-b-1 through H-2-6-b-4) is entered, then all four fields are required.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.NumberOfMonths",
+          "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Type",
+          "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Source"
+        ],
+        "effect": "required",
+        "operator": "any_present",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:9dec2df5f0638b8a8b06e7329b691a041813c025580730f8dc2c7057de1d04ae"
+        ],
+        "source_rule": "If any of these four fields (H-2-6-b-1 through H-2-6-b-4) is entered, then all four fields are required.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Amount"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Amount",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Amount",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        },
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Type",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        },
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Source",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "required",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "any_present",
+      "rule_id": "runtime-rule:sha256:9d922477658aea739a0b65da4716021e077fcb82f3b35217673b8e85be7d3baf",
+      "source_collection": "conditions",
+      "source_index": 40,
+      "source_rule": "If any of these four fields (H-2-6-b-1 through H-2-6-b-4) is entered, then all four fields are required.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Amount",
+          "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Type",
+          "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Source"
+        ],
+        "effect": "required",
+        "operator": "any_present",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:9dec2df5f0638b8a8b06e7329b691a041813c025580730f8dc2c7057de1d04ae"
+        ],
+        "source_rule": "If any of these four fields (H-2-6-b-1 through H-2-6-b-4) is entered, then all four fields are required.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.NumberOfMonths"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.NumberOfMonths",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Amount",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        },
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.NumberOfMonths",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        },
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Source",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "required",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "any_present",
+      "rule_id": "runtime-rule:sha256:d4f75f67594e59570283aaec1b56c50f89e4b5e9a34ff29d9a88f8d91a5e5cf3",
+      "source_collection": "conditions",
+      "source_index": 41,
+      "source_rule": "If any of these four fields (H-2-6-b-1 through H-2-6-b-4) is entered, then all four fields are required.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Amount",
+          "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.NumberOfMonths",
+          "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Source"
+        ],
+        "effect": "required",
+        "operator": "any_present",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:9dec2df5f0638b8a8b06e7329b691a041813c025580730f8dc2c7057de1d04ae"
+        ],
+        "source_rule": "If any of these four fields (H-2-6-b-1 through H-2-6-b-4) is entered, then all four fields are required.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Type"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Type",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Amount",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        },
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.NumberOfMonths",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        },
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Type",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "required",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "any_present",
+      "rule_id": "runtime-rule:sha256:519f831ec4239ee05d8e5b306794bf97371b24eb587a68d6e4ee982f3b443989",
+      "source_collection": "conditions",
+      "source_index": 42,
+      "source_rule": "If any of these four fields (H-2-6-b-1 through H-2-6-b-4) is entered, then all four fields are required.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Amount",
+          "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.NumberOfMonths",
+          "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Type"
+        ],
+        "effect": "required",
+        "operator": "any_present",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:9dec2df5f0638b8a8b06e7329b691a041813c025580730f8dc2c7057de1d04ae"
+        ],
+        "source_rule": "If any of these four fields (H-2-6-b-1 through H-2-6-b-4) is entered, then all four fields are required.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Source"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.SupplementationFromOtherSources.Source",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [],
+      "disposition": "working",
+      "execution_class": "executable",
+      "instance_scope": "same_instance",
+      "mechanism": "calculation",
+      "operands": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear1",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        },
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear2",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        },
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear3",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        },
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear4",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        },
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear5",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        },
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear6",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "operator": "sum",
+      "rule_id": "runtime-rule:sha256:e962c5b093f43d8b34840d119020855e4f1fec4671a5d71e22378228180d5a51",
+      "source_collection": "calculations",
+      "source_index": 0,
+      "source_rule": "Summation of Tuition and Fees Requested, for years 1 through 6 (H-1-04 through H-1-09). No data entry is allowed in this field.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "instance_scope": "same_instance",
+        "operand_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear1",
+          "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear2",
+          "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear3",
+          "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear4",
+          "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear5",
+          "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedYear6"
+        ],
+        "operator": "sum",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:c89648769f6e699f4993f9249dc0ab009f08d22152724d75832a83a332aacd0c"
+        ],
+        "source_rule": "Summation of Tuition and Fees Requested, for years 1 through 6 (H-1-04 through H-1-09). No data entry is allowed in this field.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedTotal"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.TuitionRequestedTotal",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [],
+      "disposition": "working",
+      "execution_class": "executable",
+      "instance_scope": "same_instance",
+      "mechanism": "calculation",
+      "operands": [
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear1",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        },
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear2",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        },
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear3",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        },
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear4",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        },
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear5",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        },
+        {
+          "path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear6",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "operator": "sum",
+      "rule_id": "runtime-rule:sha256:a3b007293d82ea79c65773c16e88693ef6d5664344441e673e4646f50afb9baf",
+      "source_collection": "calculations",
+      "source_index": 1,
+      "source_rule": "Summation of Childcare Costs Requested, for years 1 through 6 (H-1a-04 through H-1a-09). No data entry is allowed in this field.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+        "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+      },
+      "source_value": {
+        "instance_scope": "same_instance",
+        "operand_paths": [
+          "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear1",
+          "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear2",
+          "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear3",
+          "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear4",
+          "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear5",
+          "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedYear6"
+        ],
+        "operator": "sum",
+        "provenance": [
+          "sha256:fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:8aff0a564cc7a2e45ec1db64c39525f70bca41c75ef7e1768f3d3af5b841a7ab"
+        ],
+        "source_rule": "Summation of Childcare Costs Requested, for years 1 through 6 (H-1a-04 through H-1a-09). No data entry is allowed in this field.",
+        "target_path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedTotal"
+      },
+      "target": {
+        "path": "PHS_Fellowship_Supplemental_8_0.Budget.ChildcareRequestedTotal",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": []
+    }
+  ],
+  "runtime_contract": "generic-source-runtime-v1",
+  "source_ledger": {
+    "path": "artifacts/authoring/phs-supplemental-family/forms/PHSFellowshipSupplemental.json",
+    "sha256": "6130bbb7825737071e74e294065d111d687be42a687696760cfdcb2cd0059676"
+  },
+  "source_runtime": {
+    "path": "artifacts/authoring/priority-runtime/PHSFellowshipSupplemental.runtime.json",
+    "sha256": "b05924565826ab7b574029b5e132d1258bd8f4c72f0a9e28ff15991ed722f44d"
+  }
+}

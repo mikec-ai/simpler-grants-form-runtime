@@ -1,0 +1,6 @@
+# The complete version-local evidence package and projection compiler determine this form.
+./draft_package
+form_schema/components/source_resolved_form.py
+form_schema/components/schema_field_list.py
+form_schema/shared/common_shared.py
+form_schema/shared/shared_schema.py

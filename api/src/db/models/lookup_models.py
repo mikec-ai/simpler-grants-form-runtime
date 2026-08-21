@@ -214,6 +214,7 @@ FORM_TYPE_CONFIG: LookupConfig[FormType] = LookupConfig(
         LookupStr(FormType.RR_SUBAWARD_BUDGET_10_30, 25),
         LookupStr(FormType.RR_MP_SUBAWARD_BUDGET, 26),
         LookupStr(FormType.RR_MP_BUDGET, 27),
+        LookupStr(FormType.PHS_FELLOWSHIP_SUPPLEMENTAL, 28),
     ]
 )
 

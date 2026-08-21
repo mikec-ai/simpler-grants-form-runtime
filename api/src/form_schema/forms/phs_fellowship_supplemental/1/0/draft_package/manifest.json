@@ -1,0 +1,42 @@
+{
+  "contract": "simpler-source-resolved-form-package/v1",
+  "form": {
+    "form_id": "PHSFellowshipSupplemental",
+    "form_version": "8.0"
+  },
+  "artifacts": {
+    "schema.json": "2f3c3a17eabfc2f4cbe06228e1a5969c739d36b6e66665e045018e3c44ac0ae1",
+    "runtime-rules.json": "6f666f1faf60e1f769567eb39381c7c624e632f484521a37f0092072496bf567",
+    "portable-schema.json": "abed11b7e1bf1f2d84e6d9eeacdc4170e399cc9db77369d4f9d5f7c73efdf7d6"
+  },
+  "source_evidence": {
+    "nodes": 165,
+    "behavior_records": 120,
+    "resolved_runtime_rules": 45,
+    "conditions": 43,
+    "calculations": 2,
+    "attachments": 17,
+    "form_xsd": {
+      "source_ref": "https://apply07.grants.gov/apply/forms/schemas/PHS_Fellowship_Supplemental_8_0-V8.0.xsd",
+      "sha256": "85f8e33df4641c56f3b6b96108690f89d214de8b5c864b1d6bd1e6bf8c7cc7bc"
+    },
+    "behavior_workbook": {
+      "source_ref": "https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls",
+      "sha256": "fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb"
+    }
+  },
+  "open_gates": {
+    "xml_projection": "not_available_for_the_v8_source_set",
+    "scalar_string_arrays": [
+      "PHS_Fellowship_Supplemental_8_0.AdditionalInformation.StemCells.CellLines"
+    ],
+    "policy_and_accessibility_review": "not_complete",
+    "human_acceptance": "not_complete"
+  },
+  "review_boundary": {
+    "deterministic_structure": "source_pinned_snapshot",
+    "runtime_projection": "agent_proposed_source_resolved_canary",
+    "published_coverage_eligible": false,
+    "production_ready": false
+  }
+}
