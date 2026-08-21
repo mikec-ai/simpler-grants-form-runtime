@@ -90,6 +90,35 @@ def test_compute_version_hash_changes_when_config_changes(tmp_path: Path) -> Non
     assert compute_version_hash(form_dir, version_dir) != original
 
 
+def test_compute_version_hash_changes_when_declared_package_file_changes(tmp_path: Path) -> None:
+    form_dir = tmp_path / "my_form"
+    version_dir = form_dir / "1" / "0"
+    package_dir = version_dir / "resolved_package"
+    package_dir.mkdir(parents=True)
+    (form_dir / "config.py").write_text("FORM_ID = 'abc'\n")
+    (version_dir / "form_json.py").write_text("SCHEMA = {}\n")
+    (version_dir / "version_dependencies.txt").write_text("resolved_package\n")
+    artifact = package_dir / "json-schema.json"
+    artifact.write_text("{}\n")
+
+    original = compute_version_hash(form_dir, version_dir)
+    artifact.write_text('{"changed": true}\n')
+
+    assert compute_version_hash(form_dir, version_dir) != original
+
+
+def test_compute_version_hash_rejects_dependency_path_escape(tmp_path: Path) -> None:
+    form_dir = tmp_path / "my_form"
+    version_dir = form_dir / "1" / "0"
+    version_dir.mkdir(parents=True)
+    (form_dir / "config.py").write_text("FORM_ID = 'abc'\n")
+    (version_dir / "form_json.py").write_text("SCHEMA = {}\n")
+    (version_dir / "version_dependencies.txt").write_text("../outside.json\n")
+
+    with pytest.raises(ValueError, match="inside the version directory"):
+        compute_version_hash(form_dir, version_dir)
+
+
 def test_get_version_dir_resolves_correctly() -> None:
     """get_version_dir returns the expected form_dir and version_dir for a known form."""
     form_dir, version_dir = get_version_dir("sf424", "1.0")

@@ -15,8 +15,18 @@ from src.form_schema.resolved_form_package import (
 )
 
 FIXTURE = Path(__file__).parents[2] / "fixtures" / "form_schema" / "commongrants_key_contact_org"
-SF424_FIXTURE = Path(__file__).parents[2] / "fixtures" / "form_schema" / "generated_sf424"
-SF424_v4_0 = importlib.import_module("src.form_schema.forms.sf424.1.0.form_json").SF424_v4_0
+SF424_FIXTURE = (
+    Path(__file__).parents[3]
+    / "src"
+    / "form_schema"
+    / "forms"
+    / "sf424"
+    / "1"
+    / "0"
+    / "resolved_package"
+)
+SF424_MODULE = importlib.import_module("src.form_schema.forms.sf424.1.0.form_json")
+SF424_v4_0 = SF424_MODULE.SF424_v4_0
 
 
 def _copy_fixture(tmp_path: Path) -> Path:
@@ -80,17 +90,28 @@ def test_generated_sf424_package_matches_current_native_form_exactly() -> None:
     assert form.form_name == SF424_v4_0.form_name
     assert form.short_form_name == SF424_v4_0.short_form_name
     assert form.form_version == SF424_v4_0.form_version
-    assert form.form_ui_schema == SF424_v4_0.form_ui_schema
-    assert form.form_rule_schema == SF424_v4_0.form_rule_schema
-    assert form.json_to_xml_schema == SF424_v4_0.json_to_xml_schema
+    assert form.form_ui_schema == SF424_MODULE.FORM_UI_SCHEMA
+    assert form.form_rule_schema == SF424_MODULE.FORM_RULE_SCHEMA
+    assert form.json_to_xml_schema == SF424_MODULE.FORM_XML_TRANSFORM_RULES
 
     generated_schema = copy.deepcopy(form.form_json_schema)
     package_provenance = generated_schema.pop("x-simpler-form-package")
-    assert generated_schema == SF424_v4_0.form_json_schema
+    assert generated_schema == SF424_MODULE.FORM_JSON_SCHEMA
     assert package_provenance["package_digest"] == package.package_digest
     assert package_provenance["review_boundary"]["published_coverage_eligible"] is False
     assert package.manifest["source_set"]["closure"] == "partial_evidence"
     assert len(package.manifest["source_set"]["dependencies"]) == 15
+
+
+def test_exported_sf424_is_materialized_from_generated_package() -> None:
+    package = load_resolved_form_package(SF424_FIXTURE)
+
+    assert SF424_v4_0.form_json_schema["x-simpler-form-package"]["package_digest"] == (
+        package.package_digest
+    )
+    assert SF424_v4_0.form_ui_schema == package.ui_schema
+    assert SF424_v4_0.form_rule_schema == package.rule_schema
+    assert SF424_v4_0.json_to_xml_schema == package.xml_transform
 
 
 def test_generated_sf424_supporting_evidence_is_part_of_package_dependencies() -> None:

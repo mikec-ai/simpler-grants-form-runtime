@@ -1,7 +1,6 @@
-import uuid
+from pathlib import Path
 
-from src.constants.lookup_constants import FormType
-from src.db.models.competition_models import Form
+from src.form_schema.resolved_form_package import load_resolved_form_package
 from src.form_schema.shared import ADDRESS_SHARED_V1, COMMON_SHARED_V1
 from src.services.xml_generation.constants import NO_VALUE
 
@@ -1075,21 +1074,6 @@ FORM_XML_TRANSFORM_RULES = {
 }
 
 
-SF424_v4_0 = Form(
-    # https://www.grants.gov/forms/form-items-description/fid/713
-    form_id=uuid.UUID("1623b310-85be-496a-b84b-34bdee22a68a"),
-    legacy_form_id=713,
-    form_name="Application for Federal Assistance (SF-424)",
-    short_form_name="SF424_4_0",
-    form_version="4.0",
-    agency_code="SGG",
-    omb_number="4040-0004",
-    form_json_schema=FORM_JSON_SCHEMA,
-    form_ui_schema=FORM_UI_SCHEMA,
-    form_rule_schema=FORM_RULE_SCHEMA,
-    json_to_xml_schema=FORM_XML_TRANSFORM_RULES,
-    form_instruction_id=uuid.UUID("bf48a93f-d445-426f-a8fb-289bf93a2434"),
-    form_type=FormType.SF424,
-    sgg_version="1.0",
-    is_deprecated=False,
-)
+# The constants above remain temporarily as a compatibility oracle. The active
+# runtime form is materialized from the source-pinned resolved package.
+SF424_v4_0 = load_resolved_form_package(Path(__file__).with_name("resolved_package")).to_form()

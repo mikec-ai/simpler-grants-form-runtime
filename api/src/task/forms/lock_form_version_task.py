@@ -11,12 +11,54 @@ from src.task.task_blueprint import task_blueprint
 logger = logging.getLogger(__name__)
 
 FORMS_DIR = Path(__file__).parents[2] / "form_schema" / "forms"
+VERSION_DEPENDENCIES_FILE = "version_dependencies.txt"
+
+
+def _version_dependency_paths(version_dir: Path) -> list[Path]:
+    """Resolve optional version-owned files that participate in the immutable lock."""
+
+    manifest_path = version_dir / VERSION_DEPENDENCIES_FILE
+    if not manifest_path.exists():
+        return []
+
+    resolved_version_dir = version_dir.resolve()
+    dependencies: list[Path] = [manifest_path.resolve()]
+    seen: set[Path] = set()
+    for line_number, raw_line in enumerate(
+        manifest_path.read_text(encoding="utf-8").splitlines(), start=1
+    ):
+        value = raw_line.strip()
+        if not value or value.startswith("#"):
+            continue
+        relative = Path(value)
+        if relative.is_absolute() or ".." in relative.parts:
+            raise ValueError(
+                f"{manifest_path}:{line_number} must identify a path inside the version directory"
+            )
+        candidate = (version_dir / relative).resolve()
+        if not candidate.is_relative_to(resolved_version_dir):
+            raise ValueError(f"{manifest_path}:{line_number} escapes the version directory")
+        if not candidate.exists():
+            raise FileNotFoundError(f"version dependency not found: {candidate}")
+        files = sorted(path.resolve() for path in candidate.rglob("*") if path.is_file())
+        if candidate.is_file():
+            files = [candidate]
+        for path in files:
+            if not path.is_relative_to(resolved_version_dir):
+                raise ValueError(f"version dependency escapes the version directory: {path}")
+            if path in seen:
+                raise ValueError(f"duplicate version dependency: {path}")
+            seen.add(path)
+            dependencies.append(path)
+    return dependencies
 
 
 def compute_version_hash(form_dir: Path, version_dir: Path) -> str:
-    """Return the SHA-256 hex digest of form_json.py + config.py for a version directory.
+    """Return the SHA-256 digest of a form version and its declared dependencies.
 
-    Always hashes form_json.py first, then config.py, so the digest is stable.
+    The legacy form_json.py + config.py order remains unchanged. Versions with a
+    dependency manifest additionally hash that manifest and every declared file
+    in stable repository-relative path order.
     """
     form_json_path = version_dir / "form_json.py"
     config_path = form_dir / "config.py"
@@ -29,6 +71,11 @@ def compute_version_hash(form_dir: Path, version_dir: Path) -> str:
     h = hashlib.sha256()
     h.update(form_json_path.read_bytes())
     h.update(config_path.read_bytes())
+    for dependency in _version_dependency_paths(version_dir):
+        relative_path = dependency.relative_to(version_dir.resolve()).as_posix()
+        h.update(relative_path.encode("utf-8"))
+        h.update(b"\0")
+        h.update(dependency.read_bytes())
     return h.hexdigest()
 
 
@@ -51,7 +98,7 @@ def get_version_dir(form_name: str, version: str) -> tuple[Path, Path]:
 
 @task_blueprint.cli.command(
     "lock-form-version",
-    help="Hash form_json.py + config.py for a form version and write to a checksum file.",
+    help="Hash a form version and its declared dependencies and write a checksum file.",
 )
 @click.option("--form", required=True, help="Form directory name, e.g. sf424")
 @click.option("--version", required=True, help="Version in MAJOR.MINOR format, e.g. 1.0")
