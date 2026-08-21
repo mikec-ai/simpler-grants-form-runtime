@@ -2,7 +2,17 @@ import uuid
 
 from src.constants.lookup_constants import FormType
 from src.db.models.competition_models import Form
-from src.form_schema.shared import COMMON_SHARED_V1
+from src.form_schema.components import (
+    OrganizationNameComponentConfig,
+    build_organization_name_component,
+)
+
+_APPLICANT_ORGANIZATION = build_organization_name_component(
+    OrganizationNameComponentConfig(
+        title="Applicant Name",
+        description="This should match the 'Legal Name' field from the SF-424 form",
+    )
+).mount_root(aliases={"organization_name": "applicant_name"})
 
 FORM_JSON_SCHEMA = {
     "type": "object",
@@ -25,14 +35,9 @@ FORM_JSON_SCHEMA = {
             "minLength": 1,
             "maxLength": 15,
         },
-        "applicant_name": {
-            # NOTE: This is named OrganizationName in the XSD, but
-            # the UI calls it an applicant name.
-            # FUTURE WORK: This gets copied from the SF-424's OrganizationName field (called Legal Name in the UI)
-            "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("organization_name")}],
-            "title": "Applicant Name",
-            "description": "This should match the 'Legal Name' field from the SF-424 form",
-        },
+        # This is named OrganizationName in the XSD, but the UI calls it an
+        # applicant name. Future cross-form population remains form-owned.
+        "applicant_name": _APPLICANT_ORGANIZATION.json_schema_properties["applicant_name"],
         "project_title": {
             # FUTURE WORK: This gets copied from the SF-424's ProjectTitle field
             "type": "string",
@@ -59,7 +64,7 @@ FORM_UI_SCHEMA = [
         "children": [
             {"type": "field", "definition": "/properties/funding_opportunity_number"},
             {"type": "field", "definition": "/properties/assistance_listing_number"},
-            {"type": "field", "definition": "/properties/applicant_name"},
+            _APPLICANT_ORGANIZATION.ui_schema_fields["applicant_name"],
             {"type": "field", "definition": "/properties/project_title"},
             {"type": "field", "definition": "/properties/project_abstract"},
         ],
@@ -112,11 +117,7 @@ FORM_XML_TRANSFORM_RULES = {
         }
     },
     # OrganizationName (required) - OrganizationNameDataType
-    "applicant_name": {
-        "xml_transform": {
-            "target": "OrganizationName",
-        }
-    },
+    "applicant_name": _APPLICANT_ORGANIZATION.xml_transform_rules["applicant_name"],
     # ProjectTitle (required) - string 1-250
     "project_title": {
         "xml_transform": {
@@ -149,3 +150,5 @@ ProjectAbstractSummary_v2_0 = Form(
     sgg_version="1.0",
     is_deprecated=False,
 )
+
+del _APPLICANT_ORGANIZATION

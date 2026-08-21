@@ -14,16 +14,16 @@ _ORGANIZATION_IDENTITY = build_organization_identity_component(
         sam_uei_description="UEI of the applicant organization. This field is pre-populated from the Application cover sheet.",
         sam_uei_interaction="field",
     )
-)
+).mount_root()
 
 FORM_JSON_SCHEMA = {
     "type": "object",
     "required": [
         "submission_type",
         "application_type",
-        _ORGANIZATION_IDENTITY.required[0],
+        "organization_name",
         "employer_taxpayer_identification_number",
-        _ORGANIZATION_IDENTITY.required[1],
+        "sam_uei",
         "applicant",
         "contact_person",
         "phone_number",

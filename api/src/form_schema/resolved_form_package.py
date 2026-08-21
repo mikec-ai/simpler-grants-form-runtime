@@ -102,9 +102,7 @@ class ResolvedFormPackage:
             agency_code=metadata["agency_code"],
             omb_number=metadata.get("omb_number"),
             form_json_schema=json_schema,
-            # Form.form_ui_schema is list-shaped throughout the current runtime. The
-            # model annotation is corrected independently in the template-composition PR.
-            form_ui_schema=self.ui_schema,  # type: ignore[arg-type]
+            form_ui_schema=self.ui_schema,
             form_rule_schema=self.rule_schema,
             json_to_xml_schema=self.xml_transform,
             form_instruction_id=uuid.UUID(instruction_id) if instruction_id else None,

@@ -14,7 +14,7 @@ _ORGANIZATION_IDENTITY = build_organization_identity_component(
         sam_uei_description="UEI of the applicant organization. This field is pre-populated from the Application cover sheet.",
         sam_uei_interaction="null",
     )
-)
+).mount_root()
 
 # Applicant type codes shared by the SF-424 family (globLib:ApplicantTypeCodeDataType).
 APPLICANT_TYPE_CODES = [
@@ -50,11 +50,11 @@ FORM_JSON_SCHEMA = {
         "agency_name",
         "funding_opportunity_number",
         "funding_opportunity_title",
-        _ORGANIZATION_IDENTITY.required[0],
+        "organization_name",
         "applicant",
         "applicant_type_code",
         "employer_taxpayer_identification_number",
-        _ORGANIZATION_IDENTITY.required[1],
+        "sam_uei",
         "congressional_district_applicant",
         "project_title",
         "project_description",
