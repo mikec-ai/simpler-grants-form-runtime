@@ -680,7 +680,23 @@ def compile_xml_plan(
             raise XMLPlanError(f"duplicate runtime key {key!r}")
         result[key] = rule
     if attachments:
-        result["_xml_config"]["attachment_fields"] = {
-            slot: {"entries": entries} for slot, entries in attachments.items()
-        }
+        attachment_fields: dict[str, Any] = {}
+        for slot, entries in attachments.items():
+            slot_rules = [
+                rule
+                for rule in result.values()
+                if isinstance(rule, dict)
+                and rule.get("xml_transform") == {"target": slot, "type": "attachment_slot"}
+            ]
+            if len(slot_rules) != 1:
+                raise XMLPlanError(
+                    f"attachment slot {slot!r} does not have exactly one occurrence rule"
+                )
+            slot_rule = slot_rules[0]
+            attachment_fields[slot] = {
+                "entries": entries,
+                "_occurs": deepcopy(slot_rule["_occurs"]),
+                "_source_path": slot_rule["_source_path"],
+            }
+        result["_xml_config"]["attachment_fields"] = attachment_fields
     return result

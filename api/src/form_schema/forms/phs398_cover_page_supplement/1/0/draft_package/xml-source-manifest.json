@@ -1,0 +1,22 @@
+{
+  "constant_bindings": [],
+  "contract": "xml-plan-source/v1",
+  "form": {"form_id": "PHS398_CoverPageSupplement_5_0", "form_version": "5.0"},
+  "format_version": 1,
+  "preferred_prefixes": {
+    "http://www.w3.org/2001/XMLSchema": "xs",
+    "http://apply.grants.gov/forms/PHS398_CoverPageSupplement_5_0-V5.0": "PHS398_CoverPageSupplement_5_0",
+    "http://apply.grants.gov/system/Attachments-V1.0": "att",
+    "http://apply.grants.gov/system/Global-V1.0": "glob",
+    "http://apply.grants.gov/system/GlobalLibrary-V2.0": "globLib",
+    "http://apply.grants.gov/system/UniversalCodes-V2.0": "codes"
+  },
+  "root_qname": "{http://apply.grants.gov/forms/PHS398_CoverPageSupplement_5_0-V5.0}PHS398_CoverPageSupplement_5_0",
+  "schemas": [
+    {"path":"work/grantsgov-xsds/PHS398_CoverPageSupplement_5_0-V5.0.xsd","role":"root","sha256":"ec538c9bb5fd233c36ac73ca567d31e60779ee3df2f3c7b456d9395b3ec2dc26","source_ref":"https://apply07.grants.gov/apply/forms/schemas/PHS398_CoverPageSupplement_5_0-V5.0.xsd"},
+    {"path":"work/grantsgov-xsds/dependencies/Attachments-V1.0.xsd","role":"dependency","sha256":"ae2ebb3618f7d8fb337be2309b3096e9121b4af659e913af423aab85d13dcb1d","source_ref":"https://apply07.grants.gov/apply/system/schemas/Attachments-V1.0.xsd"},
+    {"path":"work/grantsgov-xsds/dependencies/Global-V1.0.xsd","role":"dependency","sha256":"4b338db919152eb8b96a1a846902d04ef8bca8d08127b21f80f927eaa62283cb","source_ref":"https://apply07.grants.gov/apply/system/schemas/Global-V1.0.xsd"},
+    {"path":"work/grantsgov-xsds/dependencies/GlobalLibrary-V2.0.xsd","role":"dependency","sha256":"ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8","source_ref":"https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"},
+    {"path":"work/grantsgov-xsds/dependencies/UniversalCodes-V2.0.xsd","role":"dependency","sha256":"78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a","source_ref":"https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd"}
+  ]
+}

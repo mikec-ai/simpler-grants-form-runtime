@@ -1,0 +1,61 @@
+{
+  "contract": "simpler-source-resolved-form-package/v1",
+  "form": {
+    "form_id": "PHS398CoverPageSupplement",
+    "form_version": "5.0"
+  },
+  "artifacts": {
+    "schema.json": "0033f440b2285ace69c5e83fa0dbd00f746dba411ac39ba61b91764b1346cb3b",
+    "runtime-rules.json": "7385f4281b156834f931b3e994bea875e50c0196d3e1a9cf0e7ab58cbddf941d",
+    "portable-schema.json": "b8956322db66a308932dc88b17d5c18383a626fb83c84d075871a9671753b1c9"
+  },
+  "source_evidence": {
+    "nodes": 38,
+    "behavior_records": 37,
+    "resolved_runtime_rules": 22,
+    "conditions": 22,
+    "calculations": 0,
+    "attachments": 2,
+    "form_xsd": {
+      "source_ref": "https://apply07.grants.gov/apply/forms/schemas/PHS398_CoverPageSupplement_5_0-V5.0.xsd",
+      "sha256": "ec538c9bb5fd233c36ac73ca567d31e60779ee3df2f3c7b456d9395b3ec2dc26"
+    },
+    "behavior_workbook": {
+      "source_path": "work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls",
+      "sha256": "bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab"
+    },
+    "official_pdf": {
+      "source_ref": "https://apply07.grants.gov/apply/forms/readonly/PHS398_CoverPageSupplement_5_0-V5.0_F698.pdf",
+      "sha256": "82f9827f440018a0d3cfee25ec9f9696063143a5c618fb2dafe778ac80f183e8",
+      "presentation_evidence": "presentation-evidence.json",
+      "presentation_evidence_sha256": "09e3ede270d88ff0fa19b9b9bc62e35e13b9daf0fed2c65b41276497fb52985d"
+    },
+    "deterministic_normalizations": [
+      {
+        "scope": "globLib:YesNoDataType fields",
+        "operation": "remove_non_xsd_duplicate_aliases",
+        "retained_values": ["Y: Yes", "N: No"],
+        "evidence": "GlobalLibrary-V2.0.xsd#YesNoDataType",
+        "source_sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8"
+      }
+    ]
+  },
+  "open_gates": {
+    "xml_projection": "source_pinned_plan_compiled_to_native_runtime",
+    "scalar_string_arrays": [
+      "PHS398_CoverPageSupplement_5_0.StemCells.CellLines"
+    ],
+    "pdf_visual_review": "agent_complete_coverage_ineligible",
+    "cross_form_conditions": [
+      "Inventions and Patents section applicability depends on Renewal application context"
+    ],
+    "policy_and_accessibility_review": "not_complete",
+    "human_acceptance": "not_complete"
+  },
+  "review_boundary": {
+    "deterministic_structure": "source_pinned_snapshot",
+    "runtime_projection": "agent_proposed_source_resolved_canary",
+    "published_coverage_eligible": false,
+    "production_ready": false
+  }
+}

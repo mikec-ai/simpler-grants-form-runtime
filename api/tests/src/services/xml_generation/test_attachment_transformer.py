@@ -405,6 +405,41 @@ class TestAttachmentTransformer:
         assert "DebtExplanation" not in xml_string
         assert "AdditionalProjectTitle" not in xml_string
 
+    def test_optional_wrapper_does_not_require_its_child_until_present(self):
+        root = lxml_etree.Element("TestRoot", nsmap=self.nsmap)
+        config = {
+            "ComplianceAssurance": {
+                "_occurs": {"kind": "object", "min_occurs": 0, "max_occurs": 1},
+                "_source_path": "ComplianceAssurance",
+                "entries": [
+                    {
+                        "_occurs": {
+                            "kind": "attachment",
+                            "min_occurs": 1,
+                            "max_occurs": 1,
+                        },
+                        "source_path": "ComplianceAssurance.attFile",
+                        "xml_element": "ComplianceAssurance",
+                        "type": "single_with_wrapper",
+                        "minimum_files": 0,
+                        "maximum_files": 1,
+                    }
+                ],
+            }
+        }
+        transformer = AttachmentTransformer(attachment_field_config=config)
+
+        assert (
+            transformer.add_attachment_field(root, "ComplianceAssurance", {}, self.nsmap) is False
+        )
+        with pytest.raises(ValueError, match=r"requires 1\.\.1 occurrences"):
+            transformer.add_attachment_field(
+                root,
+                "ComplianceAssurance",
+                {"ComplianceAssurance": {}},
+                self.nsmap,
+            )
+
     def test_single_with_wrapper_custom_file_element(self):
         """single_with_wrapper with file_element override uses the given inner element name."""
         form_ns = "http://apply.grants.gov/forms/Project_Abstract_1_2-V1.2"

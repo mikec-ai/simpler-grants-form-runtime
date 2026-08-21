@@ -65,6 +65,8 @@ class AttachmentTransformer:
                 raise ValueError(
                     f"Attachment field '{field_name}' entries must be a non-empty list"
                 )
+            if self._optional_wrapper_is_absent(field_name, field_config, data):
+                return False
             self._validate_entry_constraints(field_name, entries, data)
             emitted = False
             for entry in entries:
@@ -79,6 +81,25 @@ class AttachmentTransformer:
         if emitted:
             self._emitted_fields.add(field_name)
         return emitted
+
+    @staticmethod
+    def _optional_wrapper_is_absent(
+        field_name: str, field_config: dict[str, Any], data: dict[str, Any]
+    ) -> bool:
+        """Return true when an optional attachment wrapper is wholly absent.
+
+        An XSD object may be optional while requiring an attachment child whenever
+        that object is present. Child occurrence constraints therefore apply only
+        after the optional wrapper has been supplied.
+        """
+
+        occurs = field_config.get("_occurs")
+        if not isinstance(occurs, dict) or occurs.get("min_occurs") != 0:
+            return False
+        source_path = field_config.get("_source_path", field_name)
+        if not isinstance(source_path, str) or not source_path:
+            raise ValueError(f"Attachment field '{field_name}' wrapper source path is invalid")
+        return get_nested_value(data, source_path.split(".")) is None
 
     @staticmethod
     def _entry_value(entry: dict[str, Any], data: dict[str, Any], field_name: str) -> Any:

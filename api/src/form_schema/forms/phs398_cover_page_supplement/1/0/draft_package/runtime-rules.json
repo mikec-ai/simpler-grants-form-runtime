@@ -1,0 +1,1162 @@
+{
+  "accounting": {
+    "base_executable_rules": 22,
+    "blocked_records": 0,
+    "complete_source_container_partition": true,
+    "executable_rules": 22,
+    "mechanism_counts": {
+      "condition": 22
+    },
+    "multi_level_coordinate_rules": 0,
+    "normalized_records": 22,
+    "overlay_promoted_rules": 0,
+    "preserved_records": 0,
+    "working_records": 22,
+    "working_rules_needing_path_resolution": 0
+  },
+  "base_runtime_ast": {
+    "path": "artifacts/authoring/runtime-rule-ast-v1/forms/PHS398CoverPageSupplement.json",
+    "sha256": "0dddccb582e45d5246abd904622571cdc3261534be0173a4b9983a9f73ae703c"
+  },
+  "contract": "source-bound-runtime-rule-ast/resolved-v1",
+  "form_id": "PHS398CoverPageSupplement",
+  "hierarchical_coordinates": {
+    "coordinate_model": "ordered_repeat_ancestor_indices",
+    "maximum_repeat_depth": 1,
+    "repeating_source_paths": [
+      "PHS398_CoverPageSupplement_5_0.IncomeBudgetPeriod",
+      "PHS398_CoverPageSupplement_5_0.StemCells.CellLines"
+    ]
+  },
+  "production_ready": false,
+  "published_coverage_eligible": false,
+  "resolution_overlay": {
+    "promoted_rule_ids": [],
+    "published_coverage_eligible": false,
+    "review_status": "agent_proposed"
+  },
+  "review_status": "agent_proposed",
+  "rules": [
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.VertebrateAnimals.AnimalEuthanasiaIndicator",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:65b47625d32c2aa7f1ae938d3f810933573fcf1cf4a017fa6a351ec2a928800b",
+      "source_collection": "conditions",
+      "source_index": 0,
+      "source_rule": "Enabled and REQUIRED, only if response A-1-1 above (AnimalEuthanasiaIndicator) \"yes\" is checked. Otherwise this question is disabled.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.VertebrateAnimals.AnimalEuthanasiaIndicator"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:831302f6eea9206df73375911b8c874d273fd7e1d9fdb5f9d417167b6263a0ed"
+        ],
+        "source_rule": "Enabled and REQUIRED, only if response A-1-1 above (AnimalEuthanasiaIndicator) \"yes\" is checked. Otherwise this question is disabled.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.VertebrateAnimals.AVMAConsistentIndicator",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.VertebrateAnimals.AVMAConsistentIndicator",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.VertebrateAnimals.AnimalEuthanasiaIndicator",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "required",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:5bddb2e6c200018b66fae7e2254ef15625fbfc86e50b0f9b7390b557142470ef",
+      "source_collection": "conditions",
+      "source_index": 1,
+      "source_rule": "Enabled and REQUIRED, only if response A-1-1 above (AnimalEuthanasiaIndicator) \"yes\" is checked. Otherwise this question is disabled.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.VertebrateAnimals.AnimalEuthanasiaIndicator"
+        ],
+        "effect": "required",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:831302f6eea9206df73375911b8c874d273fd7e1d9fdb5f9d417167b6263a0ed"
+        ],
+        "source_rule": "Enabled and REQUIRED, only if response A-1-1 above (AnimalEuthanasiaIndicator) \"yes\" is checked. Otherwise this question is disabled.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.VertebrateAnimals.AVMAConsistentIndicator",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.VertebrateAnimals.AVMAConsistentIndicator",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.VertebrateAnimals.AVMAConsistentIndicator",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:1b8cf21421198fb3c6da23a2a71bfe3dc3646f402a78e48bd2a3266bc7a17a30",
+      "source_collection": "conditions",
+      "source_index": 2,
+      "source_rule": "Enabled and REQUIRED, only if response A-2-1 above (AVMAConsistentIndicator) \"No\" is checked. Otherwise this question is disabled.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.VertebrateAnimals.AVMAConsistentIndicator"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:6766127958f61ec7d4208efe428fba6dc6f82285be5a2453a68b58b5527d9065"
+        ],
+        "source_rule": "Enabled and REQUIRED, only if response A-2-1 above (AVMAConsistentIndicator) \"No\" is checked. Otherwise this question is disabled.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.VertebrateAnimals.EuthanasiaMethodDescription",
+        "value": "No"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.VertebrateAnimals.EuthanasiaMethodDescription",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "No"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.VertebrateAnimals.AVMAConsistentIndicator",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "required",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:d1af3984136923d093c27c44e16779f7688dff03eed1799a2bdbe35574ea1366",
+      "source_collection": "conditions",
+      "source_index": 3,
+      "source_rule": "Enabled and REQUIRED, only if response A-2-1 above (AVMAConsistentIndicator) \"No\" is checked. Otherwise this question is disabled.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.VertebrateAnimals.AVMAConsistentIndicator"
+        ],
+        "effect": "required",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:6766127958f61ec7d4208efe428fba6dc6f82285be5a2453a68b58b5527d9065"
+        ],
+        "source_rule": "Enabled and REQUIRED, only if response A-2-1 above (AVMAConsistentIndicator) \"No\" is checked. Otherwise this question is disabled.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.VertebrateAnimals.EuthanasiaMethodDescription",
+        "value": "No"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.VertebrateAnimals.EuthanasiaMethodDescription",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "No"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.ProgramIncome",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:7d225c68d0039627c0c8fbf36e225f27a4430d31a1ffe9f83f34996b38c75b5b",
+      "source_collection": "conditions",
+      "source_index": 4,
+      "source_rule": "Enabled if ProgramIncome = 'Yes'. Required if any data is entered in this row. Entry required in first occurrence if ProgramIncome = 'Yes'.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.ProgramIncome"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:32f492a8c737ce171240358ebb73649870d4d98ff72fd8459a92cd155309c6ec",
+          "behavior:sha256:5159d2980e095ec74b2c94a9c49044f9c2f3375a06b898ab197adc3c4150e8a4",
+          "behavior:sha256:d0c0c89421ef39cd273fd46727022afd704e2742034610b796fcf49eee76f7d8"
+        ],
+        "source_rule": "Enabled if ProgramIncome = 'Yes'. Required if any data is entered in this row. Entry required in first occurrence if ProgramIncome = 'Yes'.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.IncomeBudgetPeriod.BudgetPeriod",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.IncomeBudgetPeriod.BudgetPeriod",
+        "path_resolved": true,
+        "repeat_ancestors": [
+          {
+            "coordinate_variable": "$index0",
+            "depth": 0,
+            "group_path": "PHS398_CoverPageSupplement_5_0.IncomeBudgetPeriod"
+          }
+        ],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.ProgramIncome",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:dc8c48637a677ca02557e00683c2558f10fc8e54cf47af7fe6a6de053b4089fc",
+      "source_collection": "conditions",
+      "source_index": 5,
+      "source_rule": "Enabled if ProgramIncome = 'Yes'. Required if any data is entered in this row. Entry required in first occurrence if ProgramIncome = 'Yes'.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.ProgramIncome"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:32f492a8c737ce171240358ebb73649870d4d98ff72fd8459a92cd155309c6ec",
+          "behavior:sha256:5159d2980e095ec74b2c94a9c49044f9c2f3375a06b898ab197adc3c4150e8a4",
+          "behavior:sha256:d0c0c89421ef39cd273fd46727022afd704e2742034610b796fcf49eee76f7d8"
+        ],
+        "source_rule": "Enabled if ProgramIncome = 'Yes'. Required if any data is entered in this row. Entry required in first occurrence if ProgramIncome = 'Yes'.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.IncomeBudgetPeriod.AnticipatedAmount",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.IncomeBudgetPeriod.AnticipatedAmount",
+        "path_resolved": true,
+        "repeat_ancestors": [
+          {
+            "coordinate_variable": "$index0",
+            "depth": 0,
+            "group_path": "PHS398_CoverPageSupplement_5_0.IncomeBudgetPeriod"
+          }
+        ],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.ProgramIncome",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:74ae7ef8f664e514c8153c6cff86a9c3cffff32057126e6be528da98f95f56ad",
+      "source_collection": "conditions",
+      "source_index": 6,
+      "source_rule": "Enabled if ProgramIncome = 'Yes'. Required if any data is entered in this row. Entry required in first occurrence if ProgramIncome = 'Yes'.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.ProgramIncome"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:32f492a8c737ce171240358ebb73649870d4d98ff72fd8459a92cd155309c6ec",
+          "behavior:sha256:5159d2980e095ec74b2c94a9c49044f9c2f3375a06b898ab197adc3c4150e8a4",
+          "behavior:sha256:d0c0c89421ef39cd273fd46727022afd704e2742034610b796fcf49eee76f7d8"
+        ],
+        "source_rule": "Enabled if ProgramIncome = 'Yes'. Required if any data is entered in this row. Entry required in first occurrence if ProgramIncome = 'Yes'.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.IncomeBudgetPeriod.Source",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.IncomeBudgetPeriod.Source",
+        "path_resolved": true,
+        "repeat_ancestors": [
+          {
+            "coordinate_variable": "$index0",
+            "depth": 0,
+            "group_path": "PHS398_CoverPageSupplement_5_0.IncomeBudgetPeriod"
+          }
+        ],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.StemCells.isHumanStemCellsInvolved",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:521d1f37ca8e7032be5f81036388b4e47e6c8122717896bce363bb02cec38e48",
+      "source_collection": "conditions",
+      "source_index": 7,
+      "source_rule": "Check box. Enabled only when answer to \"Does the proposed project involve human embryonic stem cells?\" is \"Y\". Otherwise this checkbox is disabled. Also automatically un-checked and disabled if one or more specific stem cell lines are listed below.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.StemCells.isHumanStemCellsInvolved"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:156cd13b27aa8ba7ef1a08cf0f3d3d09e035b103142d8435f8e47936ea835adc",
+          "behavior:sha256:46d4e041157848d0a76b1eaae4323b3b3c71209ce404f74befbe79a58320feeb"
+        ],
+        "source_rule": "Check box. Enabled only when answer to \"Does the proposed project involve human embryonic stem cells?\" is \"Y\". Otherwise this checkbox is disabled. Also automatically un-checked and disabled if one or more specific stem cell lines are listed below.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.StemCells.StemCellsIndicator",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.StemCells.StemCellsIndicator",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.StemCells.isHumanStemCellsInvolved",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:b54adf4778b27a3f150b7622e4c76d48081b8340be3d4303bab93597d20902a4",
+      "source_collection": "conditions",
+      "source_index": 8,
+      "source_rule": "Check box. Enabled only when answer to \"Does the proposed project involve human embryonic stem cells?\" is \"Y\". Otherwise this checkbox is disabled. Also automatically un-checked and disabled if one or more specific stem cell lines are listed below.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.StemCells.isHumanStemCellsInvolved"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:156cd13b27aa8ba7ef1a08cf0f3d3d09e035b103142d8435f8e47936ea835adc",
+          "behavior:sha256:46d4e041157848d0a76b1eaae4323b3b3c71209ce404f74befbe79a58320feeb"
+        ],
+        "source_rule": "Check box. Enabled only when answer to \"Does the proposed project involve human embryonic stem cells?\" is \"Y\". Otherwise this checkbox is disabled. Also automatically un-checked and disabled if one or more specific stem cell lines are listed below.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.StemCells.CellLines",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.StemCells.CellLines",
+        "path_resolved": true,
+        "repeat_ancestors": [
+          {
+            "coordinate_variable": "$index0",
+            "depth": 0,
+            "group_path": "PHS398_CoverPageSupplement_5_0.StemCells.CellLines"
+          }
+        ],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.isHumanFetalTissueInvolved",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:9310225e82605ed89960daa67e4865cbb33d64fabe4da8fb78efc43e443988cf",
+      "source_collection": "conditions",
+      "source_index": 9,
+      "source_rule": "Provide standard \"Add\", \"Delete\" and \"View\" features. Enabled and required if answered “Yes” for the “Does the proposed project involve human fetal tissue obtained from elective abortions?” question.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.isHumanFetalTissueInvolved"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:245245556c7a4e24b2bf3decdd37b61c8dd7b646f3eafed1d7ab995a4238ed5e",
+          "behavior:sha256:96cf8f4d86dfa5c810f601cfabc92f2fa31fb558a474f835bb93e65beaae1cbb"
+        ],
+        "source_rule": "Provide standard \"Add\", \"Delete\" and \"View\" features. Enabled and required if answered “Yes” for the “Does the proposed project involve human fetal tissue obtained from elective abortions?” question.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.ComplianceAssurance.attFile",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.ComplianceAssurance.attFile",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.isHumanFetalTissueInvolved",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "required",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:ca87747309a39d4fe8fd0c257a92990b812cc6c23a3cd0ea7188d216a49ad886",
+      "source_collection": "conditions",
+      "source_index": 10,
+      "source_rule": "Provide standard \"Add\", \"Delete\" and \"View\" features. Enabled and required if answered “Yes” for the “Does the proposed project involve human fetal tissue obtained from elective abortions?” question.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.isHumanFetalTissueInvolved"
+        ],
+        "effect": "required",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:245245556c7a4e24b2bf3decdd37b61c8dd7b646f3eafed1d7ab995a4238ed5e",
+          "behavior:sha256:96cf8f4d86dfa5c810f601cfabc92f2fa31fb558a474f835bb93e65beaae1cbb"
+        ],
+        "source_rule": "Provide standard \"Add\", \"Delete\" and \"View\" features. Enabled and required if answered “Yes” for the “Does the proposed project involve human fetal tissue obtained from elective abortions?” question.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.ComplianceAssurance.attFile",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.ComplianceAssurance.attFile",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.isHumanFetalTissueInvolved",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:515368cf0ac6a9592c448da40b16284abc1698747d4fb6bc8060233961a2c04f",
+      "source_collection": "conditions",
+      "source_index": 11,
+      "source_rule": "Provide standard \"Add\", \"Delete\" and \"View\" features. Enabled and required if answered “Yes” for the “Does the proposed project involve human fetal tissue obtained from elective abortions?” question.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.isHumanFetalTissueInvolved"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:245245556c7a4e24b2bf3decdd37b61c8dd7b646f3eafed1d7ab995a4238ed5e",
+          "behavior:sha256:96cf8f4d86dfa5c810f601cfabc92f2fa31fb558a474f835bb93e65beaae1cbb"
+        ],
+        "source_rule": "Provide standard \"Add\", \"Delete\" and \"View\" features. Enabled and required if answered “Yes” for the “Does the proposed project involve human fetal tissue obtained from elective abortions?” question.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.HFTIRBConsentForm.attFile",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.HFTIRBConsentForm.attFile",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.isHumanFetalTissueInvolved",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "required",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:ba6b8e28c6449563f8b0e1c699dfd8e3df331bfe1312a7d9e7ed6bb79dd368dd",
+      "source_collection": "conditions",
+      "source_index": 12,
+      "source_rule": "Provide standard \"Add\", \"Delete\" and \"View\" features. Enabled and required if answered “Yes” for the “Does the proposed project involve human fetal tissue obtained from elective abortions?” question.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.isHumanFetalTissueInvolved"
+        ],
+        "effect": "required",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:245245556c7a4e24b2bf3decdd37b61c8dd7b646f3eafed1d7ab995a4238ed5e",
+          "behavior:sha256:96cf8f4d86dfa5c810f601cfabc92f2fa31fb558a474f835bb93e65beaae1cbb"
+        ],
+        "source_rule": "Provide standard \"Add\", \"Delete\" and \"View\" features. Enabled and required if answered “Yes” for the “Does the proposed project involve human fetal tissue obtained from elective abortions?” question.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.HFTIRBConsentForm.attFile",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.HFTIRBConsentForm.attFile",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.IsChangeOfPDPI",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:ee325c8eba26cad6be92b934ee7292404b19dda97f0fc59f26023ea32c72f578",
+      "source_collection": "conditions",
+      "source_index": 13,
+      "source_rule": "Enabled only if the answer to the \"Change of Project Director/Principal Investigator\" question is \"Yes\". If a PI/PD change is not indicated by the checkbox, then this field is disabled.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.IsChangeOfPDPI"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:012ea5510b01d0407ec43ec34855c5df2d8d6dd8d3b4f2bddf869395b9385651",
+          "behavior:sha256:258fc392863f34c177d35e362f34c55d3c5050d21595c0bcd94862d921a1ed15",
+          "behavior:sha256:bab3b6a4116951be0b80e0c478ee17deef92de914901ab7b8f807f1bd527544e",
+          "behavior:sha256:c156203616d42fae917474134ded5160ef2a6e77ba365e1124206fb4f8723820",
+          "behavior:sha256:f659b5de1115d9b80ff14cbd3b5d54aa2dbeb250af83420abb04013671b70ce0"
+        ],
+        "source_rule": "Enabled only if the answer to the \"Change of Project Director/Principal Investigator\" question is \"Yes\". If a PI/PD change is not indicated by the checkbox, then this field is disabled.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.FormerPD_Name.PrefixName",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.FormerPD_Name.PrefixName",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.IsChangeOfPDPI",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:4126fa155b1cd79574dcb54c2152997c53a7a257db811bc64c742800c9dae293",
+      "source_collection": "conditions",
+      "source_index": 14,
+      "source_rule": "Enabled only if the answer to the \"Change of Project Director/Principal Investigator\" question is \"Yes\". If a PI/PD change is not indicated by the checkbox, then this field is disabled.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.IsChangeOfPDPI"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:012ea5510b01d0407ec43ec34855c5df2d8d6dd8d3b4f2bddf869395b9385651",
+          "behavior:sha256:258fc392863f34c177d35e362f34c55d3c5050d21595c0bcd94862d921a1ed15",
+          "behavior:sha256:bab3b6a4116951be0b80e0c478ee17deef92de914901ab7b8f807f1bd527544e",
+          "behavior:sha256:c156203616d42fae917474134ded5160ef2a6e77ba365e1124206fb4f8723820",
+          "behavior:sha256:f659b5de1115d9b80ff14cbd3b5d54aa2dbeb250af83420abb04013671b70ce0"
+        ],
+        "source_rule": "Enabled only if the answer to the \"Change of Project Director/Principal Investigator\" question is \"Yes\". If a PI/PD change is not indicated by the checkbox, then this field is disabled.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.FormerPD_Name.FirstName",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.FormerPD_Name.FirstName",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.IsChangeOfPDPI",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:cf972539d44cffb8e8273977a866678bd8f07ed94b5cbe08c9bd7ad501a056fb",
+      "source_collection": "conditions",
+      "source_index": 15,
+      "source_rule": "Enabled only if the answer to the \"Change of Project Director/Principal Investigator\" question is \"Yes\". If a PI/PD change is not indicated by the checkbox, then this field is disabled.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.IsChangeOfPDPI"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:012ea5510b01d0407ec43ec34855c5df2d8d6dd8d3b4f2bddf869395b9385651",
+          "behavior:sha256:258fc392863f34c177d35e362f34c55d3c5050d21595c0bcd94862d921a1ed15",
+          "behavior:sha256:bab3b6a4116951be0b80e0c478ee17deef92de914901ab7b8f807f1bd527544e",
+          "behavior:sha256:c156203616d42fae917474134ded5160ef2a6e77ba365e1124206fb4f8723820",
+          "behavior:sha256:f659b5de1115d9b80ff14cbd3b5d54aa2dbeb250af83420abb04013671b70ce0"
+        ],
+        "source_rule": "Enabled only if the answer to the \"Change of Project Director/Principal Investigator\" question is \"Yes\". If a PI/PD change is not indicated by the checkbox, then this field is disabled.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.FormerPD_Name.MiddleName",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.FormerPD_Name.MiddleName",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.IsChangeOfPDPI",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:2a87b8e44c1ce82e81599b634879a9a487401843a75c7a0ebdb6f8277e9a1846",
+      "source_collection": "conditions",
+      "source_index": 16,
+      "source_rule": "Enabled only if the answer to the \"Change of Project Director/Principal Investigator\" question is \"Yes\". If a PI/PD change is not indicated by the checkbox, then this field is disabled.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.IsChangeOfPDPI"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:012ea5510b01d0407ec43ec34855c5df2d8d6dd8d3b4f2bddf869395b9385651",
+          "behavior:sha256:258fc392863f34c177d35e362f34c55d3c5050d21595c0bcd94862d921a1ed15",
+          "behavior:sha256:bab3b6a4116951be0b80e0c478ee17deef92de914901ab7b8f807f1bd527544e",
+          "behavior:sha256:c156203616d42fae917474134ded5160ef2a6e77ba365e1124206fb4f8723820",
+          "behavior:sha256:f659b5de1115d9b80ff14cbd3b5d54aa2dbeb250af83420abb04013671b70ce0"
+        ],
+        "source_rule": "Enabled only if the answer to the \"Change of Project Director/Principal Investigator\" question is \"Yes\". If a PI/PD change is not indicated by the checkbox, then this field is disabled.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.FormerPD_Name.LastName",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.FormerPD_Name.LastName",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.IsChangeOfPDPI",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:181074593f33edc299f02a857ca04735c73bf5f64216ed4474520c188139a1ff",
+      "source_collection": "conditions",
+      "source_index": 17,
+      "source_rule": "Enabled only if the answer to the \"Change of Project Director/Principal Investigator\" question is \"Yes\". If a PI/PD change is not indicated by the checkbox, then this field is disabled.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.IsChangeOfPDPI"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:012ea5510b01d0407ec43ec34855c5df2d8d6dd8d3b4f2bddf869395b9385651",
+          "behavior:sha256:258fc392863f34c177d35e362f34c55d3c5050d21595c0bcd94862d921a1ed15",
+          "behavior:sha256:bab3b6a4116951be0b80e0c478ee17deef92de914901ab7b8f807f1bd527544e",
+          "behavior:sha256:c156203616d42fae917474134ded5160ef2a6e77ba365e1124206fb4f8723820",
+          "behavior:sha256:f659b5de1115d9b80ff14cbd3b5d54aa2dbeb250af83420abb04013671b70ce0"
+        ],
+        "source_rule": "Enabled only if the answer to the \"Change of Project Director/Principal Investigator\" question is \"Yes\". If a PI/PD change is not indicated by the checkbox, then this field is disabled.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.FormerPD_Name.SuffixName",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.FormerPD_Name.SuffixName",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.IsChangeOfInstitution",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:47ad083619ebce974d1a8a4c6d82a699f8ad383381a05621c6b273bd45b64a57",
+      "source_collection": "conditions",
+      "source_index": 18,
+      "source_rule": "Enabled and required only if the answer to the \"Change of Recipient Organization\" question is \"Yes\". If a PI/PD change is not indicated by the checkbox, then this field is disabled.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.IsChangeOfInstitution"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:7aaf39441abad554fd98080dca5ed69a1f2c3352336cb2714f9866c12b598c05"
+        ],
+        "source_rule": "Enabled and required only if the answer to the \"Change of Recipient Organization\" question is \"Yes\". If a PI/PD change is not indicated by the checkbox, then this field is disabled.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.FormerInstitutionName",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.FormerInstitutionName",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.IsChangeOfInstitution",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "required",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:f069e492c579257f86041618e610e118818b37cfdd9ef6434ce36f3d9d51580e",
+      "source_collection": "conditions",
+      "source_index": 19,
+      "source_rule": "Enabled and required only if the answer to the \"Change of Recipient Organization\" question is \"Yes\". If a PI/PD change is not indicated by the checkbox, then this field is disabled.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.IsChangeOfInstitution"
+        ],
+        "effect": "required",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:7aaf39441abad554fd98080dca5ed69a1f2c3352336cb2714f9866c12b598c05"
+        ],
+        "source_rule": "Enabled and required only if the answer to the \"Change of Recipient Organization\" question is \"Yes\". If a PI/PD change is not indicated by the checkbox, then this field is disabled.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.FormerInstitutionName",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.FormerInstitutionName",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.IsInventionsAndPatents",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "visible",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:4c82eb242169e54c218f23b42c3903819b3d9c199300e071756a691644efa7d9",
+      "source_collection": "conditions",
+      "source_index": 20,
+      "source_rule": "Enabled and required only if the Inventions and Patents Question is answered \"Yes\". If the answer to \"Inventions and Patents\" is not \"Yes\", then this field is disabled.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.IsInventionsAndPatents"
+        ],
+        "effect": "visible",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:f06edbaf82f4cfd38fb50fcae9b71876c00ccf8c61fd51c6d3939869b5df1e18"
+        ],
+        "source_rule": "Enabled and required only if the Inventions and Patents Question is answered \"Yes\". If the answer to \"Inventions and Patents\" is not \"Yes\", then this field is disabled.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.IsPreviouslyReported",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.IsPreviouslyReported",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    },
+    {
+      "dependencies": [
+        {
+          "path": "PHS398_CoverPageSupplement_5_0.IsInventionsAndPatents",
+          "path_resolved": true,
+          "repeat_ancestors": [],
+          "resolution_scope": "local_form"
+        }
+      ],
+      "disposition": "working",
+      "effect": "required",
+      "execution_class": "executable",
+      "mechanism": "condition",
+      "operands": [],
+      "operator": "equals",
+      "rule_id": "runtime-rule:sha256:3f0a2c33a706d0d159f1f04a625d1e3f07469ec89c284a338dc3ac597f40e744",
+      "source_collection": "conditions",
+      "source_index": 21,
+      "source_rule": "Enabled and required only if the Inventions and Patents Question is answered \"Yes\". If the answer to \"Inventions and Patents\" is not \"Yes\", then this field is disabled.",
+      "source_runtime": {
+        "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+        "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+      },
+      "source_value": {
+        "dependency_paths": [
+          "PHS398_CoverPageSupplement_5_0.IsInventionsAndPatents"
+        ],
+        "effect": "required",
+        "operator": "equals",
+        "provenance": [
+          "sha256:bd467aee5184e8d13eb5867ba12370e60c9a10765d42a728ee8c28ab784f66ab work/form-metadata/PHS398_CoverPageSupplement_5_0-V5.0_F698.xls"
+        ],
+        "source_behavior_keys": [
+          "behavior:sha256:f06edbaf82f4cfd38fb50fcae9b71876c00ccf8c61fd51c6d3939869b5df1e18"
+        ],
+        "source_rule": "Enabled and required only if the Inventions and Patents Question is answered \"Yes\". If the answer to \"Inventions and Patents\" is not \"Yes\", then this field is disabled.",
+        "target_path": "PHS398_CoverPageSupplement_5_0.IsPreviouslyReported",
+        "value": "Yes"
+      },
+      "target": {
+        "path": "PHS398_CoverPageSupplement_5_0.IsPreviouslyReported",
+        "path_resolved": true,
+        "repeat_ancestors": [],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": [],
+      "value": "Yes"
+    }
+  ],
+  "runtime_contract": "generic-source-runtime-v1",
+  "source_ledger": {
+    "path": "artifacts/authoring/phs-supplemental-family/forms/PHS398CoverPageSupplement.json",
+    "sha256": "d62d8448e8438003e34bb76d65a49b3bf1c79fd8748abd656ddb797c18e90f69"
+  },
+  "source_runtime": {
+    "path": "artifacts/authoring/priority-runtime/PHS398CoverPageSupplement.runtime.json",
+    "sha256": "1c498c838893aab53584c325a962c3186c6e4a07a9959dcdbb7a5cbf674801f1"
+  }
+}

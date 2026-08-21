@@ -11,6 +11,7 @@ from .epa_key_contacts import EPA_KEY_CONTACT_v2_0
 from .gg_lobbying_form import GG_LobbyingForm_v1_1
 from .key_contacts import KeyContacts_v2_0
 from .other_narrative_attachment import OtherNarrativeAttachment_v1_2
+from .phs398_cover_page_supplement import PHS398CoverPageSupplement_v5_0
 from .phs_fellowship_supplemental import PHSFellowshipSupplemental_v8_0
 from .project_abstract import ProjectAbstract_v1_2
 from .project_abstract_summary import ProjectAbstractSummary_v2_0
@@ -63,6 +64,7 @@ _ALL_FORMS: list[Form] = [
     RRMPSubawardBudget_v3_0,
     RRMPBudget_v3_0,
     PHSFellowshipSupplemental_v8_0,
+    PHS398CoverPageSupplement_v5_0,
 ]
 
 

@@ -164,6 +164,7 @@ class FormType(StrEnum):
     RR_MP_SUBAWARD_BUDGET = "RRMPSubawardBudget"
     RR_MP_BUDGET = "RRMPBudget"
     PHS_FELLOWSHIP_SUPPLEMENTAL = "PHSFellowshipSupplemental"
+    PHS398_COVER_PAGE_SUPPLEMENT = "PHS398CoverPageSupplement"
     SF424_SHORT = "SF424Short"
     SF424A = "SF424A"
     SF424B = "SF424B"
