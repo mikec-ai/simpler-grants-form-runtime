@@ -5,8 +5,10 @@ from src.db.models.competition_models import Form
 from src.form_schema.components import (
     OpportunityIdentityComponentConfig,
     OrganizationIdentityComponentConfig,
+    ProjectIdentityPeriodComponentConfig,
     build_opportunity_identity_component,
     build_organization_identity_component,
+    build_project_identity_period_component,
 )
 from src.form_schema.shared import ADDRESS_SHARED_V1, COMMON_SHARED_V1
 
@@ -23,6 +25,11 @@ _OPPORTUNITY_IDENTITY = build_opportunity_identity_component(
         agency_name_title="Name of Federal Agency",
         funding_opportunity_number_title="Funding Opportunity Number",
         funding_opportunity_title_title="Funding Opportunity Title",
+    )
+).mount_root()
+_PROJECT_IDENTITY_PERIOD = build_project_identity_period_component(
+    ProjectIdentityPeriodComponentConfig(
+        date_description="Enter the date in the format MM/DD/YYYY."
     )
 ).mount_root()
 
@@ -208,13 +215,7 @@ FORM_JSON_SCHEMA = {
             "minLength": 1,
             "maxLength": 6,
         },
-        "project_title": {
-            "type": "string",
-            "title": "Project Title",
-            "description": "Enter a brief, descriptive title of the project.",
-            "minLength": 1,
-            "maxLength": 200,
-        },
+        "project_title": _PROJECT_IDENTITY_PERIOD.json_schema_properties["project_title"],
         "project_description": {
             "type": "string",
             "title": "Project Description",
@@ -222,18 +223,8 @@ FORM_JSON_SCHEMA = {
             "minLength": 1,
             "maxLength": 1000,
         },
-        "project_start_date": {
-            "type": "string",
-            "title": "Project Start Date",
-            "description": "Enter the date in the format MM/DD/YYYY.",
-            "format": "date",
-        },
-        "project_end_date": {
-            "type": "string",
-            "title": "Project End Date",
-            "description": "Enter the date in the format MM/DD/YYYY.",
-            "format": "date",
-        },
+        "project_start_date": _PROJECT_IDENTITY_PERIOD.json_schema_properties["project_start_date"],
+        "project_end_date": _PROJECT_IDENTITY_PERIOD.json_schema_properties["project_end_date"],
         "project_director": {
             "allOf": [{"$ref": "#/$defs/contact_person_group"}],
             "title": "Project Director",
@@ -385,10 +376,10 @@ FORM_UI_SCHEMA = [
         "name": "project_information",
         "label": "6. Project Information",
         "children": [
-            {"type": "field", "definition": "/properties/project_title"},
+            _PROJECT_IDENTITY_PERIOD.ui_schema_fields["project_title"],
             {"type": "field", "definition": "/properties/project_description"},
-            {"type": "field", "definition": "/properties/project_start_date"},
-            {"type": "field", "definition": "/properties/project_end_date"},
+            _PROJECT_IDENTITY_PERIOD.ui_schema_fields["project_start_date"],
+            _PROJECT_IDENTITY_PERIOD.ui_schema_fields["project_end_date"],
         ],
     },
     {
@@ -590,10 +581,10 @@ FORM_XML_TRANSFORM_RULES = {
         "xml_transform": {"target": "CongressionalDistrictApplicant"}
     },
     # Project information
-    "project_title": {"xml_transform": {"target": "ProjectTitle"}},
+    "project_title": _PROJECT_IDENTITY_PERIOD.xml_transform_rules["project_title"],
     "project_description": {"xml_transform": {"target": "ProjectDescription"}},
-    "project_start_date": {"xml_transform": {"target": "ProjectStartDate"}},
-    "project_end_date": {"xml_transform": {"target": "ProjectEndDate"}},
+    "project_start_date": _PROJECT_IDENTITY_PERIOD.xml_transform_rules["project_start_date"],
+    "project_end_date": _PROJECT_IDENTITY_PERIOD.xml_transform_rules["project_end_date"],
     # Project director (item 7) and primary contact (item 8) - ContactPersonDataTypeV3
     "project_director": _contact_person_group_xml("ProjectDirectorGroup"),
     "same_as_project_director": {
@@ -655,5 +646,6 @@ SF424Short_v3_0 = Form(
     sgg_version="1.0",
     is_deprecated=False,
 )
+del _PROJECT_IDENTITY_PERIOD
 del _OPPORTUNITY_IDENTITY
 del _ORGANIZATION_IDENTITY

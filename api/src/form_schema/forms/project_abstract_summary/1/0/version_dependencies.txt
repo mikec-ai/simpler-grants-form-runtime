@@ -3,6 +3,7 @@ form_schema/components/__init__.py
 form_schema/components/component_definition.py
 form_schema/components/opportunity_identity.py
 form_schema/components/organization_identity.py
+form_schema/components/project_identity_period.py
 form_schema/shared/__init__.py
 form_schema/shared/common_shared.py
 form_schema/shared/shared_schema.py

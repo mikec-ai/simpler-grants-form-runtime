@@ -31,5 +31,11 @@ number/title. Its configuration is limited to the three observed title deltas
 and the shared editable/read-only interaction; schemas, prepopulation rules, and
 direct XML targets remain fixed by the component contract.
 
+The project-identity-period component shares project title and proposed
+start/end dates across SF-424 and SF-424 Short. Project descriptions,
+congressional districts, attachment extensions, requiredness, and section
+placement remain form-owned. The one observed date-help-text whitespace delta
+is explicit configuration so composition preserves exact runtime parity.
+
 Optional source-question bindings are build provenance only. They do not assert
 semantic equivalence or make a component eligible for published coverage.

@@ -3,8 +3,10 @@ from pathlib import Path
 from src.form_schema.components import (
     OpportunityIdentityComponentConfig,
     OrganizationIdentityComponentConfig,
+    ProjectIdentityPeriodComponentConfig,
     build_opportunity_identity_component,
     build_organization_identity_component,
+    build_project_identity_period_component,
 )
 from src.form_schema.resolved_form_package import load_resolved_form_package
 from src.form_schema.shared import ADDRESS_SHARED_V1, COMMON_SHARED_V1
@@ -23,6 +25,11 @@ _OPPORTUNITY_IDENTITY = build_opportunity_identity_component(
         agency_name_title="Agency Name",
         funding_opportunity_number_title="Opportunity Number",
         funding_opportunity_title_title="Opportunity title",
+    )
+).mount_root()
+_PROJECT_IDENTITY_PERIOD = build_project_identity_period_component(
+    ProjectIdentityPeriodComponentConfig(
+        date_description="Enter the date in the format MM/DD/YYYY. "
     )
 ).mount_root()
 
@@ -342,13 +349,7 @@ FORM_JSON_SCHEMA = {
             "title": "Areas Affected",
             "description": "List the areas or entities using the categories (e.g., cities, counties, states, etc.) specified in agency instructions.",
         },
-        "project_title": {
-            "type": "string",
-            "title": "Project Title",
-            "description": "Enter a brief, descriptive title of the project.",
-            "minLength": 1,
-            "maxLength": 200,
-        },
+        "project_title": _PROJECT_IDENTITY_PERIOD.json_schema_properties["project_title"],
         "additional_project_title": {
             "type": "array",
             "title": "Additional Project Title",
@@ -375,18 +376,8 @@ FORM_JSON_SCHEMA = {
             "title": "Additional Congressional Districts",
             "description": "Attach an additional list of Program/Project Congressional Districts if needed.",
         },
-        "project_start_date": {
-            "type": "string",
-            "title": "Project Start Date",
-            "description": "Enter the date in the format MM/DD/YYYY. ",
-            "format": "date",
-        },
-        "project_end_date": {
-            "type": "string",
-            "title": "Project End Date",
-            "description": "Enter the date in the format MM/DD/YYYY. ",
-            "format": "date",
-        },
+        "project_start_date": _PROJECT_IDENTITY_PERIOD.json_schema_properties["project_start_date"],
+        "project_end_date": _PROJECT_IDENTITY_PERIOD.json_schema_properties["project_end_date"],
         "federal_estimated_funding": {
             "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("budget_monetary_amount")}],
             "title": "Federal Estimated Funding",
@@ -649,7 +640,7 @@ FORM_UI_SCHEMA = [
         "name": "project_title",
         "label": "15. Descriptive Title of Applicant's Project",
         "children": [
-            {"type": "field", "definition": "/properties/project_title"},
+            _PROJECT_IDENTITY_PERIOD.ui_schema_fields["project_title"],
             {
                 "type": "field",
                 "definition": "/properties/additional_project_title",
@@ -676,8 +667,8 @@ FORM_UI_SCHEMA = [
         "name": "project_dates",
         "label": "17. Proposed Project Start and End Dates",
         "children": [
-            {"type": "field", "definition": "/properties/project_start_date"},
-            {"type": "field", "definition": "/properties/project_end_date"},
+            _PROJECT_IDENTITY_PERIOD.ui_schema_fields["project_start_date"],
+            _PROJECT_IDENTITY_PERIOD.ui_schema_fields["project_end_date"],
         ],
     },
     {
@@ -949,7 +940,7 @@ FORM_XML_TRANSFORM_RULES = {
     # sequence position; the attachment transformer emits the actual element.
     "areas_affected": {"xml_transform": {"target": "areas_affected"}},
     # Project information - direct field mappings
-    "project_title": {"xml_transform": {"target": "ProjectTitle"}},
+    "project_title": _PROJECT_IDENTITY_PERIOD.xml_transform_rules["project_title"],
     "additional_project_title": {"xml_transform": {"target": "additional_project_title"}},
     "congressional_district_applicant": {
         "xml_transform": {"target": "CongressionalDistrictApplicant"}
@@ -960,8 +951,8 @@ FORM_XML_TRANSFORM_RULES = {
     "additional_congressional_districts": {
         "xml_transform": {"target": "additional_congressional_districts"}
     },
-    "project_start_date": {"xml_transform": {"target": "ProjectStartDate"}},
-    "project_end_date": {"xml_transform": {"target": "ProjectEndDate"}},
+    "project_start_date": _PROJECT_IDENTITY_PERIOD.xml_transform_rules["project_start_date"],
+    "project_end_date": _PROJECT_IDENTITY_PERIOD.xml_transform_rules["project_end_date"],
     # Funding information - with currency formatting
     "federal_estimated_funding": {
         "xml_transform": {
@@ -1077,5 +1068,6 @@ FORM_XML_TRANSFORM_RULES = {
 # The constants above remain temporarily as a compatibility oracle. The active
 # runtime form is materialized from the source-pinned resolved package.
 SF424_v4_0 = load_resolved_form_package(Path(__file__).with_name("resolved_package")).to_form()
+del _PROJECT_IDENTITY_PERIOD
 del _OPPORTUNITY_IDENTITY
 del _ORGANIZATION_IDENTITY
