@@ -1,8 +1,17 @@
 import uuid
+from copy import deepcopy
 
 from src.constants.lookup_constants import FormType
 from src.db.models.competition_models import Form
+from src.form_schema.components.assurances_signature import (
+    AssurancesSignatureComponentConfig,
+    build_assurances_signature_component,
+)
 from src.form_schema.shared import COMMON_SHARED_V1
+
+_ASSURANCES_SIGNATURE = build_assurances_signature_component(
+    AssurancesSignatureComponentConfig(date_title="Date submitted")
+).mount_root()
 
 DIRECTIONS = "Public reporting burden for this collection of information is estimated to average 15 minutes per response, including time for reviewing instructions, searching existing data sources, gathering and maintaining the data needed, and completing and reviewing the collection of information. Send comments regarding the burden estimate or any other aspect of this collection of information, including suggestions for reducing this burden, to the Office of Management and Budget, Paperwork Reduction Project (0348-0040), Washington, DC 20503."
 
@@ -50,7 +59,7 @@ As the duly authorized representative of the applicant, I certify that the appli
 19. Will comply with the requirements of Section 106(g) of the Trafficking Victims Protection Act (TVPA) of 2000, as amended (22 U.S.C. 7104) which prohibits grant award recipients or a sub-recipient from (1) Engaging in severe forms of trafficking in persons during the period of time that the award is in effect (2) Procuring a commercial sex act during the period of time that the award is in effect or (3) Using forced labor in the performance of the award or subawards under the award.
 """
 
-FORM_JSON_SCHEMA = {
+_ORACLE_FORM_JSON_SCHEMA = {
     "type": "object",
     "required": ["title", "applicant_organization"],
     "properties": {
@@ -77,7 +86,7 @@ FORM_JSON_SCHEMA = {
     },
 }
 
-FORM_UI_SCHEMA = [
+_ORACLE_FORM_UI_SCHEMA = [
     {
         "type": "section",
         "label": "Burden Statement",
@@ -105,7 +114,7 @@ FORM_UI_SCHEMA = [
     },
 ]
 
-FORM_RULE_SCHEMA = {
+_ORACLE_FORM_RULE_SCHEMA = {
     ##### POST-POPULATION RULES
     "signature": {"gg_post_population": {"rule": "signature"}},
     "date_signed": {"gg_post_population": {"rule": "current_date"}},
@@ -113,7 +122,7 @@ FORM_RULE_SCHEMA = {
 
 # XML Transformation Rules for SF-424B v1.1 (Assurances for Non-Construction Programs)
 # XSD: https://apply07.grants.gov/apply/forms/schemas/SF424B-V1.1.xsd
-FORM_XML_TRANSFORM_RULES = {
+_ORACLE_FORM_XML_TRANSFORM_RULES = {
     # Metadata
     "_xml_config": {
         "description": "XML transformation rules for SF-424B Assurances for Non-Construction Programs",
@@ -177,6 +186,24 @@ FORM_XML_TRANSFORM_RULES = {
         }
     },
 }
+
+FORM_JSON_SCHEMA = deepcopy(_ORACLE_FORM_JSON_SCHEMA)
+FORM_JSON_SCHEMA["properties"] = deepcopy(_ASSURANCES_SIGNATURE.json_schema_properties)
+assert FORM_JSON_SCHEMA == _ORACLE_FORM_JSON_SCHEMA
+
+FORM_UI_SCHEMA = deepcopy(_ORACLE_FORM_UI_SCHEMA)
+FORM_UI_SCHEMA[2]["children"] = [
+    _ASSURANCES_SIGNATURE.ui_schema_fields[field]
+    for field in ("signature", "title", "applicant_organization", "date_signed")
+]
+assert FORM_UI_SCHEMA == _ORACLE_FORM_UI_SCHEMA
+
+FORM_RULE_SCHEMA = deepcopy(_ORACLE_FORM_RULE_SCHEMA)
+assert FORM_RULE_SCHEMA == _ORACLE_FORM_RULE_SCHEMA
+
+# The form-specific wire namespace and programType remain form-owned until a
+# source-pinned SF-424B XML plan is emitted. The retained oracle stays active.
+FORM_XML_TRANSFORM_RULES = deepcopy(_ORACLE_FORM_XML_TRANSFORM_RULES)
 
 SF424b_v1_1 = Form(
     # https://grants.gov/forms/form-items-description/fid/240

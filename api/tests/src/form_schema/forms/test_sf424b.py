@@ -1,7 +1,19 @@
+import importlib
+
 import pytest
 
 from src.form_schema.jsonschema_validator import validate_json_schema_for_form
 from tests.src.form_schema.forms.conftest import validate_required
+
+_FORM_MODULE = importlib.import_module("src.form_schema.forms.sf424b.1.0.form_json")
+
+
+def test_sf424b_shared_profile_preserves_the_native_oracle() -> None:
+    assert _FORM_MODULE.FORM_JSON_SCHEMA == _FORM_MODULE._ORACLE_FORM_JSON_SCHEMA
+    assert _FORM_MODULE.FORM_UI_SCHEMA == _FORM_MODULE._ORACLE_FORM_UI_SCHEMA
+    assert _FORM_MODULE.FORM_RULE_SCHEMA == _FORM_MODULE._ORACLE_FORM_RULE_SCHEMA
+    assert _FORM_MODULE.FORM_XML_TRANSFORM_RULES == (_FORM_MODULE._ORACLE_FORM_XML_TRANSFORM_RULES)
+    assert _FORM_MODULE._ASSURANCES_SIGNATURE.component_id == ("application.assurances-signature")
 
 
 @pytest.fixture

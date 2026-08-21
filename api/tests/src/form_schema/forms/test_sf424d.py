@@ -13,8 +13,8 @@ def test_sf424d_shared_composition_preserves_the_native_oracle() -> None:
     assert _FORM_MODULE.FORM_UI_SCHEMA == _FORM_MODULE._ORACLE_FORM_UI_SCHEMA
     assert _FORM_MODULE.FORM_RULE_SCHEMA == _FORM_MODULE._ORACLE_FORM_RULE_SCHEMA
     assert (
-        _FORM_MODULE.FORM_JSON_SCHEMA["properties"]["applicant_organization"]
-        == _FORM_MODULE._APPLICANT_ORGANIZATION.json_schema_properties["applicant_organization"]
+        _FORM_MODULE.FORM_JSON_SCHEMA["properties"]
+        == _FORM_MODULE._ASSURANCES_SIGNATURE.json_schema_properties
     )
     source_plan = _FORM_MODULE.FORM_XML_TRANSFORM_RULES["_xml_config"]["source_plan"]
     assert source_plan["contract"] == "source-pinned-xml-plan/v1"

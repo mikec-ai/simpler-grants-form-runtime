@@ -21,7 +21,7 @@
     {"form": "SF-424", "module": "sf424", "status": "partial", "reuse": "shared components reconstruct compatibility oracle; active form loads resolved package", "parity_test": "tests/src/form_schema/forms/test_sf424.py"},
     {"form": "SF-424 Short", "module": "sf424_short", "status": "converted", "reuse": "contact_profile_and_person_name_components", "parity_test": "tests/src/form_schema/forms/test_sf424_short.py"},
     {"form": "SF-424A", "module": "sf424a", "status": "pending"},
-    {"form": "SF-424B", "module": "sf424b", "status": "pending"},
+    {"form": "SF-424B", "module": "sf424b", "status": "converted", "reuse": "assurances_signature_component", "parity_test": "tests/src/form_schema/forms/test_sf424b.py"},
     {"form": "SF-424D", "module": "sf424d", "status": "converted", "reuse": "organization_name_component_and_source_pinned_xml_compiler", "parity_test": "tests/src/services/xml_generation/test_sf424d_xml_generation.py"},
     {"form": "SF-LLL", "module": "sflll", "status": "pending"}
   ]
