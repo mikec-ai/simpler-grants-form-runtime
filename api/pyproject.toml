@@ -59,6 +59,7 @@ create-workflow-diagrams = "bin.create_workflow_diagrams:main"
 setup-postgres-db = "src.db.migrations.setup_local_postgres_db:setup_local_postgres_db"
 setup-local-dynamodb = "src.db.setup_local_dynamodb:setup_local_dynamodb"
 dat-to-jsonschema = "src.form_schema.dat_to_jsonschema_cli:main"
+form-analysis-export = "src.form_schema.analysis_projection_cli:main"
 validate-simpler-endpoints = "tests.validate_legacy_soap_api.validate_soap_endpoints:validate_simpler_endpoints"
 seed-local-soap-certificate = "tests.lib.seed_local_soap_certificate:seed_local_soap_certificate"
 

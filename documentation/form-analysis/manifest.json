@@ -1,0 +1,58 @@
+{
+  "contract": "simpler-form-analysis-projection/v1",
+  "outputs": [
+    {
+      "name": "forms",
+      "path": "forms.csv",
+      "rows": 8,
+      "sha256": "bdfadf401343f29ed354b5080c47f07db2538b571244cdf161018b4341e4425f"
+    },
+    {
+      "name": "questions",
+      "path": "questions.csv",
+      "rows": 264,
+      "sha256": "008f2019eeaa77c7f45e05bd37a6dd9d15ca2ac31c3f27dd592dfc9cb4e78c06"
+    },
+    {
+      "name": "form_questions",
+      "path": "form_questions.csv",
+      "rows": 736,
+      "sha256": "380671fac064f1663b87013f4171227f9840d64c1646d7cf4bdc6d41a5dd6602"
+    },
+    {
+      "name": "form_pairs",
+      "path": "form_pairs.csv",
+      "rows": 28,
+      "sha256": "a610ce64985eb6c8246fb4a824583616e660df20ff5ccc1081b7eac9623aaaae"
+    },
+    {
+      "name": "fields",
+      "path": "fields.csv",
+      "rows": 1197,
+      "sha256": "16f679ce11af7ac21cbc88f826eb3e54c49616eb81991ebbdea56d20607f2a2a"
+    },
+    {
+      "name": "exceptions",
+      "path": "exceptions.csv",
+      "rows": 248,
+      "sha256": "a8f8782c0fed1d1695736cb8e720f9ec1678a356f449830d5d57d6385aacba06"
+    },
+    {
+      "name": "projection",
+      "path": "projection.json",
+      "rows": 1,
+      "sha256": "8a3b5b0380c49874e0a44ea6a5271c79910cd3392610ea3eebcb25f1fcf34a2b"
+    }
+  ],
+  "summary": {
+    "accepted_mappings": 0,
+    "canonical_questions": 264,
+    "fields": 1197,
+    "form_pairs": 28,
+    "form_question_associations": 736,
+    "forms": 8,
+    "published_coverage_eligible": false,
+    "quality_status": "needs_reconciliation",
+    "semantic_exceptions": 248
+  }
+}

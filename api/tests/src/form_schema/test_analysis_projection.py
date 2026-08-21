@@ -1,0 +1,151 @@
+import copy
+import csv
+import json
+from pathlib import Path
+
+import pytest
+
+from src.form_schema.analysis_projection import (
+    AnalysisProjectionError,
+    build_projection,
+    discover_package_inputs,
+    project_fields,
+    select_packages,
+    write_projection,
+)
+from src.form_schema.analysis_projection_cli import main
+from src.form_schema.forms import _ALL_FORMS
+
+FORMS_ROOT = Path(__file__).parents[3] / "src" / "form_schema" / "forms"
+COMMITTED_OUTPUT = Path(__file__).parents[4] / "documentation" / "form-analysis"
+
+
+def _packages():
+    return discover_package_inputs(FORMS_ROOT, _ALL_FORMS)
+
+
+def test_discovery_reads_actual_registered_implementation_packages() -> None:
+    packages = _packages()
+    keys = {package.form_key for package in packages}
+    assert keys == {
+        "RRBudget",
+        "RRBudget10",
+        "RRMPBudget",
+        "RRMPSubawardBudget",
+        "RRSF424",
+        "RRSubawardBudget10_30",
+        "RRSubawardBudget30",
+        "SF424",
+    }
+    assert len({package.form.short_form_name for package in packages}) == 8
+
+
+def test_projection_excludes_calculations_from_question_denominator() -> None:
+    package = next(package for package in _packages() if package.form_key == "RRMPBudget")
+    fields, exceptions = project_fields(package)
+    calculations = [field for field in fields if field.field_class == "calculation"]
+    assert len(calculations) == 43
+    assert all(field.canonical_question_id == "" for field in calculations)
+    assert len(exceptions) == 43
+    assert {row["resolution"] for row in exceptions} == {"excluded_from_question_denominator"}
+
+
+def test_known_subaward_denominator_drift_is_reported_not_published() -> None:
+    packages = select_packages(_packages(), {"RRSubawardBudget30", "RRSubawardBudget10_30"})
+    projection = build_projection(packages)
+    forms = {row["form_key"]: row for row in projection["forms"]}
+    assert forms["RRSubawardBudget30"]["calculation_fields"] == 56
+    assert forms["RRSubawardBudget10_30"]["calculation_fields"] == 56
+    assert forms["RRSubawardBudget30"]["question_occurrences"] == 101
+    assert forms["RRSubawardBudget10_30"]["question_occurrences"] == 101
+    assert projection["summary"]["quality_status"] == "needs_reconciliation"
+    assert projection["summary"]["published_coverage_eligible"] is False
+
+
+def test_implemented_fields_without_semantic_evidence_remain_visible() -> None:
+    projection = build_projection(select_packages(_packages(), {"SF424"}))
+    form = projection["forms"][0]
+    assert form["unmapped_fields"] > 0
+    assert form["question_occurrences"] == 0
+    assert projection["summary"]["published_coverage_eligible"] is False
+
+
+def test_pairwise_metrics_are_directional_and_set_based() -> None:
+    projection = build_projection(select_packages(_packages(), {"RRBudget", "RRBudget10"}))
+    [pair] = projection["form_pairs"]
+    assert pair["form_a"] == "RRBudget"
+    assert pair["form_b"] == "RRBudget10"
+    assert pair["questions_common"] > 0
+    assert pair["similarity"] == pytest.approx(pair["questions_common"] / pair["questions_union"])
+    assert pair["percent_a_shared_by_b"] == pytest.approx(
+        pair["questions_common"] / pair["questions_a"]
+    )
+    assert pair["percent_b_shared_by_a"] == pytest.approx(
+        pair["questions_common"] / pair["questions_b"]
+    )
+    assert pair["accepted_similarity"] == ""
+
+
+def test_output_is_deterministic_and_preserves_billys_xml_columns(tmp_path: Path) -> None:
+    projection = build_projection(select_packages(_packages(), {"RRBudget", "RRBudget10"}))
+    first = write_projection(tmp_path / "first", projection)
+    second = write_projection(tmp_path / "second", projection)
+    assert first == second
+    for output in first["outputs"]:
+        assert (tmp_path / "first" / output["path"]).read_bytes() == (
+            tmp_path / "second" / output["path"]
+        ).read_bytes()
+
+    with (tmp_path / "first" / "form_questions.csv").open(newline="", encoding="utf-8") as f:
+        rows = list(csv.DictReader(f))
+    assert rows
+    assert {"xml_path", "type_source", "type", "xsd_source", "xsd_sha256"} <= set(rows[0])
+    assert all(row["xml_path"] for row in rows)
+    assert all(row["xsd_source"] for row in rows)
+
+
+def test_committed_projection_is_current(tmp_path: Path) -> None:
+    generated = tmp_path / "generated"
+    manifest = write_projection(generated, build_projection(_packages()))
+    for output in manifest["outputs"]:
+        path = output["path"]
+        assert generated.joinpath(path).read_bytes() == COMMITTED_OUTPUT.joinpath(path).read_bytes()
+    assert (
+        generated.joinpath("manifest.json").read_bytes()
+        == COMMITTED_OUTPUT.joinpath("manifest.json").read_bytes()
+    )
+
+
+def test_unknown_form_fails_closed() -> None:
+    with pytest.raises(AnalysisProjectionError, match="unknown form keys"):
+        select_packages(_packages(), {"not-a-form"})
+
+
+def test_package_artifact_drift_fails_closed(tmp_path: Path) -> None:
+    source = next(package for package in _packages() if package.form_key == "RRBudget10")
+    package_dir = tmp_path / "rr_budget10" / "1" / "0" / "draft_package"
+    package_dir.mkdir(parents=True)
+    manifest = copy.deepcopy(source.manifest)
+    for artifact_name in manifest["artifacts"]:
+        (package_dir / artifact_name).write_bytes(
+            source.package_dir.joinpath(artifact_name).read_bytes()
+        )
+    (package_dir / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+    (package_dir / "candidate.json").write_text("{}\n", encoding="utf-8")
+    with pytest.raises(AnalysisProjectionError, match="artifact hash drift"):
+        discover_package_inputs(tmp_path, _ALL_FORMS)
+
+
+def test_cli_emits_toon_and_unknown_flags_exit_two(tmp_path: Path, capsys) -> None:
+    assert main(["export", "--form", "RRBudget10", "--out", str(tmp_path)]) == 0
+    output = capsys.readouterr().out
+    assert output.startswith("projection:\n")
+    assert "outputs[7]{name,path,rows,sha256}:" in output
+    assert json.loads((tmp_path / "projection.json").read_text())["contract"] == (
+        "simpler-form-analysis-projection/v1"
+    )
+
+    with pytest.raises(SystemExit) as exc:
+        main(["export", "--unknown"])
+    assert exc.value.code == 2
+    assert "error:" in capsys.readouterr().out
