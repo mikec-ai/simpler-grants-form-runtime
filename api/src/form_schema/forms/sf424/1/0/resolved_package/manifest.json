@@ -15,7 +15,7 @@
     },
     "xml_transform": {
       "path": "xml-transform.json",
-      "sha256": "7718a9e8db0cdfa361cd1826a941d6f2ff7d436bb88f999ddb78e1bd78acfbce"
+      "sha256": "fb82ec3ea67b518bed647b0637a1abeee23845645ee727494ca12f5e101b87f1"
     }
   },
   "compiler": {

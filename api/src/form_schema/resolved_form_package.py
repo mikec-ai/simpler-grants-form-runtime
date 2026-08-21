@@ -409,6 +409,12 @@ def _canonical_json(value: object) -> str:
     return json.dumps(value, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
 
 
+def _ordered_json(value: object) -> str:
+    """Snapshot a verified artifact without discarding meaningful mapping order."""
+
+    return json.dumps(value, ensure_ascii=False, separators=(",", ":"))
+
+
 def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:
     """Verify and load one self-contained, pre-resolved form package."""
 
@@ -561,5 +567,7 @@ def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:
         _ui_schema_json=_canonical_json(ui_schema),
         _mappings_json=_canonical_json(mappings) if mappings is not None else None,
         _rule_schema_json=_canonical_json(rule_schema) if rule_schema is not None else None,
-        _xml_transform_json=(_canonical_json(xml_transform) if xml_transform is not None else None),
+        # The XML transformer uses mapping insertion order to emit XSD sequences.
+        # Canonical key sorting here would preserve values while corrupting wire order.
+        _xml_transform_json=(_ordered_json(xml_transform) if xml_transform is not None else None),
     )

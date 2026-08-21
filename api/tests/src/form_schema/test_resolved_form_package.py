@@ -93,6 +93,7 @@ def test_generated_sf424_package_matches_current_native_form_exactly() -> None:
     assert form.form_ui_schema == SF424_MODULE.FORM_UI_SCHEMA
     assert form.form_rule_schema == SF424_MODULE.FORM_RULE_SCHEMA
     assert form.json_to_xml_schema == SF424_MODULE.FORM_XML_TRANSFORM_RULES
+    assert json.dumps(form.json_to_xml_schema) == json.dumps(SF424_MODULE.FORM_XML_TRANSFORM_RULES)
 
     generated_schema = copy.deepcopy(form.form_json_schema)
     package_provenance = generated_schema.pop("x-simpler-form-package")
