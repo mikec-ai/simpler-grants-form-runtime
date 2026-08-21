@@ -1,4 +1,5 @@
 import hashlib
+import importlib
 import json
 from pathlib import Path
 from types import SimpleNamespace
@@ -86,13 +87,18 @@ def test_budget_profiles_differ_only_by_period_limit_after_source_metadata() -> 
 
 
 def test_shared_builder_preserves_the_original_five_year_runtime_artifacts() -> None:
-    assert _canonical_hash(RRBudget_v3_0.form_json_schema) == (
+    form_module = importlib.reload(
+        importlib.import_module("src.form_schema.forms.rr_budget.1.0.form_json")
+    )
+    fresh_rr_budget = form_module.RRBudget_v3_0
+
+    assert _canonical_hash(fresh_rr_budget.form_json_schema) == (
         "425f5eb7970633d16ed06c502c0aa037e9fca8bccf4e23334cc897efa04b7ce9"
     )
-    assert _canonical_hash(RRBudget_v3_0.form_ui_schema) == (
+    assert _canonical_hash(fresh_rr_budget.form_ui_schema) == (
         "b8f59435180c791fc312de7c83da127a5b8f0ec0233f17ec83aaf58d3437ebed"
     )
-    assert _canonical_hash(RRBudget_v3_0.form_rule_schema) == (
+    assert _canonical_hash(fresh_rr_budget.form_rule_schema) == (
         "4e2239d4c53f21247b5d4f337d1d89c66d8d9e6059b4c70733ee3e50469195b5"
     )
 
