@@ -15,6 +15,7 @@ from .project_abstract import ProjectAbstract_v1_2
 from .project_abstract_summary import ProjectAbstractSummary_v2_0
 from .project_narrative_attachment import ProjectNarrativeAttachment_v1_2
 from .project_performance_site_location import ProjectPerformanceSiteLocation_v4_0
+from .rr_budget import RRBudget_v3_0
 from .rr_sf424 import RRSF424_v5_0
 from .sf424 import SF424_v4_0
 from .sf424_short import SF424Short_v3_0
@@ -49,6 +50,7 @@ _ALL_FORMS: list[Form] = [
     KeyContacts_v2_0,
     ProjectPerformanceSiteLocation_v4_0,
     RRSF424_v5_0,
+    RRBudget_v3_0,
 ]
 
 
