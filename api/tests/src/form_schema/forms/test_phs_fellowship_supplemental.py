@@ -17,8 +17,8 @@ from src.form_schema.components.source_resolved_form import (
 )
 from src.form_schema.forms.phs_fellowship_supplemental import (
     PHSFellowshipSupplemental_v8_0,
+    _form_json,
 )
-from src.form_schema.forms.phs_fellowship_supplemental import _form_json
 from src.form_schema.rule_processing.json_rule_context import JsonRuleConfig, JsonRuleContext
 from src.form_schema.rule_processing.json_rule_processor import process_rule_schema_for_context
 
