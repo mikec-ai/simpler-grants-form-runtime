@@ -27,11 +27,13 @@ by row count and SHA-256 digest.
 
 The current tables cover the nine forms with native source packages on this branch. Similarity is
 computed only from explicit canonical identifiers, never from labels. All current semantic
-mappings are agent-proposed, so accepted coverage remains zero. Blank XML type cells mean the
-implementation package has not preserved that evidence yet; the exporter does not infer XML types
-from JSON types.
+mappings are agent-proposed, so accepted coverage remains zero. Every applicant-question row now
+retains its exact XML path, source type, cardinality, XSD URL, and XSD digest. Blank role,
+dimension, component, or behavior cells mean that attribute does not apply or is not established
+by the pinned evidence; the exporter does not invent values to fill them.
 
-PHS Fellowship Supplemental exercises the versioned `simpler-form-field-metadata/v1` handoff. Its
-47 applicant questions, 2 calculated outputs, 17 attachments, and 99 technical/structural records
-project without reclassification, and its form-question rows retain complete XML type and XSD
-evidence.
+All nine forms exercise the versioned `simpler-form-field-metadata/v1` handoff. The source-ledger
+backfill also corrects two analytical defects in the former runtime-schema fallback: SF-424 now
+contributes 71 source-bound applicant questions rather than zero, and the 5-year and 10-year R&R
+Subaward Budget variants now share the same 98-question denominator. Four R&R Budget personnel-role
+records still lack semantic identifiers and appear explicitly in `exceptions.csv` for reconciliation.

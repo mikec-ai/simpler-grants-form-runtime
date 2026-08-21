@@ -225,6 +225,7 @@
     "json-schema.json": "085c292acf2390c40789a29c5e6f8137a5da0766a82c447abb760371e6a5977a",
     "projection-report.json": "233d7d1f4a4c4acd1ea329502e590b325fc1d308e2e8e44936d43b837df206e8",
     "rule-schema.json": "cfdbf76fc763dee265d647357cd917caae90625a97b8e6c46502661cb4c43848",
+    "source-ledger.json": "2e3e2d276fea1e721a9f24a2050eada41fbe28fb385cd30d1df06b2614dfee69",
     "ui-schema.json": "063862f153feca2b1e5d587f95301d6e1b8bd5f371650b177d90d3ac83ce7aaf",
     "xml-transform.json": "320de410ee9d15cc117e19aa504bd4dd185ea3edae61116e16b5a33a7fb46815"
   }

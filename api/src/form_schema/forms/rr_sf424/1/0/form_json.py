@@ -10,6 +10,7 @@ from src.form_schema.components.country_aware_address import (
     AddressChildNamespace,
     build_country_aware_address_component,
 )
+from src.form_schema.components.field_metadata import attach_field_metadata, build_field_metadata
 from src.form_schema.components.person_name import (
     PersonNameComponentConfig,
     build_person_name_component,
@@ -244,6 +245,23 @@ for _schema_path, _ui_base, _xml_path, _child_namespace in (
         child_namespace=_child_namespace,
     )
 apply_source_reviewed_behaviors(_ARTIFACTS)
+_SOURCE_LEDGER = _ARTIFACTS["source-ledger.json"]
+attach_field_metadata(
+    _ARTIFACTS["json-schema.json"],
+    build_field_metadata(
+        _ARTIFACTS["json-schema.json"],
+        form_id="RRSF424",
+        form_version="5.0",
+        source_records=_SOURCE_LEDGER["source_questions"],
+        question_candidates=_SOURCE_LEDGER.get("question_candidates", []),
+        component_assignments=_SOURCE_LEDGER.get("component_assignments", []),
+        review_boundary={
+            "semantic_mapping": _SOURCE_LEDGER.get("review_status", "agent_proposed"),
+            "published_coverage_eligible": False,
+            "production_ready": False,
+        },
+    ),
+)
 FORM_JSON_SCHEMA = _ARTIFACTS["json-schema.json"]
 FORM_UI_SCHEMA = _ARTIFACTS["ui-schema.json"]
 FORM_RULE_SCHEMA = _ARTIFACTS["rule-schema.json"]
@@ -271,3 +289,4 @@ del _schema_path
 del _ui_base
 del _xml_path
 del _child_namespace
+del _SOURCE_LEDGER

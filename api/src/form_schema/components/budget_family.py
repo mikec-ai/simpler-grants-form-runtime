@@ -12,6 +12,7 @@ from typing import Any
 
 from src.constants.lookup_constants import FormType
 from src.db.models.competition_models import Form
+from src.form_schema.components.field_metadata import attach_field_metadata, build_field_metadata
 from src.form_schema.components.schema_field_list import build_schema_field_list
 from src.form_schema.shared import COMMON_SHARED_V1
 
@@ -57,12 +58,10 @@ class BudgetFamilyBuild:
 
 _DECIMAL_PATTERN = r"^-?(?:\d{1,14}|\d{1,13}[.]\d|\d{1,12}[.]\d{2})$"
 _PERIOD_DEFINITION = "/properties/budget_year"
-_PERIOD_ATTACHMENTS = frozenset(
-    {
-        "/properties/budget_year/items/properties/key_persons/properties/attached_key_persons",
-        "/properties/budget_year/items/properties/equipment/properties/additional_equipments_attachment",
-    }
-)
+_PERIOD_ATTACHMENTS = frozenset({
+    "/properties/budget_year/items/properties/key_persons/properties/attached_key_persons",
+    "/properties/budget_year/items/properties/equipment/properties/additional_equipments_attachment",
+})
 
 
 def _subaward_definition(embedded_budget_key: str) -> str:
@@ -72,19 +71,17 @@ def _subaward_definition(embedded_budget_key: str) -> str:
 
 
 def _subaward_attachments(definition: str) -> frozenset[str]:
-    return frozenset(
-        {
-            f"{definition}/items/properties/budget_justification_attachment",
-            (
-                f"{definition}/items/properties/budget_year/items/properties/"
-                "key_persons/properties/attached_key_persons"
-            ),
-            (
-                f"{definition}/items/properties/budget_year/items/properties/"
-                "equipment/properties/additional_equipments_attachment"
-            ),
-        }
-    )
+    return frozenset({
+        f"{definition}/items/properties/budget_justification_attachment",
+        (
+            f"{definition}/items/properties/budget_year/items/properties/"
+            "key_persons/properties/attached_key_persons"
+        ),
+        (
+            f"{definition}/items/properties/budget_year/items/properties/"
+            "equipment/properties/additional_equipments_attachment"
+        ),
+    })
 
 
 def normalize_source_decimal_fields(schema: dict[str, Any]) -> int:
@@ -345,9 +342,10 @@ def reconcile_source_resolved_required_conditions(
         else:
             predicate = {"anyOf": [{"required": [name]} for name in dependency_names]}
         predicate["$comment"] = f"Source runtime rule {rule['rule_id']}"
-        parent_schema.setdefault("allOf", []).append(
-            {"if": predicate, "then": {"required": [target_name]}}
-        )
+        parent_schema.setdefault("allOf", []).append({
+            "if": predicate,
+            "then": {"required": [target_name]},
+        })
         projected_ids.append(rule["rule_id"])
 
     resolved_count = len(projected_ids) + len(structurally_satisfied_ids)
@@ -386,7 +384,7 @@ def _attachment_schema(schema: dict[str, Any], pointer: str) -> None:
 
 def _load_package(
     package_dir: Path, config: BudgetFamilyConfig
-) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], dict[str, Any]]:
     manifest = json.loads((package_dir / "manifest.json").read_text(encoding="utf-8"))
     if manifest.get("contract") != "simpler-budget-family-draft-package/v1":
         raise BudgetFamilyError("Unsupported budget-family draft package")
@@ -409,21 +407,29 @@ def _load_package(
         artifacts[name] = json.loads(artifact_bytes)
     candidate = artifacts["candidate.json"]
     runtime_rules = artifacts["runtime-rules.json"]
+    source_ledger = artifacts["source-ledger.json"]
     if candidate.get("metadata", {}).get("form_id") != config.source_form_id:
         raise BudgetFamilyError("Budget-family candidate identity drift")
     if runtime_rules.get("form_id") != config.source_form_id:
         raise BudgetFamilyError("Budget-family runtime identity drift")
+    if source_ledger.get("form_id") != config.source_form_id:
+        raise BudgetFamilyError("Budget-family source-ledger identity drift")
+    if source_ledger.get("form_version") != config.form_version:
+        raise BudgetFamilyError("Budget-family source-ledger version drift")
+    source_questions = source_ledger.get("source_questions")
+    if not isinstance(source_questions, list) or len(source_questions) != config.source_nodes:
+        raise BudgetFamilyError("Budget-family source-ledger accounting drift")
     source_versions = candidate.get("provenance", {}).get("source_versions")
     expected_source_version = manifest.get("source_evidence", {}).get("contract_source_version")
     if source_versions != [expected_source_version]:
         raise BudgetFamilyError("Budget-family source-version drift")
-    return manifest, candidate, runtime_rules
+    return manifest, candidate, runtime_rules, source_ledger
 
 
 def build_budget_family_form(package_dir: Path, config: BudgetFamilyConfig) -> BudgetFamilyBuild:
     """Resolve one budget-family profile into Simpler's native form contract."""
 
-    manifest, candidate, runtime_rules = _load_package(package_dir, config)
+    manifest, candidate, runtime_rules, source_ledger = _load_package(package_dir, config)
     evidence = manifest.get("source_evidence", {})
     expected_evidence = {
         "nodes": config.source_nodes,
@@ -525,12 +531,10 @@ def build_budget_family_form(package_dir: Path, config: BudgetFamilyConfig) -> B
                     field["type"] = "null"
                 if field["definition"] == "/properties/budget_justification_attachment":
                     field["widget"] = "Attachment"
-        attachment_pointers = frozenset(
-            {
-                "/properties/budget_justification_attachment",
-                *_PERIOD_ATTACHMENTS,
-            }
-        )
+        attachment_pointers = frozenset({
+            "/properties/budget_justification_attachment",
+            *_PERIOD_ATTACHMENTS,
+        })
         budget_rules = rule_schema
 
     for pointer in attachment_pointers:
@@ -545,6 +549,22 @@ def build_budget_family_form(package_dir: Path, config: BudgetFamilyConfig) -> B
         "gg_validation": {"rule": "attachment"}
     }
     budget_rules["budget_justification_attachment"] = {"gg_validation": {"rule": "attachment"}}
+
+    metadata = build_field_metadata(
+        schema,
+        form_id=config.source_form_id,
+        form_version=config.form_version,
+        source_records=source_ledger["source_questions"],
+        question_candidates=source_ledger.get("question_candidates", []),
+        component_assignments=source_ledger.get("component_assignments", []),
+        runtime_rules=runtime_rules.get("rules", []),
+        review_boundary={
+            "semantic_mapping": source_ledger.get("review_status", "agent_proposed"),
+            "published_coverage_eligible": False,
+            "production_ready": False,
+        },
+    )
+    attach_field_metadata(schema, metadata)
 
     form = Form(
         form_id=config.form_id,

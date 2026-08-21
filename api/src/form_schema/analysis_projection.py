@@ -363,6 +363,7 @@ def _project_field_metadata(
         "attachment": "attachment",
     }
     actual_counts = {key: 0 for key in allowed_classes}
+    exceptions: list[dict[str, str]] = []
     for index, raw in enumerate(raw_records):
         if not isinstance(raw, dict):
             raise AnalysisProjectionError(f"field metadata record {index} must be an object")
@@ -387,6 +388,11 @@ def _project_field_metadata(
         xml = raw.get("xml")
         if not isinstance(xml, dict):
             raise AnalysisProjectionError(f"field metadata XML evidence missing: {record_id}")
+        required_xml = ("path", "type", "type_source", "xsd_url", "sha256")
+        if expected_question and any(
+            not isinstance(xml.get(key), str) or not xml.get(key) for key in required_xml
+        ):
+            raise AnalysisProjectionError(f"field metadata XML evidence incomplete: {record_id}")
         canonical_id = raw.get("canonical_semantic_question_id")
         if not isinstance(canonical_id, str):
             canonical_id = ""
@@ -402,24 +408,29 @@ def _project_field_metadata(
         raw_links = raw.get("runtime_behavior_links")
         if not isinstance(raw_links, list) or any(not isinstance(link, dict) for link in raw_links):
             raise AnalysisProjectionError(f"invalid runtime behavior links: {record_id}")
-        runtime_rule_ids = sorted(
-            {
-                str(link["rule_id"])
-                for link in raw_links
-                if isinstance(link.get("rule_id"), str) and link.get("rule_id")
-            }
-        )
-        runtime_mechanisms = sorted(
-            {
-                str(link["mechanism"])
-                for link in raw_links
-                if isinstance(link.get("mechanism"), str) and link.get("mechanism")
-            }
-        )
+        runtime_rule_ids = sorted({
+            str(link["rule_id"])
+            for link in raw_links
+            if isinstance(link.get("rule_id"), str) and link.get("rule_id")
+        })
+        runtime_mechanisms = sorted({
+            str(link["mechanism"])
+            for link in raw_links
+            if isinstance(link.get("mechanism"), str) and link.get("mechanism")
+        })
         runtime_path = _metadata_runtime_path(raw.get("runtime_data_pointer_template"))
         source_path = raw.get("source_path")
         if not isinstance(source_path, str) or not source_path:
             raise AnalysisProjectionError(f"field metadata source path missing: {record_id}")
+        if expected_question and not canonical_id:
+            exceptions.append({
+                "form_key": package.form_key,
+                "runtime_path": runtime_path,
+                "xml_path": source_path,
+                "exception": "question_missing_semantic_mapping",
+                "canonical_question_id": "",
+                "resolution": "requires_semantic_mapping",
+            })
         publishable = raw.get("published_coverage_eligible") is True
         field_class = allowed_classes[str(classification)]
         records.append(
@@ -456,7 +467,7 @@ def _project_field_metadata(
     expected_counts = {key: value for key, value in counts.items() if key in allowed_classes}
     if dict(actual_counts) != expected_counts or counts.get("total_records") != len(records):
         raise AnalysisProjectionError(f"field metadata accounting drift: {package.form_key}")
-    return records, []
+    return records, exceptions
 
 
 def project_fields(package: PackageInput) -> tuple[list[FieldRecord], list[dict[str, str]]]:
@@ -519,16 +530,14 @@ def project_fields(package: PackageInput) -> tuple[list[FieldRecord], list[dict[
             field_class = "unmapped_field"
 
         if field_class != "question" and canonical_id:
-            exceptions.append(
-                {
-                    "form_key": package.form_key,
-                    "runtime_path": runtime_path,
-                    "xml_path": source_path,
-                    "exception": f"{field_class}_has_semantic_mapping",
-                    "canonical_question_id": canonical_id,
-                    "resolution": "excluded_from_question_denominator",
-                }
-            )
+            exceptions.append({
+                "form_key": package.form_key,
+                "runtime_path": runtime_path,
+                "xml_path": source_path,
+                "exception": f"{field_class}_has_semantic_mapping",
+                "canonical_question_id": canonical_id,
+                "resolution": "excluded_from_question_denominator",
+            })
             canonical_id = ""
             mapping_status = "excluded_non_question"
 
@@ -581,19 +590,17 @@ def _question_rows(fields: Sequence[FieldRecord]) -> list[dict[str, Any]]:
         forms = sorted({item.form_key for item in occurrences})
         statuses = sorted({item.mapping_status for item in occurrences})
         labels = sorted({item.label for item in occurrences})
-        rows.append(
-            {
-                "canonical_question_id": question_id,
-                "label": labels[0],
-                "label_variants": "|".join(labels),
-                "form_count": len(forms),
-                "forms": "|".join(forms),
-                "mapping_statuses": "|".join(statuses),
-                "published_coverage_eligible": all(
-                    item.published_coverage_eligible for item in occurrences
-                ),
-            }
-        )
+        rows.append({
+            "canonical_question_id": question_id,
+            "label": labels[0],
+            "label_variants": "|".join(labels),
+            "form_count": len(forms),
+            "forms": "|".join(forms),
+            "mapping_statuses": "|".join(statuses),
+            "published_coverage_eligible": all(
+                item.published_coverage_eligible for item in occurrences
+            ),
+        })
     return rows
 
 
@@ -634,25 +641,23 @@ def _pair_rows(fields: Sequence[FieldRecord], form_keys: Sequence[str]) -> list[
             accepted_b = accepted_by_form[form_b]
             accepted_common = accepted_a & accepted_b
             accepted_union = accepted_a | accepted_b
-            rows.append(
-                {
-                    "form_a": form_a,
-                    "form_b": form_b,
-                    "questions_a": len(a),
-                    "questions_b": len(b),
-                    "questions_common": len(common),
-                    "questions_union": len(union),
-                    "similarity": len(common) / len(union) if union else "",
-                    "percent_a_shared_by_b": len(common) / len(a) if a else "",
-                    "percent_b_shared_by_a": len(common) / len(b) if b else "",
-                    "mapping_basis": "working_explicit_semantic_ids",
-                    "accepted_questions_common": len(accepted_common),
-                    "accepted_questions_union": len(accepted_union),
-                    "accepted_similarity": (
-                        len(accepted_common) / len(accepted_union) if accepted_union else ""
-                    ),
-                }
-            )
+            rows.append({
+                "form_a": form_a,
+                "form_b": form_b,
+                "questions_a": len(a),
+                "questions_b": len(b),
+                "questions_common": len(common),
+                "questions_union": len(union),
+                "similarity": len(common) / len(union) if union else "",
+                "percent_a_shared_by_b": len(common) / len(a) if a else "",
+                "percent_b_shared_by_a": len(common) / len(b) if b else "",
+                "mapping_basis": "working_explicit_semantic_ids",
+                "accepted_questions_common": len(accepted_common),
+                "accepted_questions_union": len(accepted_union),
+                "accepted_similarity": (
+                    len(accepted_common) / len(accepted_union) if accepted_union else ""
+                ),
+            })
     return rows
 
 
@@ -676,24 +681,22 @@ def build_projection(packages: Sequence[PackageInput]) -> dict[str, Any]:
             classes[field.field_class] += 1
             if field.field_class == "question" and field.canonical_question_id:
                 unique_questions.add(field.canonical_question_id)
-        form_rows.append(
-            {
-                "form_key": package.form_key,
-                "form_name": package.form.form_name,
-                "form_version": package.form.form_version,
-                "short_form_name": package.form.short_form_name,
-                "package_contract": str(package.manifest.get("contract") or ""),
-                "question_occurrences": classes["question"],
-                "unique_questions": len(unique_questions),
-                "calculation_fields": classes["calculation"],
-                "attachment_fields": classes["attachment"],
-                "static_content_records": classes["static_content"],
-                "technical_fields": classes["technical_field"],
-                "unmapped_fields": classes["unmapped_field"],
-                "semantic_exceptions": len(package_exceptions),
-                "published_coverage_eligible": False,
-            }
-        )
+        form_rows.append({
+            "form_key": package.form_key,
+            "form_name": package.form.form_name,
+            "form_version": package.form.form_version,
+            "short_form_name": package.form.short_form_name,
+            "package_contract": str(package.manifest.get("contract") or ""),
+            "question_occurrences": classes["question"],
+            "unique_questions": len(unique_questions),
+            "calculation_fields": classes["calculation"],
+            "attachment_fields": classes["attachment"],
+            "static_content_records": classes["static_content"],
+            "technical_fields": classes["technical_field"],
+            "unmapped_fields": classes["unmapped_field"],
+            "semantic_exceptions": len(package_exceptions),
+            "published_coverage_eligible": False,
+        })
 
     field_rows = [asdict(field) for field in fields]
     question_rows = _question_rows(fields)
@@ -779,14 +782,12 @@ def write_projection(output_dir: Path, projection: Mapping[str, Any]) -> dict[st
         json.dumps(projection, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
-    outputs.append(
-        {
-            "name": "projection",
-            "path": data_path.name,
-            "rows": 1,
-            "sha256": _sha256(data_path),
-        }
-    )
+    outputs.append({
+        "name": "projection",
+        "path": data_path.name,
+        "rows": 1,
+        "sha256": _sha256(data_path),
+    })
     manifest = {
         "contract": CONTRACT,
         "summary": projection["summary"],

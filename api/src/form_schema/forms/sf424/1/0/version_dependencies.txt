@@ -2,6 +2,7 @@
 ./resolved_package
 form_schema/components/__init__.py
 form_schema/components/component_definition.py
+form_schema/components/field_metadata.py
 form_schema/components/opportunity_identity.py
 form_schema/components/organization_identity.py
 form_schema/components/person_name.py

@@ -7,7 +7,8 @@
   },
   "artifacts": {
     "candidate.json": "84219caf65d2f3495a7b570a6b2fcce6f82ea6bf40fb9e6a95f3388a8af7b0cd",
-    "runtime-rules.json": "e61b568b6397a24a1f527b573303efa7bc78a5d5a649b19568a006a82b21d321"
+    "runtime-rules.json": "e61b568b6397a24a1f527b573303efa7bc78a5d5a649b19568a006a82b21d321",
+    "source-ledger.json": "83000c15f5791e67ed40ffa09e616aae6551bfbd9f021bac877a1b0e70edf294"
   },
   "source_evidence": {
     "contract_source_version": "sha256:b318951e0686bd7978ab791bd63ad36d6fa6e93b6368747b272526360e99fedb",

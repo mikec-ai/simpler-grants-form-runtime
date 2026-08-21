@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 from src.form_schema.components import (
@@ -11,6 +12,11 @@ from src.form_schema.components import (
 from src.form_schema.components.person_name import (
     PersonNameComponentConfig,
     build_person_name_component,
+)
+from src.form_schema.components.field_metadata import (
+    attach_field_metadata,
+    build_field_metadata,
+    explicit_property_bindings,
 )
 from src.form_schema.resolved_form_package import load_resolved_form_package
 from src.form_schema.shared import ADDRESS_SHARED_V1, COMMON_SHARED_V1
@@ -1026,9 +1032,38 @@ FORM_XML_TRANSFORM_RULES = {
 
 # The constants above remain temporarily as a compatibility oracle. The active
 # runtime form is materialized from the source-pinned resolved package.
-SF424_v4_0 = load_resolved_form_package(Path(__file__).with_name("resolved_package")).to_form()
+_PACKAGE_DIR = Path(__file__).with_name("resolved_package")
+SF424_v4_0 = load_resolved_form_package(_PACKAGE_DIR).to_form()
+_SOURCE_CONTRACT = json.loads(
+    _PACKAGE_DIR.joinpath(
+        "sources/harness/authoring-model/core/materialized/SF424.contract.json"
+    ).read_text(encoding="utf-8")
+)
+_SOURCE_AUTHORING = json.loads(
+    _PACKAGE_DIR.joinpath("sources/harness/sgm/source-authored/SF424.json").read_text(
+        encoding="utf-8"
+    )
+)
+attach_field_metadata(
+    SF424_v4_0.form_json_schema,
+    build_field_metadata(
+        SF424_v4_0.form_json_schema,
+        form_id="SF424",
+        form_version="4.0",
+        source_records=_SOURCE_CONTRACT["nodes"],
+        explicit_bindings=explicit_property_bindings(_SOURCE_AUTHORING["authoring"]),
+        review_boundary={
+            "semantic_mapping": "agent_proposed",
+            "published_coverage_eligible": False,
+            "production_ready": False,
+        },
+    ),
+)
 del _AUTHORIZED_REPRESENTATIVE_NAME
 del _CONTACT_PERSON_NAME
 del _PROJECT_IDENTITY_PERIOD
 del _OPPORTUNITY_IDENTITY
 del _ORGANIZATION_IDENTITY
+del _SOURCE_AUTHORING
+del _SOURCE_CONTRACT
+del _PACKAGE_DIR

@@ -5,54 +5,54 @@
       "name": "forms",
       "path": "forms.csv",
       "rows": 9,
-      "sha256": "4debeec8bb666fd50362c758fb5c410bbed38af10943787c0984bf9d0acdc142"
+      "sha256": "cb9f0686ee770680b1e4292eed343a3cee28478203a0c4fd9a716d2bdf7230e0"
     },
     {
       "name": "questions",
       "path": "questions.csv",
-      "rows": 298,
-      "sha256": "ae7aaf196823802aeebe43d2ae09cff0de58de1d04bc123e1d980e6a47f20630"
+      "rows": 354,
+      "sha256": "4a7cddda1307984830e6209f7088311fa4ada39a06d3a614c5e6855ad337e8a1"
     },
     {
       "name": "form_questions",
       "path": "form_questions.csv",
-      "rows": 783,
-      "sha256": "25f824b35efe287d67833b0136c8d5db053cabb34fe5c773ddb3af20fa3e70ec"
+      "rows": 833,
+      "sha256": "99b9c804a327cc67ab7631bd8820c7c5a85421f23f80658d3407b74d40d1d6a4"
     },
     {
       "name": "form_pairs",
       "path": "form_pairs.csv",
       "rows": 36,
-      "sha256": "c2a84689bc1ca21cde5d92acb23d0c4dce9a5bf1eda916f1945997fbbb8bdb11"
+      "sha256": "cf26d00e1b9c2a21364029695bd0a6bd4373a959577ad3b9e75b4fbc1614a453"
     },
     {
       "name": "fields",
       "path": "fields.csv",
-      "rows": 1362,
-      "sha256": "4b7c06053310677f37c651b9891704f244585a932b429d8e5750b617b8dc729d"
+      "rows": 1690,
+      "sha256": "2309a8fb7f9ea0a80f2585ac6ad03770391d91beca852948819e4bcad18d01e4"
     },
     {
       "name": "exceptions",
       "path": "exceptions.csv",
-      "rows": 248,
-      "sha256": "a8f8782c0fed1d1695736cb8e720f9ec1678a356f449830d5d57d6385aacba06"
+      "rows": 4,
+      "sha256": "5fa17cf7ef2cf932f75bfb68bd5d80b1d7e08f7a04a0502c020115953d2ed971"
     },
     {
       "name": "projection",
       "path": "projection.json",
       "rows": 1,
-      "sha256": "ed80f173ffe4d29dfea9a30de781579ff0da1ac5aabdb0fe81c8066aa93ef702"
+      "sha256": "19d8ccc9292bf55daf28b2c2d523757ae785eba681d1f91121272f8138022261"
     }
   ],
   "summary": {
     "accepted_mappings": 0,
-    "canonical_questions": 298,
-    "fields": 1362,
+    "canonical_questions": 354,
+    "fields": 1690,
     "form_pairs": 36,
-    "form_question_associations": 783,
+    "form_question_associations": 833,
     "forms": 9,
     "published_coverage_eligible": false,
     "quality_status": "needs_reconciliation",
-    "semantic_exceptions": 248
+    "semantic_exceptions": 4
   }
 }

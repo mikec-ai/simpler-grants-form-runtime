@@ -93,7 +93,7 @@ def test_shared_builder_preserves_the_original_five_year_runtime_artifacts() -> 
     fresh_rr_budget = form_module.RRBudget_v3_0
 
     assert _canonical_hash(fresh_rr_budget.form_json_schema) == (
-        "425f5eb7970633d16ed06c502c0aa037e9fca8bccf4e23334cc897efa04b7ce9"
+        "a69d80c8d23072284101bc3798196be2cbaf9ec8c4f9f775fab94f0069d978e7"
     )
     assert _canonical_hash(fresh_rr_budget.form_ui_schema) == (
         "b8f59435180c791fc312de7c83da127a5b8f0ec0233f17ec83aaf58d3437ebed"

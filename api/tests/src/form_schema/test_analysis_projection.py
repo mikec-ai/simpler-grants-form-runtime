@@ -47,27 +47,54 @@ def test_projection_excludes_calculations_from_question_denominator() -> None:
     calculations = [field for field in fields if field.field_class == "calculation"]
     assert len(calculations) == 43
     assert all(field.canonical_question_id == "" for field in calculations)
-    assert len(exceptions) == 43
-    assert {row["resolution"] for row in exceptions} == {"excluded_from_question_denominator"}
+    assert exceptions == []
 
 
-def test_known_subaward_denominator_drift_is_reported_not_published() -> None:
+def test_structurally_equivalent_subaward_variants_share_one_denominator() -> None:
     packages = select_packages(_packages(), {"RRSubawardBudget30", "RRSubawardBudget10_30"})
     projection = build_projection(packages)
     forms = {row["form_key"]: row for row in projection["forms"]}
     assert forms["RRSubawardBudget30"]["calculation_fields"] == 56
     assert forms["RRSubawardBudget10_30"]["calculation_fields"] == 56
-    assert forms["RRSubawardBudget30"]["question_occurrences"] == 101
-    assert forms["RRSubawardBudget10_30"]["question_occurrences"] == 101
-    assert projection["summary"]["quality_status"] == "needs_reconciliation"
+    assert forms["RRSubawardBudget30"]["question_occurrences"] == 98
+    assert forms["RRSubawardBudget10_30"]["question_occurrences"] == 98
+    assert forms["RRSubawardBudget30"]["unique_questions"] == 44
+    assert forms["RRSubawardBudget10_30"]["unique_questions"] == 43
+    assert projection["summary"]["semantic_exceptions"] == 0
     assert projection["summary"]["published_coverage_eligible"] is False
 
 
-def test_implemented_fields_without_semantic_evidence_remain_visible() -> None:
+def test_sf424_projects_complete_source_bound_question_metadata() -> None:
     projection = build_projection(select_packages(_packages(), {"SF424"}))
     form = projection["forms"][0]
-    assert form["unmapped_fields"] > 0
-    assert form["question_occurrences"] == 0
+    assert form["unmapped_fields"] == 0
+    assert form["question_occurrences"] == 71
+    assert form["calculation_fields"] == 1
+    assert form["attachment_fields"] == 4
+    assert form["technical_fields"] == 20
+    assert form["semantic_exceptions"] == 0
+    assert projection["summary"]["published_coverage_eligible"] is False
+
+
+def test_backfilled_forms_preserve_complete_question_level_xml_evidence() -> None:
+    for package in _packages():
+        metadata = package.form.form_json_schema.get("x-simpler-field-metadata")
+        assert metadata is not None, package.form_key
+        fields, _ = project_fields(package)
+        questions = [field for field in fields if field.field_class == "question"]
+        assert questions, package.form_key
+        assert all(field.xml_path for field in questions), package.form_key
+        assert all(field.type_source for field in questions), package.form_key
+        assert all(field.type for field in questions), package.form_key
+        assert all(field.xsd_source for field in questions), package.form_key
+        assert all(field.xsd_sha256 for field in questions), package.form_key
+        assert all(field.cardinality_maximum for field in questions), package.form_key
+
+
+def test_missing_semantic_mapping_is_an_explicit_reconciliation_item() -> None:
+    projection = build_projection(select_packages(_packages(), {"RRBudget"}))
+    assert projection["summary"]["semantic_exceptions"] == 4
+    assert {row["resolution"] for row in projection["exceptions"]} == {"requires_semantic_mapping"}
     assert projection["summary"]["published_coverage_eligible"] is False
 
 
