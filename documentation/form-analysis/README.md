@@ -22,8 +22,13 @@ that must be reconciled, such as calculated outputs carrying stale semantic ques
 `projection.json` is the lossless machine-readable bundle, and `manifest.json` pins every output
 by row count and SHA-256 digest.
 
-The current tables cover the eight forms with native source packages on this branch. Similarity is
+The current tables cover the nine forms with native source packages on this branch. Similarity is
 computed only from explicit canonical identifiers, never from labels. All current semantic
 mappings are agent-proposed, so accepted coverage remains zero. Blank XML type cells mean the
 implementation package has not preserved that evidence yet; the exporter does not infer XML types
 from JSON types.
+
+PHS Fellowship Supplemental exercises the versioned `simpler-form-field-metadata/v1` handoff. Its
+47 applicant questions, 2 calculated outputs, 17 attachments, and 99 technical/structural records
+project without reclassification, and its form-question rows retain complete XML type and XSD
+evidence.

@@ -1,4 +1,12 @@
 form_a,form_b,questions_a,questions_b,questions_common,questions_union,similarity,percent_a_shared_by_b,percent_b_shared_by_a,mapping_basis,accepted_questions_common,accepted_questions_union,accepted_similarity
+PHSFellowshipSupplemental,RRBudget,37,47,3,81,0.037037037037037035,0.08108108108108109,0.06382978723404255,working_explicit_semantic_ids,0,0,
+PHSFellowshipSupplemental,RRBudget10,37,46,3,80,0.0375,0.08108108108108109,0.06521739130434782,working_explicit_semantic_ids,0,0,
+PHSFellowshipSupplemental,RRMPBudget,37,61,0,98,0.0,0.0,0.0,working_explicit_semantic_ids,0,0,
+PHSFellowshipSupplemental,RRMPSubawardBudget,37,62,0,99,0.0,0.0,0.0,working_explicit_semantic_ids,0,0,
+PHSFellowshipSupplemental,RRSF424,37,107,0,144,0.0,0.0,0.0,working_explicit_semantic_ids,0,0,
+PHSFellowshipSupplemental,RRSubawardBudget10_30,37,46,3,80,0.0375,0.08108108108108109,0.06521739130434782,working_explicit_semantic_ids,0,0,
+PHSFellowshipSupplemental,RRSubawardBudget30,37,47,3,81,0.037037037037037035,0.08108108108108109,0.06382978723404255,working_explicit_semantic_ids,0,0,
+PHSFellowshipSupplemental,SF424,37,0,0,37,0.0,0.0,,working_explicit_semantic_ids,0,0,
 RRBudget,RRBudget10,47,46,45,48,0.9375,0.9574468085106383,0.9782608695652174,working_explicit_semantic_ids,0,0,
 RRBudget,RRMPBudget,47,61,0,108,0.0,0.0,0.0,working_explicit_semantic_ids,0,0,
 RRBudget,RRMPSubawardBudget,47,62,0,109,0.0,0.0,0.0,working_explicit_semantic_ids,0,0,

@@ -23,7 +23,7 @@ concept:budget:other-direct:subaward-contractual,5. Subawards/Consortium/Contrac
 concept:budget:period:end-date,End Date:,End Date:,4,RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
 concept:budget:period:start-date,Start Date:,Start Date:,4,RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
 concept:budget:personnel:academic-months,Academic Months Additional Project Role,Academic Months Additional Project Role|Academic Months Graduate Students|Academic Months Post Doctoral Associates|Academic Months Secretarial/Clerical|Academic Months Undergraduate Students|Senior/Key Person Academic Months,4,RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
-concept:budget:personnel:base-salary,Senior/Key Person Base Salary,Senior/Key Person Base Salary,4,RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
+concept:budget:personnel:base-salary,Amount,Amount|Senior/Key Person Base Salary,5,PHSFellowshipSupplemental|RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
 concept:budget:personnel:calendar-months,Calendar Months Additional Project Role,Calendar Months Additional Project Role|Calendar Months Graduate Students|Calendar Months Post Doctoral Associates|Calendar Months Secretarial/Clerical|Calendar Months Undergraduate Students|Senior/Key Person Calendar Months,4,RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
 concept:budget:personnel:count,Number of Personnel Additional Project Role,Number of Personnel Additional Project Role|Number of Personnel Graduate Students|Number of Personnel Post Doctoral Associates|Number of Personnel Secretarial/Clerical|Number of Personnel Undergraduate Students,4,RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
 concept:budget:personnel:fringe-benefits,Fringe Benefits Additional Project Role,Fringe Benefits Additional Project Role|Fringe Benefits Graduate Students|Fringe Benefits Post Doctoral Associates|Fringe Benefits Secretarial/Clerical|Fringe Benefits Undergraduate Students|Senior/Key Person Fringe Benefits,4,RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
@@ -33,15 +33,49 @@ concept:budget:research:attached-equipment-total,Total funds requested for all e
 concept:budget:research:attached-key-person-total,Total Funds requested for all Senior Key Persons in the attached file,Total Funds requested for all Senior Key Persons in the attached file,4,RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
 concept:budget:research:budget-type,Budget Type:,Budget Type:,4,RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
 concept:budget:trainee:count,Number of Participants/Trainees,Number of Participants/Trainees,4,RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
-concept:budget:trainee:stipends,2. Stipends,2. Stipends,4,RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
+concept:budget:trainee:stipends,2. Stipends,2. Stipends|Amount,5,PHSFellowshipSupplemental|RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
 concept:budget:trainee:subsistence,4. Subsistence,4. Subsistence,4,RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
 concept:budget:trainee:travel,3. Travel,3. Travel,4,RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
-concept:budget:trainee:tuition-fees-insurance,1. Tuition/Fees/Health Insurance,1. Tuition/Fees/Health Insurance,4,RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
+concept:budget:trainee:tuition-fees-insurance,1. Tuition/Fees/Health Insurance,1. Tuition/Fees/Health Insurance|Tuition Requested Year1|Tuition Requested Year2|Tuition Requested Year3|Tuition Requested Year4|Tuition Requested Year5|Tuition Requested Year6,5,PHSFellowshipSupplemental|RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
 concept:budget:travel:domestic,"1. Domestic Travel Costs ( Incl. Canada, Mexico and U.S. Possessions)","1. Domestic Travel Costs ( Incl. Canada, Mexico and U.S. Possessions)",4,RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
 concept:budget:travel:foreign,2. Foreign Travel Costs,2. Foreign Travel Costs,4,RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
+concept:fellowship-budget:childcare-costs-requested,Childcare Costs Requested,Childcare Costs Requested,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:fellowship-budget:childcare-requested-by-year,Childcare Requested Year1,Childcare Requested Year1|Childcare Requested Year2|Childcare Requested Year3|Childcare Requested Year4|Childcare Requested Year5|Childcare Requested Year6,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:fellowship-budget:federal-stipend-months,Number Of Months,Number Of Months,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:fellowship-budget:institutional-base-salary-months,Number Of Months,Number Of Months,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:fellowship-budget:institutional-base-salary-period,Academic Period,Academic Period,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:fellowship-budget:supplementation-amount,Amount,Amount,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:fellowship-budget:supplementation-months,Number Of Months,Number Of Months,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:fellowship-budget:supplementation-source,Source,Source,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:fellowship-budget:supplementation-type,Type,Type,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:fellowship-budget:tuition-fees-requested,Tuition And Fees Requested,Tuition And Fees Requested,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:fellowship:concurrent-support,Concurrent Support,Concurrent Support,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:fellowship:nrsa-support:current-or-prior,Current Prior NRSASupport Indicator,Current Prior NRSASupport Indicator,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:fellowship:nrsa-support:end-date,End Date,End Date,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:fellowship:nrsa-support:grant-number,Grant Number,Grant Number,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:fellowship:nrsa-support:level,Level,Level,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:fellowship:nrsa-support:start-date,Start Date,Start Date,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:fellowship:nrsa-support:type,Type,Type,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:hhs-research-policy:animal-euthanasia,Are Animals Euthanized,Are Animals Euthanized,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:hhs-research-policy:change-of-recipient-organization,Change Of Institution,Change Of Institution,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:hhs-research-policy:euthanasia-avma-consistent,AVMAConsistent Indicator,AVMAConsistent Indicator,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:hhs-research-policy:euthanasia-method-justification,Euthanasia Method Description,Euthanasia Method Description,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:hhs-research-policy:human-embryonic-stem-cells-involved,is Human Stem Cells Involved,is Human Stem Cells Involved,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:hhs-research-policy:stem-cell-line,CellLines,CellLines,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:hhs-research-policy:stem-cell-line-not-yet-known,Stem Cells Indicator,Stem Cells Indicator,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:organization:former-recipient-name,Former Institution,Former Institution,1,PHSFellowshipSupplemental,agent_proposed,false
 concept:research-person:project-role,Additional Project Role Description,Additional Project Role Description|Project Role Graduate Students|Project Role Post Doctoral Associates|Project Role Secretarial/Clerical|Project Role Undergraduate Students|Project Role:,4,RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
+concept:research-policy:vertebrate-animals-involved,Vertebrate Animals Used,Vertebrate Animals Used,1,PHSFellowshipSupplemental,agent_proposed,false
 concept:role:applicant-organization:name,Enter name of Organization:,Enter name of Organization:,2,RRBudget|RRBudget10,agent_proposed,false
 concept:role:applicant-organization:sam-uei,UEI:,UEI:,2,RRBudget|RRBudget10,agent_proposed,false
+concept:role:fellowship-candidate:degree-expected-date,Degree Date,Degree Date,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:role:fellowship-candidate:degree-type,Degree Type,Degree Type,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:role:fellowship-candidate:degree-type-other,Other Degree Type Text,Other Degree Type Text,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:role:fellowship-candidate:field-of-training,Field Of Training,Field Of Training,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:role:fellowship-candidate:non-us-citizen-status,Non USCitizen,Non USCitizen,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:role:fellowship-candidate:permanent-resident-by-award,Permanent Resident By Award Indicator,Permanent Resident By Award Indicator,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:role:fellowship-candidate:phone-alternate,Alernate Phone Number,Alernate Phone Number,1,PHSFellowshipSupplemental,agent_proposed,false
+concept:role:fellowship-candidate:us-citizen,USCitizen,USCitizen,1,PHSFellowshipSupplemental,agent_proposed,false
 concept:role:key-person:name:first,First Name,First Name,4,RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
 concept:role:key-person:name:last,Last Name,Last Name,4,RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false
 concept:role:key-person:name:middle,Middle Name,Middle Name,4,RRBudget|RRBudget10|RRSubawardBudget10_30|RRSubawardBudget30,agent_proposed,false

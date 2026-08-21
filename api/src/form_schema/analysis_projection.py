@@ -48,6 +48,7 @@ class FieldRecord:
     label: str
     field_class: str
     canonical_question_id: str
+    source_semantic_id: str
     source_question_id: str
     mapping_status: str
     role: str
@@ -301,8 +302,135 @@ def _xml_type(node: Mapping[str, Any]) -> tuple[str, str]:
     return str(type_source), str(xml_type)
 
 
+def _metadata_runtime_path(pointer: object) -> str:
+    if not isinstance(pointer, str) or pointer in ("", "/"):
+        return ""
+    parts: list[str] = []
+    for token in pointer.strip("/").split("/"):
+        if token == "*":
+            if not parts:
+                raise AnalysisProjectionError("metadata array marker has no parent")
+            parts[-1] += "[]"
+        else:
+            parts.append(token.replace("~1", "/").replace("~0", "~"))
+    return ".".join(parts)
+
+
+def _resolve_schema_pointer(schema: Mapping[str, Any], pointer: object) -> Mapping[str, Any]:
+    if not isinstance(pointer, str) or pointer in ("", "/"):
+        return schema
+    value: object = schema
+    for token in pointer.strip("/").split("/"):
+        key = token.replace("~1", "/").replace("~0", "~")
+        if not isinstance(value, dict) or key not in value:
+            raise AnalysisProjectionError(f"field metadata has dangling schema pointer: {pointer}")
+        value = value[key]
+    if not isinstance(value, dict):
+        raise AnalysisProjectionError(f"field metadata schema pointer is not an object: {pointer}")
+    return value
+
+
+def _project_field_metadata(
+    package: PackageInput, metadata: Mapping[str, Any]
+) -> tuple[list[FieldRecord], list[dict[str, str]]]:
+    if metadata.get("contract") != "simpler-form-field-metadata/v1":
+        raise AnalysisProjectionError(
+            f"unsupported field metadata contract for {package.form_key}: {metadata.get('contract')}"
+        )
+    if metadata.get("form_id") != package.form_key:
+        raise AnalysisProjectionError(f"field metadata identity drift: {package.form_key}")
+    raw_records = metadata.get("records")
+    counts = metadata.get("counts")
+    if not isinstance(raw_records, list) or not isinstance(counts, dict):
+        raise AnalysisProjectionError(f"invalid field metadata envelope: {package.form_key}")
+
+    records: list[FieldRecord] = []
+    seen_ids: set[str] = set()
+    allowed_classes = {
+        "applicant_question": "question",
+        "calculated_output": "calculation",
+        "technical_field": "technical_field",
+        "static_content": "static_content",
+        "attachment": "attachment",
+    }
+    actual_counts = {key: 0 for key in allowed_classes}
+    for index, raw in enumerate(raw_records):
+        if not isinstance(raw, dict):
+            raise AnalysisProjectionError(f"field metadata record {index} must be an object")
+        record_id = raw.get("stable_record_id")
+        classification = raw.get("classification")
+        if not isinstance(record_id, str) or not record_id or record_id in seen_ids:
+            raise AnalysisProjectionError(f"invalid or duplicate field metadata ID: {record_id}")
+        if classification not in allowed_classes:
+            raise AnalysisProjectionError(f"unsupported field classification: {classification}")
+        seen_ids.add(record_id)
+        actual_counts[str(classification)] += 1
+
+        counts_as_question = raw.get("counts_as_applicant_question")
+        expected_question = classification == "applicant_question"
+        if counts_as_question is not expected_question:
+            raise AnalysisProjectionError(
+                f"field classification/counting contradiction: {package.form_key}/{record_id}"
+            )
+        node = _resolve_schema_pointer(
+            package.form.form_json_schema, raw.get("runtime_schema_pointer")
+        )
+        xml = raw.get("xml")
+        if not isinstance(xml, dict):
+            raise AnalysisProjectionError(f"field metadata XML evidence missing: {record_id}")
+        canonical_id = raw.get("canonical_semantic_question_id")
+        if not isinstance(canonical_id, str):
+            canonical_id = ""
+        mapping_status = raw.get("semantic_mapping_status")
+        if not isinstance(mapping_status, str):
+            mapping_status = "unreviewed"
+        roles = _strings(raw.get("roles"))
+        dimensions = _strings(raw.get("dimensions"))
+        components = _strings(raw.get("component_module_ids"))
+        runtime_path = _metadata_runtime_path(raw.get("runtime_data_pointer_template"))
+        source_path = raw.get("source_path")
+        if not isinstance(source_path, str) or not source_path:
+            raise AnalysisProjectionError(f"field metadata source path missing: {record_id}")
+        publishable = raw.get("published_coverage_eligible") is True
+        field_class = allowed_classes[str(classification)]
+        records.append(
+            FieldRecord(
+                form_key=package.form_key,
+                form_name=package.form.form_name,
+                form_version=package.form.form_version,
+                runtime_path=runtime_path,
+                xml_path=str(xml.get("path") or source_path),
+                label=str(node.get("title") or source_path.rsplit(".", 1)[-1]),
+                field_class=field_class,
+                canonical_question_id=canonical_id if expected_question else "",
+                source_semantic_id=canonical_id,
+                source_question_id=record_id,
+                mapping_status=mapping_status,
+                role="|".join(roles),
+                dimensions="|".join(dimensions),
+                component_ids="|".join(components),
+                json_type=str(node.get("type") or ""),
+                type_source=str(xml.get("type_source") or ""),
+                type=str(xml.get("type") or ""),
+                xsd_source=str(xml.get("xsd_url") or ""),
+                xsd_sha256=str(xml.get("sha256") or ""),
+                source_version=str(xml.get("version") or ""),
+                published_coverage_eligible=publishable and mapping_status == "accepted",
+            )
+        )
+
+    expected_counts = {key: value for key, value in counts.items() if key in allowed_classes}
+    if dict(actual_counts) != expected_counts or counts.get("total_records") != len(records):
+        raise AnalysisProjectionError(f"field metadata accounting drift: {package.form_key}")
+    return records, []
+
+
 def project_fields(package: PackageInput) -> tuple[list[FieldRecord], list[dict[str, str]]]:
     """Project all source-bound leaf fields and report semantic contradictions."""
+
+    metadata = package.form.form_json_schema.get("x-simpler-field-metadata")
+    if isinstance(metadata, dict):
+        return _project_field_metadata(package, metadata)
 
     calculations, calculation_behavior_keys, _ = _runtime_behavior_targets(package.runtime_rules)
     xsd_source, xsd_sha256 = _source_evidence(package)
@@ -330,6 +458,7 @@ def project_fields(package: PackageInput) -> tuple[list[FieldRecord], list[dict[
             seen_source_paths.add(source_path)
 
         canonical_id, mapping_status, source_question_id = _semantic_identity(node)
+        source_semantic_id = canonical_id
         declared_kind = str(authoring.get("record_kind") or "")
         behavior_keys = set(_strings(authoring.get("behavior_keys")))
         modules = _strings(authoring.get("modules"))
@@ -384,6 +513,7 @@ def project_fields(package: PackageInput) -> tuple[list[FieldRecord], list[dict[
                 label=str(node.get("title") or runtime_path.rsplit(".", 1)[-1]),
                 field_class=field_class,
                 canonical_question_id=canonical_id,
+                source_semantic_id=source_semantic_id,
                 source_question_id=source_question_id,
                 mapping_status=mapping_status,
                 role="|".join(roles),
@@ -517,6 +647,8 @@ def build_projection(packages: Sequence[PackageInput]) -> dict[str, Any]:
                 "question_occurrences": classes["question"],
                 "unique_questions": len(unique_questions),
                 "calculation_fields": classes["calculation"],
+                "attachment_fields": classes["attachment"],
+                "static_content_records": classes["static_content"],
                 "technical_fields": classes["technical_field"],
                 "unmapped_fields": classes["unmapped_field"],
                 "semantic_exceptions": len(package_exceptions),

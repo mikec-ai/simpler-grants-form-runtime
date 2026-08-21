@@ -28,6 +28,7 @@ def test_discovery_reads_actual_registered_implementation_packages() -> None:
     packages = _packages()
     keys = {package.form_key for package in packages}
     assert keys == {
+        "PHSFellowshipSupplemental",
         "RRBudget",
         "RRBudget10",
         "RRMPBudget",
@@ -37,7 +38,7 @@ def test_discovery_reads_actual_registered_implementation_packages() -> None:
         "RRSubawardBudget30",
         "SF424",
     }
-    assert len({package.form.short_form_name for package in packages}) == 8
+    assert len({package.form.short_form_name for package in packages}) == 9
 
 
 def test_projection_excludes_calculations_from_question_denominator() -> None:
@@ -68,6 +69,47 @@ def test_implemented_fields_without_semantic_evidence_remain_visible() -> None:
     assert form["unmapped_fields"] > 0
     assert form["question_occurrences"] == 0
     assert projection["summary"]["published_coverage_eligible"] is False
+
+
+def test_versioned_field_metadata_projects_without_reclassification() -> None:
+    projection = build_projection(select_packages(_packages(), {"PHSFellowshipSupplemental"}))
+    form = projection["forms"][0]
+    assert form["question_occurrences"] == 47
+    assert form["unique_questions"] == 37
+    assert form["calculation_fields"] == 2
+    assert form["attachment_fields"] == 17
+    assert form["technical_fields"] == 99
+    assert form["semantic_exceptions"] == 0
+    assert len(projection["form_questions"]) == 47
+    assert all(row["type_source"] for row in projection["form_questions"])
+    assert all(row["type"] for row in projection["form_questions"])
+    assert all(row["xsd_source"] for row in projection["form_questions"])
+
+
+def test_versioned_field_metadata_counting_contradiction_fails_closed() -> None:
+    package = copy.deepcopy(
+        next(package for package in _packages() if package.form_key == "PHSFellowshipSupplemental")
+    )
+    metadata = package.form.form_json_schema["x-simpler-field-metadata"]
+    record = next(
+        record for record in metadata["records"] if record["classification"] == "calculated_output"
+    )
+    record["counts_as_applicant_question"] = True
+    with pytest.raises(AnalysisProjectionError, match="classification/counting contradiction"):
+        project_fields(package)
+
+
+def test_versioned_field_metadata_dangling_pointer_fails_closed() -> None:
+    package = copy.deepcopy(
+        next(package for package in _packages() if package.form_key == "PHSFellowshipSupplemental")
+    )
+    metadata = package.form.form_json_schema["x-simpler-field-metadata"]
+    record = next(
+        record for record in metadata["records"] if record["classification"] == "applicant_question"
+    )
+    record["runtime_schema_pointer"] = "/properties/not_a_real_field"
+    with pytest.raises(AnalysisProjectionError, match="dangling schema pointer"):
+        project_fields(package)
 
 
 def test_pairwise_metrics_are_directional_and_set_based() -> None:

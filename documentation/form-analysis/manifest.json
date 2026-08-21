@@ -4,32 +4,32 @@
     {
       "name": "forms",
       "path": "forms.csv",
-      "rows": 8,
-      "sha256": "bdfadf401343f29ed354b5080c47f07db2538b571244cdf161018b4341e4425f"
+      "rows": 9,
+      "sha256": "4debeec8bb666fd50362c758fb5c410bbed38af10943787c0984bf9d0acdc142"
     },
     {
       "name": "questions",
       "path": "questions.csv",
-      "rows": 264,
-      "sha256": "008f2019eeaa77c7f45e05bd37a6dd9d15ca2ac31c3f27dd592dfc9cb4e78c06"
+      "rows": 298,
+      "sha256": "ae7aaf196823802aeebe43d2ae09cff0de58de1d04bc123e1d980e6a47f20630"
     },
     {
       "name": "form_questions",
       "path": "form_questions.csv",
-      "rows": 736,
-      "sha256": "380671fac064f1663b87013f4171227f9840d64c1646d7cf4bdc6d41a5dd6602"
+      "rows": 783,
+      "sha256": "74a9736197fde374865a9caf6904e1113821e8d02cc246faaeac133f3e67a148"
     },
     {
       "name": "form_pairs",
       "path": "form_pairs.csv",
-      "rows": 28,
-      "sha256": "a610ce64985eb6c8246fb4a824583616e660df20ff5ccc1081b7eac9623aaaae"
+      "rows": 36,
+      "sha256": "c2a84689bc1ca21cde5d92acb23d0c4dce9a5bf1eda916f1945997fbbb8bdb11"
     },
     {
       "name": "fields",
       "path": "fields.csv",
-      "rows": 1197,
-      "sha256": "16f679ce11af7ac21cbc88f826eb3e54c49616eb81991ebbdea56d20607f2a2a"
+      "rows": 1362,
+      "sha256": "91a6fd993a92d039f18208e7450343f8bc419bd513f76b400ba89c713188895d"
     },
     {
       "name": "exceptions",
@@ -41,16 +41,16 @@
       "name": "projection",
       "path": "projection.json",
       "rows": 1,
-      "sha256": "8a3b5b0380c49874e0a44ea6a5271c79910cd3392610ea3eebcb25f1fcf34a2b"
+      "sha256": "192333f3ae88f9c1bba36671a095cd969191deafc4cdd5f4694f07c65fae1a82"
     }
   ],
   "summary": {
     "accepted_mappings": 0,
-    "canonical_questions": 264,
-    "fields": 1197,
-    "form_pairs": 28,
-    "form_question_associations": 736,
-    "forms": 8,
+    "canonical_questions": 298,
+    "fields": 1362,
+    "form_pairs": 36,
+    "form_question_associations": 783,
+    "forms": 9,
     "published_coverage_eligible": false,
     "quality_status": "needs_reconciliation",
     "semantic_exceptions": 248
