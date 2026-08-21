@@ -1,5 +1,6 @@
 import copy
 import hashlib
+import importlib
 import json
 import shutil
 from pathlib import Path
@@ -14,6 +15,8 @@ from src.form_schema.resolved_form_package import (
 )
 
 FIXTURE = Path(__file__).parents[2] / "fixtures" / "form_schema" / "commongrants_key_contact_org"
+SF424_FIXTURE = Path(__file__).parents[2] / "fixtures" / "form_schema" / "generated_sf424"
+SF424_v4_0 = importlib.import_module("src.form_schema.forms.sf424.1.0.form_json").SF424_v4_0
 
 
 def _copy_fixture(tmp_path: Path) -> Path:
@@ -65,6 +68,44 @@ def test_loads_source_pinned_common_grants_question_as_native_form() -> None:
         "sources/key-contact.tsp",
         "sources/org-name.tsp",
     }
+
+
+def test_generated_sf424_package_matches_current_native_form_exactly() -> None:
+    package = load_resolved_form_package(SF424_FIXTURE)
+    form = package.to_form()
+
+    assert package.mappings is None
+    assert form.form_id == SF424_v4_0.form_id
+    assert form.legacy_form_id == SF424_v4_0.legacy_form_id
+    assert form.form_name == SF424_v4_0.form_name
+    assert form.short_form_name == SF424_v4_0.short_form_name
+    assert form.form_version == SF424_v4_0.form_version
+    assert form.form_ui_schema == SF424_v4_0.form_ui_schema
+    assert form.form_rule_schema == SF424_v4_0.form_rule_schema
+    assert form.json_to_xml_schema == SF424_v4_0.json_to_xml_schema
+
+    generated_schema = copy.deepcopy(form.form_json_schema)
+    package_provenance = generated_schema.pop("x-simpler-form-package")
+    assert generated_schema == SF424_v4_0.form_json_schema
+    assert package_provenance["package_digest"] == package.package_digest
+    assert package_provenance["review_boundary"]["published_coverage_eligible"] is False
+    assert package.manifest["source_set"]["closure"] == "partial_evidence"
+    assert len(package.manifest["source_set"]["dependencies"]) == 15
+
+
+def test_generated_sf424_supporting_evidence_is_part_of_package_dependencies() -> None:
+    package = load_resolved_form_package(SF424_FIXTURE)
+    relative_paths = {
+        path.relative_to(SF424_FIXTURE).as_posix() for path in package.dependency_paths
+    }
+
+    assert "sources/work/grantsgov-xsds/SF424_4_0-V4.0.xsd" in relative_paths
+    assert "sources/work/form-metadata/SF424_4_0-V4.0_F713.xls" in relative_paths
+    assert (
+        "sources/artifacts/pdf-reconciliation/friday/SF424/V4.0/reconciliation.json"
+        in relative_paths
+    )
+    assert "sources/src/grants_question_crosswalk/sf424_source_authored.py" in relative_paths
 
 
 def test_to_form_allocates_independent_runtime_snapshots() -> None:

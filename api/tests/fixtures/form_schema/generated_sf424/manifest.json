@@ -1,0 +1,139 @@
+{
+  "artifacts": {
+    "json_schema": {
+      "path": "json-schema.json",
+      "sha256": "4257be6eb1d356f4d6d69b0dcfb503c274a64050948390a9b8cf99b78bc1af90"
+    },
+    "mappings": null,
+    "rule_schema": {
+      "path": "rule-schema.json",
+      "sha256": "8ea4fd11f9b0a3c2283a858c1e4764750331e5abc6e93721b7af88311967e44b"
+    },
+    "ui_schema": {
+      "path": "ui-schema.json",
+      "sha256": "70bc8f66bfb81aea30417c32fcde70c9e56dca93f853615dab0522f8747b64ba"
+    },
+    "xml_transform": {
+      "path": "xml-transform.json",
+      "sha256": "7718a9e8db0cdfa361cd1826a941d6f2ff7d436bb88f999ddb78e1bd78acfbce"
+    }
+  },
+  "compiler": {
+    "name": "grants-question-crosswalk-sf424-source-authored",
+    "sha256": null,
+    "verification": "manual_canary",
+    "version": "1.0.0"
+  },
+  "contract": "resolved-form-package/v1",
+  "form": {
+    "agency_code": "SGG",
+    "form_id": "1623b310-85be-496a-b84b-34bdee22a68a",
+    "form_instruction_id": "bf48a93f-d445-426f-a8fb-289bf93a2434",
+    "form_name": "Application for Federal Assistance (SF-424)",
+    "form_type": "SF424",
+    "form_version": "4.0",
+    "is_deprecated": false,
+    "legacy_form_id": 713,
+    "omb_number": "4040-0004",
+    "sgg_version": "1.0",
+    "short_form_name": "SF424_4_0"
+  },
+  "question_bindings": [],
+  "review_boundary": {
+    "mapping_composition": "agent_proposed",
+    "published_coverage_eligible": false,
+    "semantic_mappings": "agent_proposed",
+    "semantic_model_validation": "not_validated",
+    "ui_projection": "agent_proposed"
+  },
+  "source_set": {
+    "attestation": "snapshot_only",
+    "closure": "partial_evidence",
+    "dependencies": [
+      {
+        "package_path": "sources/artifacts/pdf-reconciliation/friday/SF424/V4.0/reconciliation.json",
+        "sha256": "14582ff5519e62cf3fdfec6fc6fd0d91cc5631715962392c76c4d2a787d0c267",
+        "source_path": "artifacts/pdf-reconciliation/friday/SF424/V4.0/reconciliation.json"
+      },
+      {
+        "package_path": "sources/artifacts/proof/grantsgov-SF424.jsonl",
+        "sha256": "97de332f8f2d7b92ce3568669432d26110a3e0d1ceadaa5fd4d4a092634b6fd4",
+        "source_path": "artifacts/proof/grantsgov-SF424.jsonl"
+      },
+      {
+        "package_path": "sources/artifacts/sgm/sf424-source-authored-acceptance.json",
+        "sha256": "a4dbc064912db91608fc28e5eb32d7b1dfad29b1431ef6680c6ccca33a5729ca",
+        "source_path": "artifacts/sgm/sf424-source-authored-acceptance.json"
+      },
+      {
+        "package_path": "sources/artifacts/sgm/sf424-source-authored-parity.json",
+        "sha256": "9cf70f037c41a01cf123edf4dc9fada6a84e48a158246ed48e362fdc0a7a3e9c",
+        "source_path": "artifacts/sgm/sf424-source-authored-parity.json"
+      },
+      {
+        "package_path": "sources/harness/authoring-model/core/components.json",
+        "sha256": "c2c205b18650875e05325838b6576e1212f518f54febd12fdea43f6c8d3744c0",
+        "source_path": "harness/authoring-model/core/components.json"
+      },
+      {
+        "package_path": "sources/harness/authoring-model/core/materialized/SF424.contract.json",
+        "sha256": "f7f679b6f54c44427d39b12f6561ab9374cf6e7c65ff9c037b1f81d1a30ab47e",
+        "source_path": "harness/authoring-model/core/materialized/SF424.contract.json"
+      },
+      {
+        "package_path": "sources/harness/authoring-model/core/questions.json",
+        "sha256": "1d1e25ed76e7b5ec4d322044ad0187ad095d28b7cea49fa2c66ce7c2840a9433",
+        "source_path": "harness/authoring-model/core/questions.json"
+      },
+      {
+        "package_path": "sources/harness/authoring-model/core/roles.json",
+        "sha256": "02b03915727ee525c28358824f338994484ae72043009cc2c7fa48ddb0f6dcc7",
+        "source_path": "harness/authoring-model/core/roles.json"
+      },
+      {
+        "package_path": "sources/harness/contracts/common-grants-baseline/SF424.json",
+        "sha256": "86e8133617800a13cec8f6dd44ec6f48063d8a09052703fcbdbb25af4daf2307",
+        "source_path": "harness/contracts/common-grants-baseline/SF424.json"
+      },
+      {
+        "package_path": "sources/harness/contracts/demo-core/evidence/SF424-behavior.jsonl",
+        "sha256": "8639aeab81608814d4dbe336468cc85ef56a3683f9918d2b73e2ed3b9a99d5d4",
+        "source_path": "harness/contracts/demo-core/evidence/SF424-behavior.jsonl"
+      },
+      {
+        "package_path": "sources/harness/static-content/SF424-V4.0.json",
+        "sha256": "5a7c37d671461d20932abf248500741e27e24df402c4a130693525a14f7f7376",
+        "source_path": "harness/static-content/SF424-V4.0.json"
+      },
+      {
+        "package_path": "sources/src/grants_question_crosswalk/sf424_source_authored.py",
+        "sha256": "8c898b794e8cd5d7b061f1244b845a728ce93cdb769f91df71d1c1bcf862ae9c",
+        "source_path": "src/grants_question_crosswalk/sf424_source_authored.py"
+      },
+      {
+        "package_path": "sources/src/grants_question_crosswalk/source_authored_sgm.py",
+        "sha256": "46c1b79e4e4b0774d408b89299b0a8ecf6c38e298c5b970c03cef70df21d3429",
+        "source_path": "src/grants_question_crosswalk/source_authored_sgm.py"
+      },
+      {
+        "package_path": "sources/work/form-metadata/SF424_4_0-V4.0_F713.xls",
+        "sha256": "d6c16b73f5ade8c30bff93163503d1b80a1ee609ea8daa543a90214523b92bde",
+        "source_path": "work/form-metadata/SF424_4_0-V4.0_F713.xls"
+      },
+      {
+        "package_path": "sources/work/grantsgov-xsds/SF424_4_0-V4.0.xsd",
+        "sha256": "21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364",
+        "source_path": "work/grantsgov-xsds/SF424_4_0-V4.0.xsd"
+      }
+    ],
+    "form": {
+      "package_path": "sources/harness/sgm/source-authored/SF424.json",
+      "sha256": "552ab47f65f3bb5486cb4ec4fdd4677331e4a705e911d10a179ae8dba3bf444d",
+      "source_path": "harness/sgm/source-authored/SF424.json"
+    },
+    "graph_sha256": "67b7d41484a3c63f33915f9fa18004f04608442bd0e714eaa7b2e28badb5239e",
+    "questions": [],
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
+    "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef"
+  }
+}

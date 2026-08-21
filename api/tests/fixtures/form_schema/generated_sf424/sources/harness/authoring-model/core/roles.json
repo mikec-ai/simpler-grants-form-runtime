@@ -1,0 +1,11 @@
+{
+  "authorized-organization-representative": {"title": "Authorized organization representative", "distinct_from": ["applicant-contact", "project-director", "key-contact", "payee"]},
+  "applicant-contact": {"title": "Applicant contact", "distinct_from": ["authorized-organization-representative", "project-director"]},
+  "applicant-organization": {"title": "Applicant organization", "entity_role": true},
+  "project-director": {"title": "Project director / principal investigator", "distinct_from": ["applicant-contact", "authorized-organization-representative"]},
+  "key-contact": {"title": "Key contact", "repeatable": true},
+  "payee": {"title": "EPA payee contact", "distinct_from": ["authorized-organization-representative", "administrative-contact", "project-manager"]},
+  "administrative-contact": {"title": "EPA administrative contact", "distinct_from": ["payee", "project-manager"]},
+  "project-manager": {"title": "EPA project manager", "distinct_from": ["payee", "administrative-contact"]},
+  "epa-applicant-recipient-point-of-contact": {"title": "EPA applicant or recipient point of contact", "distinct_from": ["authorized-organization-representative", "payee", "administrative-contact", "project-manager"]}
+}

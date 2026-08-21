@@ -1,0 +1,63 @@
+{
+  "claims_verdict": "pass_with_narrowed_claims",
+  "config": {
+    "path": "harness/sgm/source-authored/SF424.json",
+    "sha256": "552ab47f65f3bb5486cb4ec4fdd4677331e4a705e911d10a179ae8dba3bf444d"
+  },
+  "dimensions": {
+    "calculations": 1,
+    "enumerations": 15,
+    "full_behavior_disposition_present": false,
+    "generated_conditional_rules": 6,
+    "generated_rules": 16,
+    "nested_groups": 4,
+    "repetition": 1,
+    "source_behavior_records": 96,
+    "source_behaviors": 83,
+    "source_condition_paths": 9
+  },
+  "exact_target_match": true,
+  "form_id": "SF424",
+  "format_version": 1,
+  "four_layer_equality": {
+    "json_schema": true,
+    "rule_schema": true,
+    "ui_schema": true,
+    "xml_transform": true
+  },
+  "generation_method": {
+    "catalogs_are_operational_inputs": false,
+    "declaration_count": 144,
+    "embedded_declaration_value_bytes": 25763,
+    "embedded_value_to_target_ratio": 0.8005,
+    "exact_target_canonical_bytes": 32185,
+    "kind": "explicit_declaration_materialization",
+    "operational_catalog_refs": 0
+  },
+  "open_claims_boundaries": [
+    "Catalogs are hash-pinned provenance conventions, not operational composition inputs.",
+    "Embedded declaration values reproduce the oracle; they do not demonstrate reusable-module generation.",
+    "Source-path bindings are explicit agent-proposed bindings, not semantically derived mappings.",
+    "The 83 source behaviors lack a complete behavior-to-output disposition ledger.",
+    "Neither static source item is reproduced exactly in the generated four-layer contract."
+  ],
+  "oracle_independent_compiler": true,
+  "production_ready": false,
+  "role_separation": "verified_for_applicant_contact_and_authorized_representative",
+  "semantic_mapping_status": "agent_proposed",
+  "source_path_accounting": {
+    "accounted_paths": 75,
+    "bindings_are_semantically_derived": false,
+    "countable_paths": 75,
+    "maximum_uses_per_path": 4,
+    "minimum_uses_per_path": 2,
+    "total_declaration_path_uses": 229
+  },
+  "static_content": {
+    "exactly_presented_content_ids": [],
+    "exactly_presented_items": 0,
+    "presentation_status": "source_items_linked_but_not_exactly_presented",
+    "source_items": 2
+  },
+  "status": "accepted_with_bounded_explicit_declaration_claim"
+}

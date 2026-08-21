@@ -1,0 +1,159 @@
+{
+  "agent_findings": [
+    {
+      "finding": "Applicant type supports one primary plus up to two additional classifications.",
+      "gate": "enumeration_and_behavior",
+      "pages": [
+        5
+      ],
+      "roles": [
+        "instructions"
+      ]
+    },
+    {
+      "finding": "Delinquent debt applies at the organization level and conditionally requires an explanation attachment.",
+      "gate": "behavior_and_policy",
+      "pages": [
+        8
+      ],
+      "roles": [
+        "instructions"
+      ]
+    }
+  ],
+  "claims_boundary": "Every cited PDF page was rendered and visually inspected by an agent without OCR. This establishes source identity and page-referenced observations, not accepted semantic mappings, implementation parity, accessibility conformance, policy approval, or a basis to retire a form. XSD and DAT availability is provenance context, not proof that every PDF instruction or behavior is encoded.",
+  "fid": 713,
+  "form_key": "SF424",
+  "form_version": "V4.0",
+  "implementation_parity": "not_established",
+  "metadata_as_recorded": {
+    "omb_expiration": "11/30/2025",
+    "omb_number": "4040-0004"
+  },
+  "metadata_source_delta": "documented_without_resolution",
+  "official_pdf_text_as_observed": {
+    "omb_expiration_values": [
+      "03/31/2029"
+    ]
+  },
+  "priority_cohort": "ready_six",
+  "published_coverage_eligible": false,
+  "recommended_next_step": "Reconcile fields, static text, conditions, calculations, and role semantics against the pinned XSD/DAT/PDF evidence; route policy choices to humans.",
+  "review_state": "agent_visual_source_review_complete",
+  "schema_context": {
+    "dat": {
+      "availability_basis": "current FormMetadata declaration",
+      "available": true,
+      "filename": "SF424_4_0-V4.0_F713.xls",
+      "local_copy_available": true,
+      "local_paths": [
+        "work/form-metadata/SF424_4_0-V4.0_F713.xls"
+      ],
+      "official_url": "https://apply07.grants.gov/apply/forms/sample/SF424_4_0-V4.0_F713.xls"
+    },
+    "exact_xsd": {
+      "availability_basis": "current FormMetadata declaration",
+      "available": true,
+      "filename": "SF424_4_0-V4.0.xsd",
+      "local_copy_available": true,
+      "local_paths": [
+        "work/grantsgov-xsds/SF424_4_0-V4.0.xsd",
+        "work/simpler-grants-gov/api/src/services/xml_generation/xsds/SF424_4_0-V4.0.xsd"
+      ],
+      "official_url": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+    },
+    "note": "Availability and local paths are recorded from the deterministic census; no equivalence is inferred."
+  },
+  "semantic_acceptance": "not_requested",
+  "source_artifacts": [
+    {
+      "artifact_role": "sample_pdf",
+      "cache_path": "cache/friday/SF424/V4.0/sample/sha256-5cad14f3d86f8cb0c4b9ed6e1b4f5fcefd0d492f164e56573864bafd6cdcf2a5.pdf",
+      "content_length": 149909,
+      "content_type": "application/pdf",
+      "evidence_path": "artifacts/pdf-reconciliation/friday/SF424/V4.0/sample/deterministic-evidence.json",
+      "expected_filename": "SF424_4_0-V4.0.pdf",
+      "fid": 713,
+      "form_key": "SF424",
+      "form_version": "V4.0",
+      "http_content_type": "application/pdf;charset=UTF-8",
+      "official_form_key": "SF424_4_0",
+      "pdf": {
+        "encrypted": false,
+        "form_type": "XFA",
+        "javascript": true,
+        "pages": 1,
+        "tagged": true,
+        "version": "1.7"
+      },
+      "retrieved_at": "2026-08-19T17:55:50Z",
+      "review_path": "artifacts/pdf-reconciliation/friday/SF424/V4.0/sample/agent-review.json",
+      "reviewed_pages": 1,
+      "sha256": "5cad14f3d86f8cb0c4b9ed6e1b4f5fcefd0d492f164e56573864bafd6cdcf2a5",
+      "source_id": "grants-gov:SF424_4_0:V4.0:sample:sha256:5cad14f3d86f8cb0c4b9ed6e1b4f5fcefd0d492f164e56573864bafd6cdcf2a5",
+      "url": "https://apply07.grants.gov/apply/forms/sample/SF424_4_0-V4.0.pdf"
+    },
+    {
+      "artifact_role": "readonly_rendering",
+      "cache_path": "cache/friday/SF424/V4.0/readonly/sha256-ad3d5f4bc3f6239fdaf9b7daf13a44761af541bb388b89ce0d1946ee5002e2d2.pdf",
+      "content_length": 283448,
+      "content_type": "application/pdf",
+      "evidence_path": "artifacts/pdf-reconciliation/friday/SF424/V4.0/readonly/deterministic-evidence.json",
+      "expected_filename": "SF424_4_0-V4.0.pdf",
+      "fid": 713,
+      "form_key": "SF424",
+      "form_version": "V4.0",
+      "http_content_type": "application/pdf;charset=UTF-8",
+      "official_form_key": "SF424_4_0",
+      "pdf": {
+        "encrypted": false,
+        "form_type": "AcroForm",
+        "javascript": false,
+        "pages": 3,
+        "tagged": false,
+        "version": "1.6"
+      },
+      "retrieved_at": "2026-08-19T17:55:50Z",
+      "review_path": "artifacts/pdf-reconciliation/friday/SF424/V4.0/readonly/agent-review.json",
+      "reviewed_pages": 3,
+      "sha256": "ad3d5f4bc3f6239fdaf9b7daf13a44761af541bb388b89ce0d1946ee5002e2d2",
+      "source_id": "grants-gov:SF424_4_0:V4.0:readonly:sha256:ad3d5f4bc3f6239fdaf9b7daf13a44761af541bb388b89ce0d1946ee5002e2d2",
+      "url": "https://apply07.grants.gov/apply/forms/readonly/SF424_4_0-V4.0.pdf"
+    },
+    {
+      "artifact_role": "instructions_pdf",
+      "cache_path": "cache/friday/SF424/V4.0/instructions/sha256-ae4fcf186b268763f407843f7bb8c029efb9c02f127e32dc400e8bd74d6ce360.pdf",
+      "content_length": 341441,
+      "content_type": "application/pdf",
+      "evidence_path": "artifacts/pdf-reconciliation/friday/SF424/V4.0/instructions/deterministic-evidence.json",
+      "expected_filename": "SF424_4_0-V4.0-Instructions.pdf",
+      "fid": 713,
+      "form_key": "SF424",
+      "form_version": "V4.0",
+      "http_content_type": "application/pdf;charset=UTF-8",
+      "official_form_key": "SF424_4_0",
+      "pdf": {
+        "encrypted": false,
+        "form_type": "none",
+        "javascript": false,
+        "pages": 8,
+        "tagged": true,
+        "version": "1.7"
+      },
+      "retrieved_at": "2026-08-19T17:55:50Z",
+      "review_path": "artifacts/pdf-reconciliation/friday/SF424/V4.0/instructions/agent-review.json",
+      "reviewed_pages": 8,
+      "sha256": "ae4fcf186b268763f407843f7bb8c029efb9c02f127e32dc400e8bd74d6ce360",
+      "source_id": "grants-gov:SF424_4_0:V4.0:instructions:sha256:ae4fcf186b268763f407843f7bb8c029efb9c02f127e32dc400e8bd74d6ce360",
+      "url": "https://apply07.grants.gov/apply/forms/instructions/SF424_4_0-V4.0-Instructions.pdf"
+    }
+  ],
+  "source_coverage": {
+    "all_rendered_pages_agent_read": true,
+    "instructions": true,
+    "instructions_declared_by_official_metadata": true,
+    "ocr_used": false,
+    "readonly": true,
+    "sample": true
+  }
+}

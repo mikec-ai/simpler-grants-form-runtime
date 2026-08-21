@@ -1,0 +1,170 @@
+{
+  "accessibility_validation_status": "not_performed",
+  "claims_boundary": "This compiler materializes a complete SF424 SGM contract from explicitly authored declarations bound to exact XSD/DAT paths, page-reviewed PDF and static content, pinned CommonGrants alignment evidence, and agent-proposed SGM presentation/runtime conventions. The question, role, and component catalogs are pinned provenance conventions, not operational composition inputs. Declaration values are embedded configuration, so this proves deterministic source-bound reproduction and exact equality with the pinned SGM oracle, not reusable-module generation, semantic acceptance, policy approval, accessibility validation, production readiness, or form-retirement evidence.",
+  "config": {
+    "path": "harness/sgm/source-authored/SF424.json",
+    "sha256": "552ab47f65f3bb5486cb4ec4fdd4677331e4a705e911d10a179ae8dba3bf444d"
+  },
+  "declarations": {
+    "json_properties": 58,
+    "rules": 16,
+    "ui_nodes": 24,
+    "xml_mappings": 46
+  },
+  "dimension_assertions": {
+    "calculations": {
+      "count": 1,
+      "paths": [
+        "SF424_4_0.TotalEstimatedFunding"
+      ]
+    },
+    "conditions": {
+      "count": 9,
+      "paths": [
+        "SF424_4_0.RevisionType",
+        "SF424_4_0.RevisionOtherSpecify",
+        "SF424_4_0.FederalAwardIdentifier",
+        "SF424_4_0.Applicant.State",
+        "SF424_4_0.Applicant.Province",
+        "SF424_4_0.Applicant.ZipPostalCode",
+        "SF424_4_0.ApplicantTypeOtherSpecify",
+        "SF424_4_0.StateReviewAvailableDate",
+        "SF424_4_0.DebtExplanation"
+      ]
+    },
+    "enumerations": {
+      "count": 15,
+      "paths": [
+        "SF424_4_0.SubmissionType",
+        "SF424_4_0.ApplicationType",
+        "SF424_4_0.RevisionType",
+        "SF424_4_0.Applicant.State",
+        "SF424_4_0.Applicant.Country",
+        "SF424_4_0.ContactPerson.PrefixName",
+        "SF424_4_0.ContactPerson.SuffixName",
+        "SF424_4_0.ApplicantTypeCode1",
+        "SF424_4_0.ApplicantTypeCode2",
+        "SF424_4_0.ApplicantTypeCode3",
+        "SF424_4_0.StateReview",
+        "SF424_4_0.DelinquentFederalDebt",
+        "SF424_4_0.CertificationAgree",
+        "SF424_4_0.AuthorizedRepresentative.PrefixName",
+        "SF424_4_0.AuthorizedRepresentative.SuffixName"
+      ]
+    },
+    "nested_groups": {
+      "count": 4,
+      "paths": [
+        "SF424_4_0",
+        "SF424_4_0.Applicant",
+        "SF424_4_0.ContactPerson",
+        "SF424_4_0.AuthorizedRepresentative"
+      ]
+    },
+    "repetition": {
+      "count": 1,
+      "paths": [
+        "SF424_4_0.AdditionalProjectTitle.AttachedFile"
+      ]
+    }
+  },
+  "evidence_assertions": {
+    "behavior_records": 96,
+    "behaviors": 83,
+    "rendered_pdf_pages": 12,
+    "static_pdf_sha256": "ad3d5f4bc3f6239fdaf9b7daf13a44761af541bb388b89ce0d1946ee5002e2d2"
+  },
+  "exact_target_match": true,
+  "form_id": "SF424",
+  "format_version": 1,
+  "generated_artifact_digests": {
+    "json_schema": "sha256:e16c7367db0143ce5c2e21e3afa5ed2c12570ecdeb99b506574f62e5e280c23f",
+    "rule_schema": "sha256:6235cc4f715f471084e3c27d410c9a5efc7fd2b9a11cb5b25184f4747d98eb45",
+    "ui_schema": "sha256:435eed94f6c92886ca7b01c455b0d8ec34316667c7c351bdcd856153b15aa143",
+    "xml_transform": "sha256:dd13ce9a041c1dcd841c30ac70e48e113ead9c9a5c89d969d2f19ae3aaa3155f"
+  },
+  "generation_method": {
+    "catalog_role": "pinned_provenance_conventions_only",
+    "declaration_values_embedded": true,
+    "kind": "explicit_declaration_materialization",
+    "operational_component_composition": false
+  },
+  "human_acceptance_status": "not_requested",
+  "oracle": {
+    "artifact_digests": {
+      "json_schema": "sha256:e16c7367db0143ce5c2e21e3afa5ed2c12570ecdeb99b506574f62e5e280c23f",
+      "rule_schema": "sha256:6235cc4f715f471084e3c27d410c9a5efc7fd2b9a11cb5b25184f4747d98eb45",
+      "ui_schema": "sha256:435eed94f6c92886ca7b01c455b0d8ec34316667c7c351bdcd856153b15aa143",
+      "xml_transform": "sha256:dd13ce9a041c1dcd841c30ac70e48e113ead9c9a5c89d969d2f19ae3aaa3155f"
+    },
+    "path": "artifacts/sgm/ready-six-shadow-targets.json",
+    "sgm_revision": "5f88c96f73c15f29ed523d9b0105d3bdc3917432",
+    "sha256": "161d9369f3db1b56fdc3177934d9fe60f6334fa1b666a6ab25ebdd0a7935f037"
+  },
+  "policy_review_status": "agent_proposed",
+  "production_ready": false,
+  "rendered_pdf_pages_reviewed": 12,
+  "semantic_mapping_status": "agent_proposed",
+  "source_accounting": {
+    "cardinality_constraint_signature_sha256": "840106832600828f8b744bf0d779538da1082104e62a6fa2882b6852dd479745",
+    "container_paths": 4,
+    "countable_paths": 75,
+    "policy": "Every declaration binds one or more exact countable XSD paths; every countable path must be used at least once.",
+    "technical_paths": 17
+  },
+  "source_inputs": {
+    "behavior_artifact": {
+      "path": "harness/contracts/demo-core/evidence/SF424-behavior.jsonl",
+      "sha256": "8639aeab81608814d4dbe336468cc85ef56a3683f9918d2b73e2ed3b9a99d5d4"
+    },
+    "common_grants_baseline": {
+      "path": "harness/contracts/common-grants-baseline/SF424.json",
+      "sha256": "86e8133617800a13cec8f6dd44ec6f48063d8a09052703fcbdbb25af4daf2307"
+    },
+    "component_catalog": {
+      "path": "harness/authoring-model/core/components.json",
+      "sha256": "c2c205b18650875e05325838b6576e1212f518f54febd12fdea43f6c8d3744c0"
+    },
+    "dat": {
+      "path": "work/form-metadata/SF424_4_0-V4.0_F713.xls",
+      "sha256": "d6c16b73f5ade8c30bff93163503d1b80a1ee609ea8daa543a90214523b92bde"
+    },
+    "normalized_contract": {
+      "path": "harness/authoring-model/core/materialized/SF424.contract.json",
+      "sha256": "f7f679b6f54c44427d39b12f6561ab9374cf6e7c65ff9c037b1f81d1a30ab47e"
+    },
+    "pdf_reconciliation": {
+      "path": "artifacts/pdf-reconciliation/friday/SF424/V4.0/reconciliation.json",
+      "sha256": "14582ff5519e62cf3fdfec6fc6fd0d91cc5631715962392c76c4d2a787d0c267"
+    },
+    "question_catalog": {
+      "path": "harness/authoring-model/core/questions.json",
+      "sha256": "1d1e25ed76e7b5ec4d322044ad0187ad095d28b7cea49fa2c66ce7c2840a9433"
+    },
+    "role_catalog": {
+      "path": "harness/authoring-model/core/roles.json",
+      "sha256": "02b03915727ee525c28358824f338994484ae72043009cc2c7fa48ddb0f6dcc7"
+    },
+    "source_records": {
+      "path": "artifacts/proof/grantsgov-SF424.jsonl",
+      "sha256": "97de332f8f2d7b92ce3568669432d26110a3e0d1ceadaa5fd4d4a092634b6fd4"
+    },
+    "static_catalog": {
+      "path": "harness/static-content/SF424-V4.0.json",
+      "sha256": "5a7c37d671461d20932abf248500741e27e24df402c4a130693525a14f7f7376"
+    },
+    "xsd": {
+      "path": "work/grantsgov-xsds/SF424_4_0-V4.0.xsd",
+      "sha256": "21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364"
+    }
+  },
+  "static_assertion": {
+    "content_ids": [
+      "sf424:certification:21",
+      "sf424:certification-reference:21"
+    ],
+    "count": 2,
+    "presentation_status": "source_items_linked_but_not_exactly_presented"
+  },
+  "status": "source_authored_explicit_declaration_oracle_exact"
+}

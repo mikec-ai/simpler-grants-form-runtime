@@ -1,0 +1,7 @@
+{
+  "person_name": {"slots": ["name:prefix", "name:first", "name:middle", "name:last", "name:suffix", "name:full"]},
+  "postal_address": {"slots": ["street-1", "street-2", "city", "county", "state", "province", "postal-code", "country"]},
+  "contact_channels": {"slots": ["phone", "fax", "email"]},
+  "organization_identity": {"slots": ["name", "ein", "sam-uei", "department", "division", "website"]},
+  "role_metadata": {"slots": ["title", "organization-affiliation", "project-role"]}
+}

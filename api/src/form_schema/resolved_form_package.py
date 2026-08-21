@@ -13,7 +13,7 @@ from typing import Any
 from src.constants.lookup_constants import FormType
 from src.db.models.competition_models import Form
 
-CONTRACT = "common-grants-resolved-form-package/v1"
+CONTRACT = "resolved-form-package/v1"
 _SHA256 = re.compile(r"^[0-9a-f]{64}$")
 _REVISION = re.compile(r"^[0-9a-f]{40}$")
 
@@ -32,7 +32,7 @@ class ResolvedFormPackage:
     _manifest_json: str
     _json_schema_json: str
     _ui_schema_json: str
-    _mappings_json: str
+    _mappings_json: str | None
     _rule_schema_json: str | None
     _xml_transform_json: str | None
 
@@ -49,7 +49,9 @@ class ResolvedFormPackage:
         return json.loads(self._ui_schema_json)
 
     @property
-    def mappings(self) -> dict[str, Any]:
+    def mappings(self) -> dict[str, Any] | None:
+        if self._mappings_json is None:
+            return None
         return json.loads(self._mappings_json)
 
     @property
@@ -69,14 +71,15 @@ class ResolvedFormPackage:
         metadata = manifest["form"]
         json_schema = self.json_schema
         mappings = self.mappings
-        for key in ("x-mapping-from-cg", "x-mapping-to-cg"):
-            mapping = mappings[key]
-            existing = json_schema.get(key)
-            if existing is not None and existing != mapping:
-                raise ResolvedFormPackageError(
-                    f"json_schema.{key} conflicts with the verified mappings artifact"
-                )
-            json_schema[key] = mapping
+        if mappings is not None:
+            for key in ("x-mapping-from-cg", "x-mapping-to-cg"):
+                mapping = mappings[key]
+                existing = json_schema.get(key)
+                if existing is not None and existing != mapping:
+                    raise ResolvedFormPackageError(
+                        f"json_schema.{key} conflicts with the verified mappings artifact"
+                    )
+                json_schema[key] = mapping
         json_schema["x-simpler-form-package"] = {
             "contract": manifest["contract"],
             "package_digest": self.package_digest,
@@ -208,6 +211,7 @@ def _validate_source_set(package_root: Path, value: object) -> None:
             "graph_sha256",
             "form",
             "questions",
+            "dependencies",
         },
         "source_set",
     )
@@ -242,9 +246,28 @@ def _validate_source_set(package_root: Path, value: object) -> None:
             label,
         )
 
+    dependencies = _array(source_set["dependencies"], "source_set.dependencies")
+    seen_dependency_paths: set[str] = set()
+    for index, raw_dependency in enumerate(dependencies):
+        label = f"source_set.dependencies[{index}]"
+        dependency = _object(raw_dependency, label)
+        source_path = _string(dependency.get("source_path"), f"{label}.source_path")
+        if source_path in seen_dependency_paths:
+            raise ResolvedFormPackageError(f"duplicate source dependency: {source_path}")
+        seen_dependency_paths.add(source_path)
+        _verify_source(package_root, dependency, label)
+
     graph = {
         key: source_set[key]
-        for key in ("repository", "revision", "attestation", "closure", "form", "questions")
+        for key in (
+            "repository",
+            "revision",
+            "attestation",
+            "closure",
+            "form",
+            "questions",
+            "dependencies",
+        )
     }
     actual_graph_sha256 = hashlib.sha256(_canonical_json(graph).encode("utf-8")).hexdigest()
     expected_graph_sha256 = _sha256(source_set["graph_sha256"], "source_set.graph_sha256")
@@ -357,7 +380,7 @@ def _direct_mapping_leaves(
 
 
 def _validate_package_cross_references(
-    manifest: dict[str, Any], json_schema: dict[str, Any], mappings: dict[str, Any]
+    manifest: dict[str, Any], json_schema: dict[str, Any], mappings: dict[str, Any] | None
 ) -> None:
     for index, binding in enumerate(manifest["question_bindings"]):
         label = f"question_bindings[{index}]"
@@ -369,6 +392,9 @@ def _validate_package_cross_references(
             raise ResolvedFormPackageError(
                 f"{label}.question_id does not match the bound schema x-question-id"
             )
+
+    if mappings is None:
+        return
 
     from_leaves = _direct_mapping_leaves(
         mappings["x-mapping-from-cg"], (), "mappings.x-mapping-from-cg"
@@ -435,7 +461,7 @@ def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:
             "semantic_mappings",
             "mapping_composition",
             "ui_projection",
-            "common_grants_model_validation",
+            "semantic_model_validation",
             "published_coverage_eligible",
         },
         "review_boundary",
@@ -444,18 +470,18 @@ def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:
     for key in ("semantic_mappings", "mapping_composition", "ui_projection"):
         if review_boundary[key] not in review_states:
             raise ResolvedFormPackageError(f"review_boundary.{key} is unknown")
-    if review_boundary["common_grants_model_validation"] not in {
+    if review_boundary["semantic_model_validation"] not in {
         "not_validated",
         "source_pinned",
     }:
-        raise ResolvedFormPackageError("review_boundary.common_grants_model_validation is unknown")
+        raise ResolvedFormPackageError("review_boundary.semantic_model_validation is unknown")
     if not isinstance(review_boundary["published_coverage_eligible"], bool):
         raise ResolvedFormPackageError(
             "review_boundary.published_coverage_eligible must be a boolean"
         )
     has_unreviewed_boundary = (
         "agent_proposed" in review_boundary.values()
-        or review_boundary["common_grants_model_validation"] == "not_validated"
+        or review_boundary["semantic_model_validation"] == "not_validated"
         or compiler["verification"] == "manual_canary"
         or manifest["source_set"]["attestation"] == "snapshot_only"
         or manifest["source_set"]["closure"] != "complete"
@@ -483,13 +509,15 @@ def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:
     if not all(isinstance(node, dict) for node in ui_schema_raw):
         raise ResolvedFormPackageError("ui_schema entries must be objects")
     ui_schema: list[dict[str, Any]] = ui_schema_raw
-    mappings = _object(
-        _load_artifact(package_root, artifacts["mappings"], "artifacts.mappings"),
-        "mappings",
-    )
-    _exact_keys(mappings, {"x-mapping-from-cg", "x-mapping-to-cg"}, "mappings")
-    _object(mappings["x-mapping-from-cg"], "mappings.x-mapping-from-cg")
-    _object(mappings["x-mapping-to-cg"], "mappings.x-mapping-to-cg")
+    mappings = None
+    if artifacts["mappings"] is not None:
+        mappings = _object(
+            _load_artifact(package_root, artifacts["mappings"], "artifacts.mappings"),
+            "mappings",
+        )
+        _exact_keys(mappings, {"x-mapping-from-cg", "x-mapping-to-cg"}, "mappings")
+        _object(mappings["x-mapping-from-cg"], "mappings.x-mapping-from-cg")
+        _object(mappings["x-mapping-to-cg"], "mappings.x-mapping-to-cg")
     _validate_package_cross_references(manifest, json_schema, mappings)
 
     rule_schema = None
@@ -515,6 +543,10 @@ def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:
         for question in source_set["questions"]
     )
     dependency_paths.update(
+        _artifact_path(package_root, dependency["package_path"], "source_set.dependency")
+        for dependency in source_set["dependencies"]
+    )
+    dependency_paths.update(
         _artifact_path(package_root, descriptor["path"], f"artifacts.{name}")
         for name, descriptor in artifacts.items()
         if descriptor is not None
@@ -529,7 +561,7 @@ def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:
         _manifest_json=canonical_manifest,
         _json_schema_json=_canonical_json(json_schema),
         _ui_schema_json=_canonical_json(ui_schema),
-        _mappings_json=_canonical_json(mappings),
+        _mappings_json=_canonical_json(mappings) if mappings is not None else None,
         _rule_schema_json=_canonical_json(rule_schema) if rule_schema is not None else None,
         _xml_transform_json=(_canonical_json(xml_transform) if xml_transform is not None else None),
     )

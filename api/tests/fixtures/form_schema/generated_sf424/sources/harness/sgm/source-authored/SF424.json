@@ -1,0 +1,2957 @@
+{
+  "authoring": {
+    "json_properties": [
+      {
+        "evidence_status": "source_bound",
+        "name": "additional_congressional_districts",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AdditionalCongressionalDistricts"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/attachment"
+            }
+          ],
+          "description": "Attach an additional list of Program/Project Congressional Districts if needed.",
+          "title": "Additional Congressional Districts"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "additional_project_title",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AdditionalProjectTitle"
+        ],
+        "value": {
+          "description": "Attach file(s) using the appropriate buttons.",
+          "items": {
+            "allOf": [
+              {
+                "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/attachment"
+              }
+            ]
+          },
+          "maxItems": 100,
+          "title": "Additional Project Title",
+          "type": "array"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "agency_name",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AgencyName"
+        ],
+        "value": {
+          "description": "Pre-populated from the Application cover sheet.",
+          "maxLength": 60,
+          "minLength": 1,
+          "title": "Agency Name",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "aor_signature",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AORSignature"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/signature"
+            }
+          ],
+          "title": "AOR Signature"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "applicant",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.Applicant.Street1",
+          "SF424_4_0.Applicant.Street2",
+          "SF424_4_0.Applicant.City",
+          "SF424_4_0.Applicant.County",
+          "SF424_4_0.Applicant.State",
+          "SF424_4_0.Applicant.Province",
+          "SF424_4_0.Applicant.ZipPostalCode",
+          "SF424_4_0.Applicant.Country"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/address_shared_v1.json#/address"
+            }
+          ],
+          "description": "Enter information about the applicant.",
+          "title": "Applicant"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "applicant_estimated_funding",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ApplicantEstimatedFunding"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/budget_monetary_amount"
+            }
+          ],
+          "description": "Enter the dollar amount.",
+          "title": "Applicant Estimated Funding"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "applicant_id",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ApplicantID"
+        ],
+        "value": {
+          "description": "Enter the applicant's control number, if applicable.",
+          "maxLength": 30,
+          "minLength": 1,
+          "title": "Applicant Identifier",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "applicant_type_code",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ApplicantTypeCode1",
+          "SF424_4_0.ApplicantTypeCode2",
+          "SF424_4_0.ApplicantTypeCode3"
+        ],
+        "value": {
+          "description": "Select the appropriate applicant types.",
+          "items": {
+            "enum": [
+              "A: State Government",
+              "B: County Government",
+              "C: City or Township Government",
+              "D: Special District Government",
+              "E: Regional Organization",
+              "F: U.S. Territory or Possession",
+              "G: Independent School District",
+              "H: Public/state Controlled Institution of Higher Education",
+              "I: Indian/Native American Tribal Government (Federally Recognized)",
+              "J: Indian/Native American Tribal Government (Other than Federally Recognized)",
+              "K: Indian/Native American Tribally Designated Organization",
+              "L: Public/Indian Housing Authority",
+              "M: Nonprofit with 501C3 IRS Status (Other than Institution of Higher Education)",
+              "N: Nonprofit without 501C3 IRS Status (Other than Institution of Higher Education)",
+              "O: Private Institution of Higher Education",
+              "P: Individual",
+              "Q: For-Profit Organization (Other than Small Business)",
+              "R: Small Business",
+              "S: Hispanic-serving Institution",
+              "T: Historically Black Colleges and Universities (HBCUs)",
+              "U: Tribally Controlled Colleges and Universities (TCCUs)",
+              "V: Alaska Native and Native Hawaiian Serving Institutions",
+              "W: Non-domestic (non-US) Entity",
+              "X: Other (specify)"
+            ],
+            "type": "string"
+          },
+          "maxItems": 3,
+          "minItems": 1,
+          "title": "Type of Applicant",
+          "type": "array"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "applicant_type_other_specify",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ApplicantTypeOtherSpecify"
+        ],
+        "value": {
+          "description": "Enter the applicant type here if you selected \"Other (specify)\" for Type of applicant.",
+          "maxLength": 30,
+          "minLength": 0,
+          "title": "Type of Applicant Other Explanation",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "application_type",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ApplicationType"
+        ],
+        "value": {
+          "description": "Select one type of application in accordance with agency instructions.",
+          "enum": [
+            "New",
+            "Continuation",
+            "Revision"
+          ],
+          "title": "Application Type",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "areas_affected",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AreasAffected"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/attachment"
+            }
+          ],
+          "description": "List the areas or entities using the categories (e.g., cities, counties, states, etc.) specified in agency instructions.",
+          "title": "Areas Affected"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "assistance_listing_number",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.CFDANumber"
+        ],
+        "value": {
+          "description": "Pre-populated from the Application cover sheet.",
+          "maxLength": 15,
+          "minLength": 1,
+          "title": "Assistance Listing Number",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "assistance_listing_program_title",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.CFDAProgramTitle"
+        ],
+        "value": {
+          "description": "Pre-populated from the Application cover sheet.",
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Assistance Listing Title",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "authorized_representative",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AuthorizedRepresentative.PrefixName",
+          "SF424_4_0.AuthorizedRepresentative.FirstName",
+          "SF424_4_0.AuthorizedRepresentative.MiddleName",
+          "SF424_4_0.AuthorizedRepresentative.LastName",
+          "SF424_4_0.AuthorizedRepresentative.SuffixName"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/person_name"
+            }
+          ],
+          "description": "",
+          "title": "Authorized Representative"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "authorized_representative_email",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AuthorizedRepresentativeEmail"
+        ],
+        "value": {
+          "description": "Enter a valid email Address.",
+          "format": "email",
+          "title": "AOR email",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "authorized_representative_fax",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AuthorizedRepresentativeFax"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/phone_number"
+            }
+          ],
+          "description": "Enter the fax Number.",
+          "title": "AOR fax Number"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "authorized_representative_phone_number",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AuthorizedRepresentativePhoneNumber"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/phone_number"
+            }
+          ],
+          "description": "Enter the daytime Telephone Number.",
+          "title": "AOR Telephone Number"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "authorized_representative_title",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AuthorizedRepresentativeTitle"
+        ],
+        "value": {
+          "description": "Enter the position title.",
+          "maxLength": 45,
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "certification_agree",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.CertificationAgree"
+        ],
+        "value": {
+          "description": "By signing this application, I certify (1) to the statements contained in the list of certifications* and (2) that the statements herein are true, complete and accurate to the best of my knowledge. I also provide the required assurances** and agree to comply with any resulting terms if I accept an award. I am aware that any false, fictitious, or fraudulent statements or claims may subject me to criminal, civil, or administrative penalties. (U.S. Code, Title 18, Section 1001)",
+          "title": "Certification Agree",
+          "type": "boolean"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "competition_identification_number",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.CompetitionIdentificationNumber"
+        ],
+        "value": {
+          "description": "Pre-populated from the Application cover sheet.",
+          "maxLength": 40,
+          "minLength": 1,
+          "title": "Competition Number",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "competition_identification_title",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.CompetitionIdentificationTitle"
+        ],
+        "value": {
+          "description": "Pre-populated from the Application cover sheet.",
+          "maxLength": 255,
+          "minLength": 1,
+          "title": "Competition Title",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "congressional_district_applicant",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.CongressionalDistrictApplicant"
+        ],
+        "value": {
+          "description": "Enter the Congressional District in the format: 2 character state Abbreviation - 3 character District Number. Examples: CA-005 for California's 5th district, CA-012 for California's 12th district.If outside the US, enter 00-000.",
+          "maxLength": 6,
+          "minLength": 1,
+          "title": "Applicant District",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "congressional_district_program_project",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.CongressionalDistrictProgramProject"
+        ],
+        "value": {
+          "description": "Enter the Congressional District in the format: 2 character state Abbreviation - 3 character District Number. Examples: CA-005 for California's 5th district, CA-012 for California's 12th district.If all districts in a state are affected, enter \"all\" for the district number. Example: MD-all for all congressional districts in Maryland.If nationwide (all districts in all states), enter US-all.If the program/project is outside the US, enter 00-000.",
+          "maxLength": 6,
+          "minLength": 1,
+          "title": "Program District",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "contact_person",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ContactPerson.PrefixName",
+          "SF424_4_0.ContactPerson.FirstName",
+          "SF424_4_0.ContactPerson.MiddleName",
+          "SF424_4_0.ContactPerson.LastName",
+          "SF424_4_0.ContactPerson.SuffixName"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/person_name"
+            }
+          ],
+          "description": "Enter information about the contact person.",
+          "title": "Contact Person"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "contact_person_title",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.Title"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/contact_person_title"
+            }
+          ],
+          "description": "Enter the position title.",
+          "title": "Title"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "date_received",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.DateReceived"
+        ],
+        "value": {
+          "description": "Completed by Grants.gov upon submission.",
+          "format": "date",
+          "title": "Date Received",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "date_signed",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.DateSigned"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/submitted_date"
+            }
+          ],
+          "title": "Date Signed"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "debt_explanation",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.DebtExplanation"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/attachment"
+            }
+          ],
+          "description": "",
+          "title": "Debt Explanation"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "delinquent_federal_debt",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.DelinquentFederalDebt"
+        ],
+        "value": {
+          "description": "If 'Yes,' provide explanation in attachment.",
+          "title": "Applicant Delinquent on Federal Debt",
+          "type": "boolean"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "department_name",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.DepartmentName"
+        ],
+        "value": {
+          "description": "Enter the name of primary organizational department, service, laboratory, or equivalent level within the organization which will undertake the assistance activity.",
+          "maxLength": 30,
+          "minLength": 1,
+          "title": "Department Name",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "division_name",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.DivisionName"
+        ],
+        "value": {
+          "description": "Enter the name of primary organizational division, office, or major subdivision which will undertake the assistance activity.",
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Division Name",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "email",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.Email"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/contact_email"
+            }
+          ],
+          "description": "Enter a valid email Address.",
+          "title": "Email"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "employer_taxpayer_identification_number",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.EmployerTaxpayerIdentificationNumber"
+        ],
+        "value": {
+          "description": "Enter either TIN or EIN as assigned by the Internal Revenue Service.  If your organization is not in the US, enter 44-4444444.",
+          "maxLength": 30,
+          "minLength": 9,
+          "title": "EIN/TIN",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "fax",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.Fax"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/phone_number"
+            }
+          ],
+          "description": "Enter the fax Number.",
+          "title": "Fax Number"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "federal_award_identifier",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.FederalAwardIdentifier"
+        ],
+        "value": {
+          "description": "For new applications leave blank. For a continuation or revision to an existing award, enter the previously assigned Federal award identifier number. If a changed/corrected application, enter the Federal Identifier in accordance with agency instructions.",
+          "maxLength": 25,
+          "minLength": 1,
+          "title": "Federal Award Identifier",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "federal_entity_identifier",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.FederalEntityIdentifier"
+        ],
+        "value": {
+          "description": "Enter the number assigned to your organization by the Federal agency.",
+          "maxLength": 30,
+          "minLength": 1,
+          "title": "Federal Entity Identifier",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "federal_estimated_funding",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.FederalEstimatedFunding"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/budget_monetary_amount"
+            }
+          ],
+          "description": "Enter the dollar amount.",
+          "title": "Federal Estimated Funding"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "funding_opportunity_number",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.FundingOpportunityNumber"
+        ],
+        "value": {
+          "description": "Pre-populated from the Application cover sheet.",
+          "maxLength": 40,
+          "minLength": 1,
+          "title": "Opportunity Number",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "funding_opportunity_title",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.FundingOpportunityTitle"
+        ],
+        "value": {
+          "description": "Pre-populated from the Application cover sheet.",
+          "maxLength": 255,
+          "minLength": 1,
+          "title": "Opportunity title",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "local_estimated_funding",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.LocalEstimatedFunding"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/budget_monetary_amount"
+            }
+          ],
+          "description": "Enter the dollar amount.",
+          "title": "Local Estimated Funding"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "organization_affiliation",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.OrganizationAffiliation"
+        ],
+        "value": {
+          "description": "Enter the organization if different from the applicant organization.",
+          "maxLength": 60,
+          "minLength": 1,
+          "title": "Organizational Affiliation",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "organization_name",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.OrganizationName"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/organization_name"
+            }
+          ],
+          "description": "Enter the legal name of the applicant that will undertake the assistance activity. This is the organization that has registered with the System for Award Management (SAM). Information on registering with SAM may be obtained by visiting SAM.gov.",
+          "title": "Legal Name"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "other_estimated_funding",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.OtherEstimatedFunding"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/budget_monetary_amount"
+            }
+          ],
+          "description": "Enter the dollar amount.",
+          "title": "Other Estimated Funding"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "phone_number",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.PhoneNumber"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/phone_number"
+            }
+          ],
+          "description": "Enter the daytime Telephone Number.",
+          "title": "Telephone Number"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "program_income_estimated_funding",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ProgramIncomeEstimatedFunding"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/budget_monetary_amount"
+            }
+          ],
+          "description": "Enter the dollar amount.",
+          "title": "Program Income Estimated Funding"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "project_end_date",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ProjectEndDate"
+        ],
+        "value": {
+          "description": "Enter the date in the format MM/DD/YYYY. ",
+          "format": "date",
+          "title": "Project End Date",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "project_start_date",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ProjectStartDate"
+        ],
+        "value": {
+          "description": "Enter the date in the format MM/DD/YYYY. ",
+          "format": "date",
+          "title": "Project Start Date",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "project_title",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ProjectTitle"
+        ],
+        "value": {
+          "description": "Enter a brief, descriptive title of the project.",
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Project Title",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "revision_other_specify",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.RevisionOtherSpecify"
+        ],
+        "value": {
+          "description": "Please specify the type of revision. This field is required if E. Other is checked.",
+          "title": "Other Explanation",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "revision_type",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.RevisionType"
+        ],
+        "value": {
+          "description": "Select a revision type from the list provided. A selection is required if Type of Application is Revision.",
+          "enum": [
+            "A: Increase Award",
+            "B: Decrease Award",
+            "C: Increase Duration",
+            "D: Decrease Duration",
+            "E: Other (specify)",
+            "AC: Increase Award, Increase Duration",
+            "AD: Increase Award, Decrease Duration",
+            "BC: Decrease Award, Increase Duration",
+            "BD: Decrease Award, Decrease Duration"
+          ],
+          "title": "Revision Type",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "sam_uei",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.SAMUEI"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/sam_uei"
+            }
+          ],
+          "description": "UEI of the applicant organization. This field is pre-populated from the Application cover sheet.",
+          "title": "SAM UEI"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "state_application_id",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.StateApplicationID"
+        ],
+        "value": {
+          "description": "Leave blank, to be filled out by state.",
+          "maxLength": 30,
+          "minLength": 0,
+          "readOnly": true,
+          "title": "State Application Identifier",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "state_estimated_funding",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.StateEstimatedFunding"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/budget_monetary_amount"
+            }
+          ],
+          "description": "Enter the dollar amount.",
+          "title": "State Estimated Funding"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "state_receive_date",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.StateReceiveDate"
+        ],
+        "value": {
+          "description": "Leave blank, to be filled out by state.",
+          "format": "date",
+          "readOnly": true,
+          "title": "Date Received By State",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "state_review",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.StateReview"
+        ],
+        "value": {
+          "description": "One selection is required.",
+          "enum": [
+            "a. This application was made available to the state under the Executive Order 12372 Process for review on",
+            "b. Program is subject to E.O. 12372 but has not been selected by the state for review.",
+            "c. Program is not covered by E.O. 12372."
+          ],
+          "title": "Is Application Subject to Review By State Under Executive Order 12372 Process?",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "state_review_available_date",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.StateReviewAvailableDate"
+        ],
+        "value": {
+          "description": "If 'a' is selected, enter the date the application was submitted to the State.",
+          "format": "date",
+          "title": "State Review Date",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "submission_type",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.SubmissionType"
+        ],
+        "value": {
+          "description": "Select one type of submission in accordance with agency instructions.",
+          "enum": [
+            "Preapplication",
+            "Application",
+            "Changed/Corrected Application"
+          ],
+          "title": "Submission Type",
+          "type": "string"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "total_estimated_funding",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.TotalEstimatedFunding"
+        ],
+        "value": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/budget_monetary_amount"
+            }
+          ],
+          "description": "This field is automatically calculated by Grants.gov",
+          "title": "Total Estimated Funding"
+        }
+      }
+    ],
+    "json_schema_base": {
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "application_type": {
+                "const": "Revision"
+              }
+            },
+            "required": [
+              "application_type"
+            ]
+          },
+          "then": {
+            "required": [
+              "revision_type",
+              "federal_award_identifier"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "application_type": {
+                "const": "Continuation"
+              }
+            },
+            "required": [
+              "application_type"
+            ]
+          },
+          "then": {
+            "required": [
+              "federal_award_identifier"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "revision_type": {
+                "const": "E: Other (specify)"
+              }
+            },
+            "required": [
+              "revision_type"
+            ]
+          },
+          "then": {
+            "required": [
+              "revision_other_specify"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "delinquent_federal_debt": {
+                "const": true
+              }
+            },
+            "required": [
+              "delinquent_federal_debt"
+            ]
+          },
+          "then": {
+            "required": [
+              "debt_explanation"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state_review": {
+                "const": "a. This application was made available to the state under the Executive Order 12372 Process for review on"
+              }
+            },
+            "required": [
+              "state_review"
+            ]
+          },
+          "then": {
+            "required": [
+              "state_review_available_date"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "applicant_type_code": {
+                "contains": {
+                  "const": "X: Other (specify)"
+                }
+              }
+            },
+            "required": [
+              "applicant_type_code"
+            ]
+          },
+          "then": {
+            "required": [
+              "applicant_type_other_specify"
+            ]
+          }
+        }
+      ],
+      "required": [
+        "submission_type",
+        "application_type",
+        "organization_name",
+        "employer_taxpayer_identification_number",
+        "sam_uei",
+        "applicant",
+        "contact_person",
+        "phone_number",
+        "email",
+        "applicant_type_code",
+        "agency_name",
+        "funding_opportunity_number",
+        "funding_opportunity_title",
+        "project_title",
+        "congressional_district_applicant",
+        "congressional_district_program_project",
+        "project_start_date",
+        "project_end_date",
+        "federal_estimated_funding",
+        "applicant_estimated_funding",
+        "state_estimated_funding",
+        "local_estimated_funding",
+        "other_estimated_funding",
+        "program_income_estimated_funding",
+        "total_estimated_funding",
+        "state_review",
+        "delinquent_federal_debt",
+        "certification_agree",
+        "authorized_representative",
+        "authorized_representative_title",
+        "authorized_representative_phone_number",
+        "authorized_representative_email"
+      ],
+      "type": "object"
+    },
+    "rules": [
+      {
+        "evidence_status": "source_bound",
+        "name": "additional_congressional_districts",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AdditionalCongressionalDistricts"
+        ],
+        "value": {
+          "gg_validation": {
+            "rule": "attachment"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "additional_project_title",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AdditionalProjectTitle"
+        ],
+        "value": {
+          "gg_validation": {
+            "rule": "attachment"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "agency_name",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AgencyName"
+        ],
+        "value": {
+          "gg_pre_population": {
+            "rule": "agency_name"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "aor_signature",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AORSignature"
+        ],
+        "value": {
+          "gg_post_population": {
+            "rule": "signature"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "areas_affected",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AreasAffected"
+        ],
+        "value": {
+          "gg_validation": {
+            "rule": "attachment"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "assistance_listing_number",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.CFDANumber"
+        ],
+        "value": {
+          "gg_pre_population": {
+            "rule": "assistance_listing_number"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "assistance_listing_program_title",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.CFDAProgramTitle"
+        ],
+        "value": {
+          "gg_pre_population": {
+            "rule": "assistance_listing_program_title"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "competition_identification_number",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.CompetitionIdentificationNumber"
+        ],
+        "value": {
+          "gg_pre_population": {
+            "rule": "public_competition_id"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "competition_identification_title",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.CompetitionIdentificationTitle"
+        ],
+        "value": {
+          "gg_pre_population": {
+            "rule": "competition_title"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "date_received",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.DateReceived"
+        ],
+        "value": {
+          "gg_post_population": {
+            "rule": "current_date"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "date_signed",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.DateSigned"
+        ],
+        "value": {
+          "gg_post_population": {
+            "rule": "current_date"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "debt_explanation",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.DebtExplanation"
+        ],
+        "value": {
+          "gg_validation": {
+            "rule": "attachment"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "funding_opportunity_number",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.FundingOpportunityNumber"
+        ],
+        "value": {
+          "gg_pre_population": {
+            "rule": "opportunity_number"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "funding_opportunity_title",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.FundingOpportunityTitle"
+        ],
+        "value": {
+          "gg_pre_population": {
+            "rule": "opportunity_title"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "sam_uei",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.SAMUEI"
+        ],
+        "value": {
+          "gg_pre_population": {
+            "rule": "uei"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "total_estimated_funding",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.TotalEstimatedFunding"
+        ],
+        "value": {
+          "gg_pre_population": {
+            "fields": [
+              "federal_estimated_funding",
+              "applicant_estimated_funding",
+              "state_estimated_funding",
+              "local_estimated_funding",
+              "other_estimated_funding",
+              "program_income_estimated_funding"
+            ],
+            "rule": "sum_monetary"
+          }
+        }
+      }
+    ],
+    "ui_nodes": [
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.SubmissionType"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/submission_type",
+              "type": "field"
+            }
+          ],
+          "label": "1. Type of Submission",
+          "name": "submission_type",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ApplicationType",
+          "SF424_4_0.RevisionOtherSpecify",
+          "SF424_4_0.RevisionType"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/application_type",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/revision_type",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/revision_other_specify",
+              "type": "field"
+            }
+          ],
+          "label": "2. Type of Application",
+          "name": "application_type_and_revision",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.DateReceived"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/date_received",
+              "type": "null"
+            }
+          ],
+          "label": "3. Date Received",
+          "name": "date_received",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ApplicantID"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/applicant_id",
+              "type": "field"
+            }
+          ],
+          "label": "4. Applicant Identifier",
+          "name": "applicant_identifier",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.FederalEntityIdentifier"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/federal_entity_identifier",
+              "type": "field"
+            }
+          ],
+          "label": "5a. Federal Identifiers",
+          "name": "federal_identifiers",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.FederalAwardIdentifier"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/federal_award_identifier",
+              "type": "field"
+            }
+          ],
+          "label": "5b. Federal Award",
+          "name": "federal_award",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.StateReceiveDate"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/state_receive_date",
+              "type": "null"
+            }
+          ],
+          "label": "6. Date Received by State",
+          "name": "date_received_by_state",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.StateApplicationID"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/state_application_id",
+              "type": "null"
+            }
+          ],
+          "label": "7. State Application Identifier",
+          "name": "state_application_identifier",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.Applicant.City",
+          "SF424_4_0.Applicant.Country",
+          "SF424_4_0.Applicant.County",
+          "SF424_4_0.Applicant.Province",
+          "SF424_4_0.Applicant.State",
+          "SF424_4_0.Applicant.Street1",
+          "SF424_4_0.Applicant.Street2",
+          "SF424_4_0.Applicant.ZipPostalCode",
+          "SF424_4_0.ApplicantEstimatedFunding",
+          "SF424_4_0.ApplicantID",
+          "SF424_4_0.ApplicantTypeCode1",
+          "SF424_4_0.ApplicantTypeCode2",
+          "SF424_4_0.ApplicantTypeCode3",
+          "SF424_4_0.ApplicantTypeOtherSpecify",
+          "SF424_4_0.EmployerTaxpayerIdentificationNumber",
+          "SF424_4_0.OrganizationName",
+          "SF424_4_0.SAMUEI"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/organization_name",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/employer_taxpayer_identification_number",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/sam_uei",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/applicant/properties/street1",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/applicant/properties/street2",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/applicant/properties/city",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/applicant/properties/state",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/applicant/properties/province",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/applicant/properties/country",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/applicant/properties/zip_code",
+              "type": "field"
+            }
+          ],
+          "label": "8. Applicant Information",
+          "name": "applicant_information",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.DepartmentName",
+          "SF424_4_0.DivisionName"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/department_name",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/division_name",
+              "type": "field"
+            }
+          ],
+          "label": "8e. Organizational Unit",
+          "name": "organizational_unit",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ContactPerson.FirstName",
+          "SF424_4_0.ContactPerson.LastName",
+          "SF424_4_0.ContactPerson.MiddleName",
+          "SF424_4_0.ContactPerson.PrefixName",
+          "SF424_4_0.ContactPerson.SuffixName",
+          "SF424_4_0.Email",
+          "SF424_4_0.Fax",
+          "SF424_4_0.OrganizationAffiliation",
+          "SF424_4_0.PhoneNumber",
+          "SF424_4_0.Title"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/contact_person/properties/prefix",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/contact_person/properties/first_name",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/contact_person/properties/middle_name",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/contact_person/properties/last_name",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/contact_person/properties/suffix",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/contact_person_title",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/organization_affiliation",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/phone_number",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/fax",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/email",
+              "type": "field"
+            }
+          ],
+          "label": "8f. Name and contact information of person to be contacted on matters involving this application",
+          "name": "contact_person",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ApplicantTypeCode1",
+          "SF424_4_0.ApplicantTypeCode2",
+          "SF424_4_0.ApplicantTypeCode3",
+          "SF424_4_0.ApplicantTypeOtherSpecify"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/applicant_type_code",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/applicant_type_other_specify",
+              "type": "field"
+            }
+          ],
+          "label": "9. Type of Applicant",
+          "name": "type_of_applicant",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AgencyName"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/agency_name",
+              "type": "field"
+            }
+          ],
+          "label": "10. Name of Federal Agency",
+          "name": "federal_agency",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.CFDANumber",
+          "SF424_4_0.CFDAProgramTitle"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/assistance_listing_number",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/assistance_listing_program_title",
+              "type": "field"
+            }
+          ],
+          "label": "11. Assistance Listing Number/Title",
+          "name": "assistance_listing",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.FundingOpportunityNumber",
+          "SF424_4_0.FundingOpportunityTitle"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/funding_opportunity_number",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/funding_opportunity_title",
+              "type": "field"
+            }
+          ],
+          "label": "12. Funding Opportunity Number/Title",
+          "name": "funding_opportunity",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.CompetitionIdentificationNumber",
+          "SF424_4_0.CompetitionIdentificationTitle"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/competition_identification_number",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/competition_identification_title",
+              "type": "field"
+            }
+          ],
+          "label": "13. Competition Identification Number/Title",
+          "name": "competition_identification",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AreasAffected"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/areas_affected",
+              "type": "field",
+              "widget": "Attachment"
+            }
+          ],
+          "label": "14. Areas Affected by Project",
+          "name": "areas_affected",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AdditionalProjectTitle",
+          "SF424_4_0.ProjectTitle"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/project_title",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/additional_project_title",
+              "type": "field",
+              "widget": "AttachmentArray"
+            }
+          ],
+          "label": "15. Descriptive Title of Applicant's Project",
+          "name": "project_title",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AdditionalCongressionalDistricts",
+          "SF424_4_0.CongressionalDistrictApplicant",
+          "SF424_4_0.CongressionalDistrictProgramProject"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/congressional_district_applicant",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/congressional_district_program_project",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/additional_congressional_districts",
+              "type": "field",
+              "widget": "Attachment"
+            }
+          ],
+          "label": "16. Congressional Districts",
+          "name": "congressional_districts",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ProjectEndDate",
+          "SF424_4_0.ProjectStartDate"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/project_start_date",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/project_end_date",
+              "type": "field"
+            }
+          ],
+          "label": "17. Proposed Project Start and End Dates",
+          "name": "project_dates",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ApplicantEstimatedFunding",
+          "SF424_4_0.FederalEstimatedFunding",
+          "SF424_4_0.LocalEstimatedFunding",
+          "SF424_4_0.OtherEstimatedFunding",
+          "SF424_4_0.ProgramIncomeEstimatedFunding",
+          "SF424_4_0.StateEstimatedFunding",
+          "SF424_4_0.TotalEstimatedFunding"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/federal_estimated_funding",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/applicant_estimated_funding",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/state_estimated_funding",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/local_estimated_funding",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/other_estimated_funding",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/program_income_estimated_funding",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/total_estimated_funding",
+              "type": "null"
+            }
+          ],
+          "label": "18. Estimated Funding",
+          "name": "estimated_funding",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.StateReview",
+          "SF424_4_0.StateReviewAvailableDate"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/state_review",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/state_review_available_date",
+              "type": "field"
+            }
+          ],
+          "label": "19. Is Application Subject to Review by State Under Executive Order?",
+          "name": "state_review",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.DebtExplanation",
+          "SF424_4_0.DelinquentFederalDebt"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/delinquent_federal_debt",
+              "type": "field",
+              "widget": "Radio"
+            },
+            {
+              "definition": "/properties/debt_explanation",
+              "type": "field",
+              "widget": "Attachment"
+            }
+          ],
+          "label": "20. Is the Applicant Delinquent on any Federal Debt?",
+          "name": "federal_debt",
+          "type": "section"
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AORSignature",
+          "SF424_4_0.AuthorizedRepresentative.FirstName",
+          "SF424_4_0.AuthorizedRepresentative.LastName",
+          "SF424_4_0.AuthorizedRepresentative.MiddleName",
+          "SF424_4_0.AuthorizedRepresentative.PrefixName",
+          "SF424_4_0.AuthorizedRepresentative.SuffixName",
+          "SF424_4_0.AuthorizedRepresentativeEmail",
+          "SF424_4_0.AuthorizedRepresentativeFax",
+          "SF424_4_0.AuthorizedRepresentativePhoneNumber",
+          "SF424_4_0.AuthorizedRepresentativeTitle",
+          "SF424_4_0.CertificationAgree",
+          "SF424_4_0.DateSigned"
+        ],
+        "value": {
+          "children": [
+            {
+              "definition": "/properties/certification_agree",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/authorized_representative/properties/prefix",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/authorized_representative/properties/first_name",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/authorized_representative/properties/middle_name",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/authorized_representative/properties/last_name",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/authorized_representative/properties/suffix",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/authorized_representative_title",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/authorized_representative_phone_number",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/authorized_representative_fax",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/authorized_representative_email",
+              "type": "field"
+            },
+            {
+              "definition": "/properties/aor_signature",
+              "type": "null"
+            },
+            {
+              "definition": "/properties/date_signed",
+              "type": "null"
+            }
+          ],
+          "label": "21. Authorized Representative",
+          "name": "authorized_representative",
+          "type": "section"
+        }
+      }
+    ],
+    "xml_config": {
+      "attachment_fields": {
+        "additional_congressional_districts": {
+          "type": "single",
+          "xml_element": "AdditionalCongressionalDistricts"
+        },
+        "additional_project_title": {
+          "type": "multiple",
+          "xml_element": "AdditionalProjectTitle"
+        },
+        "areas_affected": {
+          "type": "single",
+          "xml_element": "AreasAffected"
+        },
+        "debt_explanation": {
+          "type": "single",
+          "xml_element": "DebtExplanation"
+        }
+      },
+      "description": "XML transformation rules for converting Simpler SF-424 JSON to Grants.gov XML format",
+      "form_name": "SF424_4_0",
+      "namespaces": {
+        "att": "http://apply.grants.gov/system/Attachments-V1.0",
+        "default": "http://apply.grants.gov/forms/SF424_4_0-V4.0",
+        "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0"
+      },
+      "null_handling_options": {
+        "default_value": "Use configured default value when field is None",
+        "exclude": "Default - exclude field entirely from XML (recommended)",
+        "include_null": "Include empty XML element: <Field></Field>"
+      },
+      "version": "1.0",
+      "xml_structure": {
+        "root_element": "SF424_4_0",
+        "version": "4.0"
+      },
+      "xsd_url": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+    },
+    "xml_mappings": [
+      {
+        "evidence_status": "source_bound",
+        "name": "additional_congressional_districts",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AdditionalCongressionalDistricts"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "additional_congressional_districts"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "additional_project_title",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AdditionalProjectTitle"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "additional_project_title"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "agency_name",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AgencyName"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "AgencyName"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "aor_signature",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AORSignature"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "AORSignature"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "applicant",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.Applicant.City",
+          "SF424_4_0.Applicant.Country",
+          "SF424_4_0.Applicant.County",
+          "SF424_4_0.Applicant.Province",
+          "SF424_4_0.Applicant.State",
+          "SF424_4_0.Applicant.Street1",
+          "SF424_4_0.Applicant.Street2",
+          "SF424_4_0.Applicant.ZipPostalCode"
+        ],
+        "value": {
+          "city": {
+            "xml_transform": {
+              "namespace": "globLib",
+              "target": "City"
+            }
+          },
+          "country": {
+            "xml_transform": {
+              "namespace": "globLib",
+              "target": "Country"
+            }
+          },
+          "county": {
+            "xml_transform": {
+              "namespace": "globLib",
+              "target": "County"
+            }
+          },
+          "province": {
+            "xml_transform": {
+              "namespace": "globLib",
+              "target": "Province"
+            }
+          },
+          "state": {
+            "xml_transform": {
+              "namespace": "globLib",
+              "target": "State"
+            }
+          },
+          "street1": {
+            "xml_transform": {
+              "namespace": "globLib",
+              "target": "Street1"
+            }
+          },
+          "street2": {
+            "xml_transform": {
+              "namespace": "globLib",
+              "target": "Street2"
+            }
+          },
+          "xml_transform": {
+            "target": "Applicant",
+            "type": "nested_object"
+          },
+          "zip_code": {
+            "xml_transform": {
+              "namespace": "globLib",
+              "target": "ZipPostalCode"
+            }
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "applicant_estimated_funding",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ApplicantEstimatedFunding"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "ApplicantEstimatedFunding",
+            "value_transform": {
+              "type": "currency_format"
+            }
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "applicant_type_code_mapping",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ApplicantTypeCode1",
+          "SF424_4_0.ApplicantTypeCode2",
+          "SF424_4_0.ApplicantTypeCode3"
+        ],
+        "value": {
+          "xml_transform": {
+            "conditional_transform": {
+              "item_value_transform": {
+                "params": {
+                  "mappings": {
+                    "H: Public/state Controlled Institution of Higher Education": "H: Public/State Controlled Institution of Higher Education"
+                  },
+                  "passthrough_unknown": true
+                },
+                "type": "map_values"
+              },
+              "max_count": 3,
+              "source_field": "applicant_type_code",
+              "target_pattern": "ApplicantTypeCode{index}",
+              "type": "one_to_many"
+            },
+            "target": "ApplicantTypeCode",
+            "type": "conditional"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "applicant_type_other_specify",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ApplicantTypeOtherSpecify"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "ApplicantTypeOtherSpecify"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "application_type",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ApplicationType"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "ApplicationType"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "areas_affected",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AreasAffected"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "areas_affected"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "assistance_listing_number",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.CFDANumber"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "CFDANumber"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "assistance_listing_program_title",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.CFDAProgramTitle"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "CFDAProgramTitle"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "authorized_representative",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AuthorizedRepresentative.FirstName",
+          "SF424_4_0.AuthorizedRepresentative.LastName"
+        ],
+        "value": {
+          "first_name": {
+            "xml_transform": {
+              "default_value": "John",
+              "namespace": "globLib",
+              "null_handling": "default_value",
+              "target": "FirstName"
+            }
+          },
+          "last_name": {
+            "xml_transform": {
+              "default_value": "Doe",
+              "namespace": "globLib",
+              "null_handling": "default_value",
+              "target": "LastName"
+            }
+          },
+          "xml_transform": {
+            "target": "AuthorizedRepresentative",
+            "type": "nested_object"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "authorized_representative_email",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AuthorizedRepresentativeEmail"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "AuthorizedRepresentativeEmail"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "authorized_representative_phone_number",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AuthorizedRepresentativePhoneNumber"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "AuthorizedRepresentativePhoneNumber"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "authorized_representative_title",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.AuthorizedRepresentativeTitle"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "AuthorizedRepresentativeTitle"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "certification_agree",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.CertificationAgree"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "CertificationAgree",
+            "value_transform": {
+              "type": "boolean_to_yes_no"
+            }
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "competition_identification_number",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.CompetitionIdentificationNumber"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "CompetitionIdentificationNumber"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "competition_identification_title",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.CompetitionIdentificationTitle"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "CompetitionIdentificationTitle"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "congressional_district_applicant",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.CongressionalDistrictApplicant"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "CongressionalDistrictApplicant"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "congressional_district_program_project",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.CongressionalDistrictProgramProject"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "CongressionalDistrictProgramProject"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "contact_person",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ContactPerson.FirstName",
+          "SF424_4_0.ContactPerson.LastName"
+        ],
+        "value": {
+          "first_name": {
+            "xml_transform": {
+              "namespace": "globLib",
+              "target": "FirstName"
+            }
+          },
+          "last_name": {
+            "xml_transform": {
+              "namespace": "globLib",
+              "target": "LastName"
+            }
+          },
+          "xml_transform": {
+            "target": "ContactPerson",
+            "type": "nested_object"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "date_received",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.DateReceived"
+        ],
+        "value": {
+          "xml_transform": {
+            "null_handling": "include_null",
+            "target": "DateReceived"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "date_signed",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.DateSigned"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "DateSigned"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "debt_explanation",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.DebtExplanation"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "debt_explanation"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "delinquent_federal_debt",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.DelinquentFederalDebt"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "DelinquentFederalDebt",
+            "value_transform": {
+              "type": "boolean_to_yes_no"
+            }
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "email",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.Email"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "Email"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "employer_taxpayer_identification_number",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.EmployerTaxpayerIdentificationNumber"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "EmployerTaxpayerIdentificationNumber"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "fax_number",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.Fax"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "Fax"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "federal_estimated_funding",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.FederalEstimatedFunding"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "FederalEstimatedFunding",
+            "value_transform": {
+              "type": "currency_format"
+            }
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "funding_opportunity_number",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.FundingOpportunityNumber"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "FundingOpportunityNumber"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "funding_opportunity_title",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.FundingOpportunityTitle"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "FundingOpportunityTitle"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "local_estimated_funding",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.LocalEstimatedFunding"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "LocalEstimatedFunding",
+            "value_transform": {
+              "type": "currency_format"
+            }
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "organization_name",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.OrganizationName"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "OrganizationName"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "other_estimated_funding",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.OtherEstimatedFunding"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "OtherEstimatedFunding",
+            "value_transform": {
+              "type": "currency_format"
+            }
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "phone_number",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.PhoneNumber"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "PhoneNumber"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "program_income_estimated_funding",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ProgramIncomeEstimatedFunding"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "ProgramIncomeEstimatedFunding",
+            "value_transform": {
+              "type": "currency_format"
+            }
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "project_end_date",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ProjectEndDate"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "ProjectEndDate"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "project_start_date",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ProjectStartDate"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "ProjectStartDate"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "project_title",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.ProjectTitle"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "ProjectTitle"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "sam_uei",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.SAMUEI"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "SAMUEI"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "state_estimated_funding",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.StateEstimatedFunding"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "StateEstimatedFunding",
+            "value_transform": {
+              "type": "currency_format"
+            }
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "state_review",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.StateReview"
+        ],
+        "value": {
+          "xml_transform": {
+            "default_value": "N: No",
+            "null_handling": "default_value",
+            "target": "StateReview",
+            "value_transform": {
+              "params": {
+                "mappings": {
+                  "a. This application was made available to the state under the Executive Order 12372 Process for review on": "a. This application was made available to the State under the Executive Order 12372 Process for review on",
+                  "b. Program is subject to E.O. 12372 but has not been selected by the state for review.": "b. Program is subject to E.O. 12372 but has not been selected by the State for review."
+                },
+                "passthrough_unknown": true
+              },
+              "type": "map_values"
+            }
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "state_review_available_date",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.StateReviewAvailableDate"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "StateReviewAvailableDate"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "submission_type",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.SubmissionType"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "SubmissionType"
+          }
+        }
+      },
+      {
+        "evidence_status": "source_bound",
+        "name": "total_estimated_funding",
+        "sgm_convention_status": "explicit_agent_proposed",
+        "source_paths": [
+          "SF424_4_0.TotalEstimatedFunding"
+        ],
+        "value": {
+          "xml_transform": {
+            "target": "TotalEstimatedFunding",
+            "value_transform": {
+              "type": "currency_format"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "claims_boundary": "This compiler materializes a complete SF424 SGM contract from explicitly authored declarations bound to exact XSD/DAT paths, page-reviewed PDF and static content, pinned CommonGrants alignment evidence, and agent-proposed SGM presentation/runtime conventions. The question, role, and component catalogs are pinned provenance conventions, not operational composition inputs. Declaration values are embedded configuration, so this proves deterministic source-bound reproduction and exact equality with the pinned SGM oracle, not reusable-module generation, semantic acceptance, policy approval, accessibility validation, production readiness, or form-retirement evidence.",
+  "dimension_assertions": {
+    "calculations": {
+      "count": 1,
+      "paths": [
+        "SF424_4_0.TotalEstimatedFunding"
+      ]
+    },
+    "conditions": {
+      "count": 9,
+      "paths": [
+        "SF424_4_0.RevisionType",
+        "SF424_4_0.RevisionOtherSpecify",
+        "SF424_4_0.FederalAwardIdentifier",
+        "SF424_4_0.Applicant.State",
+        "SF424_4_0.Applicant.Province",
+        "SF424_4_0.Applicant.ZipPostalCode",
+        "SF424_4_0.ApplicantTypeOtherSpecify",
+        "SF424_4_0.StateReviewAvailableDate",
+        "SF424_4_0.DebtExplanation"
+      ]
+    },
+    "enumerations": {
+      "count": 15,
+      "paths": [
+        "SF424_4_0.SubmissionType",
+        "SF424_4_0.ApplicationType",
+        "SF424_4_0.RevisionType",
+        "SF424_4_0.Applicant.State",
+        "SF424_4_0.Applicant.Country",
+        "SF424_4_0.ContactPerson.PrefixName",
+        "SF424_4_0.ContactPerson.SuffixName",
+        "SF424_4_0.ApplicantTypeCode1",
+        "SF424_4_0.ApplicantTypeCode2",
+        "SF424_4_0.ApplicantTypeCode3",
+        "SF424_4_0.StateReview",
+        "SF424_4_0.DelinquentFederalDebt",
+        "SF424_4_0.CertificationAgree",
+        "SF424_4_0.AuthorizedRepresentative.PrefixName",
+        "SF424_4_0.AuthorizedRepresentative.SuffixName"
+      ]
+    },
+    "nested_groups": {
+      "count": 4,
+      "paths": [
+        "SF424_4_0",
+        "SF424_4_0.Applicant",
+        "SF424_4_0.ContactPerson",
+        "SF424_4_0.AuthorizedRepresentative"
+      ]
+    },
+    "repetition": {
+      "count": 1,
+      "paths": [
+        "SF424_4_0.AdditionalProjectTitle.AttachedFile"
+      ]
+    }
+  },
+  "form_id": "SF424",
+  "format_version": 1,
+  "evidence_assertions": {
+    "behavior_records": 96,
+    "behaviors": 83,
+    "rendered_pdf_pages": 12,
+    "static_pdf_sha256": "ad3d5f4bc3f6239fdaf9b7daf13a44761af541bb388b89ce0d1946ee5002e2d2"
+  },
+  "inputs": {
+    "behavior_artifact": {
+      "path": "harness/contracts/demo-core/evidence/SF424-behavior.jsonl",
+      "sha256": "8639aeab81608814d4dbe336468cc85ef56a3683f9918d2b73e2ed3b9a99d5d4"
+    },
+    "common_grants_baseline": {
+      "path": "harness/contracts/common-grants-baseline/SF424.json",
+      "sha256": "86e8133617800a13cec8f6dd44ec6f48063d8a09052703fcbdbb25af4daf2307"
+    },
+    "component_catalog": {
+      "path": "harness/authoring-model/core/components.json",
+      "sha256": "c2c205b18650875e05325838b6576e1212f518f54febd12fdea43f6c8d3744c0"
+    },
+    "dat": {
+      "path": "work/form-metadata/SF424_4_0-V4.0_F713.xls",
+      "sha256": "d6c16b73f5ade8c30bff93163503d1b80a1ee609ea8daa543a90214523b92bde"
+    },
+    "normalized_contract": {
+      "path": "harness/authoring-model/core/materialized/SF424.contract.json",
+      "sha256": "f7f679b6f54c44427d39b12f6561ab9374cf6e7c65ff9c037b1f81d1a30ab47e"
+    },
+    "pdf_reconciliation": {
+      "path": "artifacts/pdf-reconciliation/friday/SF424/V4.0/reconciliation.json",
+      "sha256": "14582ff5519e62cf3fdfec6fc6fd0d91cc5631715962392c76c4d2a787d0c267"
+    },
+    "question_catalog": {
+      "path": "harness/authoring-model/core/questions.json",
+      "sha256": "1d1e25ed76e7b5ec4d322044ad0187ad095d28b7cea49fa2c66ce7c2840a9433"
+    },
+    "role_catalog": {
+      "path": "harness/authoring-model/core/roles.json",
+      "sha256": "02b03915727ee525c28358824f338994484ae72043009cc2c7fa48ddb0f6dcc7"
+    },
+    "source_records": {
+      "path": "artifacts/proof/grantsgov-SF424.jsonl",
+      "sha256": "97de332f8f2d7b92ce3568669432d26110a3e0d1ceadaa5fd4d4a092634b6fd4"
+    },
+    "static_catalog": {
+      "path": "harness/static-content/SF424-V4.0.json",
+      "sha256": "5a7c37d671461d20932abf248500741e27e24df402c4a130693525a14f7f7376"
+    },
+    "xsd": {
+      "path": "work/grantsgov-xsds/SF424_4_0-V4.0.xsd",
+      "sha256": "21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364"
+    }
+  },
+  "metadata": {
+    "agency_code": "SGG",
+    "form_id": "1623b310-85be-496a-b84b-34bdee22a68a",
+    "form_instruction_id": "bf48a93f-d445-426f-a8fb-289bf93a2434",
+    "form_name": "Application for Federal Assistance (SF-424)",
+    "form_type": "SF424",
+    "form_version": "4.0",
+    "is_deprecated": false,
+    "legacy_form_id": 713,
+    "omb_number": "4040-0004",
+    "sgg_version": "1.0",
+    "short_form_name": "SF424_4_0"
+  },
+  "policy_review_status": "agent_proposed",
+  "projection_type": "source_authored_sgm_contract",
+  "semantic_mapping_status": "agent_proposed",
+  "source_accounting": {
+    "cardinality_constraint_signature_sha256": "840106832600828f8b744bf0d779538da1082104e62a6fa2882b6852dd479745",
+    "container_paths": 4,
+    "countable_paths": 75,
+    "policy": "Every declaration binds one or more exact countable XSD paths; every countable path must be used at least once.",
+    "technical_paths": 17
+  },
+  "static_assertion": {
+    "content_ids": [
+      "sf424:certification:21",
+      "sf424:certification-reference:21"
+    ],
+    "count": 2,
+    "presentation_status": "source_items_linked_but_not_exactly_presented"
+  }
+}

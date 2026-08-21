@@ -1,0 +1,405 @@
+{
+  "_xml_config": {
+    "attachment_fields": {
+      "additional_congressional_districts": {
+        "type": "single",
+        "xml_element": "AdditionalCongressionalDistricts"
+      },
+      "additional_project_title": {
+        "type": "multiple",
+        "xml_element": "AdditionalProjectTitle"
+      },
+      "areas_affected": {
+        "type": "single",
+        "xml_element": "AreasAffected"
+      },
+      "debt_explanation": {
+        "type": "single",
+        "xml_element": "DebtExplanation"
+      }
+    },
+    "description": "XML transformation rules for converting Simpler SF-424 JSON to Grants.gov XML format",
+    "form_name": "SF424_4_0",
+    "namespaces": {
+      "att": "http://apply.grants.gov/system/Attachments-V1.0",
+      "default": "http://apply.grants.gov/forms/SF424_4_0-V4.0",
+      "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0"
+    },
+    "null_handling_options": {
+      "default_value": "Use configured default value when field is None",
+      "exclude": "Default - exclude field entirely from XML (recommended)",
+      "include_null": "Include empty XML element: <Field></Field>"
+    },
+    "version": "1.0",
+    "xml_structure": {
+      "root_element": "SF424_4_0",
+      "version": "4.0"
+    },
+    "xsd_url": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+  },
+  "additional_congressional_districts": {
+    "xml_transform": {
+      "target": "additional_congressional_districts"
+    }
+  },
+  "additional_project_title": {
+    "xml_transform": {
+      "target": "additional_project_title"
+    }
+  },
+  "agency_name": {
+    "xml_transform": {
+      "target": "AgencyName"
+    }
+  },
+  "aor_signature": {
+    "xml_transform": {
+      "target": "AORSignature"
+    }
+  },
+  "applicant": {
+    "city": {
+      "xml_transform": {
+        "namespace": "globLib",
+        "target": "City"
+      }
+    },
+    "country": {
+      "xml_transform": {
+        "namespace": "globLib",
+        "target": "Country"
+      }
+    },
+    "county": {
+      "xml_transform": {
+        "namespace": "globLib",
+        "target": "County"
+      }
+    },
+    "province": {
+      "xml_transform": {
+        "namespace": "globLib",
+        "target": "Province"
+      }
+    },
+    "state": {
+      "xml_transform": {
+        "namespace": "globLib",
+        "target": "State"
+      }
+    },
+    "street1": {
+      "xml_transform": {
+        "namespace": "globLib",
+        "target": "Street1"
+      }
+    },
+    "street2": {
+      "xml_transform": {
+        "namespace": "globLib",
+        "target": "Street2"
+      }
+    },
+    "xml_transform": {
+      "target": "Applicant",
+      "type": "nested_object"
+    },
+    "zip_code": {
+      "xml_transform": {
+        "namespace": "globLib",
+        "target": "ZipPostalCode"
+      }
+    }
+  },
+  "applicant_estimated_funding": {
+    "xml_transform": {
+      "target": "ApplicantEstimatedFunding",
+      "value_transform": {
+        "type": "currency_format"
+      }
+    }
+  },
+  "applicant_type_code_mapping": {
+    "xml_transform": {
+      "conditional_transform": {
+        "item_value_transform": {
+          "params": {
+            "mappings": {
+              "H: Public/state Controlled Institution of Higher Education": "H: Public/State Controlled Institution of Higher Education"
+            },
+            "passthrough_unknown": true
+          },
+          "type": "map_values"
+        },
+        "max_count": 3,
+        "source_field": "applicant_type_code",
+        "target_pattern": "ApplicantTypeCode{index}",
+        "type": "one_to_many"
+      },
+      "target": "ApplicantTypeCode",
+      "type": "conditional"
+    }
+  },
+  "applicant_type_other_specify": {
+    "xml_transform": {
+      "target": "ApplicantTypeOtherSpecify"
+    }
+  },
+  "application_type": {
+    "xml_transform": {
+      "target": "ApplicationType"
+    }
+  },
+  "areas_affected": {
+    "xml_transform": {
+      "target": "areas_affected"
+    }
+  },
+  "assistance_listing_number": {
+    "xml_transform": {
+      "target": "CFDANumber"
+    }
+  },
+  "assistance_listing_program_title": {
+    "xml_transform": {
+      "target": "CFDAProgramTitle"
+    }
+  },
+  "authorized_representative": {
+    "first_name": {
+      "xml_transform": {
+        "default_value": "John",
+        "namespace": "globLib",
+        "null_handling": "default_value",
+        "target": "FirstName"
+      }
+    },
+    "last_name": {
+      "xml_transform": {
+        "default_value": "Doe",
+        "namespace": "globLib",
+        "null_handling": "default_value",
+        "target": "LastName"
+      }
+    },
+    "xml_transform": {
+      "target": "AuthorizedRepresentative",
+      "type": "nested_object"
+    }
+  },
+  "authorized_representative_email": {
+    "xml_transform": {
+      "target": "AuthorizedRepresentativeEmail"
+    }
+  },
+  "authorized_representative_phone_number": {
+    "xml_transform": {
+      "target": "AuthorizedRepresentativePhoneNumber"
+    }
+  },
+  "authorized_representative_title": {
+    "xml_transform": {
+      "target": "AuthorizedRepresentativeTitle"
+    }
+  },
+  "certification_agree": {
+    "xml_transform": {
+      "target": "CertificationAgree",
+      "value_transform": {
+        "type": "boolean_to_yes_no"
+      }
+    }
+  },
+  "competition_identification_number": {
+    "xml_transform": {
+      "target": "CompetitionIdentificationNumber"
+    }
+  },
+  "competition_identification_title": {
+    "xml_transform": {
+      "target": "CompetitionIdentificationTitle"
+    }
+  },
+  "congressional_district_applicant": {
+    "xml_transform": {
+      "target": "CongressionalDistrictApplicant"
+    }
+  },
+  "congressional_district_program_project": {
+    "xml_transform": {
+      "target": "CongressionalDistrictProgramProject"
+    }
+  },
+  "contact_person": {
+    "first_name": {
+      "xml_transform": {
+        "namespace": "globLib",
+        "target": "FirstName"
+      }
+    },
+    "last_name": {
+      "xml_transform": {
+        "namespace": "globLib",
+        "target": "LastName"
+      }
+    },
+    "xml_transform": {
+      "target": "ContactPerson",
+      "type": "nested_object"
+    }
+  },
+  "date_received": {
+    "xml_transform": {
+      "null_handling": "include_null",
+      "target": "DateReceived"
+    }
+  },
+  "date_signed": {
+    "xml_transform": {
+      "target": "DateSigned"
+    }
+  },
+  "debt_explanation": {
+    "xml_transform": {
+      "target": "debt_explanation"
+    }
+  },
+  "delinquent_federal_debt": {
+    "xml_transform": {
+      "target": "DelinquentFederalDebt",
+      "value_transform": {
+        "type": "boolean_to_yes_no"
+      }
+    }
+  },
+  "email": {
+    "xml_transform": {
+      "target": "Email"
+    }
+  },
+  "employer_taxpayer_identification_number": {
+    "xml_transform": {
+      "target": "EmployerTaxpayerIdentificationNumber"
+    }
+  },
+  "fax_number": {
+    "xml_transform": {
+      "target": "Fax"
+    }
+  },
+  "federal_estimated_funding": {
+    "xml_transform": {
+      "target": "FederalEstimatedFunding",
+      "value_transform": {
+        "type": "currency_format"
+      }
+    }
+  },
+  "funding_opportunity_number": {
+    "xml_transform": {
+      "target": "FundingOpportunityNumber"
+    }
+  },
+  "funding_opportunity_title": {
+    "xml_transform": {
+      "target": "FundingOpportunityTitle"
+    }
+  },
+  "local_estimated_funding": {
+    "xml_transform": {
+      "target": "LocalEstimatedFunding",
+      "value_transform": {
+        "type": "currency_format"
+      }
+    }
+  },
+  "organization_name": {
+    "xml_transform": {
+      "target": "OrganizationName"
+    }
+  },
+  "other_estimated_funding": {
+    "xml_transform": {
+      "target": "OtherEstimatedFunding",
+      "value_transform": {
+        "type": "currency_format"
+      }
+    }
+  },
+  "phone_number": {
+    "xml_transform": {
+      "target": "PhoneNumber"
+    }
+  },
+  "program_income_estimated_funding": {
+    "xml_transform": {
+      "target": "ProgramIncomeEstimatedFunding",
+      "value_transform": {
+        "type": "currency_format"
+      }
+    }
+  },
+  "project_end_date": {
+    "xml_transform": {
+      "target": "ProjectEndDate"
+    }
+  },
+  "project_start_date": {
+    "xml_transform": {
+      "target": "ProjectStartDate"
+    }
+  },
+  "project_title": {
+    "xml_transform": {
+      "target": "ProjectTitle"
+    }
+  },
+  "sam_uei": {
+    "xml_transform": {
+      "target": "SAMUEI"
+    }
+  },
+  "state_estimated_funding": {
+    "xml_transform": {
+      "target": "StateEstimatedFunding",
+      "value_transform": {
+        "type": "currency_format"
+      }
+    }
+  },
+  "state_review": {
+    "xml_transform": {
+      "default_value": "N: No",
+      "null_handling": "default_value",
+      "target": "StateReview",
+      "value_transform": {
+        "params": {
+          "mappings": {
+            "a. This application was made available to the state under the Executive Order 12372 Process for review on": "a. This application was made available to the State under the Executive Order 12372 Process for review on",
+            "b. Program is subject to E.O. 12372 but has not been selected by the state for review.": "b. Program is subject to E.O. 12372 but has not been selected by the State for review."
+          },
+          "passthrough_unknown": true
+        },
+        "type": "map_values"
+      }
+    }
+  },
+  "state_review_available_date": {
+    "xml_transform": {
+      "target": "StateReviewAvailableDate"
+    }
+  },
+  "submission_type": {
+    "xml_transform": {
+      "target": "SubmissionType"
+    }
+  },
+  "total_estimated_funding": {
+    "xml_transform": {
+      "target": "TotalEstimatedFunding",
+      "value_transform": {
+        "type": "currency_format"
+      }
+    }
+  }
+}

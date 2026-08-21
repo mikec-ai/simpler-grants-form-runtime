@@ -1,0 +1,983 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "SF424.json",
+    "type": "object",
+    "properties": {
+        "submissionType": {
+            "$ref": "SubmissionType.json",
+            "examples": [
+                "Application"
+            ],
+            "description": "Type of submission in accordance with agency instructions"
+        },
+        "applicationType": {
+            "$ref": "ApplicationType.json",
+            "examples": [
+                "New"
+            ],
+            "description": "Type of application in accordance with agency instructions"
+        },
+        "revisionType": {
+            "$ref": "RevisionType.json",
+            "description": "Revision type (required if applicationType is Revision)"
+        },
+        "revisionOtherSpecify": {
+            "type": "string",
+            "examples": [
+                ""
+            ],
+            "description": "Revision explanation (required if revisionType is Other)"
+        },
+        "dateReceived": {
+            "type": "string",
+            "examples": [
+                "2024-03-20"
+            ],
+            "format": "date",
+            "description": "Date received by federal agency — completed by Grants.gov upon submission"
+        },
+        "applicantId": {
+            "type": "string",
+            "examples": [
+                ""
+            ],
+            "minLength": 0,
+            "maxLength": 30,
+            "description": "Applicant's control number"
+        },
+        "federalEntityIdentifier": {
+            "type": "string",
+            "examples": [
+                ""
+            ],
+            "minLength": 0,
+            "maxLength": 30,
+            "description": "Number assigned to the organization by the Federal agency"
+        },
+        "federalAwardIdentifier": {
+            "type": "string",
+            "examples": [
+                ""
+            ],
+            "minLength": 0,
+            "maxLength": 25,
+            "description": "Previously assigned Federal award identifier (for continuation or revision)"
+        },
+        "stateReceiveDate": {
+            "type": "string",
+            "examples": [
+                ""
+            ],
+            "format": "date",
+            "description": "Date received by the State"
+        },
+        "stateApplicationId": {
+            "type": "string",
+            "examples": [
+                ""
+            ],
+            "minLength": 0,
+            "maxLength": 30,
+            "description": "Identifier assigned by the State"
+        },
+        "org": {
+            "$ref": "QuestionOrgDetails.json",
+            "examples": [
+                {
+                    "name": "Example Research Institute",
+                    "ein": "123456789",
+                    "uei": "ABC123DEF456",
+                    "address": {
+                        "street1": "123 Research Way",
+                        "street2": "Suite 100",
+                        "city": "Washington",
+                        "state": "DC",
+                        "country": "US",
+                        "postalCode": "20001"
+                    }
+                }
+            ],
+            "description": "Primary applicant organization",
+            "x-overrides": {
+                "uiSchema": {
+                    "name": {
+                        "label": "Organization Name"
+                    },
+                    "ein": {
+                        "label": "EIN/TIN"
+                    },
+                    "uei": {
+                        "label": "SAM UEI"
+                    },
+                    "address.street1": {
+                        "label": "Street1"
+                    },
+                    "address.street2": {
+                        "label": "Street2"
+                    },
+                    "address.city": {
+                        "label": "City"
+                    },
+                    "address.postalCode": {
+                        "label": "Zip / Postal Code"
+                    },
+                    "duns": {
+                        "rule": {
+                            "effect": "HIDE",
+                            "condition": {
+                                "scope": "#/properties/org/properties/duns",
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "mission": {
+                        "rule": {
+                            "effect": "HIDE",
+                            "condition": {
+                                "scope": "#/properties/org/properties/mission",
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "yearFounded": {
+                        "rule": {
+                            "effect": "HIDE",
+                            "condition": {
+                                "scope": "#/properties/org/properties/yearFounded",
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "phone.countryCode": {
+                        "rule": {
+                            "effect": "HIDE",
+                            "condition": {
+                                "scope": "#/properties/org/properties/phone/properties/countryCode",
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "phone.extension": {
+                        "rule": {
+                            "effect": "HIDE",
+                            "condition": {
+                                "scope": "#/properties/org/properties/phone/properties/extension",
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "phone.isMobile": {
+                        "rule": {
+                            "effect": "HIDE",
+                            "condition": {
+                                "scope": "#/properties/org/properties/phone/properties/isMobile",
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "email": {
+                        "rule": {
+                            "effect": "HIDE",
+                            "condition": {
+                                "scope": "#/properties/org/properties/email",
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "applicantAddressHeader": {
+            "type": "string",
+            "examples": [
+                ""
+            ],
+            "description": "Address header — section label from the legacy SF-424 form"
+        },
+        "applicantCounty": {
+            "type": "string",
+            "examples": [
+                "District of Columbia"
+            ],
+            "minLength": 0,
+            "maxLength": 30,
+            "description": "County or parish of the applicant address"
+        },
+        "applicantProvince": {
+            "type": "string",
+            "examples": [
+                ""
+            ],
+            "minLength": 0,
+            "maxLength": 30,
+            "description": "Province of the applicant address"
+        },
+        "departmentName": {
+            "type": "string",
+            "examples": [
+                "Research Division"
+            ],
+            "minLength": 0,
+            "maxLength": 30,
+            "description": "Primary organizational department or equivalent level",
+            "x-mapping-from-cg": {
+                "field": "organizations.primary.customFields.department.value"
+            }
+        },
+        "divisionName": {
+            "type": "string",
+            "examples": [
+                "Innovation Lab"
+            ],
+            "minLength": 0,
+            "maxLength": 30,
+            "description": "Primary organizational division or major subdivision",
+            "x-mapping-from-cg": {
+                "field": "organizations.primary.customFields.division.value"
+            }
+        },
+        "contact": {
+            "$ref": "QuestionPocDetails.json",
+            "examples": [
+                {
+                    "name": {
+                        "prefix": "Dr.",
+                        "firstName": "Jane",
+                        "middleName": "Q",
+                        "lastName": "Smith",
+                        "suffix": "Ph.D."
+                    },
+                    "title": "Research Director",
+                    "phone": {
+                        "countryCode": "+1",
+                        "number": "555-123-4567"
+                    },
+                    "email": "jane.smith@example.org"
+                }
+            ],
+            "description": "Primary point of contact",
+            "x-overrides": {
+                "uiSchema": {
+                    "address": {
+                        "rule": {
+                            "effect": "HIDE",
+                            "condition": {
+                                "scope": "#/properties/contact/properties/address/properties/street1",
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "phone.countryCode": {
+                        "rule": {
+                            "effect": "HIDE",
+                            "condition": {
+                                "scope": "#/properties/contact/properties/phone/properties/countryCode",
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "phone.extension": {
+                        "rule": {
+                            "effect": "HIDE",
+                            "condition": {
+                                "scope": "#/properties/contact/properties/phone/properties/extension",
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "phone.isMobile": {
+                        "rule": {
+                            "effect": "HIDE",
+                            "condition": {
+                                "scope": "#/properties/contact/properties/phone/properties/isMobile",
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "contactFax": {
+            "$ref": "FaxNumber.json",
+            "examples": [
+                "555-987-6543"
+            ],
+            "description": "Contact's fax number",
+            "x-mapping-from-cg": {
+                "field": "contacts.primary.phones.fax.number"
+            }
+        },
+        "orgAffiliation": {
+            "$ref": "OrgAffiliation.json",
+            "examples": [
+                ""
+            ],
+            "description": "Contact's organizational affiliation if different from the applicant organization"
+        },
+        "applicantTypeCode1": {
+            "$ref": "ApplicantTypeCode.json",
+            "examples": [
+                "M: Nonprofit with 501C3 IRS Status (Other than Institution of Higher Education)"
+            ],
+            "description": "Primary applicant type",
+            "x-mapping-from-cg": {
+                "switch": {
+                    "field": "customFields.applicantType.value",
+                    "case": {
+                        "government-state": "A: State Government",
+                        "government-local": "B: County Government",
+                        "government-general": "E: Regional Organization",
+                        "government-tribal": "I: Indian/Native American Tribal Government (Federally Recognized)",
+                        "nonprofit-general": "M: Nonprofit with 501C3 IRS Status (Other than Institution of Higher Education)",
+                        "nonprofit-educational": "H: Public/State Controlled Institution of Higher Education",
+                        "business-small": "R: Small Business",
+                        "business-general": "Q: For-Profit Organization (Other than Small Business)",
+                        "individual": "P: Individual",
+                        "custom": "X: Other (specify)"
+                    },
+                    "default": "M: Nonprofit with 501C3 IRS Status (Other than Institution of Higher Education)"
+                }
+            }
+        },
+        "applicantTypeCode2": {
+            "$ref": "ApplicantTypeCode.json",
+            "examples": [
+                "None"
+            ],
+            "description": "Secondary applicant type"
+        },
+        "applicantTypeCode3": {
+            "$ref": "ApplicantTypeCode.json",
+            "examples": [
+                "None"
+            ],
+            "description": "Tertiary applicant type"
+        },
+        "applicantTypeOtherSpecify": {
+            "type": "string",
+            "examples": [
+                ""
+            ],
+            "minLength": 0,
+            "maxLength": 50,
+            "description": "Explanation if applicant type is Other (specify)"
+        },
+        "agencyName": {
+            "type": "string",
+            "examples": [
+                "National Science Foundation"
+            ],
+            "minLength": 1,
+            "maxLength": 60,
+            "description": "Name of the awarding federal agency — pre-populated from Application cover sheet",
+            "x-mapping-from-cg": {
+                "field": "opportunity.customFields.agency.value"
+            }
+        },
+        "cfdaNumber": {
+            "type": "string",
+            "examples": [
+                "47.041"
+            ],
+            "minLength": 0,
+            "maxLength": 15,
+            "description": "Assistance Listing (CFDA) Number — pre-populated from Application cover sheet",
+            "x-mapping-from-cg": {
+                "field": "opportunity.customFields.cfdaNumber.value"
+            }
+        },
+        "cfdaProgramTitle": {
+            "type": "string",
+            "examples": [
+                "Engineering Grants"
+            ],
+            "minLength": 0,
+            "maxLength": 120,
+            "description": "Assistance Listing (CFDA) Program Title — pre-populated from Application cover sheet"
+        },
+        "fundingOpportunityNumber": {
+            "type": "string",
+            "examples": [
+                "NSF-24-123"
+            ],
+            "minLength": 1,
+            "maxLength": 40,
+            "description": "Funding opportunity number — pre-populated from Application cover sheet",
+            "x-mapping-from-cg": {
+                "field": "opportunity.id"
+            }
+        },
+        "fundingOpportunityTitle": {
+            "type": "string",
+            "examples": [
+                "Innovation in Research Technology"
+            ],
+            "minLength": 1,
+            "maxLength": 255,
+            "description": "Funding opportunity title — pre-populated from Application cover sheet",
+            "x-mapping-from-cg": {
+                "field": "opportunity.title"
+            }
+        },
+        "competitionIdentificationNumber": {
+            "type": "string",
+            "examples": [
+                ""
+            ],
+            "description": "Competition identification number — pre-populated from Application cover sheet"
+        },
+        "competitionIdentificationTitle": {
+            "type": "string",
+            "examples": [
+                ""
+            ],
+            "description": "Competition identification title — pre-populated from Application cover sheet"
+        },
+        "project": {
+            "$ref": "QuestionProjectDetails.json",
+            "examples": [
+                {
+                    "title": "Advanced Research in Sustainable Technology",
+                    "startDate": "2024-10-01",
+                    "endDate": "2025-09-30"
+                }
+            ],
+            "description": "Core project details including title and performance period",
+            "x-overrides": {
+                "uiSchema": {
+                    "title": {
+                        "label": "Project Title"
+                    },
+                    "startDate": {
+                        "label": "Project Start Date"
+                    },
+                    "endDate": {
+                        "label": "Project End Date"
+                    },
+                    "description": {
+                        "rule": {
+                            "effect": "HIDE",
+                            "condition": {
+                                "scope": "#/properties/project/properties/description",
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "amountRequested": {
+                        "rule": {
+                            "effect": "HIDE",
+                            "condition": {
+                                "scope": "#/properties/project/properties/amountRequested/properties/amount",
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "amountRequested.amount": {
+                        "rule": {
+                            "effect": "HIDE",
+                            "condition": {
+                                "scope": "#/properties/project/properties/amountRequested/properties/amount",
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "amountRequested.currency": {
+                        "rule": {
+                            "effect": "HIDE",
+                            "condition": {
+                                "scope": "#/properties/project/properties/amountRequested/properties/currency",
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "additionalProjectTitle": {
+            "type": "string",
+            "examples": [
+                ""
+            ],
+            "description": "Additional project titles (attach file)"
+        },
+        "areasAffected": {
+            "type": "string",
+            "examples": [
+                ""
+            ],
+            "minLength": 0,
+            "maxLength": 250,
+            "description": "Areas or entities affected, using categories specified in agency instructions"
+        },
+        "congressionalDistrictApplicant": {
+            "$ref": "CongressionalDistrict.json",
+            "examples": [
+                "DC-000"
+            ],
+            "description": "Congressional district of the applicant (format: XX-###, e.g. CA-005)",
+            "x-mapping-from-cg": {
+                "field": "customFields.congressionalDistrictApplicant.value"
+            }
+        },
+        "congressionalDistrictProgramProject": {
+            "$ref": "CongressionalDistrict.json",
+            "examples": [
+                "DC-000"
+            ],
+            "description": "Congressional district(s) where the program/project will be performed",
+            "x-mapping-from-cg": {
+                "field": "customFields.congressionalDistrictProgramProject.value"
+            }
+        },
+        "additionalCongressionalDistricts": {
+            "type": "string",
+            "examples": [
+                ""
+            ],
+            "minLength": 0,
+            "maxLength": 6,
+            "description": "Additional congressional districts if the project spans more than one"
+        },
+        "federalEstimatedFunding": {
+            "type": "string",
+            "examples": [
+                "500000.00"
+            ],
+            "description": "Federal share of estimated funding",
+            "x-mapping-from-cg": {
+                "field": "amountRequested.amount"
+            }
+        },
+        "applicantEstimatedFunding": {
+            "type": "string",
+            "examples": [
+                "100000.00"
+            ],
+            "description": "Applicant share of estimated funding",
+            "x-mapping-from-cg": {
+                "field": "customFields.applicantFunding.value"
+            }
+        },
+        "stateEstimatedFunding": {
+            "type": "string",
+            "examples": [
+                "50000.00"
+            ],
+            "description": "State share of estimated funding",
+            "x-mapping-from-cg": {
+                "field": "customFields.stateFunding.value"
+            }
+        },
+        "localEstimatedFunding": {
+            "type": "string",
+            "examples": [
+                "25000.00"
+            ],
+            "description": "Local share of estimated funding",
+            "x-mapping-from-cg": {
+                "field": "customFields.localFunding.value"
+            }
+        },
+        "otherEstimatedFunding": {
+            "type": "string",
+            "examples": [
+                "25000.00"
+            ],
+            "description": "Other share of estimated funding",
+            "x-mapping-from-cg": {
+                "field": "customFields.otherFunding.value"
+            }
+        },
+        "programIncomeEstimatedFunding": {
+            "type": "string",
+            "examples": [
+                "0.00"
+            ],
+            "description": "Program income share of estimated funding",
+            "x-mapping-from-cg": {
+                "field": "customFields.programIncome.value"
+            }
+        },
+        "totalEstimatedFunding": {
+            "type": "string",
+            "examples": [
+                "700000.00"
+            ],
+            "description": "Total estimated funding — calculated field",
+            "x-mapping-from-cg": {
+                "field": "customFields.totalBudget.value"
+            }
+        },
+        "stateReview": {
+            "type": "string",
+            "examples": [
+                "No"
+            ],
+            "description": "Is the application subject to review by state executive order 12372?",
+            "x-mapping-from-cg": {
+                "field": "customFields.stateReview.value"
+            }
+        },
+        "stateReviewAvailableDate": {
+            "type": "string",
+            "examples": [
+                ""
+            ],
+            "format": "date",
+            "description": "Date the application was made available for state review"
+        },
+        "delinquentFederalDebt": {
+            "$ref": "YesNo.json",
+            "examples": [
+                "No"
+            ],
+            "description": "Is the applicant delinquent on any federal debt?",
+            "x-mapping-from-cg": {
+                "field": "customFields.delinquentFederalDebt.value"
+            }
+        },
+        "debtExplanation": {
+            "type": "string",
+            "examples": [
+                ""
+            ],
+            "description": "Explanation of federal debt delinquency (required if delinquent)"
+        },
+        "certificationAgree": {
+            "$ref": "YesNo.json",
+            "examples": [
+                "Yes"
+            ],
+            "description": "Applicant agrees to all required certifications",
+            "x-mapping-from-cg": {
+                "field": "customFields.certificationAgree.value"
+            }
+        },
+        "aorHeader": {
+            "type": "string",
+            "examples": [
+                ""
+            ],
+            "description": "Authorized representative section header"
+        },
+        "aor": {
+            "$ref": "QuestionAorDetails.json",
+            "examples": [
+                {
+                    "name": {
+                        "firstName": "Alex",
+                        "lastName": "Johnson"
+                    },
+                    "title": "Executive Director",
+                    "phone": {
+                        "countryCode": "+1",
+                        "number": "555-234-5678"
+                    },
+                    "email": "director@example.org"
+                }
+            ],
+            "description": "Authorized Organization Representative",
+            "x-overrides": {
+                "uiSchema": {
+                    "address": {
+                        "rule": {
+                            "effect": "HIDE",
+                            "condition": {
+                                "scope": "#/properties/aor/properties/address/properties/street1",
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "name": {
+                        "rule": {
+                            "effect": "HIDE",
+                            "condition": {
+                                "scope": "#/properties/aor/properties/name/properties/firstName",
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "phone.countryCode": {
+                        "rule": {
+                            "effect": "HIDE",
+                            "condition": {
+                                "scope": "#/properties/aor/properties/phone/properties/countryCode",
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "phone.extension": {
+                        "rule": {
+                            "effect": "HIDE",
+                            "condition": {
+                                "scope": "#/properties/aor/properties/phone/properties/extension",
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "phone.isMobile": {
+                        "rule": {
+                            "effect": "HIDE",
+                            "condition": {
+                                "scope": "#/properties/aor/properties/phone/properties/isMobile",
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "aorFax": {
+            "$ref": "FaxNumber.json",
+            "examples": [
+                "555-876-5432"
+            ],
+            "description": "AOR fax number",
+            "x-mapping-from-cg": {
+                "field": "contacts.otherContacts.authorizedRepresentative.phones.fax.number"
+            }
+        },
+        "aorSignature": {
+            "type": "string",
+            "examples": [
+                ""
+            ],
+            "maxLength": 144,
+            "description": "AOR signature — completed by Grants.gov upon submission",
+            "x-mapping-from-cg": {
+                "field": "customFields.aorSignature.value"
+            }
+        },
+        "dateSigned": {
+            "type": "string",
+            "examples": [
+                "2024-03-20"
+            ],
+            "format": "date",
+            "description": "Date the application was signed — completed by Grants.gov upon submission",
+            "x-mapping-from-cg": {
+                "field": "customFields.dateSigned.value"
+            }
+        }
+    },
+    "required": [
+        "submissionType",
+        "applicationType",
+        "dateReceived",
+        "org",
+        "contact",
+        "applicantTypeCode1",
+        "agencyName",
+        "fundingOpportunityNumber",
+        "fundingOpportunityTitle",
+        "project",
+        "congressionalDistrictApplicant",
+        "congressionalDistrictProgramProject",
+        "federalEstimatedFunding",
+        "applicantEstimatedFunding",
+        "stateEstimatedFunding",
+        "localEstimatedFunding",
+        "otherEstimatedFunding",
+        "programIncomeEstimatedFunding",
+        "totalEstimatedFunding",
+        "stateReview",
+        "delinquentFederalDebt",
+        "certificationAgree",
+        "aor",
+        "aorSignature",
+        "dateSigned"
+    ],
+    "description": "SF-424 Application for Federal Assistance.\n\nComposes org + contact + AOR + project details from the question bank,\nand adds SF-424-specific fields (submission type, applicant type codes,\nopportunity info, estimated funding, state review, and certification).",
+    "x-tags": [
+        "sf424",
+        "application"
+    ],
+    "x-overrides": {
+        "uiSchema": {
+            "submissionType": {
+                "label": "Submission Type"
+            },
+            "applicationType": {
+                "label": "Application Type"
+            },
+            "revisionType": {
+                "label": "Revision Type",
+                "rule": {
+                    "effect": "SHOW",
+                    "condition": {
+                        "scope": "#/properties/applicationType",
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^Revision$"
+                        }
+                    }
+                }
+            },
+            "revisionOtherSpecify": {
+                "label": "Other Explanation",
+                "rule": {
+                    "effect": "SHOW",
+                    "condition": {
+                        "scope": "#/properties/revisionType",
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^E: Other"
+                        }
+                    }
+                }
+            },
+            "applicantId": {
+                "label": "Applicant Identifier"
+            },
+            "federalEntityIdentifier": {
+                "label": "Federal Entity Identifier"
+            },
+            "federalAwardIdentifier": {
+                "label": "Federal Award Identifier"
+            },
+            "stateReceiveDate": {
+                "label": "Date Received by State"
+            },
+            "stateApplicationId": {
+                "label": "State Application Identifier"
+            },
+            "applicantAddressHeader": {
+                "label": "Address Header"
+            },
+            "applicantCounty": {
+                "label": "County/Parish"
+            },
+            "applicantProvince": {
+                "label": "Province"
+            },
+            "departmentName": {
+                "label": "Department Name"
+            },
+            "divisionName": {
+                "label": "Division Name"
+            },
+            "contactFax": {
+                "label": "Fax Number"
+            },
+            "orgAffiliation": {
+                "label": "Organizational Affiliation"
+            },
+            "applicantTypeOtherSpecify": {
+                "rule": {
+                    "effect": "SHOW",
+                    "condition": {
+                        "scope": "#/properties/applicantTypeCode1",
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^X: Other"
+                        }
+                    }
+                }
+            },
+            "agencyName": {
+                "label": "Agency Name"
+            },
+            "cfdaNumber": {
+                "label": "CFDA Number"
+            },
+            "cfdaProgramTitle": {
+                "label": "CFDA Program Title"
+            },
+            "fundingOpportunityNumber": {
+                "label": "Funding Opportunity Number"
+            },
+            "fundingOpportunityTitle": {
+                "label": "Funding Opportunity Title"
+            },
+            "competitionIdentificationNumber": {
+                "label": "Competition Identification Number"
+            },
+            "competitionIdentificationTitle": {
+                "label": "Competition Identification Title"
+            },
+            "areasAffected": {
+                "label": "Areas Affected"
+            },
+            "additionalProjectTitle": {
+                "label": "Additional Project Title"
+            },
+            "congressionalDistrictApplicant": {
+                "label": "Congressional District - Applicant"
+            },
+            "congressionalDistrictProgramProject": {
+                "label": "Congressional District - Program/Project"
+            },
+            "additionalCongressionalDistricts": {
+                "label": "Additional Congressional Districts"
+            },
+            "federalEstimatedFunding": {
+                "label": "Federal Estimated Funding"
+            },
+            "applicantEstimatedFunding": {
+                "label": "Applicant Estimated Funding"
+            },
+            "stateEstimatedFunding": {
+                "label": "State Estimated Funding"
+            },
+            "localEstimatedFunding": {
+                "label": "Local Estimated Funding"
+            },
+            "otherEstimatedFunding": {
+                "label": "Other Estimated Funding"
+            },
+            "programIncomeEstimatedFunding": {
+                "label": "Program Income Estimated Funding"
+            },
+            "totalEstimatedFunding": {
+                "label": "Total Estimated Funding"
+            },
+            "stateReview": {
+                "label": "State Review"
+            },
+            "stateReviewAvailableDate": {
+                "label": "State Review Date",
+                "rule": {
+                    "effect": "SHOW",
+                    "condition": {
+                        "scope": "#/properties/stateReview",
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^a\\."
+                        }
+                    }
+                }
+            },
+            "delinquentFederalDebt": {
+                "label": "Delinquent on Federal Debt?"
+            },
+            "debtExplanation": {
+                "label": "Explanation",
+                "rule": {
+                    "effect": "SHOW",
+                    "condition": {
+                        "scope": "#/properties/delinquentFederalDebt",
+                        "schema": {
+                            "type": "string",
+                            "pattern": "^Yes$"
+                        }
+                    }
+                }
+            },
+            "certificationAgree": {
+                "label": "Certification Agreement"
+            },
+            "aorHeader": {
+                "label": "Authorized Representative Header"
+            },
+            "aorFax": {
+                "label": "Fax Number"
+            },
+            "aorSignature": {
+                "label": "AOR Signature"
+            },
+            "dateSigned": {
+                "label": "Date Signed"
+            }
+        }
+    }
+}

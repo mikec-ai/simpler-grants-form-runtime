@@ -1,11 +1,11 @@
 {
-  "contract": "common-grants-resolved-form-package/v1",
+  "contract": "resolved-form-package/v1",
   "source_set": {
     "repository": "https://github.com/HHS/simpler-grants-protocol.git",
     "revision": "65a4de852c96d35e946e8dde9f7a9864f718d8bb",
     "attestation": "snapshot_only",
     "closure": "partial_evidence",
-    "graph_sha256": "16ebbeb687d5317d5fdfd7c1f0240dce109367ecdee8173642f76771dc02b789",
+    "graph_sha256": "1b57c2ffebf2a83c66fe5ec7c61cd1ba878eb585a5bf2d39d1880c1ec60d578f",
     "form": {
       "source_path": "website/src/specs/forms/key-contact.tsp",
       "package_path": "sources/key-contact.tsp",
@@ -18,7 +18,8 @@
         "package_path": "sources/org-name.tsp",
         "sha256": "0bbe115fe13f6827f20483bfd3b864806e9a7a441be296e76dd7dccc69b8901a"
       }
-    ]
+    ],
+    "dependencies": []
   },
   "compiler": {
     "name": "common-grants-to-simpler-compatibility-canary",
@@ -72,7 +73,7 @@
     "semantic_mappings": "source_authored",
     "mapping_composition": "agent_proposed",
     "ui_projection": "agent_proposed",
-    "common_grants_model_validation": "not_validated",
+    "semantic_model_validation": "not_validated",
     "published_coverage_eligible": false
   }
 }

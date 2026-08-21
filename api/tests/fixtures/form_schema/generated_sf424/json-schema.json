@@ -1,0 +1,639 @@
+{
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "application_type": {
+            "const": "Revision"
+          }
+        },
+        "required": [
+          "application_type"
+        ]
+      },
+      "then": {
+        "required": [
+          "revision_type",
+          "federal_award_identifier"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "application_type": {
+            "const": "Continuation"
+          }
+        },
+        "required": [
+          "application_type"
+        ]
+      },
+      "then": {
+        "required": [
+          "federal_award_identifier"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "revision_type": {
+            "const": "E: Other (specify)"
+          }
+        },
+        "required": [
+          "revision_type"
+        ]
+      },
+      "then": {
+        "required": [
+          "revision_other_specify"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "delinquent_federal_debt": {
+            "const": true
+          }
+        },
+        "required": [
+          "delinquent_federal_debt"
+        ]
+      },
+      "then": {
+        "required": [
+          "debt_explanation"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state_review": {
+            "const": "a. This application was made available to the state under the Executive Order 12372 Process for review on"
+          }
+        },
+        "required": [
+          "state_review"
+        ]
+      },
+      "then": {
+        "required": [
+          "state_review_available_date"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "applicant_type_code": {
+            "contains": {
+              "const": "X: Other (specify)"
+            }
+          }
+        },
+        "required": [
+          "applicant_type_code"
+        ]
+      },
+      "then": {
+        "required": [
+          "applicant_type_other_specify"
+        ]
+      }
+    }
+  ],
+  "properties": {
+    "additional_congressional_districts": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/attachment"
+        }
+      ],
+      "description": "Attach an additional list of Program/Project Congressional Districts if needed.",
+      "title": "Additional Congressional Districts"
+    },
+    "additional_project_title": {
+      "description": "Attach file(s) using the appropriate buttons.",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/attachment"
+          }
+        ]
+      },
+      "maxItems": 100,
+      "title": "Additional Project Title",
+      "type": "array"
+    },
+    "agency_name": {
+      "description": "Pre-populated from the Application cover sheet.",
+      "maxLength": 60,
+      "minLength": 1,
+      "title": "Agency Name",
+      "type": "string"
+    },
+    "aor_signature": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/signature"
+        }
+      ],
+      "title": "AOR Signature"
+    },
+    "applicant": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/address_shared_v1.json#/address"
+        }
+      ],
+      "description": "Enter information about the applicant.",
+      "title": "Applicant"
+    },
+    "applicant_estimated_funding": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/budget_monetary_amount"
+        }
+      ],
+      "description": "Enter the dollar amount.",
+      "title": "Applicant Estimated Funding"
+    },
+    "applicant_id": {
+      "description": "Enter the applicant's control number, if applicable.",
+      "maxLength": 30,
+      "minLength": 1,
+      "title": "Applicant Identifier",
+      "type": "string"
+    },
+    "applicant_type_code": {
+      "description": "Select the appropriate applicant types.",
+      "items": {
+        "enum": [
+          "A: State Government",
+          "B: County Government",
+          "C: City or Township Government",
+          "D: Special District Government",
+          "E: Regional Organization",
+          "F: U.S. Territory or Possession",
+          "G: Independent School District",
+          "H: Public/state Controlled Institution of Higher Education",
+          "I: Indian/Native American Tribal Government (Federally Recognized)",
+          "J: Indian/Native American Tribal Government (Other than Federally Recognized)",
+          "K: Indian/Native American Tribally Designated Organization",
+          "L: Public/Indian Housing Authority",
+          "M: Nonprofit with 501C3 IRS Status (Other than Institution of Higher Education)",
+          "N: Nonprofit without 501C3 IRS Status (Other than Institution of Higher Education)",
+          "O: Private Institution of Higher Education",
+          "P: Individual",
+          "Q: For-Profit Organization (Other than Small Business)",
+          "R: Small Business",
+          "S: Hispanic-serving Institution",
+          "T: Historically Black Colleges and Universities (HBCUs)",
+          "U: Tribally Controlled Colleges and Universities (TCCUs)",
+          "V: Alaska Native and Native Hawaiian Serving Institutions",
+          "W: Non-domestic (non-US) Entity",
+          "X: Other (specify)"
+        ],
+        "type": "string"
+      },
+      "maxItems": 3,
+      "minItems": 1,
+      "title": "Type of Applicant",
+      "type": "array"
+    },
+    "applicant_type_other_specify": {
+      "description": "Enter the applicant type here if you selected \"Other (specify)\" for Type of applicant.",
+      "maxLength": 30,
+      "minLength": 0,
+      "title": "Type of Applicant Other Explanation",
+      "type": "string"
+    },
+    "application_type": {
+      "description": "Select one type of application in accordance with agency instructions.",
+      "enum": [
+        "New",
+        "Continuation",
+        "Revision"
+      ],
+      "title": "Application Type",
+      "type": "string"
+    },
+    "areas_affected": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/attachment"
+        }
+      ],
+      "description": "List the areas or entities using the categories (e.g., cities, counties, states, etc.) specified in agency instructions.",
+      "title": "Areas Affected"
+    },
+    "assistance_listing_number": {
+      "description": "Pre-populated from the Application cover sheet.",
+      "maxLength": 15,
+      "minLength": 1,
+      "title": "Assistance Listing Number",
+      "type": "string"
+    },
+    "assistance_listing_program_title": {
+      "description": "Pre-populated from the Application cover sheet.",
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Assistance Listing Title",
+      "type": "string"
+    },
+    "authorized_representative": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/person_name"
+        }
+      ],
+      "description": "",
+      "title": "Authorized Representative"
+    },
+    "authorized_representative_email": {
+      "description": "Enter a valid email Address.",
+      "format": "email",
+      "title": "AOR email",
+      "type": "string"
+    },
+    "authorized_representative_fax": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/phone_number"
+        }
+      ],
+      "description": "Enter the fax Number.",
+      "title": "AOR fax Number"
+    },
+    "authorized_representative_phone_number": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/phone_number"
+        }
+      ],
+      "description": "Enter the daytime Telephone Number.",
+      "title": "AOR Telephone Number"
+    },
+    "authorized_representative_title": {
+      "description": "Enter the position title.",
+      "maxLength": 45,
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    },
+    "certification_agree": {
+      "description": "By signing this application, I certify (1) to the statements contained in the list of certifications* and (2) that the statements herein are true, complete and accurate to the best of my knowledge. I also provide the required assurances** and agree to comply with any resulting terms if I accept an award. I am aware that any false, fictitious, or fraudulent statements or claims may subject me to criminal, civil, or administrative penalties. (U.S. Code, Title 18, Section 1001)",
+      "title": "Certification Agree",
+      "type": "boolean"
+    },
+    "competition_identification_number": {
+      "description": "Pre-populated from the Application cover sheet.",
+      "maxLength": 40,
+      "minLength": 1,
+      "title": "Competition Number",
+      "type": "string"
+    },
+    "competition_identification_title": {
+      "description": "Pre-populated from the Application cover sheet.",
+      "maxLength": 255,
+      "minLength": 1,
+      "title": "Competition Title",
+      "type": "string"
+    },
+    "congressional_district_applicant": {
+      "description": "Enter the Congressional District in the format: 2 character state Abbreviation - 3 character District Number. Examples: CA-005 for California's 5th district, CA-012 for California's 12th district.If outside the US, enter 00-000.",
+      "maxLength": 6,
+      "minLength": 1,
+      "title": "Applicant District",
+      "type": "string"
+    },
+    "congressional_district_program_project": {
+      "description": "Enter the Congressional District in the format: 2 character state Abbreviation - 3 character District Number. Examples: CA-005 for California's 5th district, CA-012 for California's 12th district.If all districts in a state are affected, enter \"all\" for the district number. Example: MD-all for all congressional districts in Maryland.If nationwide (all districts in all states), enter US-all.If the program/project is outside the US, enter 00-000.",
+      "maxLength": 6,
+      "minLength": 1,
+      "title": "Program District",
+      "type": "string"
+    },
+    "contact_person": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/person_name"
+        }
+      ],
+      "description": "Enter information about the contact person.",
+      "title": "Contact Person"
+    },
+    "contact_person_title": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/contact_person_title"
+        }
+      ],
+      "description": "Enter the position title.",
+      "title": "Title"
+    },
+    "date_received": {
+      "description": "Completed by Grants.gov upon submission.",
+      "format": "date",
+      "title": "Date Received",
+      "type": "string"
+    },
+    "date_signed": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/submitted_date"
+        }
+      ],
+      "title": "Date Signed"
+    },
+    "debt_explanation": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/attachment"
+        }
+      ],
+      "description": "",
+      "title": "Debt Explanation"
+    },
+    "delinquent_federal_debt": {
+      "description": "If 'Yes,' provide explanation in attachment.",
+      "title": "Applicant Delinquent on Federal Debt",
+      "type": "boolean"
+    },
+    "department_name": {
+      "description": "Enter the name of primary organizational department, service, laboratory, or equivalent level within the organization which will undertake the assistance activity.",
+      "maxLength": 30,
+      "minLength": 1,
+      "title": "Department Name",
+      "type": "string"
+    },
+    "division_name": {
+      "description": "Enter the name of primary organizational division, office, or major subdivision which will undertake the assistance activity.",
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Division Name",
+      "type": "string"
+    },
+    "email": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/contact_email"
+        }
+      ],
+      "description": "Enter a valid email Address.",
+      "title": "Email"
+    },
+    "employer_taxpayer_identification_number": {
+      "description": "Enter either TIN or EIN as assigned by the Internal Revenue Service.  If your organization is not in the US, enter 44-4444444.",
+      "maxLength": 30,
+      "minLength": 9,
+      "title": "EIN/TIN",
+      "type": "string"
+    },
+    "fax": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/phone_number"
+        }
+      ],
+      "description": "Enter the fax Number.",
+      "title": "Fax Number"
+    },
+    "federal_award_identifier": {
+      "description": "For new applications leave blank. For a continuation or revision to an existing award, enter the previously assigned Federal award identifier number. If a changed/corrected application, enter the Federal Identifier in accordance with agency instructions.",
+      "maxLength": 25,
+      "minLength": 1,
+      "title": "Federal Award Identifier",
+      "type": "string"
+    },
+    "federal_entity_identifier": {
+      "description": "Enter the number assigned to your organization by the Federal agency.",
+      "maxLength": 30,
+      "minLength": 1,
+      "title": "Federal Entity Identifier",
+      "type": "string"
+    },
+    "federal_estimated_funding": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/budget_monetary_amount"
+        }
+      ],
+      "description": "Enter the dollar amount.",
+      "title": "Federal Estimated Funding"
+    },
+    "funding_opportunity_number": {
+      "description": "Pre-populated from the Application cover sheet.",
+      "maxLength": 40,
+      "minLength": 1,
+      "title": "Opportunity Number",
+      "type": "string"
+    },
+    "funding_opportunity_title": {
+      "description": "Pre-populated from the Application cover sheet.",
+      "maxLength": 255,
+      "minLength": 1,
+      "title": "Opportunity title",
+      "type": "string"
+    },
+    "local_estimated_funding": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/budget_monetary_amount"
+        }
+      ],
+      "description": "Enter the dollar amount.",
+      "title": "Local Estimated Funding"
+    },
+    "organization_affiliation": {
+      "description": "Enter the organization if different from the applicant organization.",
+      "maxLength": 60,
+      "minLength": 1,
+      "title": "Organizational Affiliation",
+      "type": "string"
+    },
+    "organization_name": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/organization_name"
+        }
+      ],
+      "description": "Enter the legal name of the applicant that will undertake the assistance activity. This is the organization that has registered with the System for Award Management (SAM). Information on registering with SAM may be obtained by visiting SAM.gov.",
+      "title": "Legal Name"
+    },
+    "other_estimated_funding": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/budget_monetary_amount"
+        }
+      ],
+      "description": "Enter the dollar amount.",
+      "title": "Other Estimated Funding"
+    },
+    "phone_number": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/phone_number"
+        }
+      ],
+      "description": "Enter the daytime Telephone Number.",
+      "title": "Telephone Number"
+    },
+    "program_income_estimated_funding": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/budget_monetary_amount"
+        }
+      ],
+      "description": "Enter the dollar amount.",
+      "title": "Program Income Estimated Funding"
+    },
+    "project_end_date": {
+      "description": "Enter the date in the format MM/DD/YYYY. ",
+      "format": "date",
+      "title": "Project End Date",
+      "type": "string"
+    },
+    "project_start_date": {
+      "description": "Enter the date in the format MM/DD/YYYY. ",
+      "format": "date",
+      "title": "Project Start Date",
+      "type": "string"
+    },
+    "project_title": {
+      "description": "Enter a brief, descriptive title of the project.",
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Project Title",
+      "type": "string"
+    },
+    "revision_other_specify": {
+      "description": "Please specify the type of revision. This field is required if E. Other is checked.",
+      "title": "Other Explanation",
+      "type": "string"
+    },
+    "revision_type": {
+      "description": "Select a revision type from the list provided. A selection is required if Type of Application is Revision.",
+      "enum": [
+        "A: Increase Award",
+        "B: Decrease Award",
+        "C: Increase Duration",
+        "D: Decrease Duration",
+        "E: Other (specify)",
+        "AC: Increase Award, Increase Duration",
+        "AD: Increase Award, Decrease Duration",
+        "BC: Decrease Award, Increase Duration",
+        "BD: Decrease Award, Decrease Duration"
+      ],
+      "title": "Revision Type",
+      "type": "string"
+    },
+    "sam_uei": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/sam_uei"
+        }
+      ],
+      "description": "UEI of the applicant organization. This field is pre-populated from the Application cover sheet.",
+      "title": "SAM UEI"
+    },
+    "state_application_id": {
+      "description": "Leave blank, to be filled out by state.",
+      "maxLength": 30,
+      "minLength": 0,
+      "readOnly": true,
+      "title": "State Application Identifier",
+      "type": "string"
+    },
+    "state_estimated_funding": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/budget_monetary_amount"
+        }
+      ],
+      "description": "Enter the dollar amount.",
+      "title": "State Estimated Funding"
+    },
+    "state_receive_date": {
+      "description": "Leave blank, to be filled out by state.",
+      "format": "date",
+      "readOnly": true,
+      "title": "Date Received By State",
+      "type": "string"
+    },
+    "state_review": {
+      "description": "One selection is required.",
+      "enum": [
+        "a. This application was made available to the state under the Executive Order 12372 Process for review on",
+        "b. Program is subject to E.O. 12372 but has not been selected by the state for review.",
+        "c. Program is not covered by E.O. 12372."
+      ],
+      "title": "Is Application Subject to Review By State Under Executive Order 12372 Process?",
+      "type": "string"
+    },
+    "state_review_available_date": {
+      "description": "If 'a' is selected, enter the date the application was submitted to the State.",
+      "format": "date",
+      "title": "State Review Date",
+      "type": "string"
+    },
+    "submission_type": {
+      "description": "Select one type of submission in accordance with agency instructions.",
+      "enum": [
+        "Preapplication",
+        "Application",
+        "Changed/Corrected Application"
+      ],
+      "title": "Submission Type",
+      "type": "string"
+    },
+    "total_estimated_funding": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/budget_monetary_amount"
+        }
+      ],
+      "description": "This field is automatically calculated by Grants.gov",
+      "title": "Total Estimated Funding"
+    }
+  },
+  "required": [
+    "submission_type",
+    "application_type",
+    "organization_name",
+    "employer_taxpayer_identification_number",
+    "sam_uei",
+    "applicant",
+    "contact_person",
+    "phone_number",
+    "email",
+    "applicant_type_code",
+    "agency_name",
+    "funding_opportunity_number",
+    "funding_opportunity_title",
+    "project_title",
+    "congressional_district_applicant",
+    "congressional_district_program_project",
+    "project_start_date",
+    "project_end_date",
+    "federal_estimated_funding",
+    "applicant_estimated_funding",
+    "state_estimated_funding",
+    "local_estimated_funding",
+    "other_estimated_funding",
+    "program_income_estimated_funding",
+    "total_estimated_funding",
+    "state_review",
+    "delinquent_federal_debt",
+    "certification_agree",
+    "authorized_representative",
+    "authorized_representative_title",
+    "authorized_representative_phone_number",
+    "authorized_representative_email"
+  ],
+  "type": "object"
+}
