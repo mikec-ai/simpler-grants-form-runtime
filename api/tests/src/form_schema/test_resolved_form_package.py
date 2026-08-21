@@ -203,6 +203,23 @@ def test_rejects_projection_report_that_conflicts_with_manifest(tmp_path: Path) 
         load_resolved_form_package(package_root)
 
 
+def test_rejects_projection_report_dependency_graph_that_conflicts(tmp_path: Path) -> None:
+    package_root = _copy_complete_fixture(tmp_path)
+    report_path = package_root / "projection-report.json"
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    report["source_identity"]["compiler"]["dependencies"][0]["sha256"] = "0" * 64
+    report_path.write_text(json.dumps(report), encoding="utf-8")
+    manifest_path = package_root / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["artifacts"]["projection_report"]["sha256"] = hashlib.sha256(
+        report_path.read_bytes()
+    ).hexdigest()
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    with pytest.raises(ResolvedFormPackageError, match="compiler dependencies conflict"):
+        load_resolved_form_package(package_root)
+
+
 def test_rejects_unknown_manifest_keys(tmp_path: Path) -> None:
     package_root = _copy_fixture(tmp_path)
     manifest_path = package_root / "manifest.json"

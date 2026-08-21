@@ -603,6 +603,35 @@ def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:
                 raise ResolvedFormPackageError(
                     f"projection_report source {report_key} conflicts with manifest"
                 )
+        report_source_files = _array(
+            report_source.get("dependencies"),
+            "projection_report.source_identity.source.dependencies",
+        )
+        normalized_report_source_files = sorted(
+            (
+                _string(
+                    _object(record, "projection report source dependency").get("path"),
+                    "projection report source dependency.path",
+                ),
+                _sha256(
+                    _object(record, "projection report source dependency").get("sha256"),
+                    "projection report source dependency.sha256",
+                ),
+            )
+            for record in report_source_files
+        )
+        manifest_source_records = [
+            manifest["source_set"]["form"],
+            *manifest["source_set"]["questions"],
+            *manifest["source_set"]["dependencies"],
+        ]
+        normalized_manifest_source_files = sorted(
+            (record["source_path"], record["sha256"]) for record in manifest_source_records
+        )
+        if normalized_report_source_files != normalized_manifest_source_files:
+            raise ResolvedFormPackageError(
+                "projection_report source dependencies conflict with manifest"
+            )
         report_compiler = _object(
             source_identity["compiler"], "projection_report.source_identity.compiler"
         )
@@ -611,6 +640,31 @@ def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:
                 raise ResolvedFormPackageError(
                     f"projection_report compiler {key} conflicts with manifest"
                 )
+        report_compiler_dependencies = _array(
+            report_compiler.get("dependencies"),
+            "projection_report.source_identity.compiler.dependencies",
+        )
+        normalized_report_compiler_files = sorted(
+            (
+                _string(
+                    _object(record, "projection report compiler dependency").get("path"),
+                    "projection report compiler dependency.path",
+                ),
+                _sha256(
+                    _object(record, "projection report compiler dependency").get("sha256"),
+                    "projection report compiler dependency.sha256",
+                ),
+            )
+            for record in report_compiler_dependencies
+        )
+        normalized_manifest_compiler_files = sorted(
+            (record["source_path"], record["sha256"])
+            for record in manifest["compiler"]["dependencies"]
+        )
+        if normalized_report_compiler_files != normalized_manifest_compiler_files:
+            raise ResolvedFormPackageError(
+                "projection_report compiler dependencies conflict with manifest"
+            )
         report_bindings = _array(
             source_identity["questionBindings"],
             "projection_report.source_identity.questionBindings",
@@ -629,6 +683,21 @@ def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:
         if normalized_report_bindings != manifest["question_bindings"]:
             raise ResolvedFormPackageError(
                 "projection_report question bindings conflict with manifest"
+            )
+        report_question_sources = {
+            binding.get("questionId"): binding.get("sourcePath")
+            for binding in map(
+                lambda value: _object(value, "projection report question binding"),
+                report_bindings,
+            )
+        }
+        manifest_question_sources = {
+            question["question_id"]: question["source_path"]
+            for question in manifest["source_set"]["questions"]
+        }
+        if report_question_sources != manifest_question_sources:
+            raise ResolvedFormPackageError(
+                "projection_report question sources conflict with manifest"
             )
         dispositions = _object(projection_report["dispositions"], "projection_report.dispositions")
         _exact_keys(
