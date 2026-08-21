@@ -1,0 +1,28 @@
+{
+  "contract": "simpler-oracle-migration-ledger/v1",
+  "updated_at": "2026-08-21",
+  "scope": "Sixteen registered Simpler forms that overlap the analyzed portfolio",
+  "status_definitions": {
+    "converted": "The active runtime form is composed through a shared component, template, or source-pinned compiler and retains oracle parity evidence.",
+    "partial": "Reusable contributions exist, but they do not yet generate the active runtime form end to end.",
+    "pending": "The registered implementation remains primarily form-specific."
+  },
+  "forms": [
+    {"form": "Attachment Form", "module": "attachment_form", "status": "pending"},
+    {"form": "Budget Narrative Attachment", "module": "budget_narrative_attachment", "status": "converted", "reuse": "narrative_attachment_template", "parity_test": "tests/src/form_schema/templates/test_narrative_attachment.py"},
+    {"form": "EPA Form 4700-4", "module": "epa_form_4700_4", "status": "pending"},
+    {"form": "EPA Key Contacts", "module": "epa_key_contacts", "status": "converted", "reuse": "contact_profile_component", "parity_test": "tests/src/form_schema/components/test_contact_profile.py"},
+    {"form": "Grants.gov Lobbying Form", "module": "gg_lobbying_form", "status": "pending"},
+    {"form": "Key Contacts", "module": "key_contacts", "status": "converted", "reuse": "contact_profile_component", "parity_test": "tests/src/form_schema/components/test_contact_profile.py"},
+    {"form": "Other Narrative Attachment", "module": "other_narrative_attachment", "status": "converted", "reuse": "narrative_attachment_template", "parity_test": "tests/src/form_schema/templates/test_narrative_attachment.py"},
+    {"form": "Project Abstract Summary", "module": "project_abstract_summary", "status": "converted", "reuse": "organization_name_component", "parity_test": "tests/src/form_schema/forms/test_project_abstract_summary.py"},
+    {"form": "Project Narrative Attachment", "module": "project_narrative_attachment", "status": "converted", "reuse": "narrative_attachment_template", "parity_test": "tests/src/form_schema/templates/test_narrative_attachment.py"},
+    {"form": "Project Performance Site Location", "module": "project_performance_site_location", "status": "pending"},
+    {"form": "SF-424", "module": "sf424", "status": "partial", "reuse": "shared components reconstruct compatibility oracle; active form loads resolved package", "parity_test": "tests/src/form_schema/forms/test_sf424.py"},
+    {"form": "SF-424 Short", "module": "sf424_short", "status": "converted", "reuse": "contact_profile_and_person_name_components", "parity_test": "tests/src/form_schema/forms/test_sf424_short.py"},
+    {"form": "SF-424A", "module": "sf424a", "status": "pending"},
+    {"form": "SF-424B", "module": "sf424b", "status": "pending"},
+    {"form": "SF-424D", "module": "sf424d", "status": "converted", "reuse": "organization_name_component_and_source_pinned_xml_compiler", "parity_test": "tests/src/services/xml_generation/test_sf424d_xml_generation.py"},
+    {"form": "SF-LLL", "module": "sflll", "status": "pending"}
+  ]
+}

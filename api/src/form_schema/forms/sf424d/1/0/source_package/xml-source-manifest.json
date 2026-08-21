@@ -1,0 +1,49 @@
+{
+  "constant_bindings": [
+    {
+      "evidence": "source_configured",
+      "target_path": "/Assurances/FormVersionIdentifier",
+      "value": "1.1"
+    }
+  ],
+  "contract": "xml-plan-source/v1",
+  "form": {
+    "form_id": "SF424D",
+    "form_version": "1.1"
+  },
+  "format_version": 1,
+  "preferred_prefixes": {
+    "http://www.w3.org/2001/XMLSchema": "xs",
+    "http://apply.grants.gov/forms/SF424D-V1.1": "SF424D",
+    "http://apply.grants.gov/system/Global-V1.0": "glob",
+    "http://apply.grants.gov/system/GlobalLibrary-V2.0": "globLib",
+    "http://apply.grants.gov/system/UniversalCodes-V2.0": "codes"
+  },
+  "root_qname": "{http://apply.grants.gov/forms/SF424D-V1.1}Assurances",
+  "schemas": [
+    {
+      "path": "work/grantsgov-xsds/SF424D-V1.1.xsd",
+      "role": "root",
+      "sha256": "22026ea7130a01b8674e1c3ce1668e1b57d5be65498b5a76042eb80d38de77f1",
+      "source_ref": "https://apply07.grants.gov/apply/forms/schemas/SF424D-V1.1.xsd"
+    },
+    {
+      "path": "work/grantsgov-xsds/dependencies/Global-V1.0.xsd",
+      "role": "dependency",
+      "sha256": "4b338db919152eb8b96a1a846902d04ef8bca8d08127b21f80f927eaa62283cb",
+      "source_ref": "https://apply07.grants.gov/apply/system/schemas/Global-V1.0.xsd"
+    },
+    {
+      "path": "work/grantsgov-xsds/dependencies/GlobalLibrary-V2.0.xsd",
+      "role": "dependency",
+      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8",
+      "source_ref": "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+    },
+    {
+      "path": "work/grantsgov-xsds/dependencies/UniversalCodes-V2.0.xsd",
+      "role": "dependency",
+      "sha256": "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a",
+      "source_ref": "https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd"
+    }
+  ]
+}

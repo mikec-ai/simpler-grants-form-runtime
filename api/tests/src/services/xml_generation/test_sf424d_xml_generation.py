@@ -1,10 +1,28 @@
 """Tests for SF-424D XML generation."""
 
+import importlib
+from pathlib import Path
+
+import pytest
 from lxml import etree as lxml_etree
 
 from src.form_schema.forms.sf424d import FORM_XML_TRANSFORM_RULES as SF424D_TRANSFORM_RULES
 from src.services.xml_generation.models import XMLGenerationRequest
 from src.services.xml_generation.service import XMLGenerationService
+
+_FORM_MODULE = importlib.import_module("src.form_schema.forms.sf424d.1.0.form_json")
+
+
+def _expanded_tree(xml: str):
+    root = lxml_etree.fromstring(xml.encode("utf-8"))
+    return (
+        root.tag,
+        tuple(sorted(root.attrib.items())),
+        [
+            (child.tag, child.text, [(nested.tag, nested.text) for nested in child])
+            for child in root
+        ],
+    )
 
 
 class TestSF424DXMLGeneration:
@@ -105,6 +123,71 @@ class TestSF424DXMLGeneration:
             "<SF424D:ApplicantOrganizationName>Org</SF424D:ApplicantOrganizationName>" in xml_data
         )
         assert "<SF424D:SubmittedDate>2026-02-07</SF424D:SubmittedDate>" in xml_data
+
+    @pytest.mark.parametrize(
+        "application_data",
+        [
+            {},
+            {"signature": "MH"},
+            {"title": "Director"},
+            {
+                "signature": "MH",
+                "title": "Director",
+                "applicant_organization": "Example Org",
+                "date_signed": "2026-02-07",
+            },
+        ],
+    )
+    def test_source_pinned_transform_is_structurally_equal_to_retained_oracle(
+        self, application_data
+    ):
+        service = XMLGenerationService()
+        generated = service.generate_xml(
+            XMLGenerationRequest(
+                application_data=application_data,
+                transform_config=SF424D_TRANSFORM_RULES,
+            )
+        )
+        oracle = service.generate_xml(
+            XMLGenerationRequest(
+                application_data=application_data,
+                transform_config=_FORM_MODULE._ORACLE_FORM_XML_TRANSFORM_RULES,
+            )
+        )
+        assert generated.success is True
+        assert oracle.success is True
+        assert _expanded_tree(generated.xml_data) == _expanded_tree(oracle.xml_data)
+
+    def test_source_pinned_output_validates_offline_against_exact_xsd(self):
+        response = XMLGenerationService().generate_xml(
+            XMLGenerationRequest(
+                application_data={
+                    "signature": "MH",
+                    "title": "Director",
+                    "applicant_organization": "Example Org",
+                    "date_signed": "2026-02-07",
+                },
+                transform_config=SF424D_TRANSFORM_RULES,
+            )
+        )
+        assert response.success is True
+
+        xsd_root = (
+            Path(_FORM_MODULE.__file__).with_name("source_package") / "work" / "grantsgov-xsds"
+        )
+
+        class OfflineResolver(lxml_etree.Resolver):
+            def resolve(self, url, public_id, context):
+                dependency = xsd_root / "dependencies" / Path(url).name
+                if dependency.exists():
+                    return self.resolve_filename(str(dependency), context)
+                return None
+
+        parser = lxml_etree.XMLParser(no_network=True)
+        parser.resolvers.add(OfflineResolver())
+        schema_document = lxml_etree.parse(str(xsd_root / "SF424D-V1.1.xsd"), parser)
+        schema = lxml_etree.XMLSchema(schema_document)
+        schema.assertValid(lxml_etree.fromstring(response.xml_data.encode("utf-8")))
 
     def test_generate_sf424d_xml_namespaces_match_legacy(self):
         """Test that generated XML includes all namespace declarations matching legacy format.

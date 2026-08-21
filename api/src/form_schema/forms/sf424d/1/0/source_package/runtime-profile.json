@@ -1,0 +1,61 @@
+{
+  "contract": "simpler-xml-runtime-profile/v1",
+  "profile_id": "sf424d-native-v1",
+  "review": {
+    "status": "reviewed",
+    "reviewed_by": "implementation-parity-review",
+    "reviewed_at": "2026-08-21T00:00:00Z",
+    "evidence_ref": "api/tests/src/services/xml_generation/test_sf424d_xml_generation.py"
+  },
+  "bindings": {
+    "/AuthorizedRepresentative/RepresentativeName": {
+      "runtime_path": "signature",
+      "review": {
+        "status": "reviewed",
+        "reviewed_by": "implementation-parity-review",
+        "reviewed_at": "2026-08-21T00:00:00Z",
+        "evidence_ref": "api/tests/src/services/xml_generation/test_sf424d_xml_generation.py"
+      }
+    },
+    "/AuthorizedRepresentative/RepresentativeTitle": {
+      "runtime_path": "title",
+      "review": {
+        "status": "reviewed",
+        "reviewed_by": "implementation-parity-review",
+        "reviewed_at": "2026-08-21T00:00:00Z",
+        "evidence_ref": "api/tests/src/services/xml_generation/test_sf424d_xml_generation.py"
+      }
+    },
+    "/ApplicantOrganizationName": {
+      "runtime_path": "applicant_organization",
+      "review": {
+        "status": "reviewed",
+        "reviewed_by": "implementation-parity-review",
+        "reviewed_at": "2026-08-21T00:00:00Z",
+        "evidence_ref": "api/tests/src/services/xml_generation/test_sf424d_xml_generation.py"
+      }
+    },
+    "/SubmittedDate": {
+      "runtime_path": "date_signed",
+      "review": {
+        "status": "reviewed",
+        "reviewed_by": "implementation-parity-review",
+        "reviewed_at": "2026-08-21T00:00:00Z",
+        "evidence_ref": "api/tests/src/services/xml_generation/test_sf424d_xml_generation.py"
+      }
+    }
+  },
+  "legacy_namespaces": [
+    {
+      "prefix": "att",
+      "uri": "http://apply.grants.gov/system/Attachments-V1.0",
+      "evidence": "legacy_observed"
+    },
+    {
+      "prefix": "globLib",
+      "uri": "http://apply.grants.gov/system/GlobalLibrary-V2.0",
+      "evidence": "legacy_observed"
+    }
+  ],
+  "profile_sha256": "dcffb728022e88f1222a99a267bd5388fa6ffb6b536a208961634bbbff676c37"
+}

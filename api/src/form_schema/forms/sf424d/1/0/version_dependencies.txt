@@ -1,0 +1,7 @@
+# The version-local source package and reusable contributions determine this form.
+./source_package
+form_schema/components/component_definition.py
+form_schema/components/organization_identity.py
+form_schema/xml_plan.py
+form_schema/shared/common_shared.py
+form_schema/shared/shared_schema.py

@@ -1,8 +1,24 @@
+import json
 import uuid
+from copy import deepcopy
+from pathlib import Path
 
 from src.constants.lookup_constants import FormType
 from src.db.models.competition_models import Form
+from src.form_schema.components import (
+    OrganizationNameComponentConfig,
+    build_organization_name_component,
+)
 from src.form_schema.shared import COMMON_SHARED_V1
+from src.form_schema.xml_plan import compile_xml_plan
+
+_SOURCE_PACKAGE = Path(__file__).with_name("source_package")
+_APPLICANT_ORGANIZATION = build_organization_name_component(
+    OrganizationNameComponentConfig(
+        title="Applicant Organization",
+        description="This should match the 'Legal Name' field from the SF-424 form",
+    )
+).mount_root(aliases={"organization_name": "applicant_organization"})
 
 BURDEN_STATEMENT = """Public reporting burden for this collection of information is estimated to average 15 minutes per response, including time for reviewing instructions, searching existing data sources, gathering and maintaining the data needed, and completing and reviewing the collection of information. Send comments regarding the burden estimate or any other aspect of this collection of information, including suggestions for reducing this burden, to the Office of Management and Budget, Paperwork Reduction Project (0348-0042), Washington, DC 20503."""
 
@@ -52,7 +68,7 @@ As the duly authorized representative of the applicant, I certify that the appli
 """
 
 
-FORM_JSON_SCHEMA = {
+_ORACLE_FORM_JSON_SCHEMA = {
     "type": "object",
     "required": ["title", "applicant_organization"],
     "properties": {
@@ -79,7 +95,7 @@ FORM_JSON_SCHEMA = {
     },
 }
 
-FORM_UI_SCHEMA = [
+_ORACLE_FORM_UI_SCHEMA = [
     {
         "type": "section",
         "label": "1. Burden Statement",
@@ -107,7 +123,7 @@ FORM_UI_SCHEMA = [
     },
 ]
 
-FORM_RULE_SCHEMA = {
+_ORACLE_FORM_RULE_SCHEMA = {
     ##### POST-POPULATION RULES
     "signature": {"gg_post_population": {"rule": "signature"}},
     "date_signed": {"gg_post_population": {"rule": "current_date"}},
@@ -115,7 +131,7 @@ FORM_RULE_SCHEMA = {
 
 # XML Transformation Rules for SF-424D v1.1 (Assurances for Construction Programs)
 # XSD: https://apply07.grants.gov/apply/forms/schemas/SF424D-V1.1.xsd
-FORM_XML_TRANSFORM_RULES = {
+_ORACLE_FORM_XML_TRANSFORM_RULES = {
     # Metadata
     "_xml_config": {
         "description": "XML transformation rules for SF-424D Assurances for Construction Programs",
@@ -179,6 +195,32 @@ FORM_XML_TRANSFORM_RULES = {
         }
     },
 }
+
+# Compose reusable contributions and fail at import time if they drift from the
+# retained Nava declaration. Requiredness and placement remain form-owned.
+FORM_JSON_SCHEMA = deepcopy(_ORACLE_FORM_JSON_SCHEMA)
+FORM_JSON_SCHEMA["properties"]["applicant_organization"] = (
+    _APPLICANT_ORGANIZATION.json_schema_properties["applicant_organization"]
+)
+assert FORM_JSON_SCHEMA == _ORACLE_FORM_JSON_SCHEMA
+
+FORM_UI_SCHEMA = deepcopy(_ORACLE_FORM_UI_SCHEMA)
+FORM_UI_SCHEMA[2]["children"][2] = _APPLICANT_ORGANIZATION.ui_schema_fields[
+    "applicant_organization"
+]
+assert FORM_UI_SCHEMA == _ORACLE_FORM_UI_SCHEMA
+
+FORM_RULE_SCHEMA = deepcopy(_ORACLE_FORM_RULE_SCHEMA)
+assert FORM_RULE_SCHEMA == _ORACLE_FORM_RULE_SCHEMA
+
+FORM_XML_TRANSFORM_RULES = compile_xml_plan(
+    json.loads((_SOURCE_PACKAGE / "xml-plan.json").read_text(encoding="utf-8")),
+    json.loads((_SOURCE_PACKAGE / "runtime-profile.json").read_text(encoding="utf-8")),
+    source_root=_SOURCE_PACKAGE,
+    source_manifest=json.loads(
+        (_SOURCE_PACKAGE / "xml-source-manifest.json").read_text(encoding="utf-8")
+    ),
+)
 
 SF424d_v1_1 = Form(
     # https://grants.gov/forms/form-items-description/fid/238
