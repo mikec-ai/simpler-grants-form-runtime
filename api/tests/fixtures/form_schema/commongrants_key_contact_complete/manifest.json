@@ -10,7 +10,7 @@
     },
     "projection_report": {
       "path": "projection-report.json",
-      "sha256": "5c49b2d3aada2d43b7fc09eecda03a74a13008eeeabe56d06b115f7d00ce598a"
+      "sha256": "e68bc1490f29b9a1c20bd0a12c87e7b6a549d66b541f83c35d9022bc57a0c2b9"
     },
     "rule_schema": null,
     "ui_schema": {
@@ -33,7 +33,7 @@
       },
       {
         "package_path": "compiler/website/src/lib/forms/materialize.ts",
-        "sha256": "f76b2853a6fad0cb0bef4cf1a0078c577a3952b28bd91662bff3acbec5615a72",
+        "sha256": "2bb292f0cabee27b66085badd45bfc9faf314e85016e10910bc58a14bff49716",
         "source_path": "website/src/lib/forms/materialize.ts"
       },
       {
@@ -68,8 +68,8 @@
       }
     ],
     "name": "@common-grants/website-form-materializer",
-    "sha256": "95be7f6016a2dccc7fd7ffb18466d22be159a95f522c90ea8cbd972bea1e49cc",
-    "verification": "content_addressed",
+    "sha256": null,
+    "verification": "manual_canary",
     "version": "1.0.0"
   },
   "contract": "common-grants-resolved-form-package/v1",
@@ -155,7 +155,7 @@
   },
   "source_set": {
     "attestation": "snapshot_only",
-    "closure": "complete",
+    "closure": "partial_evidence",
     "dependencies": [
       {
         "package_path": "sources/website/.extension-schemas/FaxNumber.yaml",
@@ -468,7 +468,7 @@
       "sha256": "57987951466d84a9f272d65551f7def987ec3b26d15c6fc2f4b5bebac9bdc1e6",
       "source_path": "website/src/specs/forms/key-contact.tsp"
     },
-    "graph_sha256": "f8d092deebf7e1a7ec7beff7c57c51d31106a98902fc0939aa19db8466e0fb92",
+    "graph_sha256": "21eceb1d77c3dbd38640ce7462d1b456c7b2faf81702aaf653db0f0bef500100",
     "questions": [
       {
         "package_path": "sources/website/src/specs/question-bank/primary-org/org-name.tsp",
@@ -484,6 +484,6 @@
       }
     ],
     "repository": "https://github.com/HHS/simpler-grants-protocol.git",
-    "revision": "26758c088fd1f8465e4c56e5e35c6c8ab8be4ad2"
+    "revision": "0fb92b128f7a492b0bf408f7226427e8c8cb04ba"
   }
 }

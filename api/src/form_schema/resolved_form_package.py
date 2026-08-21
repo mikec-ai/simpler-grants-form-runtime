@@ -475,8 +475,6 @@ def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:
             raise ResolvedFormPackageError(
                 "compiler.sha256 does not match the canonical compiler dependency graph"
             )
-    elif compiler_dependencies:
-        raise ResolvedFormPackageError("manual_canary compiler.dependencies must be empty")
 
     source_questions = {question["question_id"] for question in manifest["source_set"]["questions"]}
     _validate_question_bindings(manifest["question_bindings"], source_questions)
@@ -512,7 +510,7 @@ def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:
             "review_boundary.published_coverage_eligible must be a boolean"
         )
     has_unreviewed_boundary = (
-        "agent_proposed" in review_boundary.values()
+        any(state in {"agent_proposed", "compiler_derived"} for state in review_boundary.values())
         or review_boundary["common_grants_model_validation"] == "not_validated"
         or compiler["verification"] == "manual_canary"
         or manifest["source_set"]["attestation"] == "snapshot_only"
@@ -567,6 +565,105 @@ def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:
             ),
             "projection_report",
         )
+        _exact_keys(
+            projection_report,
+            {
+                "contract",
+                "input_digest",
+                "input_digest_verification",
+                "source_identity",
+                "dispositions",
+            },
+            "projection_report",
+        )
+        if projection_report["contract"] != "common-grants-to-simpler-ui/v1":
+            raise ResolvedFormPackageError("projection_report.contract is unsupported")
+        _sha256(projection_report["input_digest"], "projection_report.input_digest")
+        if projection_report["input_digest_verification"] != "upstream_assertion":
+            raise ResolvedFormPackageError(
+                "projection_report.input_digest_verification must be upstream_assertion"
+            )
+        source_identity = _object(
+            projection_report["source_identity"], "projection_report.source_identity"
+        )
+        _exact_keys(
+            source_identity,
+            {"source", "compiler", "form", "questionBindings"},
+            "projection_report.source_identity",
+        )
+        report_source = _object(
+            source_identity["source"], "projection_report.source_identity.source"
+        )
+        for report_key, manifest_key in (
+            ("repository", "repository"),
+            ("revision", "revision"),
+            ("closure", "closure"),
+        ):
+            if report_source.get(report_key) != manifest["source_set"][manifest_key]:
+                raise ResolvedFormPackageError(
+                    f"projection_report source {report_key} conflicts with manifest"
+                )
+        report_compiler = _object(
+            source_identity["compiler"], "projection_report.source_identity.compiler"
+        )
+        for key in ("name", "version", "verification"):
+            if report_compiler.get(key) != manifest["compiler"][key]:
+                raise ResolvedFormPackageError(
+                    f"projection_report compiler {key} conflicts with manifest"
+                )
+        report_bindings = _array(
+            source_identity["questionBindings"],
+            "projection_report.source_identity.questionBindings",
+        )
+        normalized_report_bindings = [
+            {
+                "question_id": binding.get("questionId"),
+                "form_pointer": binding.get("formPointer"),
+                "overrides": binding.get("overrides", {}),
+            }
+            for binding in map(
+                lambda value: _object(value, "projection report question binding"),
+                report_bindings,
+            )
+        ]
+        if normalized_report_bindings != manifest["question_bindings"]:
+            raise ResolvedFormPackageError(
+                "projection_report question bindings conflict with manifest"
+            )
+        dispositions = _object(projection_report["dispositions"], "projection_report.dispositions")
+        _exact_keys(
+            dispositions,
+            {
+                "omitted_controls",
+                "ui_projection",
+                "semantic_mappings",
+                "mapping_composition",
+                "published_coverage_eligible",
+            },
+            "projection_report.dispositions",
+        )
+        if (
+            dispositions["ui_projection"] != "deterministic_structural"
+            or dispositions["semantic_mappings"] != review_boundary["semantic_mappings"]
+            or dispositions["mapping_composition"] != review_boundary["mapping_composition"]
+            or dispositions["published_coverage_eligible"]
+            != review_boundary["published_coverage_eligible"]
+        ):
+            raise ResolvedFormPackageError(
+                "projection_report dispositions conflict with review_boundary"
+            )
+        omitted_controls = _array(
+            dispositions["omitted_controls"], "projection_report.dispositions.omitted_controls"
+        )
+        for index, raw_control in enumerate(omitted_controls):
+            control = _object(raw_control, f"projection_report omitted_controls[{index}]")
+            _exact_keys(
+                control,
+                {"scope", "disposition", "evidence"},
+                f"projection_report omitted_controls[{index}]",
+            )
+            if control["disposition"] != "omitted_always_hidden":
+                raise ResolvedFormPackageError("projection_report has unknown omission disposition")
 
     rule_schema = None
     if artifacts["rule_schema"] is not None:

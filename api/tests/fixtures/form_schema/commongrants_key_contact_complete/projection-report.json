@@ -23,7 +23,8 @@
     "semantic_mappings": "source_authored",
     "ui_projection": "deterministic_structural"
   },
-  "input_digest": "791c21a16c1a85e25dc1acdbd8281902018c73fe0ddac62102dbbe6581301aa5",
+  "input_digest": "6a3ad12f33e07062226d9b634a4017ac3f52c8d44b2a2ed36c6dba1571be6a99",
+  "input_digest_verification": "upstream_assertion",
   "source_identity": {
     "compiler": {
       "dependencies": [
@@ -37,7 +38,7 @@
         },
         {
           "path": "website/src/lib/forms/materialize.ts",
-          "sha256": "f76b2853a6fad0cb0bef4cf1a0078c577a3952b28bd91662bff3acbec5615a72"
+          "sha256": "2bb292f0cabee27b66085badd45bfc9faf314e85016e10910bc58a14bff49716"
         },
         {
           "path": "website/src/lib/forms/loader.ts",
@@ -64,8 +65,9 @@
           "sha256": "bbde75dd89efcfe77cda731e057b5a2512e46ec7995756ff121669c57d64b8a5"
         }
       ],
-      "graphSha256": "95be7f6016a2dccc7fd7ffb18466d22be159a95f522c90ea8cbd972bea1e49cc",
+      "graphSha256": "fac6bcbfc542b479e2320a0021132aeb8aa0b9c8ce4430e447f1eac74e14b2e7",
       "name": "@common-grants/website-form-materializer",
+      "verification": "manual_canary",
       "version": "1.0.0"
     },
     "form": {
@@ -140,6 +142,7 @@
       }
     ],
     "source": {
+      "closure": "partial_evidence",
       "dependencies": [
         {
           "path": "website/.extension-schemas/email.yaml",
@@ -404,7 +407,7 @@
       },
       "graphSha256": "f8aa70f6fbeb9a2511096b8a124fc16e4ae988d529a2dc1defa6f1c00f584ab1",
       "repository": "https://github.com/HHS/simpler-grants-protocol.git",
-      "revision": "26758c088fd1f8465e4c56e5e35c6c8ab8be4ad2"
+      "revision": "0fb92b128f7a492b0bf408f7226427e8c8cb04ba"
     }
   }
 }
