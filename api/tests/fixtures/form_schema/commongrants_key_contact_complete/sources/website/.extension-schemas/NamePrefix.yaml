@@ -1,0 +1,10 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: NamePrefix.yaml
+type: string
+enum:
+  - Mr.
+  - Ms.
+  - Mrs.
+  - Dr.
+  - Prof.
+description: Honorific name prefixes

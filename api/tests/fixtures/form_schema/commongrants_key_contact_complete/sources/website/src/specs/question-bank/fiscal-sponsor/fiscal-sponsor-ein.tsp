@@ -1,0 +1,48 @@
+import "@common-grants/core";
+import "@typespec/json-schema";
+import "../index.tsp";
+import "../generics/question-ein.tsp";
+
+using CommonGrants.Types;
+using JsonSchema;
+
+namespace QuestionBank.FiscalSponsorEin;
+
+/** The Employer Identification Number (EIN) for the fiscal sponsor */
+@extension("x-tags", #[Tags.organization, Tags.identifier])
+@extension("x-entity", #[Entities.fiscalSponsor])
+@extension(
+  "x-mapping-from-cg",
+  #{
+    ein: #{
+      field: "organizations.otherOrgs.fiscalSponsor.identifiers.org:us:ein.id",
+    },
+  }
+)
+@extension(
+  "x-mapping-to-cg",
+  #{
+    organizations: #{
+      otherOrgs: #{
+        fiscalSponsor: #{
+          identifiers: #{ `org:us:ein`: #{ id: #{ field: "ein" } } },
+        },
+      },
+    },
+  }
+)
+@extension(
+  "x-ui-schema",
+  #{
+    type: "VerticalLayout",
+    elements: #[
+      #{
+        type: "Control",
+        scope: "#/properties/ein",
+        label: "Fiscal Sponsor EIN",
+      }
+    ],
+  }
+)
+@example(#{ ein: "987654321" })
+model QuestionFiscalSponsorEin extends QuestionEin.QuestionEin {}

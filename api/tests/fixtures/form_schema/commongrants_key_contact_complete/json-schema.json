@@ -1,0 +1,878 @@
+{
+  "description": "Grants.gov \"Key Contacts\" form (FID 683).\n\nCaptures the primary point of contact for a grant application along\nwith their role on the project. The applicant organization name doubles\nas the link to ApplicantInfo on full applications.",
+  "properties": {
+    "contact": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "description": "Primary point of contact for the project",
+      "properties": {
+        "address": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "description": "The contact's mailing address",
+          "examples": [
+            {
+              "city": "Anytown",
+              "country": "US",
+              "postalCode": "12345",
+              "state": "CA",
+              "street1": "456 Main St",
+              "street2": "Suite 100"
+            }
+          ],
+          "properties": {
+            "city": {
+              "description": "The city or municipality",
+              "type": "string"
+            },
+            "country": {
+              "description": "The country",
+              "type": "string"
+            },
+            "postalCode": {
+              "description": "The postal or ZIP code",
+              "type": "string"
+            },
+            "state": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "description": "The US state, territory, or \"Outside the US\"",
+              "enum": [
+                "AL",
+                "AK",
+                "AZ",
+                "AR",
+                "CA",
+                "CO",
+                "CT",
+                "DE",
+                "FL",
+                "GA",
+                "HI",
+                "ID",
+                "IL",
+                "IN",
+                "IA",
+                "KS",
+                "KY",
+                "LA",
+                "ME",
+                "MD",
+                "MA",
+                "MI",
+                "MN",
+                "MS",
+                "MO",
+                "MT",
+                "NE",
+                "NV",
+                "NH",
+                "NJ",
+                "NM",
+                "NY",
+                "NC",
+                "ND",
+                "OH",
+                "OK",
+                "OR",
+                "PA",
+                "RI",
+                "SC",
+                "SD",
+                "TN",
+                "TX",
+                "UT",
+                "VT",
+                "VA",
+                "WA",
+                "WV",
+                "WI",
+                "WY",
+                "DC",
+                "AS",
+                "GU",
+                "MP",
+                "PR",
+                "VI",
+                "Outside the US"
+              ],
+              "type": "string"
+            },
+            "stateOrProvince": {
+              "description": "State or province name (for non-US addresses)",
+              "type": "string"
+            },
+            "street1": {
+              "description": "The primary street address line",
+              "type": "string"
+            },
+            "street2": {
+              "description": "Additional street address information",
+              "type": "string"
+            }
+          },
+          "required": [
+            "street1",
+            "city",
+            "state",
+            "country",
+            "postalCode"
+          ],
+          "type": "object",
+          "x-mapping-from-cg": {
+            "city": {
+              "field": "city"
+            },
+            "country": {
+              "field": "country"
+            },
+            "postalCode": {
+              "field": "postalCode"
+            },
+            "state": {
+              "field": "stateOrProvince"
+            },
+            "street1": {
+              "field": "street1"
+            },
+            "street2": {
+              "field": "street2"
+            }
+          },
+          "x-mapping-to-cg": {
+            "city": {
+              "field": "city"
+            },
+            "country": {
+              "field": "country"
+            },
+            "postalCode": {
+              "field": "postalCode"
+            },
+            "stateOrProvince": {
+              "field": "state"
+            },
+            "street1": {
+              "field": "street1"
+            },
+            "street2": {
+              "field": "street2"
+            }
+          },
+          "x-tags": [
+            "generic",
+            "address"
+          ],
+          "x-ui-schema": {
+            "elements": [
+              {
+                "label": "Street Address (Line 1)",
+                "scope": "#/properties/street1",
+                "type": "Control"
+              },
+              {
+                "label": "Street Address (Line 2)",
+                "scope": "#/properties/street2",
+                "type": "Control"
+              },
+              {
+                "label": "City",
+                "scope": "#/properties/city",
+                "type": "Control"
+              },
+              {
+                "label": "State",
+                "scope": "#/properties/state",
+                "type": "Control"
+              },
+              {
+                "label": "State or Province",
+                "rule": {
+                  "condition": {
+                    "schema": {
+                      "pattern": "^Outside the US$"
+                    },
+                    "scope": "#/properties/state"
+                  },
+                  "effect": "SHOW"
+                },
+                "scope": "#/properties/stateOrProvince",
+                "type": "Control"
+              },
+              {
+                "label": "Country",
+                "scope": "#/properties/country",
+                "type": "Control"
+              },
+              {
+                "label": "Postal Code",
+                "scope": "#/properties/postalCode",
+                "type": "Control"
+              }
+            ],
+            "label": "Address",
+            "type": "Group"
+          }
+        },
+        "email": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "description": "The contact's email address",
+          "examples": [
+            "test@example.com"
+          ],
+          "format": "email",
+          "type": "string"
+        },
+        "name": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "description": "The contact's full name",
+          "examples": [
+            {
+              "firstName": "Jane",
+              "lastName": "Doe",
+              "middleName": "Edward",
+              "prefix": "Dr.",
+              "suffix": "Jr."
+            }
+          ],
+          "properties": {
+            "firstName": {
+              "description": "First or given name",
+              "type": "string"
+            },
+            "lastName": {
+              "description": "Last or family name",
+              "type": "string"
+            },
+            "middleName": {
+              "description": "Middle name",
+              "type": "string"
+            },
+            "prefix": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "description": "Honorific prefix",
+              "enum": [
+                "Mr.",
+                "Ms.",
+                "Mrs.",
+                "Dr.",
+                "Prof."
+              ],
+              "type": "string"
+            },
+            "suffix": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "description": "Name suffix",
+              "enum": [
+                "Jr.",
+                "Sr.",
+                "II",
+                "III",
+                "IV",
+                "Ph.D.",
+                "M.D.",
+                "Esq."
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "firstName",
+            "lastName"
+          ],
+          "type": "object",
+          "x-mapping-from-cg": {
+            "firstName": {
+              "field": "firstName"
+            },
+            "lastName": {
+              "field": "lastName"
+            },
+            "middleName": {
+              "field": "middleName"
+            },
+            "prefix": {
+              "field": "prefix"
+            },
+            "suffix": {
+              "field": "suffix"
+            }
+          },
+          "x-mapping-to-cg": {
+            "firstName": {
+              "field": "firstName"
+            },
+            "lastName": {
+              "field": "lastName"
+            },
+            "middleName": {
+              "field": "middleName"
+            },
+            "prefix": {
+              "field": "prefix"
+            },
+            "suffix": {
+              "field": "suffix"
+            }
+          },
+          "x-tags": [
+            "generic",
+            "name"
+          ],
+          "x-ui-schema": {
+            "elements": [
+              {
+                "label": "Prefix",
+                "scope": "#/properties/prefix",
+                "type": "Control"
+              },
+              {
+                "label": "First Name",
+                "scope": "#/properties/firstName",
+                "type": "Control"
+              },
+              {
+                "label": "Middle Name",
+                "scope": "#/properties/middleName",
+                "type": "Control"
+              },
+              {
+                "label": "Last Name",
+                "scope": "#/properties/lastName",
+                "type": "Control"
+              },
+              {
+                "label": "Suffix",
+                "scope": "#/properties/suffix",
+                "type": "Control"
+              }
+            ],
+            "label": "Name",
+            "type": "Group"
+          }
+        },
+        "phone": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "description": "The contact's phone number",
+          "examples": [
+            {
+              "countryCode": "+1",
+              "isMobile": true,
+              "number": "444-456-1230"
+            },
+            {
+              "countryCode": "+1",
+              "extension": "123",
+              "isMobile": false,
+              "number": "555-123-4567"
+            }
+          ],
+          "properties": {
+            "countryCode": {
+              "description": "The international country code (e.g., \"+1\" for US/Canada).",
+              "pattern": "^\\+[1-9][0-9]{0,3}$",
+              "type": "string"
+            },
+            "extension": {
+              "description": "Optional extension number for the phone line.",
+              "type": "string"
+            },
+            "isMobile": {
+              "default": false,
+              "description": "Indicates whether this is a mobile/cell phone number.",
+              "type": "boolean"
+            },
+            "number": {
+              "description": "The local phone number without the country code.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "countryCode",
+            "number"
+          ],
+          "type": "object",
+          "x-mapping-from-cg": {
+            "countryCode": {
+              "field": "countryCode"
+            },
+            "extension": {
+              "field": "extension"
+            },
+            "isMobile": {
+              "field": "isMobile"
+            },
+            "number": {
+              "field": "number"
+            }
+          },
+          "x-mapping-to-cg": {
+            "countryCode": {
+              "field": "countryCode"
+            },
+            "extension": {
+              "field": "extension"
+            },
+            "isMobile": {
+              "field": "isMobile"
+            },
+            "number": {
+              "field": "number"
+            }
+          },
+          "x-tags": [
+            "generic",
+            "phone"
+          ],
+          "x-ui-schema": {
+            "elements": [
+              {
+                "label": "Country Code",
+                "scope": "#/properties/countryCode",
+                "type": "Control"
+              },
+              {
+                "label": "Phone Number",
+                "scope": "#/properties/number",
+                "type": "Control"
+              },
+              {
+                "label": "Extension",
+                "scope": "#/properties/extension",
+                "type": "Control"
+              },
+              {
+                "label": "Is Mobile?",
+                "scope": "#/properties/isMobile",
+                "type": "Control"
+              }
+            ],
+            "label": "Phone Number",
+            "type": "Group"
+          }
+        },
+        "title": {
+          "description": "The contact's job title or role",
+          "examples": [
+            "Executive Director"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "x-entity": [
+        "poc"
+      ],
+      "x-mapping-from-cg": {
+        "address": {
+          "city": {
+            "field": "contacts.primary.addresses.primary.city"
+          },
+          "country": {
+            "field": "contacts.primary.addresses.primary.country"
+          },
+          "postalCode": {
+            "field": "contacts.primary.addresses.primary.postalCode"
+          },
+          "state": {
+            "field": "contacts.primary.addresses.primary.stateOrProvince"
+          },
+          "street1": {
+            "field": "contacts.primary.addresses.primary.street1"
+          },
+          "street2": {
+            "field": "contacts.primary.addresses.primary.street2"
+          }
+        },
+        "email": {
+          "field": "contacts.primary.emails.primary"
+        },
+        "name": {
+          "firstName": {
+            "field": "contacts.primary.name.firstName"
+          },
+          "lastName": {
+            "field": "contacts.primary.name.lastName"
+          },
+          "middleName": {
+            "field": "contacts.primary.name.middleName"
+          },
+          "prefix": {
+            "field": "contacts.primary.name.prefix"
+          },
+          "suffix": {
+            "field": "contacts.primary.name.suffix"
+          }
+        },
+        "phone": {
+          "countryCode": {
+            "field": "contacts.primary.phones.primary.countryCode"
+          },
+          "extension": {
+            "field": "contacts.primary.phones.primary.extension"
+          },
+          "isMobile": {
+            "field": "contacts.primary.phones.primary.isMobile"
+          },
+          "number": {
+            "field": "contacts.primary.phones.primary.number"
+          }
+        },
+        "title": {
+          "field": "contacts.primary.title"
+        }
+      },
+      "x-mapping-to-cg": {
+        "contacts": {
+          "primary": {
+            "addresses": {
+              "primary": {
+                "city": {
+                  "field": "address.city"
+                },
+                "country": {
+                  "field": "address.country"
+                },
+                "postalCode": {
+                  "field": "address.postalCode"
+                },
+                "stateOrProvince": {
+                  "field": "address.state"
+                },
+                "street1": {
+                  "field": "address.street1"
+                },
+                "street2": {
+                  "field": "address.street2"
+                }
+              }
+            },
+            "emails": {
+              "primary": {
+                "field": "email"
+              }
+            },
+            "name": {
+              "firstName": {
+                "field": "name.firstName"
+              },
+              "lastName": {
+                "field": "name.lastName"
+              },
+              "middleName": {
+                "field": "name.middleName"
+              },
+              "prefix": {
+                "field": "name.prefix"
+              },
+              "suffix": {
+                "field": "name.suffix"
+              }
+            },
+            "phones": {
+              "primary": {
+                "countryCode": {
+                  "field": "phone.countryCode"
+                },
+                "extension": {
+                  "field": "phone.extension"
+                },
+                "isMobile": {
+                  "field": "phone.isMobile"
+                },
+                "number": {
+                  "field": "phone.number"
+                }
+              }
+            },
+            "title": {
+              "field": "title"
+            }
+          }
+        }
+      },
+      "x-overrides": {
+        "uiSchema": {
+          "address.postalCode": {
+            "label": "Zip / Postal Code"
+          },
+          "address.street1": {
+            "label": "Street Address Line 1"
+          },
+          "address.street2": {
+            "label": "Street Address Line 2"
+          },
+          "phone.countryCode": {
+            "rule": {
+              "condition": {
+                "schema": {},
+                "scope": "#/properties/contact/properties/phone/properties/countryCode"
+              },
+              "effect": "HIDE"
+            }
+          },
+          "phone.extension": {
+            "rule": {
+              "condition": {
+                "schema": {},
+                "scope": "#/properties/contact/properties/phone/properties/extension"
+              },
+              "effect": "HIDE"
+            }
+          },
+          "phone.isMobile": {
+            "rule": {
+              "condition": {
+                "schema": {},
+                "scope": "#/properties/contact/properties/phone/properties/isMobile"
+              },
+              "effect": "HIDE"
+            }
+          },
+          "phone.number": {
+            "label": "Telephone Number"
+          }
+        }
+      },
+      "x-question-id": "QuestionPocDetails",
+      "x-tags": [
+        "person",
+        "details"
+      ],
+      "x-ui-schema": {
+        "elements": [
+          {
+            "elements": [
+              {
+                "label": "Prefix",
+                "scope": "#/properties/name/properties/prefix",
+                "type": "Control"
+              },
+              {
+                "label": "First Name",
+                "scope": "#/properties/name/properties/firstName",
+                "type": "Control"
+              },
+              {
+                "label": "Middle Name",
+                "scope": "#/properties/name/properties/middleName",
+                "type": "Control"
+              },
+              {
+                "label": "Last Name",
+                "scope": "#/properties/name/properties/lastName",
+                "type": "Control"
+              },
+              {
+                "label": "Suffix",
+                "scope": "#/properties/name/properties/suffix",
+                "type": "Control"
+              }
+            ],
+            "label": "Name",
+            "type": "Group"
+          },
+          {
+            "label": "Job Title",
+            "scope": "#/properties/title",
+            "type": "Control"
+          },
+          {
+            "elements": [
+              {
+                "label": "Street Address (Line 1)",
+                "scope": "#/properties/address/properties/street1",
+                "type": "Control"
+              },
+              {
+                "label": "Street Address (Line 2)",
+                "scope": "#/properties/address/properties/street2",
+                "type": "Control"
+              },
+              {
+                "label": "City",
+                "scope": "#/properties/address/properties/city",
+                "type": "Control"
+              },
+              {
+                "label": "State",
+                "scope": "#/properties/address/properties/state",
+                "type": "Control"
+              },
+              {
+                "label": "Country",
+                "scope": "#/properties/address/properties/country",
+                "type": "Control"
+              },
+              {
+                "label": "Postal Code",
+                "scope": "#/properties/address/properties/postalCode",
+                "type": "Control"
+              }
+            ],
+            "label": "Mailing Address",
+            "type": "Group"
+          },
+          {
+            "elements": [
+              {
+                "label": "Country Code",
+                "scope": "#/properties/phone/properties/countryCode",
+                "type": "Control"
+              },
+              {
+                "label": "Phone Number",
+                "scope": "#/properties/phone/properties/number",
+                "type": "Control"
+              },
+              {
+                "label": "Extension",
+                "scope": "#/properties/phone/properties/extension",
+                "type": "Control"
+              },
+              {
+                "label": "Is Mobile?",
+                "scope": "#/properties/phone/properties/isMobile",
+                "type": "Control"
+              }
+            ],
+            "label": "Phone Number",
+            "type": "Group"
+          },
+          {
+            "label": "Email Address",
+            "scope": "#/properties/email",
+            "type": "Control"
+          }
+        ],
+        "label": "Primary Point of Contact Details",
+        "type": "Group"
+      }
+    },
+    "contactCounty": {
+      "description": "County or parish of the contact address",
+      "examples": [
+        ""
+      ],
+      "maxLength": 30,
+      "minLength": 0,
+      "type": "string"
+    },
+    "contactFax": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "description": "Contact's fax number",
+      "examples": [
+        "555-111-2222"
+      ],
+      "maxLength": 25,
+      "minLength": 0,
+      "type": "string"
+    },
+    "contactOrganizationalAffiliation": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "description": "Contact's organizational affiliation if different from the applicant organization",
+      "examples": [
+        "Test Organization"
+      ],
+      "maxLength": 60,
+      "minLength": 0,
+      "type": "string"
+    },
+    "org": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "description": "Applicant organization",
+      "examples": [
+        {
+          "name": "Example Organization"
+        }
+      ],
+      "properties": {
+        "name": {
+          "description": "The organization's legal name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "x-entity": [
+        "primaryOrg"
+      ],
+      "x-mapping-from-cg": {
+        "name": {
+          "field": "organizations.primary.name"
+        }
+      },
+      "x-mapping-to-cg": {
+        "organizations": {
+          "primary": {
+            "name": {
+              "field": "name"
+            }
+          }
+        }
+      },
+      "x-overrides": {
+        "uiSchema": {
+          "name": {
+            "label": "Applicant Organization Name"
+          }
+        }
+      },
+      "x-question-id": "QuestionOrgName",
+      "x-tags": [
+        "organization",
+        "name"
+      ],
+      "x-ui-schema": {
+        "elements": [
+          {
+            "label": "Organization Legal Name",
+            "scope": "#/properties/name",
+            "type": "Control"
+          }
+        ],
+        "type": "VerticalLayout"
+      }
+    },
+    "projectRole": {
+      "description": "This contact's role on the project (e.g. Project Director, Fiscal Contact)",
+      "examples": [
+        "Project Director"
+      ],
+      "maxLength": 45,
+      "minLength": 1,
+      "type": "string",
+      "x-mapping-from-cg": {
+        "field": "customFields.projectRole.value"
+      }
+    }
+  },
+  "required": [
+    "org",
+    "contact",
+    "projectRole"
+  ],
+  "type": "object",
+  "x-overrides": {
+    "uiSchema": {
+      "contactCounty": {
+        "label": "County"
+      },
+      "contactFax": {
+        "label": "Fax Number"
+      },
+      "contactOrganizationalAffiliation": {
+        "label": "Organizational Affiliation"
+      },
+      "projectRole": {
+        "label": "Project Role"
+      }
+    }
+  },
+  "x-tags": [
+    "key-contact",
+    "application"
+  ]
+}

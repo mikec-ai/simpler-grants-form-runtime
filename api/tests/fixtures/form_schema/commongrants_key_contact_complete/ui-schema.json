@@ -1,0 +1,125 @@
+[
+  {
+    "definition": "/properties/org/properties/name",
+    "label": "Applicant Organization Name",
+    "type": "field"
+  },
+  {
+    "children": [
+      {
+        "children": [
+          {
+            "definition": "/properties/contact/properties/name/properties/prefix",
+            "label": "Prefix",
+            "type": "field"
+          },
+          {
+            "definition": "/properties/contact/properties/name/properties/firstName",
+            "label": "First Name",
+            "type": "field"
+          },
+          {
+            "definition": "/properties/contact/properties/name/properties/middleName",
+            "label": "Middle Name",
+            "type": "field"
+          },
+          {
+            "definition": "/properties/contact/properties/name/properties/lastName",
+            "label": "Last Name",
+            "type": "field"
+          },
+          {
+            "definition": "/properties/contact/properties/name/properties/suffix",
+            "label": "Suffix",
+            "type": "field"
+          }
+        ],
+        "label": "Name",
+        "name": "name",
+        "type": "section"
+      },
+      {
+        "definition": "/properties/contact/properties/title",
+        "label": "Job Title",
+        "type": "field"
+      },
+      {
+        "children": [
+          {
+            "definition": "/properties/contact/properties/address/properties/street1",
+            "label": "Street Address Line 1",
+            "type": "field"
+          },
+          {
+            "definition": "/properties/contact/properties/address/properties/street2",
+            "label": "Street Address Line 2",
+            "type": "field"
+          },
+          {
+            "definition": "/properties/contact/properties/address/properties/city",
+            "label": "City",
+            "type": "field"
+          },
+          {
+            "definition": "/properties/contact/properties/address/properties/state",
+            "label": "State",
+            "type": "field"
+          },
+          {
+            "definition": "/properties/contact/properties/address/properties/country",
+            "label": "Country",
+            "type": "field"
+          },
+          {
+            "definition": "/properties/contact/properties/address/properties/postalCode",
+            "label": "Zip / Postal Code",
+            "type": "field"
+          }
+        ],
+        "label": "Mailing Address",
+        "name": "mailing_address",
+        "type": "section"
+      },
+      {
+        "children": [
+          {
+            "definition": "/properties/contact/properties/phone/properties/number",
+            "label": "Telephone Number",
+            "type": "field"
+          }
+        ],
+        "label": "Phone Number",
+        "name": "phone_number",
+        "type": "section"
+      },
+      {
+        "definition": "/properties/contact/properties/email",
+        "label": "Email Address",
+        "type": "field"
+      }
+    ],
+    "label": "Primary Point of Contact Details",
+    "name": "primary_point_of_contact_details",
+    "type": "section"
+  },
+  {
+    "definition": "/properties/contactOrganizationalAffiliation",
+    "label": "Organizational Affiliation",
+    "type": "field"
+  },
+  {
+    "definition": "/properties/contactCounty",
+    "label": "County",
+    "type": "field"
+  },
+  {
+    "definition": "/properties/contactFax",
+    "label": "Fax Number",
+    "type": "field"
+  },
+  {
+    "definition": "/properties/projectRole",
+    "label": "Project Role",
+    "type": "field"
+  }
+]

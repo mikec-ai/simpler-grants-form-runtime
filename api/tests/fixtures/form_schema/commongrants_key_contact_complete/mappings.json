@@ -1,0 +1,147 @@
+{
+  "x-mapping-from-cg": {
+    "contact": {
+      "address": {
+        "city": {
+          "field": "contacts.primary.addresses.primary.city"
+        },
+        "country": {
+          "field": "contacts.primary.addresses.primary.country"
+        },
+        "postalCode": {
+          "field": "contacts.primary.addresses.primary.postalCode"
+        },
+        "state": {
+          "field": "contacts.primary.addresses.primary.stateOrProvince"
+        },
+        "street1": {
+          "field": "contacts.primary.addresses.primary.street1"
+        },
+        "street2": {
+          "field": "contacts.primary.addresses.primary.street2"
+        }
+      },
+      "email": {
+        "field": "contacts.primary.emails.primary"
+      },
+      "name": {
+        "firstName": {
+          "field": "contacts.primary.name.firstName"
+        },
+        "lastName": {
+          "field": "contacts.primary.name.lastName"
+        },
+        "middleName": {
+          "field": "contacts.primary.name.middleName"
+        },
+        "prefix": {
+          "field": "contacts.primary.name.prefix"
+        },
+        "suffix": {
+          "field": "contacts.primary.name.suffix"
+        }
+      },
+      "phone": {
+        "countryCode": {
+          "field": "contacts.primary.phones.primary.countryCode"
+        },
+        "extension": {
+          "field": "contacts.primary.phones.primary.extension"
+        },
+        "isMobile": {
+          "field": "contacts.primary.phones.primary.isMobile"
+        },
+        "number": {
+          "field": "contacts.primary.phones.primary.number"
+        }
+      },
+      "title": {
+        "field": "contacts.primary.title"
+      }
+    },
+    "org": {
+      "name": {
+        "field": "organizations.primary.name"
+      }
+    },
+    "projectRole": {
+      "field": "customFields.projectRole.value"
+    }
+  },
+  "x-mapping-to-cg": {
+    "contacts": {
+      "primary": {
+        "addresses": {
+          "primary": {
+            "city": {
+              "field": "contact.address.city"
+            },
+            "country": {
+              "field": "contact.address.country"
+            },
+            "postalCode": {
+              "field": "contact.address.postalCode"
+            },
+            "stateOrProvince": {
+              "field": "contact.address.state"
+            },
+            "street1": {
+              "field": "contact.address.street1"
+            },
+            "street2": {
+              "field": "contact.address.street2"
+            }
+          }
+        },
+        "emails": {
+          "primary": {
+            "field": "contact.email"
+          }
+        },
+        "name": {
+          "firstName": {
+            "field": "contact.name.firstName"
+          },
+          "lastName": {
+            "field": "contact.name.lastName"
+          },
+          "middleName": {
+            "field": "contact.name.middleName"
+          },
+          "prefix": {
+            "field": "contact.name.prefix"
+          },
+          "suffix": {
+            "field": "contact.name.suffix"
+          }
+        },
+        "phones": {
+          "primary": {
+            "countryCode": {
+              "field": "contact.phone.countryCode"
+            },
+            "extension": {
+              "field": "contact.phone.extension"
+            },
+            "isMobile": {
+              "field": "contact.phone.isMobile"
+            },
+            "number": {
+              "field": "contact.phone.number"
+            }
+          }
+        },
+        "title": {
+          "field": "contact.title"
+        }
+      }
+    },
+    "organizations": {
+      "primary": {
+        "name": {
+          "field": "org.name"
+        }
+      }
+    }
+  }
+}

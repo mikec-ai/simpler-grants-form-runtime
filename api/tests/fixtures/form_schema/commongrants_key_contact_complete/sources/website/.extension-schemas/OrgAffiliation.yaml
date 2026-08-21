@@ -1,0 +1,6 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: OrgAffiliation.yaml
+type: string
+minLength: 0
+maxLength: 60
+description: Organizational affiliation string — max 60 chars

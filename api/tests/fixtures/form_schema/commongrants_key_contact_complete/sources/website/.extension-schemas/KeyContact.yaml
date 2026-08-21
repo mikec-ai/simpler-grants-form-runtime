@@ -1,0 +1,91 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: KeyContact.yaml
+type: object
+properties:
+  org:
+    $ref: QuestionOrgName.yaml
+    description: Applicant organization
+    x-overrides:
+      uiSchema:
+        name:
+          label: Applicant Organization Name
+  contact:
+    $ref: QuestionPocDetails.yaml
+    description: Primary point of contact for the project
+    x-overrides:
+      uiSchema:
+        phone.number:
+          label: Telephone Number
+        phone.countryCode:
+          rule:
+            effect: HIDE
+            condition:
+              scope: "#/properties/contact/properties/phone/properties/countryCode"
+              schema: {}
+        phone.extension:
+          rule:
+            effect: HIDE
+            condition:
+              scope: "#/properties/contact/properties/phone/properties/extension"
+              schema: {}
+        phone.isMobile:
+          rule:
+            effect: HIDE
+            condition:
+              scope: "#/properties/contact/properties/phone/properties/isMobile"
+              schema: {}
+        address.street1:
+          label: Street Address Line 1
+        address.street2:
+          label: Street Address Line 2
+        address.postalCode:
+          label: Zip / Postal Code
+  contactOrganizationalAffiliation:
+    $ref: OrgAffiliation.yaml
+    examples:
+      - Test Organization
+    description: Contact's organizational affiliation if different from the applicant organization
+  contactCounty:
+    type: string
+    examples:
+      - ""
+    minLength: 0
+    maxLength: 30
+    description: County or parish of the contact address
+  contactFax:
+    $ref: FaxNumber.yaml
+    examples:
+      - 555-111-2222
+    description: Contact's fax number
+  projectRole:
+    type: string
+    examples:
+      - Project Director
+    minLength: 1
+    maxLength: 45
+    description: This contact's role on the project (e.g. Project Director, Fiscal Contact)
+    x-mapping-from-cg:
+      field: customFields.projectRole.value
+required:
+  - org
+  - contact
+  - projectRole
+description: |-
+  Grants.gov "Key Contacts" form (FID 683).
+
+  Captures the primary point of contact for a grant application along
+  with their role on the project. The applicant organization name doubles
+  as the link to ApplicantInfo on full applications.
+x-tags:
+  - key-contact
+  - application
+x-overrides:
+  uiSchema:
+    contactOrganizationalAffiliation:
+      label: Organizational Affiliation
+    contactCounty:
+      label: County
+    contactFax:
+      label: Fax Number
+    projectRole:
+      label: Project Role

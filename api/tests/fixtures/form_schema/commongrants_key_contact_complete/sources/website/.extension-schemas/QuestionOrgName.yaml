@@ -1,0 +1,31 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: QuestionOrgName.yaml
+type: object
+properties:
+  name:
+    type: string
+    description: The organization's legal name
+required:
+  - name
+examples:
+  - name: Example Organization
+description: The legal name of the applicant organization
+x-ui-schema:
+  type: VerticalLayout
+  elements:
+    - type: Control
+      scope: "#/properties/name"
+      label: Organization Legal Name
+x-mapping-to-cg:
+  organizations:
+    primary:
+      name:
+        field: name
+x-mapping-from-cg:
+  name:
+    field: organizations.primary.name
+x-entity:
+  - primaryOrg
+x-tags:
+  - organization
+  - name

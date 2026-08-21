@@ -5,7 +5,7 @@
     "revision": "65a4de852c96d35e946e8dde9f7a9864f718d8bb",
     "attestation": "snapshot_only",
     "closure": "partial_evidence",
-    "graph_sha256": "16ebbeb687d5317d5fdfd7c1f0240dce109367ecdee8173642f76771dc02b789",
+    "graph_sha256": "1b57c2ffebf2a83c66fe5ec7c61cd1ba878eb585a5bf2d39d1880c1ec60d578f",
     "form": {
       "source_path": "website/src/specs/forms/key-contact.tsp",
       "package_path": "sources/key-contact.tsp",
@@ -18,13 +18,15 @@
         "package_path": "sources/org-name.tsp",
         "sha256": "0bbe115fe13f6827f20483bfd3b864806e9a7a441be296e76dd7dccc69b8901a"
       }
-    ]
+    ],
+    "dependencies": []
   },
   "compiler": {
     "name": "common-grants-to-simpler-compatibility-canary",
     "version": "0.1.0",
     "verification": "manual_canary",
-    "sha256": null
+    "sha256": null,
+    "dependencies": []
   },
   "form": {
     "form_id": "3636b730-ff99-439e-b11d-7a52607c3fbb",
@@ -52,6 +54,7 @@
       "path": "mappings.json",
       "sha256": "47184e1d414c38516e1270f19c524b6f8233ab11a9ef1b3c230f6e2c1967d3db"
     },
+    "projection_report": null,
     "rule_schema": null,
     "xml_transform": null
   },

@@ -33,6 +33,7 @@ class ResolvedFormPackage:
     _json_schema_json: str
     _ui_schema_json: str
     _mappings_json: str
+    _projection_report_json: str | None
     _rule_schema_json: str | None
     _xml_transform_json: str | None
 
@@ -55,6 +56,12 @@ class ResolvedFormPackage:
     @property
     def rule_schema(self) -> dict[str, Any] | None:
         return json.loads(self._rule_schema_json) if self._rule_schema_json is not None else None
+
+    @property
+    def projection_report(self) -> dict[str, Any] | None:
+        if self._projection_report_json is None:
+            return None
+        return json.loads(self._projection_report_json)
 
     @property
     def xml_transform(self) -> dict[str, Any] | None:
@@ -84,6 +91,7 @@ class ResolvedFormPackage:
             "compiler": manifest["compiler"],
             "question_bindings": manifest["question_bindings"],
             "review_boundary": manifest["review_boundary"],
+            "projection_report": self.projection_report,
         }
 
         form_type_value = metadata.get("form_type")
@@ -208,6 +216,7 @@ def _validate_source_set(package_root: Path, value: object) -> None:
             "graph_sha256",
             "form",
             "questions",
+            "dependencies",
         },
         "source_set",
     )
@@ -242,9 +251,29 @@ def _validate_source_set(package_root: Path, value: object) -> None:
             label,
         )
 
+    dependencies = _array(source_set["dependencies"], "source_set.dependencies")
+    dependency_paths: set[str] = set()
+    for index, raw_dependency in enumerate(dependencies):
+        label = f"source_set.dependencies[{index}]"
+        dependency = _object(raw_dependency, label)
+        _exact_keys(dependency, {"source_path", "package_path", "sha256"}, label)
+        package_path = _string(dependency["package_path"], f"{label}.package_path")
+        if package_path in dependency_paths:
+            raise ResolvedFormPackageError(f"duplicate source dependency: {package_path}")
+        dependency_paths.add(package_path)
+        _verify_source(package_root, dependency, label)
+
     graph = {
         key: source_set[key]
-        for key in ("repository", "revision", "attestation", "closure", "form", "questions")
+        for key in (
+            "repository",
+            "revision",
+            "attestation",
+            "closure",
+            "form",
+            "questions",
+            "dependencies",
+        )
     }
     actual_graph_sha256 = hashlib.sha256(_canonical_json(graph).encode("utf-8")).hexdigest()
     expected_graph_sha256 = _sha256(source_set["graph_sha256"], "source_set.graph_sha256")
@@ -413,7 +442,7 @@ def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:
     compiler = _object(manifest["compiler"], "compiler")
     _exact_keys(
         compiler,
-        {"name", "version", "verification", "sha256"},
+        {"name", "version", "verification", "sha256", "dependencies"},
         "compiler",
     )
     _string(compiler["name"], "compiler.name")
@@ -421,9 +450,33 @@ def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:
     if compiler["verification"] not in {"manual_canary", "content_addressed"}:
         raise ResolvedFormPackageError("compiler.verification is unknown")
     if compiler["verification"] == "content_addressed":
-        _sha256(compiler["sha256"], "compiler.sha256")
+        expected_compiler_sha = _sha256(compiler["sha256"], "compiler.sha256")
     elif compiler["sha256"] is not None:
         raise ResolvedFormPackageError("manual_canary compiler.sha256 must be null")
+
+    compiler_dependencies = _array(compiler["dependencies"], "compiler.dependencies")
+    compiler_graph: list[dict[str, str]] = []
+    compiler_paths: set[str] = set()
+    for index, raw_dependency in enumerate(compiler_dependencies):
+        label = f"compiler.dependencies[{index}]"
+        dependency = _object(raw_dependency, label)
+        _exact_keys(dependency, {"source_path", "package_path", "sha256"}, label)
+        source_path = _string(dependency["source_path"], f"{label}.source_path")
+        if source_path in compiler_paths:
+            raise ResolvedFormPackageError(f"duplicate compiler dependency: {source_path}")
+        compiler_paths.add(source_path)
+        _verify_source(package_root, dependency, label)
+        compiler_graph.append({"path": source_path, "sha256": dependency["sha256"]})
+    if compiler["verification"] == "content_addressed":
+        actual_compiler_sha = hashlib.sha256(
+            _canonical_json(compiler_graph).encode("utf-8")
+        ).hexdigest()
+        if actual_compiler_sha != expected_compiler_sha:
+            raise ResolvedFormPackageError(
+                "compiler.sha256 does not match the canonical compiler dependency graph"
+            )
+    elif compiler_dependencies:
+        raise ResolvedFormPackageError("manual_canary compiler.dependencies must be empty")
 
     source_questions = {question["question_id"] for question in manifest["source_set"]["questions"]}
     _validate_question_bindings(manifest["question_bindings"], source_questions)
@@ -440,7 +493,12 @@ def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:
         },
         "review_boundary",
     )
-    review_states = {"source_authored", "agent_proposed", "human_reviewed"}
+    review_states = {
+        "source_authored",
+        "compiler_derived",
+        "agent_proposed",
+        "human_reviewed",
+    }
     for key in ("semantic_mappings", "mapping_composition", "ui_projection"):
         if review_boundary[key] not in review_states:
             raise ResolvedFormPackageError(f"review_boundary.{key} is unknown")
@@ -469,7 +527,14 @@ def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:
     artifacts = _object(manifest["artifacts"], "artifacts")
     _exact_keys(
         artifacts,
-        {"json_schema", "ui_schema", "mappings", "rule_schema", "xml_transform"},
+        {
+            "json_schema",
+            "ui_schema",
+            "mappings",
+            "projection_report",
+            "rule_schema",
+            "xml_transform",
+        },
         "artifacts",
     )
     json_schema = _object(
@@ -491,6 +556,17 @@ def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:
     _object(mappings["x-mapping-from-cg"], "mappings.x-mapping-from-cg")
     _object(mappings["x-mapping-to-cg"], "mappings.x-mapping-to-cg")
     _validate_package_cross_references(manifest, json_schema, mappings)
+
+    projection_report = None
+    if artifacts["projection_report"] is not None:
+        projection_report = _object(
+            _load_artifact(
+                package_root,
+                artifacts["projection_report"],
+                "artifacts.projection_report",
+            ),
+            "projection_report",
+        )
 
     rule_schema = None
     if artifacts["rule_schema"] is not None:
@@ -515,6 +591,14 @@ def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:
         for question in source_set["questions"]
     )
     dependency_paths.update(
+        _artifact_path(package_root, dependency["package_path"], "source_set.dependency")
+        for dependency in source_set["dependencies"]
+    )
+    dependency_paths.update(
+        _artifact_path(package_root, dependency["package_path"], "compiler.dependency")
+        for dependency in manifest["compiler"]["dependencies"]
+    )
+    dependency_paths.update(
         _artifact_path(package_root, descriptor["path"], f"artifacts.{name}")
         for name, descriptor in artifacts.items()
         if descriptor is not None
@@ -530,6 +614,9 @@ def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:
         _json_schema_json=_canonical_json(json_schema),
         _ui_schema_json=_canonical_json(ui_schema),
         _mappings_json=_canonical_json(mappings),
+        _projection_report_json=(
+            _canonical_json(projection_report) if projection_report is not None else None
+        ),
         _rule_schema_json=_canonical_json(rule_schema) if rule_schema is not None else None,
         _xml_transform_json=(_canonical_json(xml_transform) if xml_transform is not None else None),
     )

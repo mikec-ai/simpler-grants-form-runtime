@@ -3,6 +3,7 @@ import hashlib
 import json
 import shutil
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -14,11 +15,20 @@ from src.form_schema.resolved_form_package import (
 )
 
 FIXTURE = Path(__file__).parents[2] / "fixtures" / "form_schema" / "commongrants_key_contact_org"
+COMPLETE_FIXTURE = (
+    Path(__file__).parents[2] / "fixtures" / "form_schema" / "commongrants_key_contact_complete"
+)
 
 
 def _copy_fixture(tmp_path: Path) -> Path:
     package_root = tmp_path / "package"
     shutil.copytree(FIXTURE, package_root)
+    return package_root
+
+
+def _copy_complete_fixture(tmp_path: Path) -> Path:
+    package_root = tmp_path / "complete-package"
+    shutil.copytree(COMPLETE_FIXTURE, package_root)
     return package_root
 
 
@@ -56,6 +66,7 @@ def test_loads_source_pinned_common_grants_question_as_native_form() -> None:
         "compiler": package.manifest["compiler"],
         "question_bindings": package.manifest["question_bindings"],
         "review_boundary": package.manifest["review_boundary"],
+        "projection_report": None,
     }
     assert {path.relative_to(FIXTURE).as_posix() for path in package.dependency_paths} == {
         "manifest.json",
@@ -65,6 +76,35 @@ def test_loads_source_pinned_common_grants_question_as_native_form() -> None:
         "sources/key-contact.tsp",
         "sources/org-name.tsp",
     }
+
+
+def test_loads_complete_content_addressed_key_contact_package() -> None:
+    package = load_resolved_form_package(COMPLETE_FIXTURE)
+    form = package.to_form()
+
+    assert package.manifest["source_set"]["closure"] == "complete"
+    assert len(package.manifest["source_set"]["questions"]) == 2
+    assert len(package.manifest["source_set"]["dependencies"]) == 61
+    assert package.manifest["compiler"]["verification"] == "content_addressed"
+    assert len(package.manifest["compiler"]["dependencies"]) == 9
+    assert set(form.form_json_schema["properties"]) == {
+        "contact",
+        "contactCounty",
+        "contactFax",
+        "contactOrganizationalAffiliation",
+        "org",
+        "projectRole",
+    }
+    assert form.form_json_schema["properties"]["org"]["x-question-id"] == "QuestionOrgName"
+    assert form.form_json_schema["properties"]["contact"]["x-question-id"] == ("QuestionPocDetails")
+    assert package.projection_report is not None
+    assert len(package.projection_report["dispositions"]["omitted_controls"]) == 3
+    assert package.projection_report["dispositions"]["ui_projection"] == (
+        "deterministic_structural"
+    )
+    assert form.form_json_schema["x-simpler-form-package"]["projection_report"] == (
+        package.projection_report
+    )
 
 
 def test_to_form_allocates_independent_runtime_snapshots() -> None:
@@ -112,6 +152,35 @@ def test_rejects_tampered_artifact_or_source(
     package_root = _copy_fixture(tmp_path)
     target = package_root / relative_path
     target.write_text(target.read_text(encoding="utf-8") + "\nchanged\n", encoding="utf-8")
+
+    with pytest.raises(ResolvedFormPackageError, match=expected_fragment):
+        load_resolved_form_package(package_root)
+
+
+@pytest.mark.parametrize(
+    ("manifest_path", "expected_fragment"),
+    [
+        (
+            ("source_set", "dependencies", 0),
+            r"source_set\.dependencies\[0\]\.sha256 does not match",
+        ),
+        (
+            ("compiler", "dependencies", 0),
+            r"compiler\.dependencies\[0\]\.sha256 does not match",
+        ),
+    ],
+)
+def test_complete_package_rejects_tampered_dependency(
+    tmp_path: Path, manifest_path: tuple[object, ...], expected_fragment: str
+) -> None:
+    package_root = _copy_complete_fixture(tmp_path)
+    manifest = json.loads((package_root / "manifest.json").read_text(encoding="utf-8"))
+    current: Any = manifest
+    for token in manifest_path:
+        current = current[token]
+    descriptor = current
+    target = package_root / descriptor["package_path"]
+    target.write_text(target.read_text(encoding="utf-8") + "\ntampered\n", encoding="utf-8")
 
     with pytest.raises(ResolvedFormPackageError, match=expected_fragment):
         load_resolved_form_package(package_root)

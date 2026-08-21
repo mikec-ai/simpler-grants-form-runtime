@@ -1,0 +1,13 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: NameSuffix.yaml
+type: string
+enum:
+  - Jr.
+  - Sr.
+  - II
+  - III
+  - IV
+  - Ph.D.
+  - M.D.
+  - Esq.
+description: Name suffixes

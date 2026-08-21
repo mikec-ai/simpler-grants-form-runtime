@@ -1,0 +1,73 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: QuestionName.yaml
+type: object
+properties:
+  prefix:
+    $ref: NamePrefix.yaml
+    description: Honorific prefix
+  firstName:
+    type: string
+    description: First or given name
+  middleName:
+    type: string
+    description: Middle name
+  lastName:
+    type: string
+    description: Last or family name
+  suffix:
+    $ref: NameSuffix.yaml
+    description: Name suffix
+required:
+  - firstName
+  - lastName
+examples:
+  - prefix: Dr.
+    firstName: Jane
+    middleName: Edward
+    lastName: Doe
+    suffix: Jr.
+description: A generic name question with structured prefix and suffix enums
+x-ui-schema:
+  type: Group
+  label: Name
+  elements:
+    - type: Control
+      scope: "#/properties/prefix"
+      label: Prefix
+    - type: Control
+      scope: "#/properties/firstName"
+      label: First Name
+    - type: Control
+      scope: "#/properties/middleName"
+      label: Middle Name
+    - type: Control
+      scope: "#/properties/lastName"
+      label: Last Name
+    - type: Control
+      scope: "#/properties/suffix"
+      label: Suffix
+x-mapping-to-cg:
+  prefix:
+    field: prefix
+  firstName:
+    field: firstName
+  middleName:
+    field: middleName
+  lastName:
+    field: lastName
+  suffix:
+    field: suffix
+x-mapping-from-cg:
+  prefix:
+    field: prefix
+  firstName:
+    field: firstName
+  middleName:
+    field: middleName
+  lastName:
+    field: lastName
+  suffix:
+    field: suffix
+x-tags:
+  - generic
+  - name
