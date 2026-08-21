@@ -125,6 +125,9 @@ def test_rr_budget_package_is_pinned_and_fails_closed() -> None:
     for name, expected_hash in manifest["artifacts"].items():
         assert hashlib.sha256((_PACKAGE_DIR / name).read_bytes()).hexdigest() == expected_hash
     assert manifest["source_evidence"] == {
+        "contract_source_version": (
+            "sha256:b318951e0686bd7978ab791bd63ad36d6fa6e93b6368747b272526360e99fedb"
+        ),
         "xsd": {
             "source_ref": "https://apply07.grants.gov/apply/forms/schemas/RR_Budget_3_0-V3.0.xsd",
             "sha256": "d474010f85819549990de65fc51292bed08ba98ac0895d0dde9513fbe855cdbc",

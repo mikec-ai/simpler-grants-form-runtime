@@ -1,0 +1,41 @@
+{
+  "contract": "simpler-budget-family-draft-package/v1",
+  "form": {
+    "form_id": "RRBudget10",
+    "legacy_form_id": "RR_Budget10_3_0",
+    "form_version": "3.0"
+  },
+  "artifacts": {
+    "candidate.json": "c01baadde9247ec8f1ecadd6c4933e6440f746e0cb460e48d4a7a2715c7ccd73",
+    "runtime-rules.json": "e67922c326d9c9cec17a635333c668df84b86b9566502825c216b57278437487"
+  },
+  "source_evidence": {
+    "contract_source_version": "sha256:cccce03554424d59b5958e4443a54db12a5a10780fbdc5df2ec25955d443fc9d",
+    "xsd": {
+      "source_ref": "https://apply07.grants.gov/apply/forms/schemas/RR_Budget10_3_0-V3.0.xsd",
+      "sha256": "cccce03554424d59b5958e4443a54db12a5a10780fbdc5df2ec25955d443fc9d"
+    },
+    "behavior_model": {
+      "status": "inherited_source_bound_budget_family_evidence",
+      "target_form_dat_parity": "not_established"
+    },
+    "nodes": 199,
+    "countable_questions": 107,
+    "decimal_fields": 115,
+    "repeating_groups": 5,
+    "source_calculations": 56,
+    "executable_source_resolved_sums": 30,
+    "blocked_calculations": 26
+  },
+  "review_boundary": {
+    "structural_extraction": "deterministic_from_pinned_sources",
+    "semantic_mapping": "agent_proposed",
+    "ui_projection": "structural_canary",
+    "calculation_projection": "inherited_source_bound_resolved_subset",
+    "target_form_behavior_parity": "not_established",
+    "xml_projection": "not_available",
+    "policy_and_instructions": "not_reviewed",
+    "published_coverage_eligible": false,
+    "production_ready": false
+  }
+}

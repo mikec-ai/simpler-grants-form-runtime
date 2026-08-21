@@ -209,6 +209,7 @@ FORM_TYPE_CONFIG: LookupConfig[FormType] = LookupConfig(
         LookupStr(FormType.SF424_SHORT, 20),
         LookupStr(FormType.RR_SF424, 21),
         LookupStr(FormType.RR_BUDGET, 22),
+        LookupStr(FormType.RR_BUDGET_10, 23),
     ]
 )
 
