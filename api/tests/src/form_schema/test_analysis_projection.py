@@ -84,6 +84,9 @@ def test_versioned_field_metadata_projects_without_reclassification() -> None:
     assert all(row["type_source"] for row in projection["form_questions"])
     assert all(row["type"] for row in projection["form_questions"])
     assert all(row["xsd_source"] for row in projection["form_questions"])
+    assert any(row["source_behavior_ids"] for row in projection["form_questions"])
+    assert any(row["runtime_behavior_rule_ids"] for row in projection["form_questions"])
+    assert all(row["cardinality_maximum"] for row in projection["form_questions"])
 
 
 def test_versioned_field_metadata_counting_contradiction_fails_closed() -> None:

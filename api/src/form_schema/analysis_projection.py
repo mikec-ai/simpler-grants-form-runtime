@@ -54,6 +54,11 @@ class FieldRecord:
     role: str
     dimensions: str
     component_ids: str
+    cardinality_minimum: str
+    cardinality_maximum: str
+    source_behavior_ids: str
+    runtime_behavior_rule_ids: str
+    runtime_behavior_mechanisms: str
     json_type: str
     type_source: str
     type: str
@@ -274,6 +279,10 @@ def _strings(value: object) -> list[str]:
     return [item for item in value if isinstance(item, str) and item]
 
 
+def _scalar_string(value: object) -> str:
+    return "" if value is None else str(value)
+
+
 def _semantic_identity(node: Mapping[str, Any]) -> tuple[str, str, str]:
     mapping = node.get("x-semantic-mapping")
     if isinstance(mapping, dict):
@@ -387,6 +396,26 @@ def _project_field_metadata(
         roles = _strings(raw.get("roles"))
         dimensions = _strings(raw.get("dimensions"))
         components = _strings(raw.get("component_module_ids"))
+        cardinality = raw.get("cardinality")
+        if not isinstance(cardinality, dict):
+            cardinality = {}
+        raw_links = raw.get("runtime_behavior_links")
+        if not isinstance(raw_links, list) or any(not isinstance(link, dict) for link in raw_links):
+            raise AnalysisProjectionError(f"invalid runtime behavior links: {record_id}")
+        runtime_rule_ids = sorted(
+            {
+                str(link["rule_id"])
+                for link in raw_links
+                if isinstance(link.get("rule_id"), str) and link.get("rule_id")
+            }
+        )
+        runtime_mechanisms = sorted(
+            {
+                str(link["mechanism"])
+                for link in raw_links
+                if isinstance(link.get("mechanism"), str) and link.get("mechanism")
+            }
+        )
         runtime_path = _metadata_runtime_path(raw.get("runtime_data_pointer_template"))
         source_path = raw.get("source_path")
         if not isinstance(source_path, str) or not source_path:
@@ -409,6 +438,11 @@ def _project_field_metadata(
                 role="|".join(roles),
                 dimensions="|".join(dimensions),
                 component_ids="|".join(components),
+                cardinality_minimum=_scalar_string(cardinality.get("minimum")),
+                cardinality_maximum=_scalar_string(cardinality.get("maximum")),
+                source_behavior_ids="|".join(_strings(raw.get("source_behavior_ids"))),
+                runtime_behavior_rule_ids="|".join(runtime_rule_ids),
+                runtime_behavior_mechanisms="|".join(runtime_mechanisms),
                 json_type=str(node.get("type") or ""),
                 type_source=str(xml.get("type_source") or ""),
                 type=str(xml.get("type") or ""),
@@ -519,6 +553,11 @@ def project_fields(package: PackageInput) -> tuple[list[FieldRecord], list[dict[
                 role="|".join(roles),
                 dimensions="|".join(dimensions),
                 component_ids="|".join(modules),
+                cardinality_minimum="",
+                cardinality_maximum="",
+                source_behavior_ids="|".join(sorted(behavior_keys)),
+                runtime_behavior_rule_ids="",
+                runtime_behavior_mechanisms="",
                 json_type=str(node.get("type") or ""),
                 type_source=type_source,
                 type=xml_type,
