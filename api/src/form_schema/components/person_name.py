@@ -1,6 +1,7 @@
 import dataclasses
 import json
 import re
+from collections.abc import Mapping, Sequence
 from typing import Literal
 
 from src.form_schema.components.component_definition import ComponentDefinitionError
@@ -13,6 +14,10 @@ PersonNameXmlProfile = Literal[
 ]
 
 _MOUNT_POINTER = re.compile(r"^/properties/[a-z][a-z0-9_]*$")
+_WIRE_MOUNT_POINTER = re.compile(
+    r"^/properties/[A-Za-z][A-Za-z0-9_]*(?:/properties/[A-Za-z][A-Za-z0-9_]*)*$"
+)
+_WIRE_FIELD_KEY = re.compile(r"^[A-Za-z][A-Za-z0-9_]*$")
 _NAME_PARTS = (
     ("prefix", "PrefixName"),
     ("first_name", "FirstName"),
@@ -68,12 +73,10 @@ class PersonNameDefinition:
         for field, target in parts:
             transform: dict = {"target": target, "namespace": "globLib"}
             if xml_profile == "first_last_defaulted_global":
-                transform.update(
-                    {
-                        "null_handling": "default_value",
-                        "default_value": "John" if field == "first_name" else "Doe",
-                    }
-                )
+                transform.update({
+                    "null_handling": "default_value",
+                    "default_value": "John" if field == "first_name" else "Doe",
+                })
             xml_fields[field] = {"xml_transform": transform}
 
         return MountedPersonName(
@@ -88,6 +91,83 @@ class PersonNameDefinition:
                 for field, _ in _NAME_PARTS
             ),
             xml_fields=xml_fields,
+        )
+
+    def mount_wire(
+        self,
+        base_definition: str,
+        *,
+        aliases: Mapping[str, str],
+        ui_order: Sequence[str],
+    ) -> MountedPersonName:
+        """Mount the canonical name shape under exact source-bound wire aliases.
+
+        This deliberately supports only a nested object pointer and a complete,
+        one-to-one alias for the five canonical name parts. Source provenance and
+        role semantics remain form-owned overlays.
+        """
+
+        if not isinstance(base_definition, str) or not _WIRE_MOUNT_POINTER.fullmatch(
+            base_definition
+        ):
+            raise ComponentDefinitionError(
+                "wire person name must mount at a nested object-property pointer"
+            )
+
+        canonical_fields = tuple(field for field, _ in _NAME_PARTS)
+        alias_map = dict(aliases)
+        if set(alias_map) != set(canonical_fields):
+            raise ComponentDefinitionError(
+                "wire person-name aliases must cover every canonical name part"
+            )
+        if any(
+            not isinstance(alias, str) or not _WIRE_FIELD_KEY.fullmatch(alias)
+            for alias in alias_map.values()
+        ):
+            raise ComponentDefinitionError("wire person-name aliases are invalid")
+        if len(set(alias_map.values())) != len(alias_map):
+            raise ComponentDefinitionError("wire person-name aliases must be unique")
+        if tuple(ui_order) != tuple(dict.fromkeys(ui_order)) or set(ui_order) != set(
+            canonical_fields
+        ):
+            raise ComponentDefinitionError(
+                "wire person-name UI order must contain every canonical name part once"
+            )
+
+        canonical_schema = json.loads(json.dumps(COMMON_SHARED_V1.json_schema["person_name"]))
+        schema: dict = {
+            "type": "object",
+            "required": [alias_map[field] for field in canonical_schema["required"]],
+            "properties": {},
+        }
+        for field in canonical_fields:
+            wire_field = alias_map[field]
+            field_schema = canonical_schema["properties"][field]
+            field_schema.pop("description", None)
+            field_schema["title"] = wire_field
+            schema["properties"][wire_field] = field_schema
+
+        target_by_field = dict(_NAME_PARTS)
+        return MountedPersonName(
+            component_id=self.component_id,
+            contract_version=self.contract_version,
+            json_schema=schema,
+            ui_fields=tuple(
+                {
+                    "type": "field",
+                    "definition": f"{base_definition}/properties/{alias_map[field]}",
+                }
+                for field in ui_order
+            ),
+            xml_fields={
+                alias_map[field]: {
+                    "xml_transform": {
+                        "target": target_by_field[field],
+                        "namespace": "globLib",
+                    }
+                }
+                for field in canonical_fields
+            },
         )
 
 

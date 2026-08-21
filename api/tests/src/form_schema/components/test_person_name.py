@@ -63,7 +63,8 @@ def test_rejects_invalid_config_and_profile() -> None:
         build_person_name_component(PersonNameComponentConfig(title=" ", description="Description"))
     with pytest.raises(ComponentDefinitionError, match="unsupported"):
         _definition().mount(
-            "/properties/contact_person", xml_profile="invented"  # type: ignore[arg-type]
+            "/properties/contact_person",
+            xml_profile="invented",  # type: ignore[arg-type]
         )
 
 
@@ -77,3 +78,59 @@ def test_mounts_are_independently_allocated() -> None:
 
     assert second.json_schema["title"] == "Contact Person"
     assert second.xml_fields["first_name"]["xml_transform"]["target"] == "FirstName"
+
+
+def test_mounts_source_bound_wire_aliases_without_changing_canonical_constraints() -> None:
+    mounted = _definition().mount_wire(
+        "/properties/AORInfo/properties/Name",
+        aliases={
+            "prefix": "PrefixName",
+            "first_name": "FirstName",
+            "middle_name": "MiddleName",
+            "last_name": "LastName",
+            "suffix": "SuffixName",
+        },
+        ui_order=("first_name", "last_name", "middle_name", "prefix", "suffix"),
+    )
+
+    assert mounted.json_schema["required"] == ["FirstName", "LastName"]
+    assert mounted.json_schema["properties"]["FirstName"] == {
+        "type": "string",
+        "title": "FirstName",
+        "minLength": 1,
+        "maxLength": 35,
+    }
+    assert [field["definition"] for field in mounted.ui_fields] == [
+        f"/properties/AORInfo/properties/Name/properties/{field}"
+        for field in ("FirstName", "LastName", "MiddleName", "PrefixName", "SuffixName")
+    ]
+    assert mounted.xml_fields["PrefixName"] == {
+        "xml_transform": {"target": "PrefixName", "namespace": "globLib"}
+    }
+
+
+@pytest.mark.parametrize(
+    ("aliases", "ui_order"),
+    [
+        ({"first_name": "FirstName"}, ("first_name",)),
+        (
+            {
+                "prefix": "Name",
+                "first_name": "Name",
+                "middle_name": "MiddleName",
+                "last_name": "LastName",
+                "suffix": "SuffixName",
+            },
+            ("prefix", "first_name", "middle_name", "last_name", "suffix"),
+        ),
+    ],
+)
+def test_wire_mount_fails_closed_for_incomplete_or_duplicate_aliases(
+    aliases: dict[str, str], ui_order: tuple[str, ...]
+) -> None:
+    with pytest.raises(ComponentDefinitionError):
+        _definition().mount_wire(
+            "/properties/AORInfo/properties/Name",
+            aliases=aliases,
+            ui_order=ui_order,
+        )

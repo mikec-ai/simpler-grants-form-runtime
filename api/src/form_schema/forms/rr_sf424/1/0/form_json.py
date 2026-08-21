@@ -6,6 +6,10 @@ from typing import Any
 
 from src.constants.lookup_constants import FormType
 from src.db.models.competition_models import Form
+from src.form_schema.components.person_name import (
+    PersonNameComponentConfig,
+    build_person_name_component,
+)
 
 _PACKAGE_DIR = Path(__file__).with_name("draft_package")
 _MANIFEST_PATH = _PACKAGE_DIR / "manifest.json"
@@ -29,7 +33,101 @@ def _load_verified_artifacts() -> dict[str, Any]:
     return artifacts
 
 
+_WIRE_NAME_ALIASES = {
+    "prefix": "PrefixName",
+    "first_name": "FirstName",
+    "middle_name": "MiddleName",
+    "last_name": "LastName",
+    "suffix": "SuffixName",
+}
+_WIRE_NAME_UI_ORDER = ("first_name", "last_name", "middle_name", "prefix", "suffix")
+_PERSON_NAME = build_person_name_component(
+    PersonNameComponentConfig(title="Person Name", description="")
+)
+
+
+def _compose_source_bound_person_name(
+    artifacts: dict[str, Any],
+    *,
+    schema_path: tuple[str, ...],
+    ui_base_definition: str,
+    xml_path: tuple[str, ...],
+) -> None:
+    """Replace one resolved name with the shared component without source drift."""
+
+    schema_node = artifacts["json-schema.json"]
+    for segment in schema_path:
+        schema_node = schema_node[segment]
+
+    mounted = _PERSON_NAME.mount_wire(
+        ui_base_definition,
+        aliases=_WIRE_NAME_ALIASES,
+        ui_order=_WIRE_NAME_UI_ORDER,
+    )
+    composed_schema = mounted.json_schema
+    composed_schema["x-authoring"] = schema_node["x-authoring"]
+    for field_name, field_schema in composed_schema["properties"].items():
+        field_schema["x-authoring"] = schema_node["properties"][field_name]["x-authoring"]
+    if composed_schema != schema_node:
+        raise ValueError(f"R&R SF-424 person-name component drift: {ui_base_definition}")
+
+    emitted_ui = list(mounted.ui_fields)
+    resolved_ui = [
+        child
+        for section in artifacts["ui-schema.json"]
+        for child in section["children"]
+        if child.get("definition", "").startswith(f"{ui_base_definition}/properties/")
+    ]
+    if emitted_ui != resolved_ui:
+        raise ValueError(f"R&R SF-424 person-name UI drift: {ui_base_definition}")
+
+    xml_node = artifacts["xml-transform.json"]
+    for segment in xml_path:
+        xml_node = xml_node[segment]
+    resolved_xml_fields = {key: value for key, value in xml_node.items() if key != "xml_transform"}
+    if mounted.xml_fields != resolved_xml_fields:
+        raise ValueError(f"R&R SF-424 person-name XML drift: {ui_base_definition}")
+
+    schema_node.clear()
+    schema_node.update(composed_schema)
+    wrapper = xml_node["xml_transform"]
+    xml_node.clear()
+    xml_node["xml_transform"] = wrapper
+    xml_node.update(mounted.xml_fields)
+
+
 _ARTIFACTS = _load_verified_artifacts()
+for _schema_path, _ui_base, _xml_path in (
+    (
+        ("json-schema.json", "properties", "AORInfo", "properties", "Name"),
+        "/properties/AORInfo/properties/Name",
+        ("xml-transform.json", "AORInfo", "Name"),
+    ),
+    (
+        ("json-schema.json", "properties", "PDPIContactInfo", "properties", "Name"),
+        "/properties/PDPIContactInfo/properties/Name",
+        ("xml-transform.json", "PDPIContactInfo", "Name"),
+    ),
+    (
+        (
+            "json-schema.json",
+            "properties",
+            "ApplicantInfo",
+            "properties",
+            "ContactPersonInfo",
+            "properties",
+            "Name",
+        ),
+        "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Name",
+        ("xml-transform.json", "ApplicantInfo", "ContactPersonInfo", "Name"),
+    ),
+):
+    _compose_source_bound_person_name(
+        _ARTIFACTS,
+        schema_path=_schema_path[1:],
+        ui_base_definition=_ui_base,
+        xml_path=_xml_path[1:],
+    )
 FORM_JSON_SCHEMA = _ARTIFACTS["json-schema.json"]
 FORM_UI_SCHEMA = _ARTIFACTS["ui-schema.json"]
 FORM_RULE_SCHEMA = _ARTIFACTS["rule-schema.json"]
@@ -53,3 +151,6 @@ RRSF424_v5_0 = Form(
 )
 
 del _ARTIFACTS
+del _schema_path
+del _ui_base
+del _xml_path

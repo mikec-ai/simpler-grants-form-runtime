@@ -45,6 +45,48 @@ def test_rr_sf424_draft_is_a_complete_renderable_projection() -> None:
         assert isinstance(_resolve_schema_pointer(schema, definition), dict)
 
 
+def test_shared_person_name_composition_preserves_resolved_artifacts() -> None:
+    assert RRSF424_v5_0.form_json_schema == json.loads(
+        (_PACKAGE_DIR / "json-schema.json").read_text(encoding="utf-8")
+    )
+    assert RRSF424_v5_0.form_ui_schema == json.loads(
+        (_PACKAGE_DIR / "ui-schema.json").read_text(encoding="utf-8")
+    )
+    assert RRSF424_v5_0.json_to_xml_schema == json.loads(
+        (_PACKAGE_DIR / "xml-transform.json").read_text(encoding="utf-8")
+    )
+
+    expected_name_paths = {
+        "/properties/AORInfo/properties/Name",
+        "/properties/PDPIContactInfo/properties/Name",
+        "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Name",
+    }
+    resolved_name_paths = {
+        definition.rsplit("/properties/", 1)[0]
+        for section in RRSF424_v5_0.form_ui_schema
+        for child in section["children"]
+        if (definition := child.get("definition", ""))
+        and definition.endswith((
+            "/PrefixName",
+            "/FirstName",
+            "/MiddleName",
+            "/LastName",
+            "/SuffixName",
+        ))
+    }
+    assert resolved_name_paths == expected_name_paths
+
+    global_library_ref = "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+    for name_path in expected_name_paths:
+        name_schema = _resolve_schema_pointer(RRSF424_v5_0.form_json_schema, name_path)
+        assert isinstance(name_schema, dict)
+        assert len(name_schema["properties"]) == 5
+        for field_schema in name_schema["properties"].values():
+            authoring = field_schema["x-authoring"]
+            assert authoring["published_coverage_eligible"] is False
+            assert any(global_library_ref in item for item in authoring["provenance"])
+
+
 def test_rr_sf424_draft_preserves_wire_identity_and_attachment_rules() -> None:
     xml_config = RRSF424_v5_0.json_to_xml_schema["_xml_config"]
 
@@ -84,6 +126,20 @@ def test_rr_sf424_draft_review_boundary_fails_closed() -> None:
     }
     assert projection_report["semantic_mapping_status"] == "agent_proposed"
     assert projection_report["production_ready"] is False
+    assert manifest["source_review"] == {
+        "instructions_pdf_sha256": (
+            "666647fdeb7d9d69f2d36dedc74f09ff6a9540776f87c5a5c5b0593219736bd1"
+        ),
+        "readonly_pdf_sha256": ("592a1faf1cfdac3e350a22c6fbae3b8c6f229b6c7de29ec18273b60c9235dd6b"),
+        "xfa_sample_sha256": ("06dd92da28b4afb8190fd0edaeb7a0dac3ae2d601adcc1ab9a5e0fc93c09f523"),
+        "review_status": "agent_full_source_review",
+        "published_coverage_eligible": False,
+        "open_behavior_queue": True,
+        "open_source_conflicts": True,
+    }
+    review_note = (_PACKAGE_DIR / "source-review.md").read_text(encoding="utf-8")
+    assert "executes only the\nthree attachment-type checks" in review_note
+    assert "Do not add a 15c funding calculation" in review_note
 
 
 def test_rr_sf424_draft_generates_namespaced_nested_xml() -> None:

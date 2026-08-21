@@ -29,6 +29,38 @@
     "published_coverage_eligible": false,
     "production_ready": false
   },
+  "component_bindings": [
+    {
+      "component_id": "people.person-name",
+      "contract_version": 1,
+      "source_path": "RR_SF424_5_0.AORInfo.Name",
+      "runtime_pointer": "/properties/AORInfo/properties/Name",
+      "binding_status": "exact_source_bound_structure"
+    },
+    {
+      "component_id": "people.person-name",
+      "contract_version": 1,
+      "source_path": "RR_SF424_5_0.PDPIContactInfo.Name",
+      "runtime_pointer": "/properties/PDPIContactInfo/properties/Name",
+      "binding_status": "exact_source_bound_structure"
+    },
+    {
+      "component_id": "people.person-name",
+      "contract_version": 1,
+      "source_path": "RR_SF424_5_0.ApplicantInfo.ContactPersonInfo.Name",
+      "runtime_pointer": "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Name",
+      "binding_status": "exact_source_bound_structure"
+    }
+  ],
+  "source_review": {
+    "instructions_pdf_sha256": "666647fdeb7d9d69f2d36dedc74f09ff6a9540776f87c5a5c5b0593219736bd1",
+    "readonly_pdf_sha256": "592a1faf1cfdac3e350a22c6fbae3b8c6f229b6c7de29ec18273b60c9235dd6b",
+    "xfa_sample_sha256": "06dd92da28b4afb8190fd0edaeb7a0dac3ae2d601adcc1ab9a5e0fc93c09f523",
+    "review_status": "agent_full_source_review",
+    "published_coverage_eligible": false,
+    "open_behavior_queue": true,
+    "open_source_conflicts": true
+  },
   "artifacts": {
     "json-schema.json": "085c292acf2390c40789a29c5e6f8137a5da0766a82c447abb760371e6a5977a",
     "projection-report.json": "233d7d1f4a4c4acd1ea329502e590b325fc1d308e2e8e44936d43b837df206e8",
