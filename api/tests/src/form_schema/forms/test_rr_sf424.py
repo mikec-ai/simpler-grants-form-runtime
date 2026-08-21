@@ -66,13 +66,15 @@ def test_shared_person_name_composition_preserves_resolved_artifacts() -> None:
         for section in RRSF424_v5_0.form_ui_schema
         for child in section["children"]
         if (definition := child.get("definition", ""))
-        and definition.endswith((
-            "/PrefixName",
-            "/FirstName",
-            "/MiddleName",
-            "/LastName",
-            "/SuffixName",
-        ))
+        and definition.endswith(
+            (
+                "/PrefixName",
+                "/FirstName",
+                "/MiddleName",
+                "/LastName",
+                "/SuffixName",
+            )
+        )
     }
     assert resolved_name_paths == expected_name_paths
 

@@ -73,10 +73,12 @@ class PersonNameDefinition:
         for field, target in parts:
             transform: dict = {"target": target, "namespace": "globLib"}
             if xml_profile == "first_last_defaulted_global":
-                transform.update({
-                    "null_handling": "default_value",
-                    "default_value": "John" if field == "first_name" else "Doe",
-                })
+                transform.update(
+                    {
+                        "null_handling": "default_value",
+                        "default_value": "John" if field == "first_name" else "Doe",
+                    }
+                )
             xml_fields[field] = {"xml_transform": transform}
 
         return MountedPersonName(
