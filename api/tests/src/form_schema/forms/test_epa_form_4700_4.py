@@ -1,3 +1,5 @@
+import importlib
+
 import freezegun
 import pytest
 
@@ -12,6 +14,16 @@ from tests.src.form_schema.forms.conftest import (
     validate_min_length,
     validate_required,
 )
+
+_FORM_MODULE = importlib.import_module("src.form_schema.forms.epa_form_4700_4.1.0.form_json")
+
+
+def test_epa_applicant_identity_preserves_the_native_oracle() -> None:
+    assert _FORM_MODULE.FORM_JSON_SCHEMA == _FORM_MODULE._ORACLE_FORM_JSON_SCHEMA
+    assert _FORM_MODULE.FORM_UI_SCHEMA == _FORM_MODULE._ORACLE_FORM_UI_SCHEMA
+    assert _FORM_MODULE.FORM_RULE_SCHEMA == _FORM_MODULE._ORACLE_FORM_RULE_SCHEMA
+    assert _FORM_MODULE.FORM_XML_TRANSFORM_RULES == (_FORM_MODULE._ORACLE_FORM_XML_TRANSFORM_RULES)
+    assert _FORM_MODULE._APPLICANT_IDENTITY.component_id == ("application.epa-applicant-identity")
 
 
 @pytest.fixture

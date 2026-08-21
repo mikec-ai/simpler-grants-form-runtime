@@ -10,7 +10,7 @@
   "forms": [
     {"form": "Attachment Form", "module": "attachment_form", "status": "converted", "reuse": "numbered_attachment_slots_component", "parity_test": "tests/src/form_schema/forms/test_attachment_form.py"},
     {"form": "Budget Narrative Attachment", "module": "budget_narrative_attachment", "status": "converted", "reuse": "narrative_attachment_template", "parity_test": "tests/src/form_schema/templates/test_narrative_attachment.py"},
-    {"form": "EPA Form 4700-4", "module": "epa_form_4700_4", "status": "pending"},
+    {"form": "EPA Form 4700-4", "module": "epa_form_4700_4", "status": "converted", "reuse": "epa_applicant_identity_component_with_distinct_address_profile", "parity_test": "tests/src/form_schema/forms/test_epa_form_4700_4.py"},
     {"form": "EPA Key Contacts", "module": "epa_key_contacts", "status": "converted", "reuse": "contact_profile_component", "parity_test": "tests/src/form_schema/components/test_contact_profile.py"},
     {"form": "Grants.gov Lobbying Form", "module": "gg_lobbying_form", "status": "converted", "reuse": "organization_name_and_person_name_components", "parity_test": "tests/src/form_schema/forms/test_gg_lobbying_form.py"},
     {"form": "Key Contacts", "module": "key_contacts", "status": "converted", "reuse": "contact_profile_component", "parity_test": "tests/src/form_schema/components/test_contact_profile.py"},

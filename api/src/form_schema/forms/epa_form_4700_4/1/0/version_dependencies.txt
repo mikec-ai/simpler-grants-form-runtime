@@ -1,0 +1,5 @@
+# The exact EPA applicant identity profile determines these active artifacts.
+form_schema/components/epa_applicant_identity.py
+form_schema/shared/address_shared.py
+form_schema/shared/common_shared.py
+form_schema/shared/shared_schema.py

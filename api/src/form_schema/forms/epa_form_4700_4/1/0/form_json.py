@@ -1,8 +1,12 @@
 import uuid
+from copy import deepcopy
 
 from src.constants.lookup_constants import FormType
 from src.db.models.competition_models import Form
+from src.form_schema.components.epa_applicant_identity import build_epa_applicant_identity
 from src.form_schema.shared import ADDRESS_SHARED_V1, COMMON_SHARED_V1
+
+_APPLICANT_IDENTITY = build_epa_applicant_identity()
 
 DIRECTIONS = """General. Recipients of Federal financial assistance from the U.S. Environmental Protection Agency must comply with the following statutes and regulations.
 
@@ -10,7 +14,7 @@ Title VI of the Civil Rights Acts of 1964 provides that no person in the United 
 
 Items "Applicant" means any entity that files an application or unsolicited proposal or otherwise requests EPA assistance. 40 C.F.R. §§ 5.105, 7.25. "Recipient" means any State or its political subdivision, any instrumentality of a State or its political subdivision, any public or private agency, institution, organizations, or other entity, or any person to which Federal financial assistance is extended directly or through another recipient, including any successor, assignee, or transferee of a recipient, but excluding the ultimate beneficiary of the assistance. 40 C.F.R. §§ 5.105, 7.25. "Civil rights lawsuits and administrative complaints" means any lawsuit or administrative complaint alleging discrimination on the basis of race, color, national origin, sex, age, or disability pending or decided against the applicant and/or entity which actually benefits from the grant, but excluding employment complaints not covered by 40 C.F.R. Parts 5 and 7. For example, if a city is the named applicant but the grant will actually benefit the Department of Sewage, civil rights lawsuits involving both the city and the Department of Sewage should be listed. "Civil rights compliance review" means: any federal agency-initiated investigation of a particular aspect of the applicant's and/or recipient's programs or activities to determine compliance with the federal non-discrimination laws. Submit this form with the original and required copies of applications, requests for extensions, requests for increase of funds, etc. Updates of information are all that are required after the initial application submission. If any item is not relevant to the project for which assistance is requested, write "NA" for "Not Applicable." In the event applicant is uncertain about how to answer any questions, EPA program officials should be contacted for clarification."""
 
-FORM_JSON_SCHEMA = {
+_ORACLE_FORM_JSON_SCHEMA = {
     "type": "object",
     "required": [
         "applicant_name",
@@ -159,7 +163,7 @@ FORM_JSON_SCHEMA = {
     },
 }
 
-FORM_UI_SCHEMA = [
+_ORACLE_FORM_UI_SCHEMA = [
     {
         "type": "section",
         "label": "Instructions for EPA Form 4700-4 (Rev. 04/2021)",
@@ -317,7 +321,7 @@ FORM_UI_SCHEMA = [
     },
 ]
 
-FORM_RULE_SCHEMA = {
+_ORACLE_FORM_RULE_SCHEMA = {
     #### PRE-POPULATION RULES
     "sam_uei": {"gg_pre_population": {"rule": "uei"}},
     #### POST-POPULATION RULES
@@ -328,7 +332,7 @@ FORM_RULE_SCHEMA = {
 }
 
 # XML transformation rules for converting Simpler EPA Form 4700-4 JSON to Grants.gov XML format
-FORM_XML_TRANSFORM_RULES = {
+_ORACLE_FORM_XML_TRANSFORM_RULES = {
     # Metadata
     "_xml_config": {
         "description": "XML transformation rules for converting Simpler EPA Form 4700-4 JSON to XML",
@@ -528,6 +532,25 @@ FORM_XML_TRANSFORM_RULES = {
         },
     },
 }
+
+FORM_JSON_SCHEMA = deepcopy(_ORACLE_FORM_JSON_SCHEMA)
+for field, schema in _APPLICANT_IDENTITY.json_schema_properties.items():
+    FORM_JSON_SCHEMA["properties"][field] = deepcopy(schema)
+assert FORM_JSON_SCHEMA == _ORACLE_FORM_JSON_SCHEMA
+
+FORM_UI_SCHEMA = deepcopy(_ORACLE_FORM_UI_SCHEMA)
+FORM_UI_SCHEMA[1]["children"] = list(deepcopy(_APPLICANT_IDENTITY.applicant_ui_fields))
+FORM_UI_SCHEMA[2]["children"] = [deepcopy(_APPLICANT_IDENTITY.uei_ui_field)]
+assert FORM_UI_SCHEMA == _ORACLE_FORM_UI_SCHEMA
+
+FORM_RULE_SCHEMA = deepcopy(_ORACLE_FORM_RULE_SCHEMA)
+FORM_RULE_SCHEMA["sam_uei"] = deepcopy(_APPLICANT_IDENTITY.rule_schema["sam_uei"])
+assert FORM_RULE_SCHEMA == _ORACLE_FORM_RULE_SCHEMA
+
+FORM_XML_TRANSFORM_RULES = deepcopy(_ORACLE_FORM_XML_TRANSFORM_RULES)
+for field, rule in _APPLICANT_IDENTITY.xml_transform_rules.items():
+    FORM_XML_TRANSFORM_RULES[field] = deepcopy(rule)
+assert FORM_XML_TRANSFORM_RULES == _ORACLE_FORM_XML_TRANSFORM_RULES
 
 EPA_FORM_4700_4_v5_0 = Form(
     # https://www.grants.gov/forms/form-items-description/fid/773
