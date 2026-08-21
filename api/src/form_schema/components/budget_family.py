@@ -179,7 +179,10 @@ def compile_source_resolved_sum_rules(
                     raise BudgetFamilyError(f"Runtime path drift: {operand_source}")
                 relative = operand_path[len(target_parent_path) :]
                 fields.append(f"@THIS.{_dotted(relative)}")
-            elif rule.get("instance_scope") == "all_budget_periods":
+            elif rule.get("instance_scope") in {
+                "all_budget_periods",
+                "all_collection_instances",
+            }:
                 repeated_target_indices = [
                     index for index, (_, repeated) in enumerate(target_parent_path) if repeated
                 ]

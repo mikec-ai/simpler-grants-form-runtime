@@ -1,0 +1,45 @@
+{
+  "contract": "simpler-budget-family-draft-package/v1",
+  "form": {
+    "form_id": "RRMPBudget",
+    "legacy_form_id": "RR_MP_Budget_3_0",
+    "form_version": "3.0"
+  },
+  "artifacts": {
+    "candidate.json": "6cd2aae9da2b1bf8f8f028ed8843aad0bebc3f13bf3fe781ebb75dbc8112dc51",
+    "runtime-rules.json": "94b2295559806855ebeb96e8b1694e0a8982c49140b98953c4ed9663d18fd771"
+  },
+  "source_evidence": {
+    "contract_source_version": "sha256:8ee3867971d4030582ff4c4cd906cd1a086c2d2491fb6f05b33cdd07ae435846",
+    "xsd": {
+      "source_ref": "https://apply07.grants.gov/apply/forms/schemas/RR_MP_Budget_3_0-V3.0.xsd",
+      "sha256": "8ee3867971d4030582ff4c4cd906cd1a086c2d2491fb6f05b33cdd07ae435846"
+    },
+    "behavior_model": {
+      "status": "exact_source_resolved_subset",
+      "source_behavior_records": 217,
+      "calculation_records_observed": 56,
+      "condition_records_observed": 55,
+      "target_form_behavior_parity": "not_established"
+    },
+    "nodes": 199,
+    "countable_questions": 157,
+    "decimal_fields": 115,
+    "repeating_groups": 5,
+    "source_calculations": 56,
+    "executable_source_resolved_sums": 10,
+    "blocked_calculations": 46
+  },
+  "review_boundary": {
+    "structural_extraction": "deterministic_from_pinned_sources",
+    "semantic_mapping": "agent_proposed",
+    "ui_projection": "structural_canary",
+    "calculation_projection": "source_bound_resolved_subset",
+    "condition_projection": "none_without_typed_runtime",
+    "target_form_behavior_parity": "not_established",
+    "xml_projection": "not_available",
+    "policy_and_instructions": "partially_pdf_reviewed_not_accepted",
+    "published_coverage_eligible": false,
+    "production_ready": false
+  }
+}

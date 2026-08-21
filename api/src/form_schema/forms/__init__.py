@@ -17,6 +17,7 @@ from .project_narrative_attachment import ProjectNarrativeAttachment_v1_2
 from .project_performance_site_location import ProjectPerformanceSiteLocation_v4_0
 from .rr_budget import RRBudget_v3_0
 from .rr_budget10 import RRBudget10_v3_0
+from .rr_mp_budget import RRMPBudget_v3_0
 from .rr_mp_subaward_budget import RRMPSubawardBudget_v3_0
 from .rr_sf424 import RRSF424_v5_0
 from .rr_subaward_budget10_30 import RRSubawardBudget10_30_v3_0
@@ -59,6 +60,7 @@ _ALL_FORMS: list[Form] = [
     RRSubawardBudget30_v3_0,
     RRSubawardBudget10_30_v3_0,
     RRMPSubawardBudget_v3_0,
+    RRMPBudget_v3_0,
 ]
 
 
