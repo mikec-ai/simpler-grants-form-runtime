@@ -81,13 +81,15 @@ def test_shared_person_name_composition_preserves_resolved_artifacts() -> None:
         for section in RRSF424_v5_0.form_ui_schema
         for child in section["children"]
         if (definition := child.get("definition", ""))
-        and definition.endswith((
-            "/PrefixName",
-            "/FirstName",
-            "/MiddleName",
-            "/LastName",
-            "/SuffixName",
-        ))
+        and definition.endswith(
+            (
+                "/PrefixName",
+                "/FirstName",
+                "/MiddleName",
+                "/LastName",
+                "/SuffixName",
+            )
+        )
     }
     assert resolved_name_paths == expected_name_paths
 
@@ -149,21 +151,25 @@ def test_all_four_addresses_execute_us_and_non_us_rules() -> None:
         address_schema = _resolve_schema_pointer(RRSF424_v5_0.form_json_schema, address_path)
         validator = Draft202012Validator(address_schema)
         us_errors = list(
-            validator.iter_errors({
-                "Country": "USA: UNITED STATES",
-                "City": "Washington",
-                "Street1": "1 Main St",
-                "ZipPostalCode": "12345",
-            })
+            validator.iter_errors(
+                {
+                    "Country": "USA: UNITED STATES",
+                    "City": "Washington",
+                    "Street1": "1 Main St",
+                    "ZipPostalCode": "12345",
+                }
+            )
         )
         assert any("State" in error.message for error in us_errors)
         assert any(error.validator == "minLength" for error in us_errors)
         assert not list(
-            validator.iter_errors({
-                "Country": "CAN: CANADA",
-                "City": "Ottawa",
-                "Street1": "1 Main St",
-            })
+            validator.iter_errors(
+                {
+                    "Country": "CAN: CANADA",
+                    "City": "Ottawa",
+                    "Street1": "1 Main St",
+                }
+            )
         )
 
 
