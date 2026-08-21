@@ -3,8 +3,10 @@ import uuid
 from src.constants.lookup_constants import FormType
 from src.db.models.competition_models import Form
 from src.form_schema.components import (
+    OpportunityIdentityComponentConfig,
     OrganizationIdentityComponentConfig,
     build_organization_identity_component,
+    build_opportunity_identity_component,
 )
 from src.form_schema.shared import ADDRESS_SHARED_V1, COMMON_SHARED_V1
 
@@ -13,6 +15,14 @@ _ORGANIZATION_IDENTITY = build_organization_identity_component(
         organization_name_description="Enter the legal name of applicant that will undertake the assistance activity. This is the name that the organization has registered with the System for Award Management (SAM.gov). Information on registering with SAM may be obtained by visiting the Grants.gov website.",
         sam_uei_description="UEI of the applicant organization. This field is pre-populated from the Application cover sheet.",
         sam_uei_interaction="null",
+    )
+).mount_root()
+_OPPORTUNITY_IDENTITY = build_opportunity_identity_component(
+    OpportunityIdentityComponentConfig(
+        interaction="null",
+        agency_name_title="Name of Federal Agency",
+        funding_opportunity_number_title="Funding Opportunity Number",
+        funding_opportunity_title_title="Funding Opportunity Title",
     )
 ).mount_root()
 
@@ -129,27 +139,13 @@ FORM_JSON_SCHEMA = {
         },
     },
     "properties": {
-        "agency_name": {
-            "type": "string",
-            "title": "Name of Federal Agency",
-            "description": "Pre-populated from the Application cover sheet.",
-            "minLength": 1,
-            "maxLength": 60,
-        },
-        "assistance_listing_number": {
-            "type": "string",
-            "title": "Assistance Listing Number",
-            "description": "Pre-populated from the Application cover sheet.",
-            "minLength": 1,
-            "maxLength": 15,
-        },
-        "assistance_listing_program_title": {
-            "type": "string",
-            "title": "Assistance Listing Title",
-            "description": "Pre-populated from the Application cover sheet.",
-            "minLength": 1,
-            "maxLength": 120,
-        },
+        "agency_name": _OPPORTUNITY_IDENTITY.json_schema_properties["agency_name"],
+        "assistance_listing_number": _OPPORTUNITY_IDENTITY.json_schema_properties[
+            "assistance_listing_number"
+        ],
+        "assistance_listing_program_title": _OPPORTUNITY_IDENTITY.json_schema_properties[
+            "assistance_listing_program_title"
+        ],
         "date_received": {
             "type": "string",
             "title": "Date Received",
@@ -157,20 +153,12 @@ FORM_JSON_SCHEMA = {
             "format": "date",
             "readOnly": True,
         },
-        "funding_opportunity_number": {
-            "type": "string",
-            "title": "Funding Opportunity Number",
-            "description": "Pre-populated from the Application cover sheet.",
-            "minLength": 1,
-            "maxLength": 40,
-        },
-        "funding_opportunity_title": {
-            "type": "string",
-            "title": "Funding Opportunity Title",
-            "description": "Pre-populated from the Application cover sheet.",
-            "minLength": 1,
-            "maxLength": 255,
-        },
+        "funding_opportunity_number": _OPPORTUNITY_IDENTITY.json_schema_properties[
+            "funding_opportunity_number"
+        ],
+        "funding_opportunity_title": _OPPORTUNITY_IDENTITY.json_schema_properties[
+            "funding_opportunity_title"
+        ],
         "organization_name": _ORGANIZATION_IDENTITY.json_schema_properties["organization_name"],
         "applicant": {
             "allOf": [{"$ref": ADDRESS_SHARED_V1.field_ref("address")}],
@@ -340,15 +328,15 @@ FORM_UI_SCHEMA = [
         "type": "section",
         "name": "federal_agency",
         "label": "1. Name of Federal Agency",
-        "children": [{"type": "null", "definition": "/properties/agency_name"}],
+        "children": [_OPPORTUNITY_IDENTITY.ui_schema_fields["agency_name"]],
     },
     {
         "type": "section",
         "name": "assistance_listing",
         "label": "2. Assistance Listing Number and Title",
         "children": [
-            {"type": "null", "definition": "/properties/assistance_listing_number"},
-            {"type": "null", "definition": "/properties/assistance_listing_program_title"},
+            _OPPORTUNITY_IDENTITY.ui_schema_fields["assistance_listing_number"],
+            _OPPORTUNITY_IDENTITY.ui_schema_fields["assistance_listing_program_title"],
         ],
     },
     {
@@ -362,8 +350,8 @@ FORM_UI_SCHEMA = [
         "name": "funding_opportunity",
         "label": "4. Funding Opportunity Number and Title",
         "children": [
-            {"type": "null", "definition": "/properties/funding_opportunity_number"},
-            {"type": "null", "definition": "/properties/funding_opportunity_title"},
+            _OPPORTUNITY_IDENTITY.ui_schema_fields["funding_opportunity_number"],
+            _OPPORTUNITY_IDENTITY.ui_schema_fields["funding_opportunity_title"],
         ],
     },
     {
@@ -461,13 +449,13 @@ FORM_UI_SCHEMA = [
 
 FORM_RULE_SCHEMA = {
     ##### PRE-POPULATION RULES
-    "agency_name": {"gg_pre_population": {"rule": "agency_name"}},
-    "assistance_listing_number": {"gg_pre_population": {"rule": "assistance_listing_number"}},
-    "assistance_listing_program_title": {
-        "gg_pre_population": {"rule": "assistance_listing_program_title"}
-    },
-    "funding_opportunity_number": {"gg_pre_population": {"rule": "opportunity_number"}},
-    "funding_opportunity_title": {"gg_pre_population": {"rule": "opportunity_title"}},
+    "agency_name": _OPPORTUNITY_IDENTITY.rule_schema["agency_name"],
+    "assistance_listing_number": _OPPORTUNITY_IDENTITY.rule_schema["assistance_listing_number"],
+    "assistance_listing_program_title": _OPPORTUNITY_IDENTITY.rule_schema[
+        "assistance_listing_program_title"
+    ],
+    "funding_opportunity_number": _OPPORTUNITY_IDENTITY.rule_schema["funding_opportunity_number"],
+    "funding_opportunity_title": _OPPORTUNITY_IDENTITY.rule_schema["funding_opportunity_title"],
     "sam_uei": _ORGANIZATION_IDENTITY.rule_schema["sam_uei"],
     ##### POST-POPULATION RULES
     "date_received": {"gg_post_population": {"rule": "current_date"}},
@@ -537,12 +525,20 @@ FORM_XML_TRANSFORM_RULES = {
         },
     },
     # Opportunity information - order matches XSD sequence
-    "agency_name": {"xml_transform": {"target": "AgencyName"}},
-    "assistance_listing_number": {"xml_transform": {"target": "CFDANumber"}},
-    "assistance_listing_program_title": {"xml_transform": {"target": "CFDAProgramTitle"}},
+    "agency_name": _OPPORTUNITY_IDENTITY.xml_transform_rules["agency_name"],
+    "assistance_listing_number": _OPPORTUNITY_IDENTITY.xml_transform_rules[
+        "assistance_listing_number"
+    ],
+    "assistance_listing_program_title": _OPPORTUNITY_IDENTITY.xml_transform_rules[
+        "assistance_listing_program_title"
+    ],
     "date_received": {"xml_transform": {"target": "DateReceived", "null_handling": "include_null"}},
-    "funding_opportunity_number": {"xml_transform": {"target": "FundingOpportunityNumber"}},
-    "funding_opportunity_title": {"xml_transform": {"target": "FundingOpportunityTitle"}},
+    "funding_opportunity_number": _OPPORTUNITY_IDENTITY.xml_transform_rules[
+        "funding_opportunity_number"
+    ],
+    "funding_opportunity_title": _OPPORTUNITY_IDENTITY.xml_transform_rules[
+        "funding_opportunity_title"
+    ],
     # Applicant information
     "organization_name": _ORGANIZATION_IDENTITY.xml_transform_rules["organization_name"],
     "applicant": {
@@ -659,4 +655,5 @@ SF424Short_v3_0 = Form(
     sgg_version="1.0",
     is_deprecated=False,
 )
+del _OPPORTUNITY_IDENTITY
 del _ORGANIZATION_IDENTITY

@@ -6,7 +6,14 @@ from collections.abc import Collection, Mapping
 _COMPONENT_ID = re.compile(r"^[a-z][a-z0-9.-]*$")
 _FIELD_KEY = re.compile(r"^[a-z][a-z0-9_]*$")
 _SOURCE_QUESTION_ID = re.compile(r"^[A-Za-z][A-Za-z0-9._:-]*$")
-_UEI_PREPOPULATION_RULE = {"gg_pre_population": {"rule": "uei"}}
+_SUPPORTED_PREPOPULATION_RULES = frozenset({
+    "agency_name",
+    "assistance_listing_number",
+    "assistance_listing_program_title",
+    "opportunity_number",
+    "opportunity_title",
+    "uei",
+})
 
 
 class ComponentDefinitionError(ValueError):
@@ -115,8 +122,20 @@ class ComponentDefinition:
                 raise ComponentDefinitionError(f"{field_key} UI type must be 'field' or 'null'")
 
             rule = contribution.rule()
-            if rule is not None and rule != _UEI_PREPOPULATION_RULE:
-                raise ComponentDefinitionError(f"{field_key} rule contains unsupported behavior")
+            if rule is not None:
+                if set(rule) != {"gg_pre_population"}:
+                    raise ComponentDefinitionError(
+                        f"{field_key} rule contains unsupported behavior"
+                    )
+                prepopulation = rule.get("gg_pre_population")
+                if (
+                    not isinstance(prepopulation, dict)
+                    or set(prepopulation) != {"rule"}
+                    or prepopulation.get("rule") not in _SUPPORTED_PREPOPULATION_RULES
+                ):
+                    raise ComponentDefinitionError(
+                        f"{field_key} rule contains unsupported behavior"
+                    )
 
             direct_xml = contribution.direct_xml()
             if direct_xml is not None:

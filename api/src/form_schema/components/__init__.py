@@ -4,6 +4,10 @@ from .component_definition import (
     FieldContribution,
     MountedComponentDefinition,
 )
+from .opportunity_identity import (
+    OpportunityIdentityComponentConfig,
+    build_opportunity_identity_component,
+)
 from .organization_identity import (
     OrganizationIdentityComponentConfig,
     OrganizationNameComponentConfig,
@@ -18,10 +22,12 @@ __all__ = [
     "ComponentDefinitionError",
     "FieldContribution",
     "MountedComponentDefinition",
+    "OpportunityIdentityComponentConfig",
     "OrganizationIdentityComponentConfig",
     "OrganizationNameComponentConfig",
     "SamUeiComponentConfig",
     "build_organization_identity_component",
     "build_organization_name_component",
+    "build_opportunity_identity_component",
     "build_sam_uei_component",
 ]

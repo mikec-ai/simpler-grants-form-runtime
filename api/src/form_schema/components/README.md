@@ -25,5 +25,11 @@ Summary mounts the same organization-name contribution as `applicant_name`,
 proving that a form-specific field name and label need not duplicate its schema,
 UI pointer, or direct XML mapping.
 
+SF-424 and SF-424 Short also share an opportunity-identity component covering
+agency name, Assistance Listing number/title, and funding opportunity
+number/title. Its configuration is limited to the three observed title deltas
+and the shared editable/read-only interaction; schemas, prepopulation rules, and
+direct XML targets remain fixed by the component contract.
+
 Optional source-question bindings are build provenance only. They do not assert
 semantic equivalence or make a component eligible for published coverage.
