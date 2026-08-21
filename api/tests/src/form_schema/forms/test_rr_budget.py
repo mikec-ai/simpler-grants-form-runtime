@@ -8,6 +8,7 @@ import pytest
 from jsonschema import Draft202012Validator
 
 from src.constants.lookup_constants import FormType
+from src.form_schema.components.budget_family import reconcile_source_resolved_required_conditions
 from src.form_schema.forms.rr_budget import RRBudget_v3_0
 from src.form_schema.forms.rr_budget.behaviors import (
     RRBudgetBehaviorError,
@@ -143,6 +144,9 @@ def test_rr_budget_package_is_pinned_and_fails_closed() -> None:
         "source_calculations": 56,
         "executable_source_resolved_sums": 30,
         "blocked_calculations": 26,
+        "source_resolved_conditions": 20,
+        "conditions_satisfied_by_structure": 20,
+        "projected_source_resolved_conditions": 0,
     }
     assert manifest["review_boundary"]["published_coverage_eligible"] is False
     assert manifest["review_boundary"]["production_ready"] is False
@@ -170,5 +174,90 @@ def test_rr_budget_calculation_compiler_rejects_runtime_evidence_drift(tamper: s
 
     with pytest.raises(RRBudgetBehaviorError):
         compile_source_resolved_sum_rules(
+            deepcopy(candidate["artifacts"]["json_schema"]), runtime_rules
+        )
+
+
+def test_required_condition_reconciliation_projects_only_additive_behavior() -> None:
+    schema = {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+            "controller": {"type": "string", "x-source-path": "Form.Controller"},
+            "target": {"type": "string", "x-source-path": "Form.Target"},
+        },
+    }
+    runtime_rules = {
+        "contract": "source-bound-runtime-rule-ast/resolved-v1",
+        "rules": [
+            {
+                "rule_id": "runtime-rule:sha256:additive-condition",
+                "mechanism": "condition",
+                "execution_class": "executable",
+                "disposition": "working",
+                "effect": "required",
+                "operator": "present",
+                "target": {
+                    "path": "Form.Target",
+                    "path_resolved": True,
+                    "resolution_scope": "local_form",
+                },
+                "dependencies": [
+                    {
+                        "path": "Form.Controller",
+                        "path_resolved": True,
+                        "resolution_scope": "local_form",
+                    }
+                ],
+                "source_value": {
+                    "target_path": "Form.Target",
+                    "dependency_paths": ["Form.Controller"],
+                    "operator": "present",
+                    "effect": "required",
+                },
+                "unresolved_references": [],
+            }
+        ],
+    }
+
+    projected, structural = reconcile_source_resolved_required_conditions(
+        schema, runtime_rules, expected_count=1, expected_projected_count=1
+    )
+    assert projected == ("runtime-rule:sha256:additive-condition",)
+    assert structural == ()
+    assert not list(Draft202012Validator(schema).iter_errors({}))
+    errors = list(Draft202012Validator(schema).iter_errors({"controller": "yes"}))
+    assert [error.validator for error in errors] == ["required"]
+    assert "target" in errors[0].message
+
+    structurally_required = deepcopy(schema)
+    structurally_required["required"] = ["target"]
+    structurally_required.pop("allOf")
+    projected, structural = reconcile_source_resolved_required_conditions(
+        structurally_required, runtime_rules, expected_count=1, expected_projected_count=0
+    )
+    assert projected == ()
+    assert structural == ("runtime-rule:sha256:additive-condition",)
+    assert "allOf" not in structurally_required
+
+
+@pytest.mark.parametrize("tamper", ["operator", "cross_object_dependency"])
+def test_required_condition_reconciliation_rejects_runtime_evidence_drift(
+    tamper: str,
+) -> None:
+    candidate = json.loads((_PACKAGE_DIR / "candidate.json").read_text(encoding="utf-8"))
+    runtime_rules = json.loads((_PACKAGE_DIR / "runtime-rules.json").read_text(encoding="utf-8"))
+    executable = next(
+        rule
+        for rule in runtime_rules["rules"]
+        if rule["mechanism"] == "condition" and rule["execution_class"] == "executable"
+    )
+    if tamper == "operator":
+        executable["operator"] = "invented"
+    else:
+        executable["dependencies"][0]["path"] = "RR_Budget_3_0.BudgetYear.Travel.DomesticTravelCost"
+
+    with pytest.raises(RRBudgetBehaviorError):
+        reconcile_source_resolved_required_conditions(
             deepcopy(candidate["artifacts"]["json_schema"]), runtime_rules
         )

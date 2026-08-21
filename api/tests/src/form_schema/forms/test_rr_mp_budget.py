@@ -1,4 +1,5 @@
 import hashlib
+import importlib
 import json
 from collections.abc import Iterator
 from pathlib import Path
@@ -18,6 +19,8 @@ from src.form_schema.forms.rr_mp_budget import RRMPBudget_v3_0
 from src.form_schema.forms.rr_mp_subaward_budget import RRMPSubawardBudget_v3_0
 from src.form_schema.rule_processing.json_rule_context import JsonRuleConfig, JsonRuleContext
 from src.form_schema.rule_processing.json_rule_processor import process_rule_schema_for_context
+
+_FORM_MODULE = importlib.import_module("src.form_schema.forms.rr_mp_budget.1.0.form_json")
 
 _PACKAGE_DIR = (
     Path(__file__).parents[4]
@@ -73,6 +76,8 @@ def test_rr_mp_budget_is_a_standalone_ten_period_multi_project_profile() -> None
     assert len([node for kind, node in ui_nodes if kind == "field" and node.get("widget")]) == 3
     assert _count_rules(RRMPBudget_v3_0.form_rule_schema, "gg_pre_population") == 10
     assert _count_rules(RRMPBudget_v3_0.form_rule_schema, "gg_validation") == 3
+    assert len(_FORM_MODULE._BUILD.compiled_rule_ids) == 10
+    assert len(_FORM_MODULE._BUILD.structurally_satisfied_rule_ids) == 1
 
 
 def test_standalone_profile_matches_the_previously_embedded_runtime_structure() -> None:
@@ -150,8 +155,13 @@ def test_package_pins_sources_and_keeps_unresolved_behavior_explicit() -> None:
     )
     assert evidence["executable_source_resolved_sums"] == 10
     assert evidence["blocked_calculations"] == 46
+    assert evidence["source_resolved_conditions"] == 1
+    assert evidence["conditions_satisfied_by_structure"] == 1
+    assert evidence["projected_source_resolved_conditions"] == 0
     assert manifest["review_boundary"]["calculation_projection"] == ("source_bound_resolved_subset")
-    assert manifest["review_boundary"]["condition_projection"] == ("none_without_typed_runtime")
+    assert manifest["review_boundary"]["condition_projection"] == (
+        "source_bound_reconciled_to_structural_requiredness"
+    )
     assert manifest["review_boundary"]["published_coverage_eligible"] is False
     assert manifest["review_boundary"]["production_ready"] is False
 
@@ -163,6 +173,8 @@ def test_package_pins_sources_and_keeps_unresolved_behavior_explicit() -> None:
         ("countable_questions", 156),
         ("source_calculations", 55),
         ("executable_sums", 30),
+        ("source_resolved_conditions", 2),
+        ("projected_conditions", 1),
         ("subaward_items", 1),
     ],
 )
@@ -178,6 +190,7 @@ def test_builder_rejects_multi_project_profile_drift(field: str, value: object) 
         "budget_periods": 10,
         "countable_questions": 157,
         "executable_sums": 10,
+        "source_resolved_conditions": 1,
     }
     values[field] = value
     with pytest.raises(BudgetFamilyError):

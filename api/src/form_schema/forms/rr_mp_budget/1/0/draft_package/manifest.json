@@ -28,14 +28,17 @@
     "repeating_groups": 5,
     "source_calculations": 56,
     "executable_source_resolved_sums": 10,
-    "blocked_calculations": 46
+    "blocked_calculations": 46,
+    "source_resolved_conditions": 1,
+    "conditions_satisfied_by_structure": 1,
+    "projected_source_resolved_conditions": 0
   },
   "review_boundary": {
     "structural_extraction": "deterministic_from_pinned_sources",
     "semantic_mapping": "agent_proposed",
     "ui_projection": "structural_canary",
     "calculation_projection": "source_bound_resolved_subset",
-    "condition_projection": "none_without_typed_runtime",
+    "condition_projection": "source_bound_reconciled_to_structural_requiredness",
     "target_form_behavior_parity": "not_established",
     "xml_projection": "not_available",
     "policy_and_instructions": "partially_pdf_reviewed_not_accepted",

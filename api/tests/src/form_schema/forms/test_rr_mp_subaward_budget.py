@@ -148,6 +148,7 @@ def test_budget_family_builder_rejects_multi_project_profile_drift(
         "repeating_groups": 6,
         "source_calculations": 0,
         "executable_sums": 0,
+        "source_resolved_conditions": 0,
     }
     values[field] = value
     with pytest.raises(BudgetFamilyError):

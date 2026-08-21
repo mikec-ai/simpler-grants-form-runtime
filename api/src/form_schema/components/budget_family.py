@@ -41,6 +41,8 @@ class BudgetFamilyConfig:
     repeating_groups: int = 5
     source_calculations: int = 56
     executable_sums: int = 30
+    source_resolved_conditions: int = 20
+    projected_conditions: int = 0
 
 
 @dataclass(frozen=True)
@@ -50,6 +52,7 @@ class BudgetFamilyBuild:
     form: Form
     manifest: dict[str, Any]
     compiled_rule_ids: tuple[str, ...]
+    structurally_satisfied_rule_ids: tuple[str, ...]
 
 
 _DECIMAL_PATTERN = r"^-?(?:\d{1,14}|\d{1,13}[.]\d|\d{1,12}[.]\d{2})$"
@@ -230,6 +233,135 @@ def compile_source_resolved_sum_rules(
     return rule_schema, tuple(compiled_ids)
 
 
+def _schema_object_at_runtime_path(
+    schema: dict[str, Any], path: tuple[tuple[str, bool], ...]
+) -> dict[str, Any]:
+    current = schema
+    for name, repeated in path:
+        properties = current.get("properties")
+        if not isinstance(properties, dict) or name not in properties:
+            raise BudgetFamilyError(f"Conditional schema path does not resolve: {_dotted(path)}")
+        child = properties[name]
+        if not isinstance(child, dict):
+            raise BudgetFamilyError(f"Conditional schema node is invalid: {_dotted(path)}")
+        if repeated:
+            child = child.get("items")
+            if not isinstance(child, dict):
+                raise BudgetFamilyError(f"Conditional array has no item schema: {_dotted(path)}")
+        current = child
+    return current
+
+
+def reconcile_source_resolved_required_conditions(
+    schema: dict[str, Any],
+    runtime_ast: dict[str, Any],
+    *,
+    expected_count: int = 20,
+    expected_projected_count: int = 0,
+) -> tuple[tuple[str, ...], tuple[str, ...]]:
+    """Reconcile exact required conditions with structural and conditional schemas."""
+
+    if runtime_ast.get("contract") != "source-bound-runtime-rule-ast/resolved-v1":
+        raise BudgetFamilyError("Unsupported budget runtime-rule contract")
+    source_index = _source_path_index(schema)
+    projected_ids: list[str] = []
+    structurally_satisfied_ids: list[str] = []
+
+    for rule in runtime_ast.get("rules", []):
+        if rule.get("mechanism") != "condition" or rule.get("execution_class") != "executable":
+            continue
+        if (
+            rule.get("disposition") != "working"
+            or rule.get("effect") != "required"
+            or rule.get("operator") not in {"present", "any_present"}
+            or rule.get("unresolved_references") != []
+        ):
+            raise BudgetFamilyError(f"Unsupported executable condition: {rule.get('rule_id')}")
+
+        target = rule.get("target", {})
+        target_source = target.get("path")
+        if (
+            target.get("path_resolved") is not True
+            or target.get("resolution_scope") != "local_form"
+        ):
+            raise BudgetFamilyError(f"Conditional target is not source-resolved: {target_source}")
+        target_path = source_index.get(target_source)
+        if target_path is None or not target_path or target_path[-1][1]:
+            raise BudgetFamilyError(f"Unknown conditional target: {target_source}")
+        parent_path = target_path[:-1]
+        target_name = target_path[-1][0]
+
+        dependency_names: list[str] = []
+        dependency_sources: list[str] = []
+        for dependency in rule.get("dependencies", []):
+            dependency_source = dependency.get("path")
+            if (
+                dependency.get("path_resolved") is not True
+                or dependency.get("resolution_scope") != "local_form"
+            ):
+                raise BudgetFamilyError(
+                    f"Conditional dependency is not source-resolved: {dependency_source}"
+                )
+            dependency_path = source_index.get(dependency_source)
+            if (
+                dependency_path is None
+                or not dependency_path
+                or dependency_path[-1][1]
+                or dependency_path[:-1] != parent_path
+            ):
+                raise BudgetFamilyError(
+                    f"Conditional dependency is not in the target object: {dependency_source}"
+                )
+            dependency_name = dependency_path[-1][0]
+            if dependency_name == target_name or dependency_name in dependency_names:
+                raise BudgetFamilyError(
+                    f"Conditional dependency is duplicate or circular: {dependency_source}"
+                )
+            dependency_names.append(dependency_name)
+            dependency_sources.append(dependency_source)
+        if not dependency_names:
+            raise BudgetFamilyError(f"Conditional has no dependencies: {rule.get('rule_id')}")
+        if rule["operator"] == "present" and len(dependency_names) != 1:
+            raise BudgetFamilyError("Present conditions require exactly one dependency")
+        source_value = rule.get("source_value", {})
+        if (
+            source_value.get("target_path") != target_source
+            or source_value.get("dependency_paths") != dependency_sources
+            or source_value.get("operator") != rule["operator"]
+            or source_value.get("effect") != rule["effect"]
+        ):
+            raise BudgetFamilyError(
+                f"Conditional runtime projection diverges from source evidence: {rule.get('rule_id')}"
+            )
+
+        parent_schema = _schema_object_at_runtime_path(schema, parent_path)
+        if target_name in parent_schema.get("required", []):
+            structurally_satisfied_ids.append(rule["rule_id"])
+            continue
+
+        predicate: dict[str, Any]
+        if rule["operator"] == "present":
+            predicate = {"required": dependency_names}
+        else:
+            predicate = {"anyOf": [{"required": [name]} for name in dependency_names]}
+        predicate["$comment"] = f"Source runtime rule {rule['rule_id']}"
+        parent_schema.setdefault("allOf", []).append(
+            {"if": predicate, "then": {"required": [target_name]}}
+        )
+        projected_ids.append(rule["rule_id"])
+
+    resolved_count = len(projected_ids) + len(structurally_satisfied_ids)
+    if resolved_count != expected_count:
+        raise BudgetFamilyError(
+            f"Expected {expected_count} resolved conditions, got {resolved_count}"
+        )
+    if len(projected_ids) != expected_projected_count:
+        raise BudgetFamilyError(
+            f"Expected {expected_projected_count} projected conditions, got {len(projected_ids)}"
+        )
+    return tuple(projected_ids), tuple(structurally_satisfied_ids)
+
+
 def _resolve_pointer(schema: dict[str, Any], pointer: str) -> dict[str, Any]:
     current: Any = schema
     for token in pointer.removeprefix("/").split("/"):
@@ -301,6 +433,11 @@ def build_budget_family_form(package_dir: Path, config: BudgetFamilyConfig) -> B
         "source_calculations": config.source_calculations,
         "executable_source_resolved_sums": config.executable_sums,
         "blocked_calculations": config.source_calculations - config.executable_sums,
+        "source_resolved_conditions": config.source_resolved_conditions,
+        "conditions_satisfied_by_structure": (
+            config.source_resolved_conditions - config.projected_conditions
+        ),
+        "projected_source_resolved_conditions": config.projected_conditions,
     }
     for key, value in expected_evidence.items():
         if evidence.get(key) != value:
@@ -337,6 +474,14 @@ def build_budget_family_form(package_dir: Path, config: BudgetFamilyConfig) -> B
 
     rule_schema, compiled_rule_ids = compile_source_resolved_sum_rules(
         schema, runtime_rules, expected_count=config.executable_sums
+    )
+    compiled_condition_ids, structurally_satisfied_rule_ids = (
+        reconcile_source_resolved_required_conditions(
+            schema,
+            runtime_rules,
+            expected_count=config.source_resolved_conditions,
+            expected_projected_count=config.projected_conditions,
+        )
     )
     ui_schema: list[dict[str, Any]]
     if subaward_schema is not None:
@@ -419,5 +564,6 @@ def build_budget_family_form(package_dir: Path, config: BudgetFamilyConfig) -> B
     return BudgetFamilyBuild(
         form=form,
         manifest=deepcopy(manifest),
-        compiled_rule_ids=compiled_rule_ids,
+        compiled_rule_ids=compiled_rule_ids + compiled_condition_ids,
+        structurally_satisfied_rule_ids=structurally_satisfied_rule_ids,
     )

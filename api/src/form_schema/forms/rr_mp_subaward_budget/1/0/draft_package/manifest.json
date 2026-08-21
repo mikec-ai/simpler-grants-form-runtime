@@ -37,13 +37,17 @@
     "repeating_groups": 6,
     "source_calculations": 0,
     "executable_source_resolved_sums": 0,
-    "blocked_calculations": 0
+    "blocked_calculations": 0,
+    "source_resolved_conditions": 0,
+    "conditions_satisfied_by_structure": 0,
+    "projected_source_resolved_conditions": 0
   },
   "review_boundary": {
     "structural_extraction": "deterministic_from_pinned_sources",
     "semantic_mapping": "agent_proposed",
     "ui_projection": "structural_canary",
     "calculation_projection": "none_without_target_evidence",
+    "condition_projection": "none_without_target_evidence",
     "sibling_calculation_inheritance": "explicitly_forbidden",
     "target_form_behavior_parity": "not_established",
     "technical_slot_semantics": "unresolved",
