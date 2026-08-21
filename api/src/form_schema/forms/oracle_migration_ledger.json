@@ -8,7 +8,7 @@
     "pending": "The registered implementation remains primarily form-specific."
   },
   "forms": [
-    {"form": "Attachment Form", "module": "attachment_form", "status": "pending"},
+    {"form": "Attachment Form", "module": "attachment_form", "status": "converted", "reuse": "numbered_attachment_slots_component", "parity_test": "tests/src/form_schema/forms/test_attachment_form.py"},
     {"form": "Budget Narrative Attachment", "module": "budget_narrative_attachment", "status": "converted", "reuse": "narrative_attachment_template", "parity_test": "tests/src/form_schema/templates/test_narrative_attachment.py"},
     {"form": "EPA Form 4700-4", "module": "epa_form_4700_4", "status": "pending"},
     {"form": "EPA Key Contacts", "module": "epa_key_contacts", "status": "converted", "reuse": "contact_profile_component", "parity_test": "tests/src/form_schema/components/test_contact_profile.py"},

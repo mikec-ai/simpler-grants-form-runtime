@@ -1,0 +1,4 @@
+# The numbered attachment-slot pattern determines this form's active artifacts.
+form_schema/components/numbered_attachment_slots.py
+form_schema/shared/common_shared.py
+form_schema/shared/shared_schema.py

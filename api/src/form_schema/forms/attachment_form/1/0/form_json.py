@@ -1,8 +1,12 @@
 import uuid
+from copy import deepcopy
 
 from src.constants.lookup_constants import FormType
 from src.db.models.competition_models import Form
+from src.form_schema.components.numbered_attachment_slots import build_numbered_attachment_slots
 from src.form_schema.shared import COMMON_SHARED_V1
+
+_ATTACHMENT_SLOTS = build_numbered_attachment_slots(15)
 
 INSTRUCTIONS = (
     "Instructions: On this form, you will attach the various files that "
@@ -17,7 +21,7 @@ IMPORTANT = (
     " See the appropriate Agency Guidelines for details."
 )
 
-FORM_JSON_SCHEMA = {
+_ORACLE_FORM_JSON_SCHEMA = {
     "type": "object",
     # No required fields
     "properties": {
@@ -99,7 +103,7 @@ FORM_JSON_SCHEMA = {
     },
 }
 
-FORM_UI_SCHEMA = [
+_ORACLE_FORM_UI_SCHEMA = [
     {
         "type": "section",
         "label": "",
@@ -236,7 +240,7 @@ FORM_UI_SCHEMA = [
     },
 ]
 
-FORM_RULE_SCHEMA = {
+_ORACLE_FORM_RULE_SCHEMA = {
     ##### VALIDATION RULES
     "att1": {"gg_validation": {"rule": "attachment"}},
     "att2": {"gg_validation": {"rule": "attachment"}},
@@ -255,7 +259,7 @@ FORM_RULE_SCHEMA = {
     "att15": {"gg_validation": {"rule": "attachment"}},
 }
 
-FORM_XML_TRANSFORM_RULES = {
+_ORACLE_FORM_XML_TRANSFORM_RULES = {
     # Metadata
     "_xml_config": {
         "description": "XML transformation rules for Attachment form",
@@ -342,6 +346,24 @@ FORM_XML_TRANSFORM_RULES = {
     },
     # No explicit field mapping needed - attachments are handled automatically via attachment_fields config
 }
+
+FORM_JSON_SCHEMA = {
+    "type": "object",
+    "properties": deepcopy(_ATTACHMENT_SLOTS.json_schema_properties),
+}
+assert FORM_JSON_SCHEMA == _ORACLE_FORM_JSON_SCHEMA
+
+FORM_UI_SCHEMA = deepcopy(_ORACLE_FORM_UI_SCHEMA[:2]) + deepcopy(_ATTACHMENT_SLOTS.ui_sections)
+assert FORM_UI_SCHEMA == _ORACLE_FORM_UI_SCHEMA
+
+FORM_RULE_SCHEMA = deepcopy(_ATTACHMENT_SLOTS.rule_schema)
+assert FORM_RULE_SCHEMA == _ORACLE_FORM_RULE_SCHEMA
+
+FORM_XML_TRANSFORM_RULES = deepcopy(_ORACLE_FORM_XML_TRANSFORM_RULES)
+FORM_XML_TRANSFORM_RULES["_xml_config"]["attachment_fields"] = deepcopy(
+    _ATTACHMENT_SLOTS.xml_attachment_fields
+)
+assert FORM_XML_TRANSFORM_RULES == _ORACLE_FORM_XML_TRANSFORM_RULES
 
 AttachmentForm_v1_2 = Form(
     # https://grants.gov/forms/form-items-description/fid/540

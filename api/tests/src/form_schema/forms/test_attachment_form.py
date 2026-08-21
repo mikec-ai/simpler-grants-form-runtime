@@ -1,3 +1,5 @@
+import importlib
+
 import pytest
 
 from src.form_schema.jsonschema_validator import validate_json_schema_for_form
@@ -7,6 +9,20 @@ from src.services.applications.application_validation import (
 )
 from src.validation.validation_constants import ValidationErrorType
 from tests.lib.data_factories import setup_application_for_form_validation
+
+_FORM_MODULE = importlib.import_module("src.form_schema.forms.attachment_form.1.0.form_json")
+
+
+def test_attachment_form_numbered_slots_preserve_the_native_oracle() -> None:
+    assert _FORM_MODULE.FORM_JSON_SCHEMA == _FORM_MODULE._ORACLE_FORM_JSON_SCHEMA
+    assert _FORM_MODULE.FORM_UI_SCHEMA == _FORM_MODULE._ORACLE_FORM_UI_SCHEMA
+    assert _FORM_MODULE.FORM_RULE_SCHEMA == _FORM_MODULE._ORACLE_FORM_RULE_SCHEMA
+    assert _FORM_MODULE.FORM_XML_TRANSFORM_RULES == (_FORM_MODULE._ORACLE_FORM_XML_TRANSFORM_RULES)
+    assert _FORM_MODULE._ATTACHMENT_SLOTS.component_id == ("application.numbered-attachment-slots")
+    assert all(
+        item.classification == "attachment" and item.semantic_question_id is None
+        for item in _FORM_MODULE._ATTACHMENT_SLOTS.field_metadata
+    )
 
 
 @pytest.fixture
