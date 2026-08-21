@@ -1,0 +1,6 @@
+# Fixed and repeated performance-site profiles determine this form's active artifacts.
+form_schema/components/component_definition.py
+form_schema/components/performance_site_location.py
+form_schema/shared/address_shared.py
+form_schema/shared/common_shared.py
+form_schema/shared/shared_schema.py

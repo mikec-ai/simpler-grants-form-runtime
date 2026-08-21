@@ -1,8 +1,19 @@
 import uuid
+from copy import deepcopy
 
 from src.constants.lookup_constants import FormType
 from src.db.models.competition_models import Form
+from src.form_schema.components.performance_site_location import build_performance_site_location
 from src.form_schema.shared import ADDRESS_SHARED_V1, COMMON_SHARED_V1
+
+_PRIMARY_SITE = build_performance_site_location(
+    "/properties/primary_site",
+    require_organization_unless_individual=True,
+)
+_ADDITIONAL_SITE = build_performance_site_location(
+    "/properties/additional_sites/items",
+    require_organization_unless_individual=False,
+)
 
 # Congressional district format: 2 alphanumeric chars + hyphen + 3 alphanumeric chars
 # Examples: CA-005, MD-all, US-all, 00-000
@@ -60,7 +71,7 @@ _US_CONGRESSIONAL_DISTRICT_CONDITIONAL = {
     "then": {"required": ["congressional_district"]},
 }
 
-FORM_JSON_SCHEMA = {
+_ORACLE_FORM_JSON_SCHEMA = {
     "type": "object",
     "required": ["primary_site"],
     "properties": {
@@ -111,7 +122,7 @@ FORM_JSON_SCHEMA = {
     },
 }
 
-FORM_UI_SCHEMA = [
+_ORACLE_FORM_UI_SCHEMA = [
     {
         "type": "section",
         "label": "Project/Performance Site Primary Location",
@@ -245,7 +256,7 @@ FORM_UI_SCHEMA = [
     },
 ]
 
-FORM_RULE_SCHEMA = {
+_ORACLE_FORM_RULE_SCHEMA = {
     # Validate the attachment ID exists on the application
     "additional_locations_attachment": {"gg_validation": {"rule": "attachment"}},
 }
@@ -337,7 +348,7 @@ def _site_location_xml_fields() -> dict:
     }
 
 
-FORM_XML_TRANSFORM_RULES = {
+_ORACLE_FORM_XML_TRANSFORM_RULES = {
     "_xml_config": {
         "description": "XML transformation rules for Project/Performance Site Location(s) v4.0",
         "version": "1.0",
@@ -382,6 +393,29 @@ FORM_XML_TRANSFORM_RULES = {
         "items": _site_location_xml_fields(),
     },
 }
+
+FORM_JSON_SCHEMA = deepcopy(_ORACLE_FORM_JSON_SCHEMA)
+FORM_JSON_SCHEMA["$defs"]["primary_site"] = deepcopy(_PRIMARY_SITE.json_schema)
+FORM_JSON_SCHEMA["$defs"]["site_location"] = deepcopy(_ADDITIONAL_SITE.json_schema)
+assert FORM_JSON_SCHEMA == _ORACLE_FORM_JSON_SCHEMA
+
+FORM_UI_SCHEMA = deepcopy(_ORACLE_FORM_UI_SCHEMA)
+FORM_UI_SCHEMA[0]["children"] = list(deepcopy(_PRIMARY_SITE.ui_fields))
+FORM_UI_SCHEMA[1]["children"][0]["children"] = list(deepcopy(_ADDITIONAL_SITE.ui_fields))
+assert FORM_UI_SCHEMA == _ORACLE_FORM_UI_SCHEMA
+
+FORM_RULE_SCHEMA = deepcopy(_ORACLE_FORM_RULE_SCHEMA)
+
+FORM_XML_TRANSFORM_RULES = deepcopy(_ORACLE_FORM_XML_TRANSFORM_RULES)
+FORM_XML_TRANSFORM_RULES["primary_site"] = {
+    "xml_transform": {"target": "PrimarySite", "type": "nested_object"},
+    **deepcopy(_PRIMARY_SITE.xml_fields),
+}
+FORM_XML_TRANSFORM_RULES["additional_sites"] = {
+    "xml_transform": {"target": "OtherSite", "type": "array"},
+    "items": deepcopy(_ADDITIONAL_SITE.xml_fields),
+}
+assert FORM_XML_TRANSFORM_RULES == _ORACLE_FORM_XML_TRANSFORM_RULES
 
 ProjectPerformanceSiteLocation_v4_0 = Form(
     # https://www.grants.gov/forms/form-items-description/fid/723
