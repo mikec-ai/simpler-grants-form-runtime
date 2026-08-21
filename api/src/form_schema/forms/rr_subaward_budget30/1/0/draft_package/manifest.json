@@ -1,0 +1,51 @@
+{
+  "contract": "simpler-budget-family-draft-package/v1",
+  "form": {
+    "form_id": "RRSubawardBudget30",
+    "legacy_form_id": "RR_SubawardBudget30_3_0",
+    "form_version": "3.0"
+  },
+  "artifacts": {
+    "candidate.json": "7090f3a9e76b09df87a862df49134ed63d2e8dce3947a312d35992d18205fe90",
+    "runtime-rules.json": "2554e6d8400c045568c5626f7dcdb3ede5a9e07e256cb882c0da613e4b65040f"
+  },
+  "source_evidence": {
+    "contract_source_version": "sha256:d5d534326e8f7e4416baf98c95c1f9234c0a23628259ee2d7e3199181a24e08a",
+    "xsd": {
+      "source_ref": "https://apply07.grants.gov/apply/forms/schemas/RR_SubawardBudget30_3_0-V3.0.xsd",
+      "sha256": "d5d534326e8f7e4416baf98c95c1f9234c0a23628259ee2d7e3199181a24e08a"
+    },
+    "embedded_budget_xsd": {
+      "source_ref": "https://apply07.grants.gov/apply/forms/schemas/RR_Budget_3_0-V3.0.xsd",
+      "sha256": "d474010f85819549990de65fc51292bed08ba98ac0895d0dde9513fbe855cdbc"
+    },
+    "behavior_model": {
+      "status": "inherited_source_bound_budget_family_evidence",
+      "target_form_dat_parity": "not_established"
+    },
+    "technical_slot_disposition": {
+      "count": 30,
+      "status": "hidden_unresolved_wire_slots",
+      "reason": "ATT names and xs:string types are not attachment semantics"
+    },
+    "nodes": 231,
+    "countable_questions": 187,
+    "decimal_fields": 115,
+    "repeating_groups": 6,
+    "source_calculations": 56,
+    "executable_source_resolved_sums": 30,
+    "blocked_calculations": 26
+  },
+  "review_boundary": {
+    "structural_extraction": "deterministic_from_pinned_sources",
+    "semantic_mapping": "agent_proposed",
+    "ui_projection": "structural_canary",
+    "calculation_projection": "inherited_source_bound_resolved_subset",
+    "target_form_behavior_parity": "not_established",
+    "technical_slot_semantics": "unresolved",
+    "xml_projection": "not_available",
+    "policy_and_instructions": "not_reviewed",
+    "published_coverage_eligible": false,
+    "production_ready": false
+  }
+}

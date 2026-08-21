@@ -51,6 +51,7 @@ export const hasClientCalculationRules = (
 const PATH_TOKEN_PATTERN = /^(.+?)(?:\[([*]|\d+)])?$/;
 const MONETARY_PATTERN = /^-?(?:\d+(?:\.\d+)?|\.\d+)$/;
 const RELATIVE_PATH_PREFIX = "@THIS.";
+const PARENT_PATH_PREFIX = "@PARENT.";
 
 const isJsonRecord = (value: unknown): value is JsonRecord =>
   typeof value === "object" && value !== null && !Array.isArray(value);
@@ -227,6 +228,15 @@ const resolveOperandPath = (
     return [
       ...targetPath.slice(0, -1),
       ...operandPath.slice(RELATIVE_PATH_PREFIX.length).split("."),
+    ];
+  }
+  if (operandPath.startsWith(PARENT_PATH_PREFIX)) {
+    if (targetPath.length < 2) {
+      return [];
+    }
+    return [
+      ...targetPath.slice(0, -2),
+      ...operandPath.slice(PARENT_PATH_PREFIX.length).split("."),
     ];
   }
   return operandPath.split(".");

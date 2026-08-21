@@ -33,6 +33,9 @@ class BudgetFamilyConfig:
     form_instruction_id: uuid.UUID
     budget_periods: int
     countable_questions: int
+    source_nodes: int = 199
+    subaward_items: int = 0
+    technical_slots: int = 0
     decimal_fields: int = 115
     repeating_groups: int = 5
     source_calculations: int = 56
@@ -54,6 +57,20 @@ _PERIOD_ATTACHMENTS = frozenset(
     {
         "/properties/budget_year/items/properties/key_persons/properties/attached_key_persons",
         "/properties/budget_year/items/properties/equipment/properties/additional_equipments_attachment",
+    }
+)
+_SUBAWARD_DEFINITION = "/properties/budget_attachments/properties/rr_budget_3_0"
+_SUBAWARD_ATTACHMENTS = frozenset(
+    {
+        f"{_SUBAWARD_DEFINITION}/items/properties/budget_justification_attachment",
+        (
+            f"{_SUBAWARD_DEFINITION}/items/properties/budget_year/items/properties/"
+            "key_persons/properties/attached_key_persons"
+        ),
+        (
+            f"{_SUBAWARD_DEFINITION}/items/properties/budget_year/items/properties/"
+            "equipment/properties/additional_equipments_attachment"
+        ),
     }
 )
 
@@ -154,7 +171,24 @@ def compile_source_resolved_sum_rules(
                 relative = operand_path[len(target_parent_path) :]
                 fields.append(f"@THIS.{_dotted(relative)}")
             elif rule.get("instance_scope") == "all_budget_periods":
-                fields.append(_dotted(operand_path))
+                repeated_target_indices = [
+                    index for index, (_, repeated) in enumerate(target_parent_path) if repeated
+                ]
+                if repeated_target_indices:
+                    scope_length = repeated_target_indices[-1] + 1
+                    scope_prefix = target_parent_path[:scope_length]
+                    if operand_path[:scope_length] != scope_prefix:
+                        raise BudgetFamilyError(
+                            f"Budget-period operand escapes repeated budget: {operand_source}"
+                        )
+                    parent_depth = len(target_parent_path) - scope_length
+                    if parent_depth != 1:
+                        raise BudgetFamilyError(
+                            "Nested budget-period sums require exactly one parent scope"
+                        )
+                    fields.append(f"@PARENT.{_dotted(operand_path[scope_length:])}")
+                else:
+                    fields.append(_dotted(operand_path))
             else:
                 raise BudgetFamilyError(
                     f"Unsupported calculation scope: {rule.get('instance_scope')}"
@@ -248,6 +282,7 @@ def build_budget_family_form(package_dir: Path, config: BudgetFamilyConfig) -> B
     manifest, candidate, runtime_rules = _load_package(package_dir, config)
     evidence = manifest.get("source_evidence", {})
     expected_evidence = {
+        "nodes": config.source_nodes,
         "countable_questions": config.countable_questions,
         "decimal_fields": config.decimal_fields,
         "repeating_groups": config.repeating_groups,
@@ -262,35 +297,79 @@ def build_budget_family_form(package_dir: Path, config: BudgetFamilyConfig) -> B
     schema = deepcopy(candidate["artifacts"]["json_schema"])
     if normalize_source_decimal_fields(schema) != config.decimal_fields:
         raise BudgetFamilyError("Budget-family decimal-field count drift")
-    period_schema = schema.get("properties", {}).get("budget_year", {})
+    root_properties = schema.get("properties", {})
+    if config.subaward_items:
+        budget_attachments = root_properties.get("budget_attachments", {})
+        subaward_schema = budget_attachments.get("properties", {}).get("rr_budget_3_0", {})
+        if subaward_schema.get("maxItems") != config.subaward_items:
+            raise BudgetFamilyError("Budget-family subaward parameter drift")
+        item_schema = subaward_schema.get("items", {})
+        period_schema = item_schema.get("properties", {}).get("budget_year", {})
+        technical_slots = {key for key in root_properties if key.startswith("att_")}
+        if len(technical_slots) != config.technical_slots:
+            raise BudgetFamilyError("Budget-family technical-slot accounting drift")
+    else:
+        if config.technical_slots:
+            raise BudgetFamilyError("Standalone budget cannot declare technical slots")
+        subaward_schema = None
+        period_schema = root_properties.get("budget_year", {})
     if period_schema.get("maxItems") != config.budget_periods:
         raise BudgetFamilyError("Budget-family period parameter drift")
 
     rule_schema, compiled_rule_ids = compile_source_resolved_sum_rules(
         schema, runtime_rules, expected_count=config.executable_sums
     )
-    period = build_schema_field_list(
-        period_schema,
-        definition=_PERIOD_DEFINITION,
-        name="budget_year",
-        label="Budget Period",
-        attachment_definitions=_PERIOD_ATTACHMENTS,
-    )
+    ui_schema: list[dict[str, Any]]
+    if subaward_schema is not None:
+        subaward = build_schema_field_list(
+            subaward_schema,
+            definition=_SUBAWARD_DEFINITION,
+            name="rr_budget_3_0",
+            label="Subaward Budget",
+            attachment_definitions=_SUBAWARD_ATTACHMENTS,
+        )
+        ui_schema = [
+            {
+                "type": "section",
+                "name": "subaward_budgets",
+                "label": "Subaward Budgets",
+                "children": [subaward.ui_schema],
+            }
+        ]
+        attachment_pointers = _SUBAWARD_ATTACHMENTS
+        budget_rules = rule_schema.setdefault("budget_attachments", {}).setdefault(
+            "rr_budget_3_0", {}
+        )
+        budget_rules["gg_type"] = "array"
+    else:
+        period = build_schema_field_list(
+            period_schema,
+            definition=_PERIOD_DEFINITION,
+            name="budget_year",
+            label="Budget Period",
+            attachment_definitions=_PERIOD_ATTACHMENTS,
+        )
+        ui_schema = deepcopy(candidate["artifacts"]["ui_schema"])
+        ui_schema[1]["children"] = [period.ui_schema]
+        for section in (ui_schema[0], ui_schema[2]):
+            for field in section["children"]:
+                node = _resolve_pointer(schema, field["definition"])
+                if node.get("readOnly") is True:
+                    field["type"] = "null"
+                if field["definition"] == "/properties/budget_justification_attachment":
+                    field["widget"] = "Attachment"
+        attachment_pointers = frozenset(
+            {
+                "/properties/budget_justification_attachment",
+                *_PERIOD_ATTACHMENTS,
+            }
+        )
+        budget_rules = rule_schema
 
-    ui_schema = deepcopy(candidate["artifacts"]["ui_schema"])
-    ui_schema[1]["children"] = [period.ui_schema]
-    for section in (ui_schema[0], ui_schema[2]):
-        for field in section["children"]:
-            node = _resolve_pointer(schema, field["definition"])
-            if node.get("readOnly") is True:
-                field["type"] = "null"
-            if field["definition"] == "/properties/budget_justification_attachment":
-                field["widget"] = "Attachment"
-
-    for pointer in ("/properties/budget_justification_attachment", *_PERIOD_ATTACHMENTS):
+    for pointer in attachment_pointers:
         _attachment_schema(schema, pointer)
 
-    budget_year_rules = rule_schema.setdefault("budget_year", {})
+    budget_year_rules = budget_rules.setdefault("budget_year", {})
     budget_year_rules["gg_type"] = "array"
     budget_year_rules.setdefault("key_persons", {})["attached_key_persons"] = {
         "gg_validation": {"rule": "attachment"}
@@ -298,7 +377,7 @@ def build_budget_family_form(package_dir: Path, config: BudgetFamilyConfig) -> B
     budget_year_rules.setdefault("equipment", {})["additional_equipments_attachment"] = {
         "gg_validation": {"rule": "attachment"}
     }
-    rule_schema["budget_justification_attachment"] = {"gg_validation": {"rule": "attachment"}}
+    budget_rules["budget_justification_attachment"] = {"gg_validation": {"rule": "attachment"}}
 
     form = Form(
         form_id=config.form_id,

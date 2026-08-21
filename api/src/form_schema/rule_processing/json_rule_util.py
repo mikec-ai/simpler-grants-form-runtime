@@ -7,6 +7,7 @@ from grants_shared.util.dict_util import get_nested_value
 logger = logging.getLogger(__name__)
 
 RELATIVE_PATH_TOKEN = "@THIS."
+PARENT_PATH_TOKEN = "@PARENT."
 
 # Regex to parse strings that end with [*] or [0] (any number of digits)
 ARRAY_INDEX_REGEX = re.compile(
@@ -38,6 +39,12 @@ def is_relative_path(raw_path: str) -> bool:
     return raw_path.startswith(RELATIVE_PATH_TOKEN)
 
 
+def is_parent_path(raw_path: str) -> bool:
+    """Return whether a configured operand is relative to the enclosing object."""
+
+    return raw_path.startswith(PARENT_PATH_TOKEN)
+
+
 def make_relative_path_absolute(path: list[str], relative_path: str) -> list[str]:
     """Create an absolute path from a relative path
 
@@ -55,6 +62,20 @@ def make_relative_path_absolute(path: list[str], relative_path: str) -> list[str
     """
     updated_relative_path = relative_path.removeprefix(RELATIVE_PATH_TOKEN)
     return path[:-1] + updated_relative_path.split(".")
+
+
+def make_parent_path_absolute(path: list[str], parent_path: str) -> list[str]:
+    """Resolve ``@PARENT.x`` against the object enclosing ``@THIS``.
+
+    A target at ``array[0].summary.total`` resolves ``@PARENT.periods[*]`` to
+    ``array[0].periods[*]``. This keeps calculations scoped to one repeated
+    aggregate rather than accidentally summing sibling aggregates.
+    """
+
+    if len(path) < 2:
+        raise ValueError("@PARENT requires a target nested at least two levels")
+    updated_parent_path = parent_path.removeprefix(PARENT_PATH_TOKEN)
+    return path[:-2] + updated_parent_path.split(".")
 
 
 def get_field_values(data: dict, fields: list[str], path: list[str]) -> list:
@@ -75,6 +96,8 @@ def get_field_values(data: dict, fields: list[str], path: list[str]) -> list:
     for field in fields:
         if is_relative_path(field):
             field_path = make_relative_path_absolute(path, field)
+        elif is_parent_path(field):
+            field_path = make_parent_path_absolute(path, field)
         else:
             field_path = field.split(".")
 

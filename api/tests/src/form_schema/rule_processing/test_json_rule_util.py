@@ -4,6 +4,7 @@ from src.form_schema.rule_processing.json_rule_util import (
     _get_index_from_str,
     build_path_str,
     get_field_values,
+    make_parent_path_absolute,
     make_relative_path_absolute,
     populate_nested_value,
 )
@@ -195,6 +196,12 @@ def test_populate_nested_value_value_is_not_array():
 )
 def test_make_relative_path_absolute(path, relative_path, expected_value):
     assert make_relative_path_absolute(path, relative_path) == expected_value
+
+
+def test_make_parent_path_absolute_scopes_to_enclosing_array_item():
+    assert make_parent_path_absolute(
+        ["subawards[1]", "summary", "total"], "@PARENT.periods[*].cost"
+    ) == ["subawards[1]", "periods[*]", "cost"]
 
 
 @pytest.mark.parametrize(

@@ -202,5 +202,45 @@
     "expected_client_errors": [
       "Unable to populate calculated value at section.total"
     ]
+  },
+  {
+    "name": "scope nested aggregate sums to the current parent array item",
+    "input": {
+      "subawards": [
+        {
+          "periods": [{"cost": "10.00"}, {"cost": "15.25"}],
+          "summary": {}
+        },
+        {
+          "periods": [{"cost": "100.00"}],
+          "summary": {}
+        }
+      ]
+    },
+    "rule_schema": {
+      "subawards": {
+        "gg_type": "array",
+        "summary": {
+          "total": {
+            "gg_pre_population": {
+              "rule": "sum_monetary",
+              "fields": ["@PARENT.periods[*].cost"]
+            }
+          }
+        }
+      }
+    },
+    "expected": {
+      "subawards": [
+        {
+          "periods": [{"cost": "10.00"}, {"cost": "15.25"}],
+          "summary": {"total": "25.25"}
+        },
+        {
+          "periods": [{"cost": "100.00"}],
+          "summary": {"total": "100.00"}
+        }
+      ]
+    }
   }
 ]
