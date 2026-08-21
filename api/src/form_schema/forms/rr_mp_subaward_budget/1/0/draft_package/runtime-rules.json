@@ -1,0 +1,689 @@
+{
+  "accounting": {
+    "base_executable_rules": 6,
+    "blocked_records": 9,
+    "complete_source_container_partition": true,
+    "executable_rules": 6,
+    "mechanism_counts": {
+      "implementation_gate": 2,
+      "inherited_behavior_candidate": 1,
+      "repetition": 6,
+      "static_policy_or_presentation": 6
+    },
+    "multi_level_coordinate_rules": 5,
+    "normalized_records": 15,
+    "overlay_promoted_rules": 0,
+    "preserved_records": 0,
+    "working_records": 6,
+    "working_rules_needing_path_resolution": 0
+  },
+  "base_runtime_ast": {
+    "path": "artifacts/authoring/runtime-rule-ast-v1/forms/RRMPSubawardBudget.json",
+    "sha256": "7a881bae9c7974313399d61bb0eca4ca54b37982daf68044ff3117caa0e99f3f"
+  },
+  "contract": "source-bound-runtime-rule-ast/resolved-v1",
+  "form_id": "RRMPSubawardBudget",
+  "hierarchical_coordinates": {
+    "coordinate_model": "ordered_repeat_ancestor_indices",
+    "maximum_repeat_depth": 3,
+    "repeating_source_paths": [
+      "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0",
+      "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear",
+      "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear.Equipment.EquipmentList",
+      "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear.IndirectCosts.IndirectCost",
+      "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear.KeyPersons.KeyPerson",
+      "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear.OtherPersonnel.Other"
+    ]
+  },
+  "production_ready": false,
+  "published_coverage_eligible": false,
+  "resolution_overlay": {
+    "promoted_rule_ids": [],
+    "published_coverage_eligible": false,
+    "review_status": "agent_proposed"
+  },
+  "review_status": "agent_proposed",
+  "rules": [
+    {
+      "dependencies": [],
+      "disposition": "working",
+      "execution_class": "executable",
+      "mechanism": "repetition",
+      "operands": [],
+      "rule_id": "runtime-rule:sha256:c64e944d0c700763b8fbc349ab17b1c2c3ee4d811a6d4d2afaea1a5ede35e1c8",
+      "source_collection": "repetitions",
+      "source_index": 0,
+      "source_runtime": {
+        "path": "artifacts/authoring/expansion-runtime-wave/RRMPSubawardBudget.runtime.json",
+        "sha256": "61143f7b47cdbb90e338b2c547c99523cec8a6342b95daf3015512b56d1571aa"
+      },
+      "source_value": {
+        "cardinality": {
+          "maximum": 30,
+          "minimum": 0
+        },
+        "path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0",
+        "source": {
+          "provenance": [
+            "sha256:8ee3867971d4030582ff4c4cd906cd1a086c2d2491fb6f05b33cdd07ae435846 https://apply07.grants.gov/apply/forms/schemas/RR_MP_Budget_3_0-V3.0.xsd"
+          ]
+        },
+        "source_question_key": "question:sha256:99d39e6231ce9fb959e48bc669eb0c4d6e1139fe27bba5cb5785e8401311b1ee"
+      },
+      "target": {
+        "path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0",
+        "path_resolved": true,
+        "repeat_ancestors": [
+          {
+            "coordinate_variable": "$index0",
+            "depth": 0,
+            "group_path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0"
+          }
+        ],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [],
+      "disposition": "working",
+      "execution_class": "executable",
+      "mechanism": "repetition",
+      "operands": [],
+      "rule_id": "runtime-rule:sha256:0c1fd4477a69785d03ff1c8b3e2411b751bd99fb939dcd3446976ad8aa6cbf35",
+      "source_collection": "repetitions",
+      "source_index": 1,
+      "source_runtime": {
+        "path": "artifacts/authoring/expansion-runtime-wave/RRMPSubawardBudget.runtime.json",
+        "sha256": "61143f7b47cdbb90e338b2c547c99523cec8a6342b95daf3015512b56d1571aa"
+      },
+      "source_value": {
+        "cardinality": {
+          "maximum": 10,
+          "minimum": 1
+        },
+        "path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear",
+        "source": {
+          "provenance": [
+            "sha256:8ee3867971d4030582ff4c4cd906cd1a086c2d2491fb6f05b33cdd07ae435846 https://apply07.grants.gov/apply/forms/schemas/RR_MP_Budget_3_0-V3.0.xsd"
+          ]
+        },
+        "source_question_key": "question:sha256:9c60e8a59c653537c0ae02d407081f6cfbf2c7b8935005f9397e4dff1d99abf3"
+      },
+      "target": {
+        "path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear",
+        "path_resolved": true,
+        "repeat_ancestors": [
+          {
+            "coordinate_variable": "$index0",
+            "depth": 0,
+            "group_path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0"
+          },
+          {
+            "coordinate_variable": "$index1",
+            "depth": 1,
+            "group_path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear"
+          }
+        ],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [],
+      "disposition": "working",
+      "execution_class": "executable",
+      "mechanism": "repetition",
+      "operands": [],
+      "rule_id": "runtime-rule:sha256:97651509b3757d8ca049b755419ac39aac45d168f5de0c480b568e53960cf7e0",
+      "source_collection": "repetitions",
+      "source_index": 2,
+      "source_runtime": {
+        "path": "artifacts/authoring/expansion-runtime-wave/RRMPSubawardBudget.runtime.json",
+        "sha256": "61143f7b47cdbb90e338b2c547c99523cec8a6342b95daf3015512b56d1571aa"
+      },
+      "source_value": {
+        "cardinality": {
+          "maximum": 100,
+          "minimum": 0
+        },
+        "path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear.Equipment.EquipmentList",
+        "source": {
+          "provenance": [
+            "sha256:8ee3867971d4030582ff4c4cd906cd1a086c2d2491fb6f05b33cdd07ae435846 https://apply07.grants.gov/apply/forms/schemas/RR_MP_Budget_3_0-V3.0.xsd"
+          ]
+        },
+        "source_question_key": "question:sha256:8611f12dcf8f014c79fff2340434857892f47df971b23fc5dd71394b46dc0185"
+      },
+      "target": {
+        "path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear.Equipment.EquipmentList",
+        "path_resolved": true,
+        "repeat_ancestors": [
+          {
+            "coordinate_variable": "$index0",
+            "depth": 0,
+            "group_path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0"
+          },
+          {
+            "coordinate_variable": "$index1",
+            "depth": 1,
+            "group_path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear"
+          },
+          {
+            "coordinate_variable": "$index2",
+            "depth": 2,
+            "group_path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear.Equipment.EquipmentList"
+          }
+        ],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [],
+      "disposition": "working",
+      "execution_class": "executable",
+      "mechanism": "repetition",
+      "operands": [],
+      "rule_id": "runtime-rule:sha256:3e0d1c6a34956bb1103e491ba83e8489d40085d030e5c3532fa04e5b67627d34",
+      "source_collection": "repetitions",
+      "source_index": 3,
+      "source_runtime": {
+        "path": "artifacts/authoring/expansion-runtime-wave/RRMPSubawardBudget.runtime.json",
+        "sha256": "61143f7b47cdbb90e338b2c547c99523cec8a6342b95daf3015512b56d1571aa"
+      },
+      "source_value": {
+        "cardinality": {
+          "maximum": 4,
+          "minimum": 1
+        },
+        "path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear.IndirectCosts.IndirectCost",
+        "source": {
+          "provenance": [
+            "sha256:8ee3867971d4030582ff4c4cd906cd1a086c2d2491fb6f05b33cdd07ae435846 https://apply07.grants.gov/apply/forms/schemas/RR_MP_Budget_3_0-V3.0.xsd"
+          ]
+        },
+        "source_question_key": "question:sha256:a105654281523bfdc37772f280af9bc796e62a10086e6a4f98f643e40353c1fc"
+      },
+      "target": {
+        "path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear.IndirectCosts.IndirectCost",
+        "path_resolved": true,
+        "repeat_ancestors": [
+          {
+            "coordinate_variable": "$index0",
+            "depth": 0,
+            "group_path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0"
+          },
+          {
+            "coordinate_variable": "$index1",
+            "depth": 1,
+            "group_path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear"
+          },
+          {
+            "coordinate_variable": "$index2",
+            "depth": 2,
+            "group_path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear.IndirectCosts.IndirectCost"
+          }
+        ],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [],
+      "disposition": "working",
+      "execution_class": "executable",
+      "mechanism": "repetition",
+      "operands": [],
+      "rule_id": "runtime-rule:sha256:24cf5135745f52442035faa3117fb1f6472aae3d63265929fbed2097303f1d13",
+      "source_collection": "repetitions",
+      "source_index": 4,
+      "source_runtime": {
+        "path": "artifacts/authoring/expansion-runtime-wave/RRMPSubawardBudget.runtime.json",
+        "sha256": "61143f7b47cdbb90e338b2c547c99523cec8a6342b95daf3015512b56d1571aa"
+      },
+      "source_value": {
+        "cardinality": {
+          "maximum": 100,
+          "minimum": 1
+        },
+        "path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear.KeyPersons.KeyPerson",
+        "source": {
+          "provenance": [
+            "sha256:8ee3867971d4030582ff4c4cd906cd1a086c2d2491fb6f05b33cdd07ae435846 https://apply07.grants.gov/apply/forms/schemas/RR_MP_Budget_3_0-V3.0.xsd"
+          ]
+        },
+        "source_question_key": "question:sha256:1ea6992b2ef07b1b601296c197b39730e0de0d2076efe9b88f3bb76b3496140f"
+      },
+      "target": {
+        "path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear.KeyPersons.KeyPerson",
+        "path_resolved": true,
+        "repeat_ancestors": [
+          {
+            "coordinate_variable": "$index0",
+            "depth": 0,
+            "group_path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0"
+          },
+          {
+            "coordinate_variable": "$index1",
+            "depth": 1,
+            "group_path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear"
+          },
+          {
+            "coordinate_variable": "$index2",
+            "depth": 2,
+            "group_path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear.KeyPersons.KeyPerson"
+          }
+        ],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [],
+      "disposition": "working",
+      "execution_class": "executable",
+      "mechanism": "repetition",
+      "operands": [],
+      "rule_id": "runtime-rule:sha256:11431129faa8a44bcafc0f3873b19d64e94951a094a97495af830e8e01b6fe5f",
+      "source_collection": "repetitions",
+      "source_index": 5,
+      "source_runtime": {
+        "path": "artifacts/authoring/expansion-runtime-wave/RRMPSubawardBudget.runtime.json",
+        "sha256": "61143f7b47cdbb90e338b2c547c99523cec8a6342b95daf3015512b56d1571aa"
+      },
+      "source_value": {
+        "cardinality": {
+          "maximum": 6,
+          "minimum": 0
+        },
+        "path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear.OtherPersonnel.Other",
+        "source": {
+          "provenance": [
+            "sha256:8ee3867971d4030582ff4c4cd906cd1a086c2d2491fb6f05b33cdd07ae435846 https://apply07.grants.gov/apply/forms/schemas/RR_MP_Budget_3_0-V3.0.xsd"
+          ]
+        },
+        "source_question_key": "question:sha256:30a7cbc834001bdede21289cfa27ab148e1a4857a19145b5a7f162f8c8d8bfdd"
+      },
+      "target": {
+        "path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear.OtherPersonnel.Other",
+        "path_resolved": true,
+        "repeat_ancestors": [
+          {
+            "coordinate_variable": "$index0",
+            "depth": 0,
+            "group_path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0"
+          },
+          {
+            "coordinate_variable": "$index1",
+            "depth": 1,
+            "group_path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear"
+          },
+          {
+            "coordinate_variable": "$index2",
+            "depth": 2,
+            "group_path": "RR_MP_SubawardBudget_3_0.BudgetAttachments.RR_MP_Budget_3_0.BudgetYear.OtherPersonnel.Other"
+          }
+        ],
+        "resolution_scope": "local_form"
+      },
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [],
+      "disposition": "blocked",
+      "execution_class": "evidence",
+      "mechanism": "implementation_gate",
+      "operands": [],
+      "rule_id": "runtime-rule:sha256:bf9d185cdf32663ec9db67581cb6a5d7c6f3199afefd203b66b1eacc9e66a157",
+      "source_collection": "form_specific_gates",
+      "source_index": 0,
+      "source_runtime": {
+        "path": "artifacts/authoring/expansion-runtime-wave/RRMPSubawardBudget.runtime.json",
+        "sha256": "61143f7b47cdbb90e338b2c547c99523cec8a6342b95daf3015512b56d1571aa"
+      },
+      "source_value": {
+        "finding": "The form is a bounded 30-slot collection of 10-year R&R subaward-budget PDFs with an extract-template action and unique subawardee-organization filename rule.",
+        "gate": "bounded_repetition_and_file_behavior",
+        "pages": [
+          1
+        ]
+      },
+      "target": null,
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [],
+      "disposition": "blocked",
+      "execution_class": "evidence",
+      "mechanism": "implementation_gate",
+      "operands": [],
+      "rule_id": "runtime-rule:sha256:f71e486cba839b3e364a6bd1fcff89f02208667431875fae7a47293ef1ddfe3d",
+      "source_collection": "form_specific_gates",
+      "source_index": 1,
+      "source_runtime": {
+        "path": "artifacts/authoring/expansion-runtime-wave/RRMPSubawardBudget.runtime.json",
+        "sha256": "61143f7b47cdbb90e338b2c547c99523cec8a6342b95daf3015512b56d1571aa"
+      },
+      "source_value": {
+        "finding": "Official metadata declares no separate instruction PDF, so no unseen instruction behavior was inferred.",
+        "gate": "source_gap",
+        "pages": []
+      },
+      "target": null,
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [],
+      "disposition": "blocked",
+      "execution_class": "evidence",
+      "mechanism": "inherited_behavior_candidate",
+      "operands": [],
+      "reason": "target DAT contains only wrapper behavior; nested behavior inheritance is not established",
+      "rule_id": "runtime-rule:sha256:0911149878cba74a7b842b99347464b44d0d7bd0a3a679ba377e5732e5ae747b",
+      "source_collection": "inherited_behavior",
+      "source_index": 0,
+      "source_runtime": {
+        "path": "artifacts/authoring/expansion-runtime-wave/RRMPSubawardBudget.runtime.json",
+        "sha256": "61143f7b47cdbb90e338b2c547c99523cec8a6342b95daf3015512b56d1571aa"
+      },
+      "source_value": {
+        "reason": "target DAT contains only wrapper behavior; nested behavior inheritance is not established",
+        "status": "not_inferred"
+      },
+      "target": null,
+      "unresolved_references": []
+    },
+    {
+      "dependencies": [],
+      "disposition": "blocked",
+      "execution_class": "evidence",
+      "mechanism": "static_policy_or_presentation",
+      "operands": [],
+      "rule_id": "runtime-rule:sha256:077579ce9d267b5170cdb1b8e686013414513a0890dd96808c51cb5f97fe5060",
+      "source_collection": "static_policy_and_presentation",
+      "source_index": 0,
+      "source_runtime": {
+        "path": "artifacts/authoring/expansion-runtime-wave/RRMPSubawardBudget.runtime.json",
+        "sha256": "61143f7b47cdbb90e338b2c547c99523cec8a6342b95daf3015512b56d1571aa"
+      },
+      "source_value": {
+        "allowed_values": [],
+        "behavior_key": "behavior:sha256:824a49151bbb2f46dce88c31b3942fed6789a6b3c0a0726590422fd2df43c8e7",
+        "business_rules": "",
+        "condition": "",
+        "data_type": "",
+        "fid": "789",
+        "field_id": "OMB Number Text",
+        "field_number": "0-0",
+        "form_id": "RR_MP_SubawardBudget_3_0",
+        "form_version": "3.0",
+        "implementation": "Label",
+        "input_role": "presentation",
+        "label": "OMB Number: 4040-0001",
+        "max_occurs": null,
+        "maximum": null,
+        "min_occurs": null,
+        "minimum": null,
+        "provenance": [
+          "sha256:aa2288490aec0ae2848a803946e6d80633fa90bd0f6bdefe9d515bfc2a800569 https://apply07.grants.gov/apply/forms/sample/RR_MP_SubawardBudget_3_0-V3.0_F789.xls"
+        ],
+        "required": null,
+        "source": "grants.gov.dat",
+        "source_ref": "https://apply07.grants.gov/apply/forms/sample/RR_MP_SubawardBudget_3_0-V3.0_F789.xls",
+        "source_version": "sha256:aa2288490aec0ae2848a803946e6d80633fa90bd0f6bdefe9d515bfc2a800569"
+      },
+      "target": null,
+      "unresolved_references": [
+        {
+          "descriptor": "grants.gov.dat",
+          "role": "target"
+        }
+      ]
+    },
+    {
+      "dependencies": [],
+      "disposition": "blocked",
+      "execution_class": "evidence",
+      "mechanism": "static_policy_or_presentation",
+      "operands": [],
+      "rule_id": "runtime-rule:sha256:aa637afbfb0f7b3a2584b35d690cb0363f2b40edd72e08491540d431fadb679e",
+      "source_collection": "static_policy_and_presentation",
+      "source_index": 1,
+      "source_runtime": {
+        "path": "artifacts/authoring/expansion-runtime-wave/RRMPSubawardBudget.runtime.json",
+        "sha256": "61143f7b47cdbb90e338b2c547c99523cec8a6342b95daf3015512b56d1571aa"
+      },
+      "source_value": {
+        "allowed_values": [],
+        "behavior_key": "behavior:sha256:52993f956f8a53c725605f42b005181db54ce7948e6ba0fc846094c86975a785",
+        "business_rules": "",
+        "condition": "",
+        "data_type": "",
+        "fid": "789",
+        "field_id": "Expiration Date Text",
+        "field_number": "0-1",
+        "form_id": "RR_MP_SubawardBudget_3_0",
+        "form_version": "3.0",
+        "implementation": "Label",
+        "input_role": "presentation",
+        "label": "Expiration Date: 01/31/2029",
+        "max_occurs": null,
+        "maximum": null,
+        "min_occurs": null,
+        "minimum": null,
+        "provenance": [
+          "sha256:aa2288490aec0ae2848a803946e6d80633fa90bd0f6bdefe9d515bfc2a800569 https://apply07.grants.gov/apply/forms/sample/RR_MP_SubawardBudget_3_0-V3.0_F789.xls"
+        ],
+        "required": null,
+        "source": "grants.gov.dat",
+        "source_ref": "https://apply07.grants.gov/apply/forms/sample/RR_MP_SubawardBudget_3_0-V3.0_F789.xls",
+        "source_version": "sha256:aa2288490aec0ae2848a803946e6d80633fa90bd0f6bdefe9d515bfc2a800569"
+      },
+      "target": null,
+      "unresolved_references": [
+        {
+          "descriptor": "grants.gov.dat",
+          "role": "target"
+        }
+      ]
+    },
+    {
+      "dependencies": [],
+      "disposition": "blocked",
+      "execution_class": "evidence",
+      "mechanism": "static_policy_or_presentation",
+      "operands": [],
+      "rule_id": "runtime-rule:sha256:6cbae57b2d4cd4754606396fd27e05bdd3e9fcd2ef81d96fbb1bbc172fdfa94a",
+      "source_collection": "static_policy_and_presentation",
+      "source_index": 2,
+      "source_runtime": {
+        "path": "artifacts/authoring/expansion-runtime-wave/RRMPSubawardBudget.runtime.json",
+        "sha256": "61143f7b47cdbb90e338b2c547c99523cec8a6342b95daf3015512b56d1571aa"
+      },
+      "source_value": {
+        "allowed_values": [],
+        "behavior_key": "behavior:sha256:bd560687b9c245146411de825bc07d94b2af663e4ac226f8b87792eef555a6de",
+        "business_rules": "",
+        "condition": "",
+        "data_type": "",
+        "fid": "789",
+        "field_id": "Form Title Text",
+        "field_number": "0-2",
+        "form_id": "RR_MP_SubawardBudget_3_0",
+        "form_version": "3.0",
+        "implementation": "Label",
+        "input_role": "presentation",
+        "label": "10 YEAR R&R SUBAWARD BUDGET ATTACHMENT(S) FORM",
+        "max_occurs": null,
+        "maximum": null,
+        "min_occurs": null,
+        "minimum": null,
+        "provenance": [
+          "sha256:aa2288490aec0ae2848a803946e6d80633fa90bd0f6bdefe9d515bfc2a800569 https://apply07.grants.gov/apply/forms/sample/RR_MP_SubawardBudget_3_0-V3.0_F789.xls"
+        ],
+        "required": null,
+        "source": "grants.gov.dat",
+        "source_ref": "https://apply07.grants.gov/apply/forms/sample/RR_MP_SubawardBudget_3_0-V3.0_F789.xls",
+        "source_version": "sha256:aa2288490aec0ae2848a803946e6d80633fa90bd0f6bdefe9d515bfc2a800569"
+      },
+      "target": null,
+      "unresolved_references": [
+        {
+          "descriptor": "grants.gov.dat",
+          "role": "target"
+        }
+      ]
+    },
+    {
+      "dependencies": [],
+      "disposition": "blocked",
+      "execution_class": "evidence",
+      "mechanism": "static_policy_or_presentation",
+      "operands": [],
+      "rule_id": "runtime-rule:sha256:8bbc6c3e3cbabcfb0280fab652ff27d23345c36cc381de35c344ef3b5522b467",
+      "source_collection": "static_policy_and_presentation",
+      "source_index": 3,
+      "source_runtime": {
+        "path": "artifacts/authoring/expansion-runtime-wave/RRMPSubawardBudget.runtime.json",
+        "sha256": "61143f7b47cdbb90e338b2c547c99523cec8a6342b95daf3015512b56d1571aa"
+      },
+      "source_value": {
+        "allowed_values": [],
+        "behavior_key": "behavior:sha256:0e96c95a60aeb1796efca8514be6fbdbcf28144b273dcd4542dac7b5a4452322",
+        "business_rules": "",
+        "condition": "",
+        "data_type": "",
+        "fid": "789",
+        "field_id": "Instructions Text",
+        "field_number": "0-3",
+        "form_id": "RR_MP_SubawardBudget_3_0",
+        "form_version": "3.0",
+        "implementation": "Label",
+        "input_role": "presentation",
+        "label": "Instructions: On this form, you will attach the 10 Year R&R Subaward Budget files for your grant application. Complete the subawardee budget(s) in accordance with the 10 Year R&R budget instructions. Please remember that any files you attach must be a PDF document.",
+        "max_occurs": null,
+        "maximum": null,
+        "min_occurs": null,
+        "minimum": null,
+        "provenance": [
+          "sha256:aa2288490aec0ae2848a803946e6d80633fa90bd0f6bdefe9d515bfc2a800569 https://apply07.grants.gov/apply/forms/sample/RR_MP_SubawardBudget_3_0-V3.0_F789.xls"
+        ],
+        "required": null,
+        "source": "grants.gov.dat",
+        "source_ref": "https://apply07.grants.gov/apply/forms/sample/RR_MP_SubawardBudget_3_0-V3.0_F789.xls",
+        "source_version": "sha256:aa2288490aec0ae2848a803946e6d80633fa90bd0f6bdefe9d515bfc2a800569"
+      },
+      "target": null,
+      "unresolved_references": [
+        {
+          "descriptor": "grants.gov.dat",
+          "role": "target"
+        }
+      ]
+    },
+    {
+      "dependencies": [],
+      "disposition": "blocked",
+      "execution_class": "evidence",
+      "mechanism": "static_policy_or_presentation",
+      "operands": [],
+      "rule_id": "runtime-rule:sha256:2ceb640e68d7dea53310bde284735224b0406c7b3007e97e0e028b0e3511ba34",
+      "source_collection": "static_policy_and_presentation",
+      "source_index": 4,
+      "source_runtime": {
+        "path": "artifacts/authoring/expansion-runtime-wave/RRMPSubawardBudget.runtime.json",
+        "sha256": "61143f7b47cdbb90e338b2c547c99523cec8a6342b95daf3015512b56d1571aa"
+      },
+      "source_value": {
+        "allowed_values": [],
+        "behavior_key": "behavior:sha256:12c02a922fcf2fbb0a986b25a7a309267b44f1a03255c0f074ed6f38832c2c6d",
+        "business_rules": "The PDF of the 10 Year R&R Budget Form will be embedded into this form. The applicant will click the button and a dialog box will appear where applicant indicates where to save the file.",
+        "condition": "",
+        "data_type": "",
+        "fid": "789",
+        "field_id": "Click to Extract Button",
+        "field_number": "0-4",
+        "form_id": "RR_MP_SubawardBudget_3_0",
+        "form_version": "3.0",
+        "implementation": "Button",
+        "input_role": "presentation",
+        "label": "Click here to extract the 10 Year R&R Subaward Budget Attachment",
+        "max_occurs": null,
+        "maximum": null,
+        "min_occurs": null,
+        "minimum": null,
+        "provenance": [
+          "sha256:aa2288490aec0ae2848a803946e6d80633fa90bd0f6bdefe9d515bfc2a800569 https://apply07.grants.gov/apply/forms/sample/RR_MP_SubawardBudget_3_0-V3.0_F789.xls"
+        ],
+        "required": null,
+        "source": "grants.gov.dat",
+        "source_ref": "https://apply07.grants.gov/apply/forms/sample/RR_MP_SubawardBudget_3_0-V3.0_F789.xls",
+        "source_version": "sha256:aa2288490aec0ae2848a803946e6d80633fa90bd0f6bdefe9d515bfc2a800569"
+      },
+      "target": null,
+      "unresolved_references": [
+        {
+          "descriptor": "grants.gov.dat",
+          "role": "target"
+        }
+      ]
+    },
+    {
+      "dependencies": [],
+      "disposition": "blocked",
+      "execution_class": "evidence",
+      "mechanism": "static_policy_or_presentation",
+      "operands": [],
+      "rule_id": "runtime-rule:sha256:25d110342916104e70a7c3b26f3a8ad3b1325365e56833bd8f47205e196d5b1e",
+      "source_collection": "static_policy_and_presentation",
+      "source_index": 5,
+      "source_runtime": {
+        "path": "artifacts/authoring/expansion-runtime-wave/RRMPSubawardBudget.runtime.json",
+        "sha256": "61143f7b47cdbb90e338b2c547c99523cec8a6342b95daf3015512b56d1571aa"
+      },
+      "source_value": {
+        "allowed_values": [],
+        "behavior_key": "behavior:sha256:4f3374b8a086762faf98723a9d5191296b82e0a7504d454f16fc18cb88e73594",
+        "business_rules": "",
+        "condition": "",
+        "data_type": "",
+        "fid": "789",
+        "field_id": "Important Text",
+        "field_number": "0-5",
+        "form_id": "RR_MP_SubawardBudget_3_0",
+        "form_version": "3.0",
+        "implementation": "Label",
+        "input_role": "presentation",
+        "label": "Important: Please attach your subawardee budget file(s) with the file name of the subawardee organization. Each file name must be unique.",
+        "max_occurs": null,
+        "maximum": null,
+        "min_occurs": null,
+        "minimum": null,
+        "provenance": [
+          "sha256:aa2288490aec0ae2848a803946e6d80633fa90bd0f6bdefe9d515bfc2a800569 https://apply07.grants.gov/apply/forms/sample/RR_MP_SubawardBudget_3_0-V3.0_F789.xls"
+        ],
+        "required": null,
+        "source": "grants.gov.dat",
+        "source_ref": "https://apply07.grants.gov/apply/forms/sample/RR_MP_SubawardBudget_3_0-V3.0_F789.xls",
+        "source_version": "sha256:aa2288490aec0ae2848a803946e6d80633fa90bd0f6bdefe9d515bfc2a800569"
+      },
+      "target": null,
+      "unresolved_references": [
+        {
+          "descriptor": "grants.gov.dat",
+          "role": "target"
+        }
+      ]
+    }
+  ],
+  "runtime_contract": "source-bound-expansion-runtime-v1",
+  "source_ledger": {
+    "path": "artifacts/authoring/rr-multi-project/forms/RRMPSubawardBudget.json",
+    "sha256": "98a9915da3c94037c1c2aae0e79d4494a85614f782732319e497740fbadd2cac"
+  },
+  "source_runtime": {
+    "path": "artifacts/authoring/expansion-runtime-wave/RRMPSubawardBudget.runtime.json",
+    "sha256": "61143f7b47cdbb90e338b2c547c99523cec8a6342b95daf3015512b56d1571aa"
+  }
+}

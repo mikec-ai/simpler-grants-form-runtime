@@ -161,6 +161,7 @@ class FormType(StrEnum):
     RR_BUDGET_10 = "RRBudget10"
     RR_SUBAWARD_BUDGET_30 = "RRSubawardBudget30"
     RR_SUBAWARD_BUDGET_10_30 = "RRSubawardBudget10_30"
+    RR_MP_SUBAWARD_BUDGET = "RRMPSubawardBudget"
     SF424_SHORT = "SF424Short"
     SF424A = "SF424A"
     SF424B = "SF424B"

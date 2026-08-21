@@ -1,0 +1,55 @@
+{
+  "contract": "simpler-budget-family-draft-package/v1",
+  "form": {
+    "form_id": "RRMPSubawardBudget",
+    "legacy_form_id": "RR_MP_SubawardBudget_3_0",
+    "form_version": "3.0"
+  },
+  "artifacts": {
+    "candidate.json": "9b7ed01120f9985405979ec8a8b5f09049f27022a871d73988b5e5d3bf74c1d5",
+    "runtime-rules.json": "5226289f6892267ce3a1481afa45a2fd41b03c0f5bab22d5e016dbe6f3eb010d"
+  },
+  "source_evidence": {
+    "contract_source_version": "sha256:20dce5b3498c809727892ee6cb837db223d687564c5829d94fe481367b7815c4",
+    "xsd": {
+      "source_ref": "https://apply07.grants.gov/apply/forms/schemas/RR_MP_SubawardBudget_3_0-V3.0.xsd",
+      "sha256": "20dce5b3498c809727892ee6cb837db223d687564c5829d94fe481367b7815c4"
+    },
+    "embedded_budget_xsd": {
+      "source_ref": "https://apply07.grants.gov/apply/forms/schemas/RR_MP_Budget_3_0-V3.0.xsd",
+      "sha256": "8ee3867971d4030582ff4c4cd906cd1a086c2d2491fb6f05b33cdd07ae435846"
+    },
+    "behavior_model": {
+      "status": "insufficient_to_inherit_sibling_runtime_behavior",
+      "source_behavior_records": 7,
+      "calculation_records_observed": 0,
+      "condition_records_observed": 0,
+      "target_form_behavior_parity": "not_established"
+    },
+    "technical_slot_disposition": {
+      "count": 30,
+      "status": "hidden_unresolved_wire_slots",
+      "reason": "ATT names and xs:string types are not attachment semantics"
+    },
+    "nodes": 231,
+    "countable_questions": 187,
+    "decimal_fields": 115,
+    "repeating_groups": 6,
+    "source_calculations": 0,
+    "executable_source_resolved_sums": 0,
+    "blocked_calculations": 0
+  },
+  "review_boundary": {
+    "structural_extraction": "deterministic_from_pinned_sources",
+    "semantic_mapping": "agent_proposed",
+    "ui_projection": "structural_canary",
+    "calculation_projection": "none_without_target_evidence",
+    "sibling_calculation_inheritance": "explicitly_forbidden",
+    "target_form_behavior_parity": "not_established",
+    "technical_slot_semantics": "unresolved",
+    "xml_projection": "not_available",
+    "policy_and_instructions": "not_reviewed",
+    "published_coverage_eligible": false,
+    "production_ready": false
+  }
+}
