@@ -29,8 +29,8 @@ _NAME_PARTS = (
 
 @dataclasses.dataclass(frozen=True)
 class PersonNameComponentConfig:
-    title: str
-    description: str
+    title: str | None = None
+    description: str | None = None
 
 
 @dataclasses.dataclass(frozen=True)
@@ -178,16 +178,16 @@ def build_person_name_component(
 ) -> PersonNameDefinition:
     """Build the exact shared five-part person-name schema contribution."""
 
-    if not isinstance(config.title, str) or not config.title.strip():
+    if config.title is not None and (not isinstance(config.title, str) or not config.title.strip()):
         raise ComponentDefinitionError("person-name title must be a nonempty string")
-    if not isinstance(config.description, str):
+    if config.description is not None and not isinstance(config.description, str):
         raise ComponentDefinitionError("person-name description must be a string")
 
-    schema = {
-        "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("person_name")}],
-        "title": config.title,
-        "description": config.description,
-    }
+    schema: dict = {"allOf": [{"$ref": COMMON_SHARED_V1.field_ref("person_name")}]}
+    if config.title is not None:
+        schema["title"] = config.title
+    if config.description is not None:
+        schema["description"] = config.description
     return PersonNameDefinition(
         component_id="people.person-name",
         contract_version=1,

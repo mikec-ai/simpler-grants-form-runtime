@@ -1,0 +1,6 @@
+# Atomic organization and person-name contributions determine this form's artifacts.
+form_schema/components/component_definition.py
+form_schema/components/organization_identity.py
+form_schema/components/person_name.py
+form_schema/shared/common_shared.py
+form_schema/shared/shared_schema.py

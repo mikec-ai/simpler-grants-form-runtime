@@ -11,9 +11,9 @@ def test_oracle_migration_ledger_accounts_for_the_sixteen_form_scope() -> None:
     assert len(forms) == 16
     assert len({entry["module"] for entry in forms}) == 16
     assert {entry["status"] for entry in forms} <= {"converted", "partial", "pending"}
-    assert sum(entry["status"] == "converted" for entry in forms) == 10
+    assert sum(entry["status"] == "converted" for entry in forms) == 11
     assert sum(entry["status"] == "partial" for entry in forms) == 1
-    assert sum(entry["status"] == "pending" for entry in forms) == 5
+    assert sum(entry["status"] == "pending" for entry in forms) == 4
     for entry in forms:
         assert (ledger_path.parent / entry["module"]).is_dir()
         if entry["status"] == "converted":

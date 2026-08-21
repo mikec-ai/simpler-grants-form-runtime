@@ -1,3 +1,5 @@
+import importlib
+
 import freezegun
 import pytest
 
@@ -11,6 +13,17 @@ from tests.src.form_schema.forms.conftest import (
     validate_min_length,
     validate_required,
 )
+
+_FORM_MODULE = importlib.import_module("src.form_schema.forms.gg_lobbying_form.1.0.form_json")
+
+
+def test_gg_lobbying_components_preserve_the_native_oracle() -> None:
+    assert _FORM_MODULE.FORM_JSON_SCHEMA == _FORM_MODULE._ORACLE_FORM_JSON_SCHEMA
+    assert _FORM_MODULE.FORM_UI_SCHEMA == _FORM_MODULE._ORACLE_FORM_UI_SCHEMA
+    assert _FORM_MODULE.FORM_RULE_SCHEMA == _FORM_MODULE._ORACLE_FORM_RULE_SCHEMA
+    assert _FORM_MODULE.FORM_XML_TRANSFORM_RULES == (_FORM_MODULE._ORACLE_FORM_XML_TRANSFORM_RULES)
+    assert _FORM_MODULE._ORGANIZATION_NAME.component_id == "application.organization-name"
+    assert _FORM_MODULE._AUTHORIZED_REPRESENTATIVE_NAME.component_id == "people.person-name"
 
 
 @pytest.fixture

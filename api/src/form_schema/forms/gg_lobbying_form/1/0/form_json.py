@@ -1,8 +1,28 @@
 import uuid
+from copy import deepcopy
 
 from src.constants.lookup_constants import FormType
 from src.db.models.competition_models import Form
+from src.form_schema.components.organization_identity import (
+    OrganizationNameComponentConfig,
+    build_organization_name_component,
+)
+from src.form_schema.components.person_name import (
+    PersonNameComponentConfig,
+    build_person_name_component,
+)
 from src.form_schema.shared import COMMON_SHARED_V1
+
+_ORGANIZATION_NAME = build_organization_name_component(
+    OrganizationNameComponentConfig(
+        title="Applicant's Organization",
+        description="Enter the legal name of the applicant's organization that will undertake the assistance activity. This is the organization that has registered with the System for Award Management (SAM). Information on registering with SAM may be obtained by visiting SAM.gov.",
+    )
+).mount_root()
+_AUTHORIZED_REPRESENTATIVE_NAME = build_person_name_component(PersonNameComponentConfig()).mount(
+    "/properties/authorized_representative_name",
+    xml_profile="full_global",
+)
 
 DIRECTIONS = """The undersigned certifies, to the best of his or her knowledge and belief, that:
 
@@ -19,7 +39,7 @@ The undersigned states, to the best of his or her knowledge and belief, that:
 If any funds have been paid or will be paid to any person for influencing or attempting to influence an officer or employee of any agency, a Member of Congress, an officer or employee of Congress, or an employee of a Member of Congress in connection with this commitment providing for the United States to insure or guarantee a loan, the undersigned shall complete and submit Standard Form-LLL, ''Disclosure of Lobbying Activities,'' in accordance with its instructions. Submission of this statement is a prerequisite for making or entering into this transaction imposed by section 1352, title 31, U.S. Code. Any person who fails to file the required statement shall be subject to a civil penalty of not less than $10,000 and not more than $100,000 for each such failure.
 """
 
-FORM_JSON_SCHEMA = {
+_ORACLE_FORM_JSON_SCHEMA = {
     "type": "object",
     "required": [
         "organization_name",
@@ -50,7 +70,7 @@ FORM_JSON_SCHEMA = {
     },
 }
 
-FORM_UI_SCHEMA = [
+_ORACLE_FORM_UI_SCHEMA = [
     {
         "type": "section",
         "label": "1. Certification for Contracts, Grants, Loans, and Cooperative Agreements",
@@ -105,7 +125,7 @@ FORM_UI_SCHEMA = [
     },
 ]
 
-FORM_RULE_SCHEMA = {
+_ORACLE_FORM_RULE_SCHEMA = {
     #### POST-POPULATION RULES
     "authorized_representative_signature": {"gg_post_population": {"rule": "signature"}},
     "submitted_date": {"gg_post_population": {"rule": "current_date"}},
@@ -113,7 +133,7 @@ FORM_RULE_SCHEMA = {
 
 # XML Transformation Rules for GG_LobbyingForm v1.1
 # XSD: https://apply07.grants.gov/apply/forms/schemas/GG_LobbyingForm-V1.1.xsd
-FORM_XML_TRANSFORM_RULES = {
+_ORACLE_FORM_XML_TRANSFORM_RULES = {
     # Metadata
     "_xml_config": {
         "description": "XML transformation rules for converting GG_LobbyingForm JSON to Grants.gov XML format",
@@ -203,6 +223,35 @@ FORM_XML_TRANSFORM_RULES = {
         }
     },
 }
+
+FORM_JSON_SCHEMA = deepcopy(_ORACLE_FORM_JSON_SCHEMA)
+FORM_JSON_SCHEMA["properties"]["organization_name"] = deepcopy(
+    _ORGANIZATION_NAME.json_schema_properties["organization_name"]
+)
+FORM_JSON_SCHEMA["properties"]["authorized_representative_name"] = deepcopy(
+    _AUTHORIZED_REPRESENTATIVE_NAME.json_schema
+)
+assert FORM_JSON_SCHEMA == _ORACLE_FORM_JSON_SCHEMA
+
+FORM_UI_SCHEMA = deepcopy(_ORACLE_FORM_UI_SCHEMA)
+FORM_UI_SCHEMA[1]["children"] = [deepcopy(_ORGANIZATION_NAME.ui_schema_fields["organization_name"])]
+FORM_UI_SCHEMA[2]["children"] = [
+    *deepcopy(_AUTHORIZED_REPRESENTATIVE_NAME.ui_fields),
+    {"type": "field", "definition": "/properties/authorized_representative_title"},
+]
+assert FORM_UI_SCHEMA == _ORACLE_FORM_UI_SCHEMA
+
+FORM_RULE_SCHEMA = deepcopy(_ORACLE_FORM_RULE_SCHEMA)
+
+FORM_XML_TRANSFORM_RULES = deepcopy(_ORACLE_FORM_XML_TRANSFORM_RULES)
+FORM_XML_TRANSFORM_RULES["authorized_representative_name"] = {
+    "xml_transform": {
+        "target": "AuthorizedRepresentativeName",
+        "type": "nested_object",
+    },
+    **deepcopy(_AUTHORIZED_REPRESENTATIVE_NAME.xml_fields),
+}
+assert FORM_XML_TRANSFORM_RULES == _ORACLE_FORM_XML_TRANSFORM_RULES
 
 GG_LobbyingForm_v1_1 = Form(
     # https://www.grants.gov/forms/form-items-description/fid/255

@@ -80,6 +80,14 @@ def test_mounts_are_independently_allocated() -> None:
     assert second.xml_fields["first_name"]["xml_transform"]["target"] == "FirstName"
 
 
+def test_component_can_preserve_an_unlabelled_source_schema() -> None:
+    mounted = build_person_name_component(PersonNameComponentConfig()).mount(
+        "/properties/authorized_representative_name", xml_profile="full_global"
+    )
+
+    assert mounted.json_schema == {"allOf": [{"$ref": COMMON_SHARED_V1.field_ref("person_name")}]}
+
+
 def test_mounts_source_bound_wire_aliases_without_changing_canonical_constraints() -> None:
     mounted = _definition().mount_wire(
         "/properties/AORInfo/properties/Name",
