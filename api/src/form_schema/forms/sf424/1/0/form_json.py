@@ -8,6 +8,10 @@ from src.form_schema.components import (
     build_organization_identity_component,
     build_project_identity_period_component,
 )
+from src.form_schema.components.person_name import (
+    PersonNameComponentConfig,
+    build_person_name_component,
+)
 from src.form_schema.resolved_form_package import load_resolved_form_package
 from src.form_schema.shared import ADDRESS_SHARED_V1, COMMON_SHARED_V1
 from src.services.xml_generation.constants import NO_VALUE
@@ -32,6 +36,18 @@ _PROJECT_IDENTITY_PERIOD = build_project_identity_period_component(
         date_description="Enter the date in the format MM/DD/YYYY. "
     )
 ).mount_root()
+_CONTACT_PERSON_NAME = build_person_name_component(
+    PersonNameComponentConfig(
+        title="Contact Person",
+        description="Enter information about the contact person.",
+    )
+).mount("/properties/contact_person", xml_profile="first_last_global")
+_AUTHORIZED_REPRESENTATIVE_NAME = build_person_name_component(
+    PersonNameComponentConfig(title="Authorized Representative", description="")
+).mount(
+    "/properties/authorized_representative",
+    xml_profile="first_last_defaulted_global",
+)
 
 FORM_JSON_SCHEMA = {
     "type": "object",
@@ -240,11 +256,7 @@ FORM_JSON_SCHEMA = {
             "minLength": 1,
             "maxLength": 100,
         },
-        "contact_person": {
-            "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("person_name")}],
-            "title": "Contact Person",
-            "description": "Enter information about the contact person.",
-        },
+        "contact_person": _CONTACT_PERSON_NAME.json_schema,
         "contact_person_title": {
             "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("contact_person_title")}],
             "title": "Title",
@@ -444,11 +456,7 @@ FORM_JSON_SCHEMA = {
             "title": "Certification Agree",
             "description": "By signing this application, I certify (1) to the statements contained in the list of certifications* and (2) that the statements herein are true, complete and accurate to the best of my knowledge. I also provide the required assurances** and agree to comply with any resulting terms if I accept an award. I am aware that any false, fictitious, or fraudulent statements or claims may subject me to criminal, civil, or administrative penalties. (U.S. Code, Title 18, Section 1001)",
         },
-        "authorized_representative": {
-            "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("person_name")}],
-            "title": "Authorized Representative",
-            "description": "",
-        },
+        "authorized_representative": _AUTHORIZED_REPRESENTATIVE_NAME.json_schema,
         "authorized_representative_title": {
             "type": "string",
             "title": "Title",
@@ -573,11 +581,7 @@ FORM_UI_SCHEMA = [
         "name": "contact_person",
         "label": "8f. Name and contact information of person to be contacted on matters involving this application",
         "children": [
-            {"type": "field", "definition": "/properties/contact_person/properties/prefix"},
-            {"type": "field", "definition": "/properties/contact_person/properties/first_name"},
-            {"type": "field", "definition": "/properties/contact_person/properties/middle_name"},
-            {"type": "field", "definition": "/properties/contact_person/properties/last_name"},
-            {"type": "field", "definition": "/properties/contact_person/properties/suffix"},
+            *_CONTACT_PERSON_NAME.ui_fields,
             {"type": "field", "definition": "/properties/contact_person_title"},
             {"type": "field", "definition": "/properties/organization_affiliation"},
             {"type": "field", "definition": "/properties/phone_number"},
@@ -737,26 +741,7 @@ FORM_UI_SCHEMA = [
                 "type": "field",
                 "definition": "/properties/certification_agree",
             },
-            {
-                "type": "field",
-                "definition": "/properties/authorized_representative/properties/prefix",
-            },
-            {
-                "type": "field",
-                "definition": "/properties/authorized_representative/properties/first_name",
-            },
-            {
-                "type": "field",
-                "definition": "/properties/authorized_representative/properties/middle_name",
-            },
-            {
-                "type": "field",
-                "definition": "/properties/authorized_representative/properties/last_name",
-            },
-            {
-                "type": "field",
-                "definition": "/properties/authorized_representative/properties/suffix",
-            },
+            *_AUTHORIZED_REPRESENTATIVE_NAME.ui_fields,
             {"type": "field", "definition": "/properties/authorized_representative_title"},
             {"type": "field", "definition": "/properties/authorized_representative_phone_number"},
             {"type": "field", "definition": "/properties/authorized_representative_fax"},
@@ -873,18 +858,7 @@ FORM_XML_TRANSFORM_RULES = {
     # Contact person - nested structure with GlobalLibrary namespace for names
     "contact_person": {
         "xml_transform": {"target": "ContactPerson", "type": "nested_object"},
-        "first_name": {
-            "xml_transform": {
-                "target": "FirstName",
-                "namespace": "globLib",
-            }
-        },
-        "last_name": {
-            "xml_transform": {
-                "target": "LastName",
-                "namespace": "globLib",
-            }
-        },
+        **_CONTACT_PERSON_NAME.xml_fields,
     },
     # Contact information - direct field mappings
     "phone_number": {"xml_transform": {"target": "PhoneNumber"}},
@@ -1034,22 +1008,7 @@ FORM_XML_TRANSFORM_RULES = {
     # Authorized representative - nested structure with GlobalLibrary namespace for names
     "authorized_representative": {
         "xml_transform": {"target": "AuthorizedRepresentative", "type": "nested_object"},
-        "first_name": {
-            "xml_transform": {
-                "target": "FirstName",
-                "namespace": "globLib",
-                "null_handling": "default_value",
-                "default_value": "John",
-            }
-        },
-        "last_name": {
-            "xml_transform": {
-                "target": "LastName",
-                "namespace": "globLib",
-                "null_handling": "default_value",
-                "default_value": "Doe",
-            }
-        },
+        **_AUTHORIZED_REPRESENTATIVE_NAME.xml_fields,
     },
     "authorized_representative_title": {
         "xml_transform": {"target": "AuthorizedRepresentativeTitle"}
@@ -1068,6 +1027,8 @@ FORM_XML_TRANSFORM_RULES = {
 # The constants above remain temporarily as a compatibility oracle. The active
 # runtime form is materialized from the source-pinned resolved package.
 SF424_v4_0 = load_resolved_form_package(Path(__file__).with_name("resolved_package")).to_form()
+del _AUTHORIZED_REPRESENTATIVE_NAME
+del _CONTACT_PERSON_NAME
 del _PROJECT_IDENTITY_PERIOD
 del _OPPORTUNITY_IDENTITY
 del _ORGANIZATION_IDENTITY

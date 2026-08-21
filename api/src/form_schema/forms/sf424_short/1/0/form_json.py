@@ -11,6 +11,10 @@ from src.form_schema.components import (
     build_project_identity_period_component,
 )
 from src.form_schema.components.contact_profile import build_contact_profile_component
+from src.form_schema.components.person_name import (
+    PersonNameComponentConfig,
+    build_person_name_component,
+)
 from src.form_schema.shared import ADDRESS_SHARED_V1, COMMON_SHARED_V1
 
 _ORGANIZATION_IDENTITY = build_organization_identity_component(
@@ -35,6 +39,12 @@ _PROJECT_IDENTITY_PERIOD = build_project_identity_period_component(
 ).mount_root()
 _CONTACT_PERSON_DEFINITION = build_contact_profile_component("sf424_short_contact_person_v3")
 _CONTACT_PERSON_PROFILE = _CONTACT_PERSON_DEFINITION.mount("/properties/project_director")
+_AUTHORIZED_REPRESENTATIVE_NAME = build_person_name_component(
+    PersonNameComponentConfig(
+        title="Authorized Representative",
+        description="Enter the name of the authorized representative.",
+    )
+).mount("/properties/authorized_representative", xml_profile="full_global")
 
 # Applicant type codes shared by the SF-424 family (globLib:ApplicantTypeCodeDataType).
 APPLICANT_TYPE_CODES = [
@@ -212,11 +222,7 @@ FORM_JSON_SCHEMA = {
             "title": "** I Agree",
             "description": "** The list of certifications and assurances, or an internet site where you may obtain this list, is contained in the announcement or agency specific instructions. By signing this application, I certify (1) to the statements contained in the list of certifications and (2) that the statements herein are true, complete and accurate to the best of my knowledge. I also provide the required assurances and agree to comply with any resulting terms if I accept an award. I am aware that any false, fictitious, or fraudulent statements or claims may subject me to criminal, civil, or administrative penalties. (U.S. Code, Title 18, Section 1001)",
         },
-        "authorized_representative": {
-            "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("person_name")}],
-            "title": "Authorized Representative",
-            "description": "Enter the name of the authorized representative.",
-        },
+        "authorized_representative": _AUTHORIZED_REPRESENTATIVE_NAME.json_schema,
         "authorized_representative_title": {
             "type": "string",
             "title": "Title",
@@ -360,26 +366,7 @@ FORM_UI_SCHEMA = [
                 "definition": "/properties/application_certification",
                 "printDescription": True,
             },
-            {
-                "type": "field",
-                "definition": "/properties/authorized_representative/properties/prefix",
-            },
-            {
-                "type": "field",
-                "definition": "/properties/authorized_representative/properties/first_name",
-            },
-            {
-                "type": "field",
-                "definition": "/properties/authorized_representative/properties/middle_name",
-            },
-            {
-                "type": "field",
-                "definition": "/properties/authorized_representative/properties/last_name",
-            },
-            {
-                "type": "field",
-                "definition": "/properties/authorized_representative/properties/suffix",
-            },
+            *_AUTHORIZED_REPRESENTATIVE_NAME.ui_fields,
             {"type": "field", "definition": "/properties/authorized_representative_title"},
             {"type": "field", "definition": "/properties/authorized_representative_email"},
             {"type": "field", "definition": "/properties/authorized_representative_phone_number"},
@@ -528,11 +515,7 @@ FORM_XML_TRANSFORM_RULES = {
     },
     "authorized_representative": {
         "xml_transform": {"target": "AuthorizedRepresentative", "type": "nested_object"},
-        "prefix": {"xml_transform": {"target": "PrefixName", "namespace": "globLib"}},
-        "first_name": {"xml_transform": {"target": "FirstName", "namespace": "globLib"}},
-        "middle_name": {"xml_transform": {"target": "MiddleName", "namespace": "globLib"}},
-        "last_name": {"xml_transform": {"target": "LastName", "namespace": "globLib"}},
-        "suffix": {"xml_transform": {"target": "SuffixName", "namespace": "globLib"}},
+        **_AUTHORIZED_REPRESENTATIVE_NAME.xml_fields,
     },
     "authorized_representative_title": {
         "xml_transform": {"target": "AuthorizedRepresentativeTitle"}
@@ -571,6 +554,7 @@ SF424Short_v3_0 = Form(
     sgg_version="1.0",
     is_deprecated=False,
 )
+del _AUTHORIZED_REPRESENTATIVE_NAME
 del _PROJECT_IDENTITY_PERIOD
 del _OPPORTUNITY_IDENTITY
 del _ORGANIZATION_IDENTITY

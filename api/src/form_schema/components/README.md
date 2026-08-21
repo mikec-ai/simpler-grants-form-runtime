@@ -44,5 +44,11 @@ full-address, `phone_number`, help-text, and requiredness deltas. Role semantics
 organizational affiliation, repeated versus fixed containers, section placement,
 UI ordering, and outer XML wrappers remain form-owned.
 
+The person-name component is the smaller reusable layer beneath those profiles.
+It contributes the shared five-part name schema and UI anatomy while selecting
+one of three proven XML projections: all five GlobalLibrary parts, first/last
+only, or SF-424's legacy defaulted first/last pair. Titles, help text, role
+semantics, and outer XML wrappers remain form-owned.
+
 Optional source-question bindings are build provenance only. They do not assert
 semantic equivalence or make a component eligible for published coverage.
