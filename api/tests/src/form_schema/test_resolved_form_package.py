@@ -6,12 +6,12 @@ from pathlib import Path
 
 import pytest
 
+from src.form_schema.registry.form_template_registry import FormTemplateKey, FormTemplateRegistry
 from src.form_schema.resolved_form_package import (
     CONTRACT,
     ResolvedFormPackageError,
     load_resolved_form_package,
 )
-from src.form_schema.registry.form_template_registry import FormTemplateKey, FormTemplateRegistry
 
 FIXTURE = Path(__file__).parents[2] / "fixtures" / "form_schema" / "commongrants_key_contact_org"
 
