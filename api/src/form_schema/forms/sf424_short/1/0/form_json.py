@@ -5,8 +5,8 @@ from src.db.models.competition_models import Form
 from src.form_schema.components import (
     OpportunityIdentityComponentConfig,
     OrganizationIdentityComponentConfig,
-    build_organization_identity_component,
     build_opportunity_identity_component,
+    build_organization_identity_component,
 )
 from src.form_schema.shared import ADDRESS_SHARED_V1, COMMON_SHARED_V1
 

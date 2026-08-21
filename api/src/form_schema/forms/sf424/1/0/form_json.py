@@ -3,8 +3,8 @@ from pathlib import Path
 from src.form_schema.components import (
     OpportunityIdentityComponentConfig,
     OrganizationIdentityComponentConfig,
-    build_organization_identity_component,
     build_opportunity_identity_component,
+    build_organization_identity_component,
 )
 from src.form_schema.resolved_form_package import load_resolved_form_package
 from src.form_schema.shared import ADDRESS_SHARED_V1, COMMON_SHARED_V1
