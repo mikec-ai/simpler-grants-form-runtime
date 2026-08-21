@@ -11,7 +11,8 @@ from src.form_schema.components.budget_family import (
     BudgetFamilyError,
     build_budget_family_form,
 )
-from src.form_schema.forms.rr_budget import RRBudget_v3_0
+from src.form_schema.forms.rr_budget10 import RRBudget10_v3_0
+from src.form_schema.forms.rr_subaward_budget10_30 import RRSubawardBudget10_30_v3_0
 from src.form_schema.forms.rr_subaward_budget30 import RRSubawardBudget30_v3_0
 from src.form_schema.rule_processing.json_rule_context import JsonRuleConfig, JsonRuleContext
 from src.form_schema.rule_processing.json_rule_processor import process_rule_schema_for_context
@@ -21,7 +22,7 @@ _PACKAGE_DIR = (
     / "src"
     / "form_schema"
     / "forms"
-    / "rr_subaward_budget30"
+    / "rr_subaward_budget10_30"
     / "1"
     / "0"
     / "draft_package"
@@ -56,45 +57,57 @@ def _runtime_schema(value: object, *, root: bool = True) -> object:
     return value
 
 
-def test_rr_subaward_budget30_composes_thirty_five_period_budget_profiles() -> None:
-    assert RRSubawardBudget30_v3_0.form_type == FormType.RR_SUBAWARD_BUDGET_30
-    assert RRSubawardBudget30_v3_0.short_form_name == "RR_SubawardBudget30_3_0"
-    assert RRSubawardBudget30_v3_0.json_to_xml_schema is None
+def test_rr_subaward_budget10_30_composes_thirty_ten_period_budget_profiles() -> None:
+    assert RRSubawardBudget10_30_v3_0.form_type == FormType.RR_SUBAWARD_BUDGET_10_30
+    assert RRSubawardBudget10_30_v3_0.short_form_name == "RR_SubawardBudget10_30_3_0"
+    assert RRSubawardBudget10_30_v3_0.json_to_xml_schema is None
 
-    schema = RRSubawardBudget30_v3_0.form_json_schema
-    subawards = schema["properties"]["budget_attachments"]["properties"]["rr_budget_3_0"]
+    schema = RRSubawardBudget10_30_v3_0.form_json_schema
+    subawards = schema["properties"]["budget_attachments"]["properties"]["rr_budget_10_3_0"]
     assert subawards["maxItems"] == 30
-    assert subawards["items"]["properties"]["budget_year"]["maxItems"] == 5
-    assert _runtime_schema(subawards["items"]) == _runtime_schema(RRBudget_v3_0.form_json_schema)
+    assert subawards["items"]["properties"]["budget_year"]["maxItems"] == 10
+    assert _runtime_schema(subawards["items"]) == _runtime_schema(RRBudget10_v3_0.form_json_schema)
 
-    ui_nodes = list(_walk_ui(RRSubawardBudget30_v3_0.form_ui_schema))
+    ui_nodes = list(_walk_ui(RRSubawardBudget10_30_v3_0.form_ui_schema))
     assert len([item for item in ui_nodes if item[0] == "field"]) == 157
     assert len([item for item in ui_nodes if item[0] == "array"]) == 6
-    assert _count_rules(RRSubawardBudget30_v3_0.form_rule_schema, "gg_pre_population") == 30
-    assert _count_rules(RRSubawardBudget30_v3_0.form_rule_schema, "gg_validation") == 3
+    assert _count_rules(RRSubawardBudget10_30_v3_0.form_rule_schema, "gg_pre_population") == 30
+    assert _count_rules(RRSubawardBudget10_30_v3_0.form_rule_schema, "gg_validation") == 3
+
+
+def test_subaward_profiles_differ_only_by_embedded_identity_and_period_limit() -> None:
+    five_year = _runtime_schema(RRSubawardBudget30_v3_0.form_json_schema)
+    ten_year = _runtime_schema(RRSubawardBudget10_30_v3_0.form_json_schema)
+    assert isinstance(five_year, dict)
+    assert isinstance(ten_year, dict)
+    five_properties = five_year["properties"]["budget_attachments"]["properties"]
+    five_budget = five_properties.pop("rr_budget_3_0")
+    five_budget["items"]["properties"]["budget_year"]["maxItems"] = 10
+    five_budget["items"]["title"] = "RR Budget10 3 0"
+    five_properties["rr_budget_10_3_0"] = five_budget
+    assert five_year == ten_year
 
 
 def test_unresolved_technical_slots_remain_in_schema_but_are_not_rendered() -> None:
-    properties = RRSubawardBudget30_v3_0.form_json_schema["properties"]
+    properties = RRSubawardBudget10_30_v3_0.form_json_schema["properties"]
     technical_slots = {name for name in properties if name.startswith("att_")}
     assert technical_slots == {f"att_{index}" for index in range(1, 31)}
     assert all(properties[name]["type"] == "string" for name in technical_slots)
-
     rendered_definitions = {
-        definition for _, definition in _walk_ui(RRSubawardBudget30_v3_0.form_ui_schema)
+        definition for _, definition in _walk_ui(RRSubawardBudget10_30_v3_0.form_ui_schema)
     }
     assert all(f"/properties/{name}" not in rendered_definitions for name in technical_slots)
 
 
 def test_each_subaward_executes_cumulative_sums_in_its_own_parent_scope() -> None:
-    cumulative_rule = RRSubawardBudget30_v3_0.form_rule_schema["budget_attachments"][
-        "rr_budget_3_0"
+    cumulative_rule = RRSubawardBudget10_30_v3_0.form_rule_schema["budget_attachments"][
+        "rr_budget_10_3_0"
     ]["budget_summary"]["cumulative_domestic_travel_costs"]["gg_pre_population"]
     assert cumulative_rule["fields"] == ["@PARENT.budget_year[*].travel.domestic_travel_cost"]
 
     application_response = {
         "budget_attachments": {
-            "rr_budget_3_0": [
+            "rr_budget_10_3_0": [
                 {
                     "budget_year": [
                         {"travel": {"domestic_travel_cost": "10.00"}},
@@ -111,9 +124,9 @@ def test_each_subaward_executes_cumulative_sums_in_its_own_parent_scope() -> Non
     }
     application_form = SimpleNamespace(
         application_response=application_response,
-        form=RRSubawardBudget30_v3_0,
-        application_form_id="draft-subaward-budget30-test",
-        form_id=RRSubawardBudget30_v3_0.form_id,
+        form=RRSubawardBudget10_30_v3_0,
+        application_form_id="draft-subaward-budget10-30-test",
+        form_id=RRSubawardBudget10_30_v3_0.form_id,
     )
     context = JsonRuleContext(
         application_form,
@@ -124,8 +137,7 @@ def test_each_subaward_executes_cumulative_sums_in_its_own_parent_scope() -> Non
         ),
     )
     process_rule_schema_for_context(context)
-
-    budgets = context.json_data["budget_attachments"]["rr_budget_3_0"]
+    budgets = context.json_data["budget_attachments"]["rr_budget_10_3_0"]
     assert [budget["budget_summary"]["cumulative_domestic_travel_costs"] for budget in budgets] == [
         "25.25",
         "100.00",
@@ -139,17 +151,25 @@ def test_package_pins_sources_and_keeps_behavior_and_wire_gaps_explicit() -> Non
 
     evidence = manifest["source_evidence"]
     assert evidence["nodes"] == 231
-    assert evidence["countable_questions"] == 187
+    assert evidence["countable_questions"] == 142
     assert evidence["xsd"]["sha256"] == (
-        "d5d534326e8f7e4416baf98c95c1f9234c0a23628259ee2d7e3199181a24e08a"
+        "0ed112b2e50f0e0c43423f690201b207f5b9c5a85349335260e4fd999f3a611a"
     )
     assert evidence["embedded_budget_xsd"]["sha256"] == (
-        "d474010f85819549990de65fc51292bed08ba98ac0895d0dde9513fbe855cdbc"
+        "cccce03554424d59b5958e4443a54db12a5a10780fbdc5df2ec25955d443fc9d"
     )
     assert evidence["technical_slot_disposition"] == {
         "count": 30,
         "status": "hidden_unresolved_wire_slots",
         "reason": "ATT names and xs:string types are not attachment semantics",
+    }
+    assert evidence["sibling_profile_comparison"] == {
+        "sibling_form_id": "RRSubawardBudget30",
+        "shared_node_count": 231,
+        "target_countable_questions": 142,
+        "sibling_countable_questions": 187,
+        "implementation_structure": "equal_after_wire_identity_and_period_limit",
+        "semantic_count_reconciliation": "open",
     }
     assert evidence["behavior_model"]["target_form_dat_parity"] == "not_established"
     assert manifest["review_boundary"]["published_coverage_eligible"] is False
@@ -159,23 +179,28 @@ def test_package_pins_sources_and_keeps_behavior_and_wire_gaps_explicit() -> Non
 
 @pytest.mark.parametrize(
     "field,value",
-    [("subaward_items", 29), ("technical_slots", 29), ("budget_periods", 10)],
+    [
+        ("subaward_items", 29),
+        ("technical_slots", 29),
+        ("budget_periods", 5),
+        ("embedded_budget_key", "rr_budget_3_0"),
+    ],
 )
 def test_budget_family_builder_rejects_subaward_profile_drift(field: str, value: object) -> None:
     values = {
-        "source_form_id": "RRSubawardBudget30",
-        "form_id": RRSubawardBudget30_v3_0.form_id,
-        "form_name": RRSubawardBudget30_v3_0.form_name,
-        "short_form_name": RRSubawardBudget30_v3_0.short_form_name,
+        "source_form_id": "RRSubawardBudget10_30",
+        "form_id": RRSubawardBudget10_30_v3_0.form_id,
+        "form_name": RRSubawardBudget10_30_v3_0.form_name,
+        "short_form_name": RRSubawardBudget10_30_v3_0.short_form_name,
         "form_version": "3.0",
-        "form_type": FormType.RR_SUBAWARD_BUDGET_30,
-        "form_instruction_id": RRSubawardBudget30_v3_0.form_instruction_id,
-        "budget_periods": 5,
+        "form_type": FormType.RR_SUBAWARD_BUDGET_10_30,
+        "form_instruction_id": RRSubawardBudget10_30_v3_0.form_instruction_id,
+        "budget_periods": 10,
         "subaward_items": 30,
         "technical_slots": 30,
-        "embedded_budget_key": "rr_budget_3_0",
+        "embedded_budget_key": "rr_budget_10_3_0",
         "source_nodes": 231,
-        "countable_questions": 187,
+        "countable_questions": 142,
         "repeating_groups": 6,
     }
     values[field] = value

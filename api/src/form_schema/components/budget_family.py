@@ -36,6 +36,7 @@ class BudgetFamilyConfig:
     source_nodes: int = 199
     subaward_items: int = 0
     technical_slots: int = 0
+    embedded_budget_key: str | None = None
     decimal_fields: int = 115
     repeating_groups: int = 5
     source_calculations: int = 56
@@ -59,20 +60,28 @@ _PERIOD_ATTACHMENTS = frozenset(
         "/properties/budget_year/items/properties/equipment/properties/additional_equipments_attachment",
     }
 )
-_SUBAWARD_DEFINITION = "/properties/budget_attachments/properties/rr_budget_3_0"
-_SUBAWARD_ATTACHMENTS = frozenset(
-    {
-        f"{_SUBAWARD_DEFINITION}/items/properties/budget_justification_attachment",
-        (
-            f"{_SUBAWARD_DEFINITION}/items/properties/budget_year/items/properties/"
-            "key_persons/properties/attached_key_persons"
-        ),
-        (
-            f"{_SUBAWARD_DEFINITION}/items/properties/budget_year/items/properties/"
-            "equipment/properties/additional_equipments_attachment"
-        ),
-    }
-)
+
+
+def _subaward_definition(embedded_budget_key: str) -> str:
+    if not embedded_budget_key or not embedded_budget_key.replace("_", "").isalnum():
+        raise BudgetFamilyError("Invalid embedded-budget key")
+    return f"/properties/budget_attachments/properties/{embedded_budget_key}"
+
+
+def _subaward_attachments(definition: str) -> frozenset[str]:
+    return frozenset(
+        {
+            f"{definition}/items/properties/budget_justification_attachment",
+            (
+                f"{definition}/items/properties/budget_year/items/properties/"
+                "key_persons/properties/attached_key_persons"
+            ),
+            (
+                f"{definition}/items/properties/budget_year/items/properties/"
+                "equipment/properties/additional_equipments_attachment"
+            ),
+        }
+    )
 
 
 def normalize_source_decimal_fields(schema: dict[str, Any]) -> int:
@@ -299,8 +308,13 @@ def build_budget_family_form(package_dir: Path, config: BudgetFamilyConfig) -> B
         raise BudgetFamilyError("Budget-family decimal-field count drift")
     root_properties = schema.get("properties", {})
     if config.subaward_items:
+        if config.embedded_budget_key is None:
+            raise BudgetFamilyError("Subaward profile requires an embedded-budget key")
         budget_attachments = root_properties.get("budget_attachments", {})
-        subaward_schema = budget_attachments.get("properties", {}).get("rr_budget_3_0", {})
+        subaward_properties = budget_attachments.get("properties", {})
+        if set(subaward_properties) != {config.embedded_budget_key}:
+            raise BudgetFamilyError("Budget-family embedded-budget identity drift")
+        subaward_schema = subaward_properties[config.embedded_budget_key]
         if subaward_schema.get("maxItems") != config.subaward_items:
             raise BudgetFamilyError("Budget-family subaward parameter drift")
         item_schema = subaward_schema.get("items", {})
@@ -311,6 +325,8 @@ def build_budget_family_form(package_dir: Path, config: BudgetFamilyConfig) -> B
     else:
         if config.technical_slots:
             raise BudgetFamilyError("Standalone budget cannot declare technical slots")
+        if config.embedded_budget_key is not None:
+            raise BudgetFamilyError("Standalone budget cannot embed another budget")
         subaward_schema = None
         period_schema = root_properties.get("budget_year", {})
     if period_schema.get("maxItems") != config.budget_periods:
@@ -321,12 +337,15 @@ def build_budget_family_form(package_dir: Path, config: BudgetFamilyConfig) -> B
     )
     ui_schema: list[dict[str, Any]]
     if subaward_schema is not None:
+        assert config.embedded_budget_key is not None
+        subaward_definition = _subaward_definition(config.embedded_budget_key)
+        subaward_attachments = _subaward_attachments(subaward_definition)
         subaward = build_schema_field_list(
             subaward_schema,
-            definition=_SUBAWARD_DEFINITION,
-            name="rr_budget_3_0",
+            definition=subaward_definition,
+            name=config.embedded_budget_key,
             label="Subaward Budget",
-            attachment_definitions=_SUBAWARD_ATTACHMENTS,
+            attachment_definitions=subaward_attachments,
         )
         ui_schema = [
             {
@@ -336,9 +355,9 @@ def build_budget_family_form(package_dir: Path, config: BudgetFamilyConfig) -> B
                 "children": [subaward.ui_schema],
             }
         ]
-        attachment_pointers = _SUBAWARD_ATTACHMENTS
+        attachment_pointers = subaward_attachments
         budget_rules = rule_schema.setdefault("budget_attachments", {}).setdefault(
-            "rr_budget_3_0", {}
+            config.embedded_budget_key, {}
         )
         budget_rules["gg_type"] = "array"
     else:

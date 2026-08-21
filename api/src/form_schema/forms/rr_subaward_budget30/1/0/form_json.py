@@ -18,6 +18,7 @@ _BUILD = build_budget_family_form(
         budget_periods=5,
         subaward_items=30,
         technical_slots=30,
+        embedded_budget_key="rr_budget_3_0",
         source_nodes=231,
         countable_questions=187,
         repeating_groups=6,
