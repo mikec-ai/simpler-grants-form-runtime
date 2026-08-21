@@ -450,12 +450,14 @@ def _build_ui(
                 if in_list:
                     children.extend(nested)
                 else:
-                    children.append({
-                        "type": "section",
-                        "name": child_pointer.replace("/properties/", "-").strip("/"),
-                        "label": child.get("title") or name,
-                        "children": nested,
-                    })
+                    children.append(
+                        {
+                            "type": "section",
+                            "name": child_pointer.replace("/properties/", "-").strip("/"),
+                            "label": child.get("title") or name,
+                            "children": nested,
+                        }
+                    )
             elif child_type == "array" and isinstance(child.get("items"), dict):
                 if child["items"].get("type") == "object":
                     definition = build_schema_field_list(
@@ -531,11 +533,13 @@ def _build_field_metadata(
             ("operand", rule.get("operands", [])),
         ):
             for entry in entries:
-                rule_links.setdefault(entry["path"], []).append({
-                    "rule_id": rule_id,
-                    "mechanism": rule["mechanism"],
-                    "role": role,
-                })
+                rule_links.setdefault(entry["path"], []).append(
+                    {
+                        "rule_id": rule_id,
+                        "mechanism": rule["mechanism"],
+                        "role": role,
+                    }
+                )
 
     records: list[dict[str, Any]] = []
     counts: dict[str, int] = {
@@ -567,45 +571,49 @@ def _build_field_metadata(
         constraints = node.get("constraints", {})
         declared_type = constraints.get("declared_type")
         source_version = node.get("source_version")
-        records.append({
-            "stable_record_id": node["node_id"],
-            "source_path": source_path,
-            "runtime_schema_pointer": (
-                _schema_pointer(runtime_path) if runtime_path is not None else None
-            ),
-            "runtime_data_pointer_template": (
-                _data_pointer_template(runtime_path) if runtime_path is not None else None
-            ),
-            "classification": classification,
-            "counts_as_applicant_question": classification == "applicant_question",
-            "canonical_semantic_question_id": canonical_semantic_id,
-            "semantic_mapping_status": (
-                authoring.get("review_statuses", [None])[0]
-                if canonical_semantic_id is not None
-                else "unmapped"
-            ),
-            "semantic_candidates": semantic_candidates,
-            "xml": {
-                "path": source_path,
-                "type": declared_type or node.get("data_type"),
-                "type_source": ("xsd_declared_type" if declared_type else "normalized_source_type"),
-                "xsd_url": node.get("source_ref"),
-                "version": source_version,
-                "sha256": (
-                    source_version.removeprefix("sha256:")
-                    if isinstance(source_version, str)
-                    else None
+        records.append(
+            {
+                "stable_record_id": node["node_id"],
+                "source_path": source_path,
+                "runtime_schema_pointer": (
+                    _schema_pointer(runtime_path) if runtime_path is not None else None
                 ),
-            },
-            "component_module_ids": authoring.get("modules", []),
-            "roles": authoring.get("roles", []),
-            "dimensions": authoring.get("dimensions", []),
-            "cardinality": node.get("cardinality"),
-            "source_behavior_ids": node.get("behavior_keys", []),
-            "runtime_behavior_links": rule_links.get(source_path, []),
-            "review_statuses": authoring.get("review_statuses", []),
-            "published_coverage_eligible": authoring.get("published_coverage_eligible", False),
-        })
+                "runtime_data_pointer_template": (
+                    _data_pointer_template(runtime_path) if runtime_path is not None else None
+                ),
+                "classification": classification,
+                "counts_as_applicant_question": classification == "applicant_question",
+                "canonical_semantic_question_id": canonical_semantic_id,
+                "semantic_mapping_status": (
+                    authoring.get("review_statuses", [None])[0]
+                    if canonical_semantic_id is not None
+                    else "unmapped"
+                ),
+                "semantic_candidates": semantic_candidates,
+                "xml": {
+                    "path": source_path,
+                    "type": declared_type or node.get("data_type"),
+                    "type_source": (
+                        "xsd_declared_type" if declared_type else "normalized_source_type"
+                    ),
+                    "xsd_url": node.get("source_ref"),
+                    "version": source_version,
+                    "sha256": (
+                        source_version.removeprefix("sha256:")
+                        if isinstance(source_version, str)
+                        else None
+                    ),
+                },
+                "component_module_ids": authoring.get("modules", []),
+                "roles": authoring.get("roles", []),
+                "dimensions": authoring.get("dimensions", []),
+                "cardinality": node.get("cardinality"),
+                "source_behavior_ids": node.get("behavior_keys", []),
+                "runtime_behavior_links": rule_links.get(source_path, []),
+                "review_statuses": authoring.get("review_statuses", []),
+                "published_coverage_eligible": authoring.get("published_coverage_eligible", False),
+            }
+        )
     if counts["calculated_output"] != len(calculation_targets):
         raise SourceResolvedFormError("Calculated-output metadata accounting drift")
     return {
