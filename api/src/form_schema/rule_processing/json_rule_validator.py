@@ -1,5 +1,7 @@
 import logging
+import re
 import typing
+from datetime import datetime
 
 from grants_shared.api.response import ValidationErrorDetail
 from grants_shared.util.dict_util import get_nested_value
@@ -9,6 +11,8 @@ from src.form_schema.rule_processing.json_rule_util import build_path_str
 from src.validation.validation_constants import ValidationErrorType
 
 logger = logging.getLogger(__name__)
+
+_DOTTED_FIELD_PATH = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)*$")
 
 
 def _validate_attachment_value(
@@ -93,7 +97,43 @@ def validate_attachments(context: JsonRuleContext, json_rule: JsonRule) -> None:
         )
 
 
-VALIDATION_RULES = {"attachment": validate_attachments}
+def validate_date_not_before(context: JsonRuleContext, json_rule: JsonRule) -> None:
+    """Require the target date to be on or after another date field.
+
+    JSON Schema remains responsible for requiredness and date-format errors. This
+    rule only adds the cross-field ordering constraint after both operands are
+    present and valid ISO calendar dates.
+    """
+
+    if set(json_rule.rule) != {"rule", "other_field"}:
+        raise ValueError("date_not_before requires exactly 'rule' and 'other_field'")
+    other_field = json_rule.rule["other_field"]
+    if not isinstance(other_field, str) or not _DOTTED_FIELD_PATH.fullmatch(other_field):
+        raise ValueError("date_not_before other_field must be an absolute dotted path")
+
+    target_value = get_nested_value(context.json_data, json_rule.path)
+    other_value = get_nested_value(context.json_data, other_field.split("."))
+    try:
+        target_date = datetime.strptime(target_value, "%Y-%m-%d").date()
+        other_date = datetime.strptime(other_value, "%Y-%m-%d").date()
+    except TypeError, ValueError:
+        return
+
+    if target_date < other_date:
+        context.validation_issues.append(
+            ValidationErrorDetail(
+                type=ValidationErrorType.INVALID_DATE_ORDER,
+                message="Date cannot be before the related start date",
+                field=build_path_str(json_rule.path),
+                value=target_value,
+            )
+        )
+
+
+VALIDATION_RULES = {
+    "attachment": validate_attachments,
+    "date_not_before": validate_date_not_before,
+}
 
 
 def handle_validation(context: JsonRuleContext, json_rule: JsonRule) -> None:

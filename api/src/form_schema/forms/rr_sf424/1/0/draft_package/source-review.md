@@ -43,19 +43,18 @@ classified as internal rather than rendered as a second EIN.
 - Revision details render as the canonical five checkboxes while preserving the encoded
   XML value, accept only the source-defined single/pair combinations, require an Other
   explanation for E, and clear dependent values when the application type changes.
+- Applicant congressional district uses the source-prescribed `CA-005` or `00-000`
+  structure.
+- Project end date cannot precede project start date.
+- All four funding amounts preserve the source range and two-decimal precision as
+  independently applicant-entered values; no funding calculation was introduced.
 
 ## Priority behavior queue
 
 1. Lifecycle population:
    - Copy applicant organization/address into initially empty PD/PI and AOR fields,
      while allowing overwrite.
-2. Validation:
-   - Contact, PD/PI, and AOR email validation; contact email remains optional.
-   - Project start date must not follow end date.
-   - Congressional district format (`CA-005` or `00-000`).
-   - Funding range 0-9,999,999,999,999.99 with at most two decimal places.
-   - Do not add a 15c funding calculation without an explicit reviewed decision.
-3. Presentation and instructions:
+2. Presentation and instructions:
    - Restore numbered order 1-21, human labels, help text, certification language,
      attachment-role guidance, OMB metadata, expiration, and burden-statement access.
 

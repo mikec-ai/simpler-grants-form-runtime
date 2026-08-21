@@ -162,6 +162,22 @@ def apply_source_reviewed_behaviors(artifacts: dict[str, Any]) -> None:
     ]
     sam_uei.update({"minLength": 12, "maxLength": 12})
 
+    applicant_district = schema["properties"]["CongressionalDistrict"]["properties"][
+        "ApplicantCongressionalDistrict"
+    ]
+    applicant_district["pattern"] = r"^(?:[A-Z]{2}|00)-[0-9]{3}$"
+
+    funding = schema["properties"]["EstimatedProjectFunding"]["properties"]
+    for field_name in (
+        "TotalEstimatedAmount",
+        "TotalNonfedrequested",
+        "TotalfedNonfedrequested",
+        "EstimatedProgramIncome",
+    ):
+        # The source constrains precision but does not calculate any of these
+        # four independently entered funding answers.
+        funding[field_name]["multipleOf"] = 0.01
+
     # These values are supplied only during submission. Keeping them required in
     # the authoring schema makes every ordinary GET/MODIFY state invalid while the
     # disabled controls are still empty.
@@ -257,5 +273,11 @@ def apply_source_reviewed_behaviors(artifacts: dict[str, Any]) -> None:
                 {"field": "ApplicationType.RevisionCode", "value": "E"},
             ],
             "order": 2,
+        }
+    }
+    rules.setdefault("ProposedProjectPeriod", {})["ProposedEndDate"] = {
+        "gg_validation": {
+            "rule": "date_not_before",
+            "other_field": "ProposedProjectPeriod.ProposedStartDate",
         }
     }

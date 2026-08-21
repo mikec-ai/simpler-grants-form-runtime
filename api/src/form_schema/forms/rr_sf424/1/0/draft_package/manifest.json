@@ -91,7 +91,7 @@
   },
   "executed_behavior_slice": {
     "evidence_file": "behavior-evidence.json",
-    "evidence_sha256": "03c60d0a0de81dec237ce7341101c5cb30001a01a84fe574df7f433265000cb1",
+    "evidence_sha256": "cca4a9727c36ade47c8b54ac915e6f7d1424c958c630ffbed6cc10751d857ec7",
     "review_status": "agent_full_source_review",
     "published_coverage_eligible": false,
     "conditional_required_paths": [
@@ -155,7 +155,19 @@
       "RR_SF424_5_0.ApplicantInfo.OrganizationInfo.SAMUEI",
       "RR_SF424_5_0.ApplicantInfo.ContactPersonInfo.Email",
       "RR_SF424_5_0.PDPIContactInfo.Email",
-      "RR_SF424_5_0.AORInfo.Email"
+      "RR_SF424_5_0.AORInfo.Email",
+      "RR_SF424_5_0.ProposedProjectPeriod.ProposedEndDate",
+      "RR_SF424_5_0.CongressionalDistrict.ApplicantCongressionalDistrict",
+      "RR_SF424_5_0.EstimatedProjectFunding.TotalEstimatedAmount",
+      "RR_SF424_5_0.EstimatedProjectFunding.TotalNonfedrequested",
+      "RR_SF424_5_0.EstimatedProjectFunding.TotalfedNonfedrequested",
+      "RR_SF424_5_0.EstimatedProjectFunding.EstimatedProgramIncome"
+    ],
+    "applicant_entered_not_calculated_paths": [
+      "RR_SF424_5_0.EstimatedProjectFunding.TotalEstimatedAmount",
+      "RR_SF424_5_0.EstimatedProjectFunding.TotalNonfedrequested",
+      "RR_SF424_5_0.EstimatedProjectFunding.TotalfedNonfedrequested",
+      "RR_SF424_5_0.EstimatedProjectFunding.EstimatedProgramIncome"
     ],
     "presentation_dispositions": {
       "RR_SF424_5_0.ApplicantInfo.OrganizationInfo.EIN": "hidden_unbound_xsd_leaf",

@@ -364,6 +364,47 @@ def test_rr_sf424_source_conditions_control_ui_and_lifecycle_fields() -> None:
         assert _resolve_schema_pointer(RRSF424_v5_0.form_json_schema, pointer)["format"] == "email"
 
 
+def test_rr_sf424_source_validation_constraints_are_executable() -> None:
+    schema = RRSF424_v5_0.form_json_schema
+    district = schema["properties"]["CongressionalDistrict"]["properties"][
+        "ApplicantCongressionalDistrict"
+    ]
+    assert district["pattern"] == r"^(?:[A-Z]{2}|00)-[0-9]{3}$"
+    district_validator = Draft202012Validator(district)
+    for value in ("CA-005", "00-000"):
+        assert list(district_validator.iter_errors(value)) == []
+    for value in ("CA005", "ca-005", "US-all", "001-00"):
+        assert any(error.validator == "pattern" for error in district_validator.iter_errors(value))
+
+    funding = schema["properties"]["EstimatedProjectFunding"]["properties"]
+    assert {
+        name: funding[name]["multipleOf"]
+        for name in (
+            "TotalEstimatedAmount",
+            "TotalNonfedrequested",
+            "TotalfedNonfedrequested",
+            "EstimatedProgramIncome",
+        )
+    } == {
+        "TotalEstimatedAmount": 0.01,
+        "TotalNonfedrequested": 0.01,
+        "TotalfedNonfedrequested": 0.01,
+        "EstimatedProgramIncome": 0.01,
+    }
+    amount_validator = Draft202012Validator(funding["TotalEstimatedAmount"])
+    for value in (0, 0.01, 9999999999999.99):
+        assert list(amount_validator.iter_errors(value)) == []
+    for value in (-0.01, 0.001, 10000000000000):
+        assert list(amount_validator.iter_errors(value))
+
+    assert RRSF424_v5_0.form_rule_schema["ProposedProjectPeriod"]["ProposedEndDate"] == {
+        "gg_validation": {
+            "rule": "date_not_before",
+            "other_field": "ProposedProjectPeriod.ProposedStartDate",
+        }
+    }
+
+
 def test_rr_sf424_draft_review_boundary_fails_closed() -> None:
     manifest = json.loads((_PACKAGE_DIR / "manifest.json").read_text(encoding="utf-8"))
     projection_report = json.loads(
@@ -443,6 +484,12 @@ def test_rr_sf424_draft_review_boundary_fails_closed() -> None:
         "RR_SF424_5_0.ApplicantInfo.ContactPersonInfo.Email",
         "RR_SF424_5_0.PDPIContactInfo.Email",
         "RR_SF424_5_0.AORInfo.Email",
+        "RR_SF424_5_0.ProposedProjectPeriod.ProposedEndDate",
+        "RR_SF424_5_0.CongressionalDistrict.ApplicantCongressionalDistrict",
+        "RR_SF424_5_0.EstimatedProjectFunding.TotalEstimatedAmount",
+        "RR_SF424_5_0.EstimatedProjectFunding.TotalNonfedrequested",
+        "RR_SF424_5_0.EstimatedProjectFunding.TotalfedNonfedrequested",
+        "RR_SF424_5_0.EstimatedProjectFunding.EstimatedProgramIncome",
     }
     evidence_path = _PACKAGE_DIR / behavior_slice["evidence_file"]
     assert (
@@ -450,8 +497,8 @@ def test_rr_sf424_draft_review_boundary_fails_closed() -> None:
     )
     evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
     assert evidence["published_coverage_eligible"] is False
-    assert len(evidence["records"]) == 39
-    assert len({record["evidence_id"] for record in evidence["records"]}) == 39
+    assert len(evidence["records"]) == 50
+    assert len({record["evidence_id"] for record in evidence["records"]}) == 50
     assert all(
         record["source_artifact"] in evidence["source_artifacts"] for record in evidence["records"]
     )
@@ -470,9 +517,24 @@ def test_rr_sf424_draft_review_boundary_fails_closed() -> None:
         for record in evidence["records"]
         if "default_usa_if_missing" in record["effects"]
     } <= set(behavior_slice["population_paths"])
+    assert {
+        record["target_path"]
+        for record in evidence["records"]
+        if "two_decimal_precision" in record["effects"]
+    } == {
+        "RR_SF424_5_0.EstimatedProjectFunding.TotalEstimatedAmount",
+        "RR_SF424_5_0.EstimatedProjectFunding.TotalNonfedrequested",
+        "RR_SF424_5_0.EstimatedProjectFunding.TotalfedNonfedrequested",
+        "RR_SF424_5_0.EstimatedProjectFunding.EstimatedProgramIncome",
+    }
+    assert {
+        record["target_path"]
+        for record in evidence["records"]
+        if "applicant_entered_not_calculated" in record["effects"]
+    } == set(behavior_slice["applicant_entered_not_calculated_paths"])
     review_note = (_PACKAGE_DIR / "source-review.md").read_text(encoding="utf-8")
     assert "executed only\nthe three attachment-type checks" in review_note
-    assert "Do not add a 15c funding calculation" in review_note
+    assert "no funding calculation was introduced" in review_note
 
 
 def test_rr_sf424_draft_generates_namespaced_nested_xml() -> None:

@@ -15,6 +15,10 @@
     "xfa_sample": {
       "source_ref": "grants.gov:RRSF424:V5.0:canonical-xfa-sample",
       "sha256": "06dd92da28b4afb8190fd0edaeb7a0dac3ae2d601adcc1ab9a5e0fc93c09f523"
+    },
+    "global_library_xsd": {
+      "source_ref": "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
+      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8"
     }
   },
   "records": [
@@ -251,6 +255,72 @@
       "effects": ["conditional_required", "conditional_presentation", "stale_value_clearing"],
       "evidence_id": "behavior:sha256:9158508f1fbc79dfcd776303f6592a81c2cc5d4dfbde18dafe80531adcb898b6",
       "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ProposedProjectPeriod.ProposedStartDate",
+      "effects": ["date_order_start_operand"],
+      "evidence_id": "behavior:sha256:793fbdc930485448e5cdf3dd886873410dbedbc8378b3e89bf8bd7178317ecc1",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ProposedProjectPeriod.ProposedEndDate",
+      "effects": ["date_not_before_start"],
+      "evidence_id": "behavior:sha256:677153c3a440b46c85532c036a1d712e0b05a3a2d7536c612e0d6e3a792440f1",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.CongressionalDistrict.ApplicantCongressionalDistrict",
+      "effects": ["applicant_congressional_district_format"],
+      "evidence_id": "review-finding:instructions-applicant-congressional-district-format",
+      "source_artifact": "instructions_pdf"
+    },
+    {
+      "target_path": "RR_SF424_5_0.EstimatedProjectFunding.TotalEstimatedAmount",
+      "effects": ["two_decimal_precision"],
+      "evidence_id": "review-finding:xsd-total-estimated-amount-fraction-digits-2",
+      "source_artifact": "global_library_xsd"
+    },
+    {
+      "target_path": "RR_SF424_5_0.EstimatedProjectFunding.TotalNonfedrequested",
+      "effects": ["two_decimal_precision"],
+      "evidence_id": "review-finding:xsd-total-nonfederal-requested-fraction-digits-2",
+      "source_artifact": "global_library_xsd"
+    },
+    {
+      "target_path": "RR_SF424_5_0.EstimatedProjectFunding.TotalfedNonfedrequested",
+      "effects": ["two_decimal_precision"],
+      "evidence_id": "review-finding:xsd-total-federal-nonfederal-fraction-digits-2",
+      "source_artifact": "global_library_xsd"
+    },
+    {
+      "target_path": "RR_SF424_5_0.EstimatedProjectFunding.EstimatedProgramIncome",
+      "effects": ["two_decimal_precision"],
+      "evidence_id": "review-finding:xsd-estimated-program-income-fraction-digits-2",
+      "source_artifact": "global_library_xsd"
+    },
+    {
+      "target_path": "RR_SF424_5_0.EstimatedProjectFunding.TotalEstimatedAmount",
+      "effects": ["applicant_entered_not_calculated"],
+      "evidence_id": "review-finding:xfa-total-estimated-amount-no-calculation",
+      "source_artifact": "xfa_sample"
+    },
+    {
+      "target_path": "RR_SF424_5_0.EstimatedProjectFunding.TotalNonfedrequested",
+      "effects": ["applicant_entered_not_calculated"],
+      "evidence_id": "review-finding:xfa-total-nonfederal-requested-no-calculation",
+      "source_artifact": "xfa_sample"
+    },
+    {
+      "target_path": "RR_SF424_5_0.EstimatedProjectFunding.TotalfedNonfedrequested",
+      "effects": ["applicant_entered_not_calculated"],
+      "evidence_id": "review-finding:xfa-total-federal-nonfederal-no-calculation",
+      "source_artifact": "xfa_sample"
+    },
+    {
+      "target_path": "RR_SF424_5_0.EstimatedProjectFunding.EstimatedProgramIncome",
+      "effects": ["applicant_entered_not_calculated"],
+      "evidence_id": "review-finding:xfa-estimated-program-income-no-calculation",
+      "source_artifact": "xfa_sample"
     }
   ],
   "review_status": "agent_full_source_review"

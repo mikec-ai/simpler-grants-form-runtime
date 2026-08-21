@@ -300,10 +300,6 @@ we'll add it to a list of validation issues.
 For validation, this rule group is `gg_validation` with the following
 rules currently implemented:
 * `attachment` - verifies that the field representing an attachment ID corresponds to an attachment ID on the application itself.
+* `date_not_before` - requires the target ISO date to be on or after the date at an absolute dotted `other_field` path. Missing or malformed operands remain the responsibility of JSON Schema.
 
 # Future Work
-
-## Cross-field Validation
-We likely want some form of cross-field validation. I don't think
-JSON Schema supports a way to validate dates are in order for something
-like start/end dates.
