@@ -1,3 +1,5 @@
+from types import SimpleNamespace
+
 import pytest
 from grants_shared.util.datetime_util import get_now_us_eastern_date
 
@@ -5,6 +7,7 @@ from src.form_schema.rule_processing.json_rule_context import JsonRule
 from src.form_schema.rule_processing.json_rule_field_population import (
     POST_POPULATION_MAPPER,
     PRE_POPULATION_MAPPER,
+    get_default_value,
     handle_field_population,
 )
 from tests.src.form_schema.rule_processing.conftest import setup_context
@@ -91,6 +94,41 @@ def test_handle_field_population_pre_population_with_null_value(
     )
     # Because the value is null, we don't populate it, and actually remove the field by default
     assert context.json_data == {}
+
+
+def test_default_value_only_fills_a_missing_target() -> None:
+    rule = {"rule": "default_value", "value": "USA: UNITED STATES"}
+    json_rule = JsonRule(
+        handler="gg_pre_population",
+        rule=rule,
+        path=["address", "country"],
+    )
+
+    missing_context = SimpleNamespace(json_data={}, get_log_context=lambda: {})
+    existing_context = SimpleNamespace(
+        json_data={"address": {"country": "CAN: CANADA"}},
+        get_log_context=lambda: {},
+    )
+
+    assert get_default_value(missing_context, json_rule) == "USA: UNITED STATES"
+    assert get_default_value(existing_context, json_rule) == "CAN: CANADA"
+    assert PRE_POPULATION_MAPPER["default_value"] is get_default_value
+
+    handle_field_population(missing_context, json_rule, PRE_POPULATION_MAPPER)
+    handle_field_population(existing_context, json_rule, PRE_POPULATION_MAPPER)
+
+    assert missing_context.json_data == {"address": {"country": "USA: UNITED STATES"}}
+    assert existing_context.json_data == {"address": {"country": "CAN: CANADA"}}
+
+    with pytest.raises(ValueError, match="JSON scalar"):
+        get_default_value(
+            missing_context,
+            JsonRule(
+                handler="gg_pre_population",
+                rule={"rule": "default_value", "value": {}},
+                path=["address", "country"],
+            ),
+        )
 
 
 @pytest.mark.parametrize(

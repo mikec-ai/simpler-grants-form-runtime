@@ -131,6 +131,90 @@
       "effects": ["remove_unbound_ui_leaf"],
       "evidence_id": "review-finding:xfa-no-binding-nested-ein",
       "source_artifact": "xfa_sample"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicantInfo.OrganizationInfo.Address.State",
+      "effects": ["conditional_required", "conditional_presentation"],
+      "evidence_id": "behavior:sha256:3091decfc83c52c8635100d6abcba6e75abfa02ab74aa78b5f1a79127c40570a",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicantInfo.OrganizationInfo.Address.Province",
+      "effects": ["conditional_presentation"],
+      "evidence_id": "behavior:sha256:1af80e1a1941b7247d97511bf9c1a06dd1bdcb0c51cf97e47c856aefe52ccca8",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicantInfo.OrganizationInfo.Address.ZipPostalCode",
+      "effects": ["conditional_required", "conditional_presentation", "us_min_length_9"],
+      "evidence_id": "behavior:sha256:44714309cdbbd4ca8a01f1260ecfd31a07da75a9f99b0f63123d724acd6bd178",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicantInfo.OrganizationInfo.Address.Country",
+      "effects": ["default_usa_if_missing"],
+      "evidence_id": "behavior:sha256:f92b2ad91660540f97a65fb40f71bdad6c3b4216e03bd6930d071bb6e5fbe64b",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicantInfo.ContactPersonInfo.Address.State",
+      "effects": ["conditional_required", "conditional_presentation"],
+      "evidence_id": "behavior:sha256:f664a49a0f4fe35640d041067ec9636de42f27e0ece191573c14fc0845ac332d",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicantInfo.ContactPersonInfo.Address.Province",
+      "effects": ["conditional_presentation"],
+      "evidence_id": "behavior:sha256:f73a633c28eade054d3fe5e6ff9dafc11f3471a3b91d6c893333f95e9c3f2c82",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicantInfo.ContactPersonInfo.Address.ZipPostalCode",
+      "effects": ["conditional_required", "conditional_presentation", "us_min_length_9"],
+      "evidence_id": "behavior:sha256:41b5a7c6dcc5f60cf14bea33b95234e6314576ee90f71f56f67c507b19e541d9",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.ApplicantInfo.ContactPersonInfo.Address.Country",
+      "effects": ["default_usa_if_missing"],
+      "evidence_id": "behavior:sha256:9cc2c54d9d6646b56841b5c6f6c12d86bc029b8cbb04b01993f0e7bbbe394dd1",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.PDPIContactInfo.Address.State",
+      "effects": ["conditional_required", "conditional_presentation"],
+      "evidence_id": "behavior:sha256:ced31c242ae86829c6a13314a22c0cb90c20e6cdbd0255e68b6ee19594b78833",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.PDPIContactInfo.Address.Province",
+      "effects": ["conditional_presentation"],
+      "evidence_id": "behavior:sha256:0abc65d53161e63fb6492c4560f4706cdcb89a8fd60c87235edd10e0928e8c2f",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.PDPIContactInfo.Address.ZipPostalCode",
+      "effects": ["conditional_required", "conditional_presentation", "us_min_length_9"],
+      "evidence_id": "behavior:sha256:f94046a49dfae155f30ccbaff5c372ba4d9727e1b0896f6abaec68ab752f17c7",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.AORInfo.Address.State",
+      "effects": ["conditional_required", "conditional_presentation"],
+      "evidence_id": "behavior:sha256:355cee57eba6cd6332079274063c26d8922e99243f6005b4d6516b3a76386634",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.AORInfo.Address.Province",
+      "effects": ["conditional_presentation"],
+      "evidence_id": "behavior:sha256:157303b67c27e7d07fddf1492916d6215d08534e2dbc1e464b8bc70ed58af8ef",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.AORInfo.Address.ZipPostalCode",
+      "effects": ["conditional_required", "conditional_presentation", "us_min_length_9"],
+      "evidence_id": "behavior:sha256:4cd93b0537ad36cec85690dbdbcae646d25cc572823e94737d68126b3c81df5e",
+      "source_artifact": "dat"
     }
   ],
   "review_status": "agent_full_source_review"

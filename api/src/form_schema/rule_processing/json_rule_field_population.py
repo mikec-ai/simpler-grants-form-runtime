@@ -5,6 +5,7 @@ from typing import Any
 
 from grants_shared.util.datetime_util import get_now_us_eastern_date
 from grants_shared.util.decimal_util import ZERO_DECIMAL, convert_monetary_field, quantize_decimal
+from grants_shared.util.dict_util import get_nested_value
 
 from src.form_schema.rule_processing.json_rule_context import JsonRule, JsonRuleContext
 from src.form_schema.rule_processing.json_rule_util import get_field_values, populate_nested_value
@@ -128,6 +129,19 @@ def get_competition_title(context: JsonRuleContext, json_rule: JsonRule) -> str 
     """Get the competition title from the competition"""
     competition = context.application_form.application.competition
     return competition.competition_title
+
+
+def get_default_value(context: JsonRuleContext, json_rule: JsonRule) -> Any:
+    """Populate a reviewed JSON scalar only when the target has no value yet."""
+
+    if "value" not in json_rule.rule:
+        raise ValueError("default_value requires a 'value'")
+    default = json_rule.rule["value"]
+    if default is None or isinstance(default, (dict, list)):
+        raise ValueError("default_value only supports JSON scalar values")
+
+    current = get_nested_value(context.json_data, json_rule.path)
+    return default if current is None else current
 
 
 def get_signature(context: JsonRuleContext, json_rule: JsonRule) -> str | None:
@@ -292,6 +306,7 @@ PRE_POPULATION_MAPPER: dict[str, population_func] = {
     "assistance_listing_program_title": get_assistance_listing_program_title,
     "public_competition_id": get_public_competition_id,
     "competition_title": get_competition_title,
+    "default_value": get_default_value,
     "sum_monetary": sum_monetary_values,
     "multiply_by_percentage": multiply_by_percentage,
     "subtract_monetary": subtract_monetary_values,

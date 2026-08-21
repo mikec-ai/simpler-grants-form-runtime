@@ -6,6 +6,10 @@ from typing import Any
 
 from src.constants.lookup_constants import FormType
 from src.db.models.competition_models import Form
+from src.form_schema.components.country_aware_address import (
+    AddressChildNamespace,
+    build_country_aware_address_component,
+)
 from src.form_schema.components.person_name import (
     PersonNameComponentConfig,
     build_person_name_component,
@@ -45,6 +49,7 @@ _WIRE_NAME_UI_ORDER = ("first_name", "last_name", "middle_name", "prefix", "suff
 _PERSON_NAME = build_person_name_component(
     PersonNameComponentConfig(title="Person Name", description="")
 )
+_COUNTRY_AWARE_ADDRESS = build_country_aware_address_component()
 
 
 def _compose_source_bound_person_name(
@@ -97,6 +102,66 @@ def _compose_source_bound_person_name(
     xml_node.update(mounted.xml_fields)
 
 
+def _compose_source_bound_address(
+    artifacts: dict[str, Any],
+    *,
+    schema_path: tuple[str, ...],
+    ui_base_definition: str,
+    xml_path: tuple[str, ...],
+    child_namespace: AddressChildNamespace,
+) -> None:
+    """Replace one resolved address with the reviewed shared wire profile."""
+
+    schema_node = artifacts["json-schema.json"]
+    for segment in schema_path:
+        schema_node = schema_node[segment]
+
+    mounted = _COUNTRY_AWARE_ADDRESS.mount_wire(
+        ui_base_definition,
+        child_namespace=child_namespace,
+    )
+    composed_schema = mounted.json_schema
+    composed_schema["x-authoring"] = schema_node["x-authoring"]
+    for field_name, field_schema in composed_schema["properties"].items():
+        field_schema["x-authoring"] = schema_node["properties"][field_name]["x-authoring"]
+
+    structural_schema = json.loads(json.dumps(composed_schema))
+    structural_schema.pop("allOf")
+    if structural_schema != schema_node:
+        raise ValueError(f"R&R SF-424 address component drift: {ui_base_definition}")
+
+    resolved_ui = {
+        child["definition"]: child
+        for section in artifacts["ui-schema.json"]
+        for child in section["children"]
+        if child.get("definition", "").startswith(f"{ui_base_definition}/properties/")
+    }
+    if len(resolved_ui) != len(mounted.ui_fields):
+        raise ValueError(f"R&R SF-424 address UI field drift: {ui_base_definition}")
+    for mounted_field in mounted.ui_fields:
+        definition = mounted_field["definition"]
+        baseline_field = dict(mounted_field)
+        condition = baseline_field.pop("conditional", None)
+        if resolved_ui.get(definition) != baseline_field:
+            raise ValueError(f"R&R SF-424 address UI drift: {definition}")
+        if condition is not None:
+            resolved_ui[definition]["conditional"] = condition
+
+    xml_node = artifacts["xml-transform.json"]
+    for segment in xml_path:
+        xml_node = xml_node[segment]
+    resolved_xml_fields = {key: value for key, value in xml_node.items() if key != "xml_transform"}
+    if mounted.xml_fields != resolved_xml_fields:
+        raise ValueError(f"R&R SF-424 address XML drift: {ui_base_definition}")
+
+    schema_node.clear()
+    schema_node.update(composed_schema)
+    wrapper = xml_node["xml_transform"]
+    xml_node.clear()
+    xml_node["xml_transform"] = wrapper
+    xml_node.update(mounted.xml_fields)
+
+
 _ARTIFACTS = _load_verified_artifacts()
 for _schema_path, _ui_base, _xml_path in (
     (
@@ -129,6 +194,55 @@ for _schema_path, _ui_base, _xml_path in (
         ui_base_definition=_ui_base,
         xml_path=_xml_path[1:],
     )
+for _schema_path, _ui_base, _xml_path, _child_namespace in (
+    (
+        (
+            "json-schema.json",
+            "properties",
+            "ApplicantInfo",
+            "properties",
+            "OrganizationInfo",
+            "properties",
+            "Address",
+        ),
+        "/properties/ApplicantInfo/properties/OrganizationInfo/properties/Address",
+        ("xml-transform.json", "ApplicantInfo", "OrganizationInfo", "Address"),
+        "inherit",
+    ),
+    (
+        (
+            "json-schema.json",
+            "properties",
+            "ApplicantInfo",
+            "properties",
+            "ContactPersonInfo",
+            "properties",
+            "Address",
+        ),
+        "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Address",
+        ("xml-transform.json", "ApplicantInfo", "ContactPersonInfo", "Address"),
+        "globLib",
+    ),
+    (
+        ("json-schema.json", "properties", "PDPIContactInfo", "properties", "Address"),
+        "/properties/PDPIContactInfo/properties/Address",
+        ("xml-transform.json", "PDPIContactInfo", "Address"),
+        "globLib",
+    ),
+    (
+        ("json-schema.json", "properties", "AORInfo", "properties", "Address"),
+        "/properties/AORInfo/properties/Address",
+        ("xml-transform.json", "AORInfo", "Address"),
+        "globLib",
+    ),
+):
+    _compose_source_bound_address(
+        _ARTIFACTS,
+        schema_path=_schema_path[1:],
+        ui_base_definition=_ui_base,
+        xml_path=_xml_path[1:],
+        child_namespace=_child_namespace,
+    )
 apply_source_reviewed_behaviors(_ARTIFACTS)
 FORM_JSON_SCHEMA = _ARTIFACTS["json-schema.json"]
 FORM_UI_SCHEMA = _ARTIFACTS["ui-schema.json"]
@@ -156,3 +270,4 @@ del _ARTIFACTS
 del _schema_path
 del _ui_base
 del _xml_path
+del _child_namespace

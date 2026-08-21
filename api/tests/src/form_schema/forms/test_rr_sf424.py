@@ -104,6 +104,75 @@ def test_shared_person_name_composition_preserves_resolved_artifacts() -> None:
             assert any(global_library_ref in item for item in authoring["provenance"])
 
 
+def test_country_aware_address_component_preserves_structure_and_wire_mapping() -> None:
+    baseline_schema = json.loads((_PACKAGE_DIR / "json-schema.json").read_text(encoding="utf-8"))
+    baseline_ui = json.loads((_PACKAGE_DIR / "ui-schema.json").read_text(encoding="utf-8"))
+    address_paths = (
+        "/properties/ApplicantInfo/properties/OrganizationInfo/properties/Address",
+        "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Address",
+        "/properties/PDPIContactInfo/properties/Address",
+        "/properties/AORInfo/properties/Address",
+    )
+
+    for address_path in address_paths:
+        runtime_address = _resolve_schema_pointer(RRSF424_v5_0.form_json_schema, address_path)
+        assert isinstance(runtime_address, dict)
+        structural_address = dict(runtime_address)
+        structural_address.pop("allOf")
+        assert structural_address == _resolve_schema_pointer(baseline_schema, address_path)
+
+        runtime_fields = [
+            child
+            for section in RRSF424_v5_0.form_ui_schema
+            for child in section["children"]
+            if child.get("definition", "").startswith(f"{address_path}/properties/")
+        ]
+        baseline_fields = [
+            child
+            for section in baseline_ui
+            for child in section["children"]
+            if child.get("definition", "").startswith(f"{address_path}/properties/")
+        ]
+        assert [
+            {key: value for key, value in field.items() if key != "conditional"}
+            for field in runtime_fields
+        ] == baseline_fields
+        assert len([field for field in runtime_fields if "conditional" in field]) == 3
+
+
+def test_all_four_addresses_execute_us_and_non_us_rules() -> None:
+    address_paths = (
+        "/properties/ApplicantInfo/properties/OrganizationInfo/properties/Address",
+        "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Address",
+        "/properties/PDPIContactInfo/properties/Address",
+        "/properties/AORInfo/properties/Address",
+    )
+    for address_path in address_paths:
+        address_schema = _resolve_schema_pointer(RRSF424_v5_0.form_json_schema, address_path)
+        validator = Draft202012Validator(address_schema)
+        us_errors = list(
+            validator.iter_errors(
+                {
+                    "Country": "USA: UNITED STATES",
+                    "City": "Washington",
+                    "Street1": "1 Main St",
+                    "ZipPostalCode": "12345",
+                }
+            )
+        )
+        assert any("State" in error.message for error in us_errors)
+        assert any(error.validator == "minLength" for error in us_errors)
+        assert not list(
+            validator.iter_errors(
+                {
+                    "Country": "CAN: CANADA",
+                    "City": "Ottawa",
+                    "Street1": "1 Main St",
+                }
+            )
+        )
+
+
 def test_rr_sf424_draft_preserves_wire_identity_and_attachment_rules() -> None:
     xml_config = RRSF424_v5_0.json_to_xml_schema["_xml_config"]
 
@@ -187,6 +256,14 @@ def test_rr_sf424_source_conditions_control_ui_and_lifecycle_fields() -> None:
     }
     assert rules["AOR_Signature"] == {"gg_post_population": {"rule": "signature"}}
     assert rules["AOR_SignedDate"] == {"gg_post_population": {"rule": "current_date"}}
+    country_default = {
+        "gg_pre_population": {
+            "rule": "default_value",
+            "value": "USA: UNITED STATES",
+        }
+    }
+    assert rules["ApplicantInfo"]["OrganizationInfo"]["Address"]["Country"] == country_default
+    assert rules["ApplicantInfo"]["ContactPersonInfo"]["Address"]["Country"] == country_default
 
     sam_uei = RRSF424_v5_0.form_json_schema["properties"]["ApplicantInfo"]["properties"][
         "OrganizationInfo"
@@ -228,6 +305,15 @@ def test_rr_sf424_draft_review_boundary_fails_closed() -> None:
     }
     assert projection_report["semantic_mapping_status"] == "agent_proposed"
     assert projection_report["production_ready"] is False
+    address_bindings = [
+        binding
+        for binding in manifest["component_bindings"]
+        if binding["component_id"] == "people.country-aware-address.global-library-v2"
+    ]
+    assert len(address_bindings) == 4
+    assert {binding["binding_status"] for binding in address_bindings} == {
+        "exact_source_bound_structure"
+    }
     assert manifest["source_review"] == {
         "instructions_pdf_sha256": (
             "666647fdeb7d9d69f2d36dedc74f09ff6a9540776f87c5a5c5b0593219736bd1"
@@ -248,6 +334,14 @@ def test_rr_sf424_draft_review_boundary_fails_closed() -> None:
         "RR_SF424_5_0.ApplicationType.OtherAgencySubmissionExplanation",
         "RR_SF424_5_0.ApplicantType.ApplicantTypeCodeOtherExplanation",
         "RR_SF424_5_0.StateReview.StateReviewDate",
+        "RR_SF424_5_0.ApplicantInfo.OrganizationInfo.Address.State",
+        "RR_SF424_5_0.ApplicantInfo.OrganizationInfo.Address.ZipPostalCode",
+        "RR_SF424_5_0.ApplicantInfo.ContactPersonInfo.Address.State",
+        "RR_SF424_5_0.ApplicantInfo.ContactPersonInfo.Address.ZipPostalCode",
+        "RR_SF424_5_0.PDPIContactInfo.Address.State",
+        "RR_SF424_5_0.PDPIContactInfo.Address.ZipPostalCode",
+        "RR_SF424_5_0.AORInfo.Address.State",
+        "RR_SF424_5_0.AORInfo.Address.ZipPostalCode",
     }
     assert set(behavior_slice["population_paths"]) == {
         "RR_SF424_5_0.FederalAgencyName",
@@ -256,6 +350,8 @@ def test_rr_sf424_draft_review_boundary_fails_closed() -> None:
         "RR_SF424_5_0.ApplicantInfo.OrganizationInfo.SAMUEI",
         "RR_SF424_5_0.AOR_Signature",
         "RR_SF424_5_0.AOR_SignedDate",
+        "RR_SF424_5_0.ApplicantInfo.OrganizationInfo.Address.Country",
+        "RR_SF424_5_0.ApplicantInfo.ContactPersonInfo.Address.Country",
     }
     assert set(behavior_slice["validation_paths"]) == {
         "RR_SF424_5_0.TrustAgree",
@@ -270,8 +366,8 @@ def test_rr_sf424_draft_review_boundary_fails_closed() -> None:
     )
     evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
     assert evidence["published_coverage_eligible"] is False
-    assert len(evidence["records"]) == 19
-    assert len({record["evidence_id"] for record in evidence["records"]}) == 19
+    assert len(evidence["records"]) == 33
+    assert len({record["evidence_id"] for record in evidence["records"]}) == 33
     assert all(
         record["source_artifact"] in evidence["source_artifacts"] for record in evidence["records"]
     )
@@ -280,6 +376,16 @@ def test_rr_sf424_draft_review_boundary_fails_closed() -> None:
         for record in evidence["records"]
         if "conditional_required" in record["effects"]
     } == set(behavior_slice["conditional_required_paths"])
+    assert {
+        record["target_path"]
+        for record in evidence["records"]
+        if "conditional_presentation" in record["effects"]
+    } == set(behavior_slice["conditional_presentation_paths"])
+    assert {
+        record["target_path"]
+        for record in evidence["records"]
+        if "default_usa_if_missing" in record["effects"]
+    } <= set(behavior_slice["population_paths"])
     review_note = (_PACKAGE_DIR / "source-review.md").read_text(encoding="utf-8")
     assert "executed only\nthe three attachment-type checks" in review_note
     assert "Do not add a 15c funding calculation" in review_note

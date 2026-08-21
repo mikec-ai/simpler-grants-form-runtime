@@ -179,3 +179,16 @@ def apply_source_reviewed_behaviors(artifacts: dict[str, Any]) -> None:
             "AOR_SignedDate": {"gg_post_population": {"rule": "current_date"}},
         }
     )
+    applicant_rules = rules.setdefault("ApplicantInfo", {})
+    applicant_rules.setdefault("OrganizationInfo", {}).setdefault("Address", {})["Country"] = {
+        "gg_pre_population": {
+            "rule": "default_value",
+            "value": "USA: UNITED STATES",
+        }
+    }
+    applicant_rules.setdefault("ContactPersonInfo", {}).setdefault("Address", {})["Country"] = {
+        "gg_pre_population": {
+            "rule": "default_value",
+            "value": "USA: UNITED STATES",
+        }
+    }

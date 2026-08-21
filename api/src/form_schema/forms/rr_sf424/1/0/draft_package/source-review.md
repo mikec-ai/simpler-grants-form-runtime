@@ -29,24 +29,26 @@ calculate the four funding totals.
 The user-facing EIN is the top-level `EmployerID`; the nested field must be hidden or
 classified as internal rather than rendered as a second EIN.
 
+## Executed behavior slices
+
+- Conditional requiredness and presentation for Federal ID, previous tracking ID,
+  Applicant Other, other-agency explanation, state-review date, and small-business
+  attributes.
+- Required affirmative certification, three email formats, UEI length, opportunity
+  population, and submission-managed AOR signature/date.
+- US State and ZIP versus non-US Province across all four address roles, including the
+  nine-character US ZIP minimum.
+- Missing applicant and application-contact countries default to USA without replacing
+  a user's existing non-US selection.
+
 ## Priority behavior queue
 
-1. Conditional requiredness and presentation:
-   - Federal ID for Renewal, Continuation, and Revision.
-   - Previous tracking ID for Changed/Corrected submissions.
-   - US State and ZIP versus non-US Province for all four address roles.
-   - Applicant Other, revision details/Other, other-agency explanation, and
-     state-review date.
-   - Revision checkbox combinations and stale-value clearing.
-   - Small-business attributes only for applicant type R.
-   - Required affirmative certification; `N: No` must not satisfy it.
+1. Revision behavior:
+   - Revision details/Other conditional presentation and requiredness.
+   - Valid checkbox combinations and stale-value clearing.
 2. Lifecycle population:
-   - Default applicant and application-contact country to USA.
-   - Populate Assistance Listing number/title and federal agency from opportunity data.
-   - Enforce and protect the 12-character UEI.
    - Copy applicant organization/address into initially empty PD/PI and AOR fields,
      while allowing overwrite.
-   - Make AOR signature/date submission-managed rather than ordinary editable fields.
 3. Validation:
    - Contact, PD/PI, and AOR email validation; contact email remains optional.
    - Project start date must not follow end date.

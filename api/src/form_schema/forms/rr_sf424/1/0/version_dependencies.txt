@@ -1,7 +1,10 @@
 # The complete version-local draft package determines the resolved form artifacts.
 ./draft_package
 form_schema/components/component_definition.py
+form_schema/components/country_aware_address.py
 form_schema/components/person_name.py
 form_schema/forms/rr_sf424/behaviors.py
+form_schema/shared/address_shared.py
+form_schema/shared/shared_form_constants.py
 form_schema/shared/common_shared.py
 form_schema/shared/shared_schema.py
