@@ -8,6 +8,7 @@ from src.form_schema.rule_processing.json_rule_field_population import (
     POST_POPULATION_MAPPER,
     PRE_POPULATION_MAPPER,
     clear_unless_all_equal,
+    copy_if_missing,
     get_default_value,
     handle_field_population,
 )
@@ -139,6 +140,82 @@ def test_default_value_only_fills_a_missing_target() -> None:
                 path=["address", "country"],
             ),
         )
+
+
+@pytest.mark.parametrize(
+    "target_value,expected_value",
+    [
+        (None, "Applicant organization"),
+        ("Edited organization", "Edited organization"),
+        ("", ""),
+    ],
+)
+def test_copy_if_missing_preserves_overwrite_capability(
+    target_value: str | None, expected_value: str
+) -> None:
+    json_data = {
+        "ApplicantInfo": {"OrganizationInfo": {"OrganizationName": "Applicant organization"}}
+    }
+    if target_value is not None:
+        json_data["PDPIContactInfo"] = {"OrganizationName": target_value}
+    context = SimpleNamespace(json_data=json_data, get_log_context=lambda: {})
+    json_rule = JsonRule(
+        handler="gg_pre_population",
+        rule={
+            "rule": "copy_if_missing",
+            "source_field": "ApplicantInfo.OrganizationInfo.OrganizationName",
+            "order": 2,
+        },
+        path=["PDPIContactInfo", "OrganizationName"],
+    )
+
+    assert PRE_POPULATION_MAPPER["copy_if_missing"] is copy_if_missing
+    handle_field_population(context, json_rule, PRE_POPULATION_MAPPER)
+    assert context.json_data["PDPIContactInfo"]["OrganizationName"] == expected_value
+
+
+def test_copy_if_missing_leaves_a_missing_target_absent_when_source_is_missing() -> None:
+    context = SimpleNamespace(json_data={}, get_log_context=lambda: {})
+    json_rule = JsonRule(
+        handler="gg_pre_population",
+        rule={"rule": "copy_if_missing", "source_field": "ApplicantInfo.OrganizationName"},
+        path=["PDPIContactInfo", "OrganizationName"],
+    )
+
+    handle_field_population(context, json_rule, PRE_POPULATION_MAPPER)
+    assert context.json_data == {}
+
+
+@pytest.mark.parametrize(
+    "rule,json_data",
+    [
+        ({"rule": "copy_if_missing"}, {}),
+        ({"rule": "copy_if_missing", "source_field": "@THIS.Name"}, {}),
+        ({"rule": "copy_if_missing", "source_field": "ApplicantInfo..Name"}, {}),
+        (
+            {"rule": "copy_if_missing", "source_field": "ApplicantInfo.Name", "extra": True},
+            {},
+        ),
+        (
+            {"rule": "copy_if_missing", "source_field": "ApplicantInfo.Name", "order": 0},
+            {},
+        ),
+        (
+            {"rule": "copy_if_missing", "source_field": "ApplicantInfo.Name"},
+            {"ApplicantInfo": {"Name": {"FirstName": "Ada"}}},
+        ),
+    ],
+)
+def test_copy_if_missing_rejects_an_invalid_contract(rule: dict, json_data: dict) -> None:
+    context = SimpleNamespace(json_data=json_data, get_log_context=lambda: {})
+    json_rule = JsonRule(
+        handler="gg_pre_population",
+        rule=rule,
+        path=["PDPIContactInfo", "OrganizationName"],
+    )
+
+    with pytest.raises(ValueError):
+        copy_if_missing(context, json_rule)
 
 
 @pytest.mark.parametrize(

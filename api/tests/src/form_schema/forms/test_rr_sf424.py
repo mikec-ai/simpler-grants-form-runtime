@@ -21,6 +21,25 @@ _PACKAGE_DIR = (
     / "draft_package"
 )
 
+_INITIAL_COPY_FIELDS = (
+    "OrganizationName",
+    "Department",
+    "Division",
+    "Address.Street1",
+    "Address.Street2",
+    "Address.City",
+    "Address.County",
+    "Address.State",
+    "Address.Province",
+    "Address.Country",
+    "Address.ZipPostalCode",
+)
+_INITIAL_COPY_PATHS = {
+    f"RR_SF424_5_0.{role}.{field}"
+    for role in ("PDPIContactInfo", "AORInfo")
+    for field in _INITIAL_COPY_FIELDS
+}
+
 
 def _resolve_schema_pointer(schema: dict, pointer: str) -> object:
     current: object = schema
@@ -81,15 +100,13 @@ def test_shared_person_name_composition_preserves_resolved_artifacts() -> None:
         for section in RRSF424_v5_0.form_ui_schema
         for child in section["children"]
         if (definition := child.get("definition", ""))
-        and definition.endswith(
-            (
-                "/PrefixName",
-                "/FirstName",
-                "/MiddleName",
-                "/LastName",
-                "/SuffixName",
-            )
-        )
+        and definition.endswith((
+            "/PrefixName",
+            "/FirstName",
+            "/MiddleName",
+            "/LastName",
+            "/SuffixName",
+        ))
     }
     assert resolved_name_paths == expected_name_paths
 
@@ -151,25 +168,21 @@ def test_all_four_addresses_execute_us_and_non_us_rules() -> None:
         address_schema = _resolve_schema_pointer(RRSF424_v5_0.form_json_schema, address_path)
         validator = Draft202012Validator(address_schema)
         us_errors = list(
-            validator.iter_errors(
-                {
-                    "Country": "USA: UNITED STATES",
-                    "City": "Washington",
-                    "Street1": "1 Main St",
-                    "ZipPostalCode": "12345",
-                }
-            )
+            validator.iter_errors({
+                "Country": "USA: UNITED STATES",
+                "City": "Washington",
+                "Street1": "1 Main St",
+                "ZipPostalCode": "12345",
+            })
         )
         assert any("State" in error.message for error in us_errors)
         assert any(error.validator == "minLength" for error in us_errors)
         assert not list(
-            validator.iter_errors(
-                {
-                    "Country": "CAN: CANADA",
-                    "City": "Ottawa",
-                    "Street1": "1 Main St",
-                }
-            )
+            validator.iter_errors({
+                "Country": "CAN: CANADA",
+                "City": "Ottawa",
+                "Street1": "1 Main St",
+            })
         )
 
 
@@ -316,6 +329,18 @@ def test_rr_sf424_source_conditions_control_ui_and_lifecycle_fields() -> None:
     }
     assert rules["ApplicantInfo"]["OrganizationInfo"]["Address"]["Country"] == country_default
     assert rules["ApplicantInfo"]["ContactPersonInfo"]["Address"]["Country"] == country_default
+    for target_role in ("PDPIContactInfo", "AORInfo"):
+        for relative_field in _INITIAL_COPY_FIELDS:
+            target_rule: dict = rules[target_role]
+            for segment in relative_field.split("."):
+                target_rule = target_rule[segment]
+            assert target_rule == {
+                "gg_pre_population": {
+                    "rule": "copy_if_missing",
+                    "source_field": f"ApplicantInfo.OrganizationInfo.{relative_field}",
+                    "order": 2,
+                }
+            }
     assert rules["ApplicationType"]["RevisionCode"] == {
         "gg_pre_population": {
             "rule": "clear_unless_all_equal",
@@ -463,7 +488,7 @@ def test_rr_sf424_draft_review_boundary_fails_closed() -> None:
         "RR_SF424_5_0.ApplicationType.RevisionCode",
         "RR_SF424_5_0.ApplicationType.RevisionCodeOtherExplanation",
     }
-    assert set(behavior_slice["population_paths"]) == {
+    expected_base_population_paths = {
         "RR_SF424_5_0.FederalAgencyName",
         "RR_SF424_5_0.CFDANumber",
         "RR_SF424_5_0.ActivityTitle",
@@ -473,6 +498,10 @@ def test_rr_sf424_draft_review_boundary_fails_closed() -> None:
         "RR_SF424_5_0.ApplicantInfo.OrganizationInfo.Address.Country",
         "RR_SF424_5_0.ApplicantInfo.ContactPersonInfo.Address.Country",
     }
+    assert set(behavior_slice["initial_copy_paths"]) == _INITIAL_COPY_PATHS
+    assert set(behavior_slice["population_paths"]) == (
+        expected_base_population_paths | _INITIAL_COPY_PATHS
+    )
     assert behavior_slice["encoded_checkbox_paths"] == ["RR_SF424_5_0.ApplicationType.RevisionCode"]
     assert set(behavior_slice["stale_clear_paths"]) == {
         "RR_SF424_5_0.ApplicationType.RevisionCode",
@@ -497,8 +526,8 @@ def test_rr_sf424_draft_review_boundary_fails_closed() -> None:
     )
     evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
     assert evidence["published_coverage_eligible"] is False
-    assert len(evidence["records"]) == 50
-    assert len({record["evidence_id"] for record in evidence["records"]}) == 50
+    assert len(evidence["records"]) == 66
+    assert len({record["evidence_id"] for record in evidence["records"]}) == 66
     assert all(
         record["source_artifact"] in evidence["source_artifacts"] for record in evidence["records"]
     )
@@ -517,6 +546,11 @@ def test_rr_sf424_draft_review_boundary_fails_closed() -> None:
         for record in evidence["records"]
         if "default_usa_if_missing" in record["effects"]
     } <= set(behavior_slice["population_paths"])
+    assert {
+        record["target_path"]
+        for record in evidence["records"]
+        if "copy_if_missing_from_applicant" in record["effects"]
+    } == _INITIAL_COPY_PATHS
     assert {
         record["target_path"]
         for record in evidence["records"]

@@ -40,6 +40,9 @@ classified as internal rather than rendered as a second EIN.
   nine-character US ZIP minimum.
 - Missing applicant and application-contact countries default to USA without replacing
   a user's existing non-US selection.
+- Applicant organization and address values initially copy into the PD/PI and AOR
+  profiles. Any later user overwrite, including an intentionally blank value, is
+  preserved on subsequent lifecycle population passes.
 - Revision details render as the canonical five checkboxes while preserving the encoded
   XML value, accept only the source-defined single/pair combinations, require an Other
   explanation for E, and clear dependent values when the application type changes.
@@ -51,10 +54,7 @@ classified as internal rather than rendered as a second EIN.
 
 ## Priority behavior queue
 
-1. Lifecycle population:
-   - Copy applicant organization/address into initially empty PD/PI and AOR fields,
-     while allowing overwrite.
-2. Presentation and instructions:
+1. Presentation and instructions:
    - Restore numbered order 1-21, human labels, help text, certification language,
      attachment-role guidance, OMB metadata, expiration, and burden-statement access.
 

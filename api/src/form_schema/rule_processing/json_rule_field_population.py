@@ -148,6 +148,42 @@ def get_default_value(context: JsonRuleContext, json_rule: JsonRule) -> Any:
     return default if current is None else current
 
 
+def copy_if_missing(context: JsonRuleContext, json_rule: JsonRule) -> Any:
+    """Copy one reviewed scalar path only when the target is absent.
+
+    The target remains user-overwritable: any existing value, including an empty
+    string, wins on later START/MODIFY population passes.
+    """
+
+    allowed_keys = {"rule", "source_field", "order"}
+    if not set(json_rule.rule).issubset(allowed_keys):
+        raise ValueError("copy_if_missing received unsupported configuration")
+
+    source_field = json_rule.rule.get("source_field")
+    if (
+        not isinstance(source_field, str)
+        or not source_field
+        or not all(segment.isidentifier() for segment in source_field.split("."))
+    ):
+        raise ValueError("copy_if_missing source_field must be an absolute dotted path")
+
+    if "order" in json_rule.rule:
+        order = json_rule.rule["order"]
+        if isinstance(order, bool) or not isinstance(order, int) or order < 1:
+            raise ValueError("copy_if_missing order must be a positive integer")
+
+    current = get_nested_value(context.json_data, json_rule.path)
+    if current is not None:
+        if not _is_json_scalar(current):
+            raise ValueError("copy_if_missing only supports JSON scalar values")
+        return current
+
+    source = get_nested_value(context.json_data, source_field.split("."))
+    if source is not None and not _is_json_scalar(source):
+        raise ValueError("copy_if_missing only supports JSON scalar values")
+    return source
+
+
 def clear_unless_all_equal(context: JsonRuleContext, json_rule: JsonRule) -> Any:
     """Preserve a target only while every reviewed scalar condition matches.
 
@@ -349,6 +385,7 @@ PRE_POPULATION_MAPPER: dict[str, population_func] = {
     "public_competition_id": get_public_competition_id,
     "competition_title": get_competition_title,
     "default_value": get_default_value,
+    "copy_if_missing": copy_if_missing,
     "clear_unless_all_equal": clear_unless_all_equal,
     "sum_monetary": sum_monetary_values,
     "multiply_by_percentage": multiply_by_percentage,

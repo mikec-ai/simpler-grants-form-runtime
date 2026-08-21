@@ -95,6 +95,7 @@ rules currently implemented:
 * `public_competition_id` - from the competition
 * `competition_title` - from the competition
 * `default_value` - a reviewed scalar default used only while the target is missing
+* `copy_if_missing` - copies a reviewed scalar source path only while the target is missing, preserving later user overwrites (including an intentionally blank value)
 * `clear_unless_all_equal` - removes a stale dependent target unless every configured scalar condition matches
 * `sum_monetary` - calculated based on other fields in the JSON, see Monetary Summation section below for further details
 * `multiply_by_percentage` - a monetary amount multiplied by a whole-number percentage, see Multiply by Percentage section below for further details

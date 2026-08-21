@@ -185,38 +185,134 @@
       "source_artifact": "dat"
     },
     {
+      "target_path": "RR_SF424_5_0.PDPIContactInfo.OrganizationName",
+      "effects": ["copy_if_missing_from_applicant"],
+      "evidence_id": "behavior:sha256:b7c624786565053d2e4cba3881197b666400355d2b5a2105958efad3fdc2c2ff",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.PDPIContactInfo.Department",
+      "effects": ["copy_if_missing_from_applicant"],
+      "evidence_id": "behavior:sha256:bc6d2d9d7c1094ae16d49d806dd2bee01f79248d9e555b1c59426b58376e6af6",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.PDPIContactInfo.Division",
+      "effects": ["copy_if_missing_from_applicant"],
+      "evidence_id": "behavior:sha256:3d67016d86a6c50529dfb683ed12b03c0a64a7ba4dacdf5a316916bffff11f03",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.PDPIContactInfo.Address.Street1",
+      "effects": ["copy_if_missing_from_applicant"],
+      "evidence_id": "behavior:sha256:ab559c81feb867e0ca43e802a47be7f71234cd7230f83a229193c8b609abb834",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.PDPIContactInfo.Address.Street2",
+      "effects": ["copy_if_missing_from_applicant"],
+      "evidence_id": "behavior:sha256:b81eb6bf8a3b1ddd511b879d6a5014902fb5ecac965c6f4df317e67c17dd7466",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.PDPIContactInfo.Address.City",
+      "effects": ["copy_if_missing_from_applicant"],
+      "evidence_id": "behavior:sha256:97151537be1f7e0153514577ce4c1320a2c6bcf6591e986fff2dd7b103da10c9",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.PDPIContactInfo.Address.County",
+      "effects": ["copy_if_missing_from_applicant"],
+      "evidence_id": "behavior:sha256:f08f01cbac1ffda8c55dcb442feb9ab0e4ac0550f8402f03ea015914b87e26ef",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.PDPIContactInfo.Address.Country",
+      "effects": ["copy_if_missing_from_applicant"],
+      "evidence_id": "behavior:sha256:15d07f0284c596e8ac1a4c2d27faf345a40d85b62986497be09fd486aa8af1a4",
+      "source_artifact": "dat"
+    },
+    {
       "target_path": "RR_SF424_5_0.PDPIContactInfo.Address.State",
-      "effects": ["conditional_required", "conditional_presentation"],
+      "effects": ["conditional_required", "conditional_presentation", "copy_if_missing_from_applicant"],
       "evidence_id": "behavior:sha256:ced31c242ae86829c6a13314a22c0cb90c20e6cdbd0255e68b6ee19594b78833",
       "source_artifact": "dat"
     },
     {
       "target_path": "RR_SF424_5_0.PDPIContactInfo.Address.Province",
-      "effects": ["conditional_presentation"],
+      "effects": ["conditional_presentation", "copy_if_missing_from_applicant"],
       "evidence_id": "behavior:sha256:0abc65d53161e63fb6492c4560f4706cdcb89a8fd60c87235edd10e0928e8c2f",
       "source_artifact": "dat"
     },
     {
       "target_path": "RR_SF424_5_0.PDPIContactInfo.Address.ZipPostalCode",
-      "effects": ["conditional_required", "conditional_presentation", "us_min_length_9"],
+      "effects": ["conditional_required", "conditional_presentation", "us_min_length_9", "copy_if_missing_from_applicant"],
       "evidence_id": "behavior:sha256:f94046a49dfae155f30ccbaff5c372ba4d9727e1b0896f6abaec68ab752f17c7",
       "source_artifact": "dat"
     },
     {
+      "target_path": "RR_SF424_5_0.AORInfo.OrganizationName",
+      "effects": ["copy_if_missing_from_applicant"],
+      "evidence_id": "behavior:sha256:5433c345dfb98c27be8e33623f5df11b944b25e391e35628e918b0969a5c4376",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.AORInfo.Department",
+      "effects": ["copy_if_missing_from_applicant"],
+      "evidence_id": "behavior:sha256:d7c5778be03c8b65bed3d412d71d058b3e5be1415e5c2f9d58ba527aa8d44755",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.AORInfo.Division",
+      "effects": ["copy_if_missing_from_applicant"],
+      "evidence_id": "behavior:sha256:b50c5467a7b0af6206fd4aeec7bb2776889acc78e532d03c323b9a8187dfdde1",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.AORInfo.Address.Street1",
+      "effects": ["copy_if_missing_from_applicant"],
+      "evidence_id": "behavior:sha256:f974acc23e9fd8983cde13eff97a1c03b2ea33d1bc153f56f9ce84535dea929b",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.AORInfo.Address.Street2",
+      "effects": ["copy_if_missing_from_applicant"],
+      "evidence_id": "behavior:sha256:b3e58d6325951e29b722677784c5068231d8b4e69bdbe0122f7d64088ba38594",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.AORInfo.Address.City",
+      "effects": ["copy_if_missing_from_applicant"],
+      "evidence_id": "behavior:sha256:5245612474dd4cb01e61089d4763da6aa3e980e2ef6e4e9c563df055ca6eb35a",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.AORInfo.Address.County",
+      "effects": ["copy_if_missing_from_applicant"],
+      "evidence_id": "behavior:sha256:d88fa829f4960b5346cc4106bc8375b6df415d75cae66e38100512b058d77780",
+      "source_artifact": "dat"
+    },
+    {
+      "target_path": "RR_SF424_5_0.AORInfo.Address.Country",
+      "effects": ["copy_if_missing_from_applicant"],
+      "evidence_id": "behavior:sha256:56ae0f34766b56620b1077fab44b0867f07ba65fed5e7d833bdcc5d675f46bae",
+      "source_artifact": "dat"
+    },
+    {
       "target_path": "RR_SF424_5_0.AORInfo.Address.State",
-      "effects": ["conditional_required", "conditional_presentation"],
+      "effects": ["conditional_required", "conditional_presentation", "copy_if_missing_from_applicant"],
       "evidence_id": "behavior:sha256:355cee57eba6cd6332079274063c26d8922e99243f6005b4d6516b3a76386634",
       "source_artifact": "dat"
     },
     {
       "target_path": "RR_SF424_5_0.AORInfo.Address.Province",
-      "effects": ["conditional_presentation"],
+      "effects": ["conditional_presentation", "copy_if_missing_from_applicant"],
       "evidence_id": "behavior:sha256:157303b67c27e7d07fddf1492916d6215d08534e2dbc1e464b8bc70ed58af8ef",
       "source_artifact": "dat"
     },
     {
       "target_path": "RR_SF424_5_0.AORInfo.Address.ZipPostalCode",
-      "effects": ["conditional_required", "conditional_presentation", "us_min_length_9"],
+      "effects": ["conditional_required", "conditional_presentation", "us_min_length_9", "copy_if_missing_from_applicant"],
       "evidence_id": "behavior:sha256:4cd93b0537ad36cec85690dbdbcae646d25cc572823e94737d68126b3c81df5e",
       "source_artifact": "dat"
     },
