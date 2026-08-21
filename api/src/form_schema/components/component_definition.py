@@ -6,14 +6,16 @@ from collections.abc import Collection, Mapping
 _COMPONENT_ID = re.compile(r"^[a-z][a-z0-9.-]*$")
 _FIELD_KEY = re.compile(r"^[a-z][a-z0-9_]*$")
 _SOURCE_QUESTION_ID = re.compile(r"^[A-Za-z][A-Za-z0-9._:-]*$")
-_SUPPORTED_PREPOPULATION_RULES = frozenset({
-    "agency_name",
-    "assistance_listing_number",
-    "assistance_listing_program_title",
-    "opportunity_number",
-    "opportunity_title",
-    "uei",
-})
+_SUPPORTED_PREPOPULATION_RULES = frozenset(
+    {
+        "agency_name",
+        "assistance_listing_number",
+        "assistance_listing_program_title",
+        "opportunity_number",
+        "opportunity_title",
+        "uei",
+    }
+)
 
 
 class ComponentDefinitionError(ValueError):
