@@ -1,0 +1,20 @@
+{
+  "CoverLetterAttachment": {
+    "gg_validation": {
+      "order": 1,
+      "rule": "attachment"
+    }
+  },
+  "PreApplicationAttachment": {
+    "gg_validation": {
+      "order": 2,
+      "rule": "attachment"
+    }
+  },
+  "SFLLLAttachment": {
+    "gg_validation": {
+      "order": 3,
+      "rule": "attachment"
+    }
+  }
+}

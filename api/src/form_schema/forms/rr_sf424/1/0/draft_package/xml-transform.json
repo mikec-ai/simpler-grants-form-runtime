@@ -1,0 +1,753 @@
+{
+  "AORInfo": {
+    "Address": {
+      "City": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "City"
+        }
+      },
+      "Country": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "Country"
+        }
+      },
+      "County": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "County"
+        }
+      },
+      "Province": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "Province"
+        }
+      },
+      "State": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "State"
+        }
+      },
+      "Street1": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "Street1"
+        }
+      },
+      "Street2": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "Street2"
+        }
+      },
+      "ZipPostalCode": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "ZipPostalCode"
+        }
+      },
+      "xml_transform": {
+        "target": "Address",
+        "type": "nested_object"
+      }
+    },
+    "Department": {
+      "xml_transform": {
+        "target": "Department"
+      }
+    },
+    "Division": {
+      "xml_transform": {
+        "target": "Division"
+      }
+    },
+    "Email": {
+      "xml_transform": {
+        "target": "Email"
+      }
+    },
+    "Fax": {
+      "xml_transform": {
+        "target": "Fax"
+      }
+    },
+    "Name": {
+      "FirstName": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "FirstName"
+        }
+      },
+      "LastName": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "LastName"
+        }
+      },
+      "MiddleName": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "MiddleName"
+        }
+      },
+      "PrefixName": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "PrefixName"
+        }
+      },
+      "SuffixName": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "SuffixName"
+        }
+      },
+      "xml_transform": {
+        "target": "Name",
+        "type": "nested_object"
+      }
+    },
+    "OrganizationName": {
+      "xml_transform": {
+        "target": "OrganizationName"
+      }
+    },
+    "Phone": {
+      "xml_transform": {
+        "target": "Phone"
+      }
+    },
+    "Title": {
+      "xml_transform": {
+        "target": "Title"
+      }
+    },
+    "xml_transform": {
+      "target": "AORInfo",
+      "type": "nested_object"
+    }
+  },
+  "AOR_Signature": {
+    "xml_transform": {
+      "target": "AOR_Signature"
+    }
+  },
+  "AOR_SignedDate": {
+    "xml_transform": {
+      "target": "AOR_SignedDate"
+    }
+  },
+  "ActivityTitle": {
+    "xml_transform": {
+      "target": "ActivityTitle"
+    }
+  },
+  "AgencyRoutingNumber": {
+    "xml_transform": {
+      "target": "AgencyRoutingNumber"
+    }
+  },
+  "ApplicantID": {
+    "xml_transform": {
+      "target": "ApplicantID"
+    }
+  },
+  "ApplicantInfo": {
+    "ContactPersonInfo": {
+      "Address": {
+        "City": {
+          "xml_transform": {
+            "namespace": "globLib",
+            "target": "City"
+          }
+        },
+        "Country": {
+          "xml_transform": {
+            "namespace": "globLib",
+            "target": "Country"
+          }
+        },
+        "County": {
+          "xml_transform": {
+            "namespace": "globLib",
+            "target": "County"
+          }
+        },
+        "Province": {
+          "xml_transform": {
+            "namespace": "globLib",
+            "target": "Province"
+          }
+        },
+        "State": {
+          "xml_transform": {
+            "namespace": "globLib",
+            "target": "State"
+          }
+        },
+        "Street1": {
+          "xml_transform": {
+            "namespace": "globLib",
+            "target": "Street1"
+          }
+        },
+        "Street2": {
+          "xml_transform": {
+            "namespace": "globLib",
+            "target": "Street2"
+          }
+        },
+        "ZipPostalCode": {
+          "xml_transform": {
+            "namespace": "globLib",
+            "target": "ZipPostalCode"
+          }
+        },
+        "xml_transform": {
+          "target": "Address",
+          "type": "nested_object"
+        }
+      },
+      "Email": {
+        "xml_transform": {
+          "target": "Email"
+        }
+      },
+      "Fax": {
+        "xml_transform": {
+          "target": "Fax"
+        }
+      },
+      "Name": {
+        "FirstName": {
+          "xml_transform": {
+            "namespace": "globLib",
+            "target": "FirstName"
+          }
+        },
+        "LastName": {
+          "xml_transform": {
+            "namespace": "globLib",
+            "target": "LastName"
+          }
+        },
+        "MiddleName": {
+          "xml_transform": {
+            "namespace": "globLib",
+            "target": "MiddleName"
+          }
+        },
+        "PrefixName": {
+          "xml_transform": {
+            "namespace": "globLib",
+            "target": "PrefixName"
+          }
+        },
+        "SuffixName": {
+          "xml_transform": {
+            "namespace": "globLib",
+            "target": "SuffixName"
+          }
+        },
+        "xml_transform": {
+          "target": "Name",
+          "type": "nested_object"
+        }
+      },
+      "Phone": {
+        "xml_transform": {
+          "target": "Phone"
+        }
+      },
+      "Title": {
+        "xml_transform": {
+          "target": "Title"
+        }
+      },
+      "xml_transform": {
+        "target": "ContactPersonInfo",
+        "type": "nested_object"
+      }
+    },
+    "OrganizationInfo": {
+      "Address": {
+        "City": {
+          "xml_transform": {
+            "target": "City"
+          }
+        },
+        "Country": {
+          "xml_transform": {
+            "target": "Country"
+          }
+        },
+        "County": {
+          "xml_transform": {
+            "target": "County"
+          }
+        },
+        "Province": {
+          "xml_transform": {
+            "target": "Province"
+          }
+        },
+        "State": {
+          "xml_transform": {
+            "target": "State"
+          }
+        },
+        "Street1": {
+          "xml_transform": {
+            "target": "Street1"
+          }
+        },
+        "Street2": {
+          "xml_transform": {
+            "target": "Street2"
+          }
+        },
+        "ZipPostalCode": {
+          "xml_transform": {
+            "target": "ZipPostalCode"
+          }
+        },
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "Address",
+          "type": "nested_object"
+        }
+      },
+      "Department": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "Department"
+        }
+      },
+      "Division": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "Division"
+        }
+      },
+      "EIN": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "EIN"
+        }
+      },
+      "OrganizationName": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "OrganizationName"
+        }
+      },
+      "SAMUEI": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "SAMUEI"
+        }
+      },
+      "xml_transform": {
+        "target": "OrganizationInfo",
+        "type": "nested_object"
+      }
+    },
+    "xml_transform": {
+      "target": "ApplicantInfo",
+      "type": "nested_object"
+    }
+  },
+  "ApplicantType": {
+    "ApplicantTypeCode": {
+      "xml_transform": {
+        "target": "ApplicantTypeCode"
+      }
+    },
+    "ApplicantTypeCodeOtherExplanation": {
+      "xml_transform": {
+        "target": "ApplicantTypeCodeOtherExplanation"
+      }
+    },
+    "SmallBusinessOrganizationType": {
+      "isSociallyEconomicallyDisadvantaged": {
+        "xml_transform": {
+          "target": "isSociallyEconomicallyDisadvantaged"
+        }
+      },
+      "isWomenOwned": {
+        "xml_transform": {
+          "target": "isWomenOwned"
+        }
+      },
+      "xml_transform": {
+        "target": "SmallBusinessOrganizationType",
+        "type": "nested_object"
+      }
+    },
+    "xml_transform": {
+      "target": "ApplicantType",
+      "type": "nested_object"
+    }
+  },
+  "ApplicationType": {
+    "ApplicationTypeCode": {
+      "xml_transform": {
+        "target": "ApplicationTypeCode"
+      }
+    },
+    "OtherAgencySubmissionExplanation": {
+      "xml_transform": {
+        "target": "OtherAgencySubmissionExplanation"
+      }
+    },
+    "RevisionCode": {
+      "xml_transform": {
+        "target": "RevisionCode"
+      }
+    },
+    "RevisionCodeOtherExplanation": {
+      "xml_transform": {
+        "target": "RevisionCodeOtherExplanation"
+      }
+    },
+    "isOtherAgencySubmission": {
+      "xml_transform": {
+        "target": "isOtherAgencySubmission"
+      }
+    },
+    "xml_transform": {
+      "target": "ApplicationType",
+      "type": "nested_object"
+    }
+  },
+  "CFDANumber": {
+    "xml_transform": {
+      "target": "CFDANumber"
+    }
+  },
+  "CongressionalDistrict": {
+    "ApplicantCongressionalDistrict": {
+      "xml_transform": {
+        "target": "ApplicantCongressionalDistrict"
+      }
+    },
+    "xml_transform": {
+      "target": "CongressionalDistrict",
+      "type": "nested_object"
+    }
+  },
+  "EmployerID": {
+    "xml_transform": {
+      "target": "EmployerID"
+    }
+  },
+  "EstimatedProjectFunding": {
+    "EstimatedProgramIncome": {
+      "xml_transform": {
+        "target": "EstimatedProgramIncome"
+      }
+    },
+    "TotalEstimatedAmount": {
+      "xml_transform": {
+        "target": "TotalEstimatedAmount"
+      }
+    },
+    "TotalNonfedrequested": {
+      "xml_transform": {
+        "target": "TotalNonfedrequested"
+      }
+    },
+    "TotalfedNonfedrequested": {
+      "xml_transform": {
+        "target": "TotalfedNonfedrequested"
+      }
+    },
+    "xml_transform": {
+      "target": "EstimatedProjectFunding",
+      "type": "nested_object"
+    }
+  },
+  "FederalAgencyName": {
+    "xml_transform": {
+      "target": "FederalAgencyName"
+    }
+  },
+  "FederalID": {
+    "xml_transform": {
+      "target": "FederalID"
+    }
+  },
+  "GGTrackingID": {
+    "xml_transform": {
+      "target": "GGTrackingID"
+    }
+  },
+  "PDPIContactInfo": {
+    "Address": {
+      "City": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "City"
+        }
+      },
+      "Country": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "Country"
+        }
+      },
+      "County": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "County"
+        }
+      },
+      "Province": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "Province"
+        }
+      },
+      "State": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "State"
+        }
+      },
+      "Street1": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "Street1"
+        }
+      },
+      "Street2": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "Street2"
+        }
+      },
+      "ZipPostalCode": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "ZipPostalCode"
+        }
+      },
+      "xml_transform": {
+        "target": "Address",
+        "type": "nested_object"
+      }
+    },
+    "Department": {
+      "xml_transform": {
+        "target": "Department"
+      }
+    },
+    "Division": {
+      "xml_transform": {
+        "target": "Division"
+      }
+    },
+    "Email": {
+      "xml_transform": {
+        "target": "Email"
+      }
+    },
+    "Fax": {
+      "xml_transform": {
+        "target": "Fax"
+      }
+    },
+    "Name": {
+      "FirstName": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "FirstName"
+        }
+      },
+      "LastName": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "LastName"
+        }
+      },
+      "MiddleName": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "MiddleName"
+        }
+      },
+      "PrefixName": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "PrefixName"
+        }
+      },
+      "SuffixName": {
+        "xml_transform": {
+          "namespace": "globLib",
+          "target": "SuffixName"
+        }
+      },
+      "xml_transform": {
+        "target": "Name",
+        "type": "nested_object"
+      }
+    },
+    "OrganizationName": {
+      "xml_transform": {
+        "target": "OrganizationName"
+      }
+    },
+    "Phone": {
+      "xml_transform": {
+        "target": "Phone"
+      }
+    },
+    "Title": {
+      "xml_transform": {
+        "target": "Title"
+      }
+    },
+    "xml_transform": {
+      "target": "PDPIContactInfo",
+      "type": "nested_object"
+    }
+  },
+  "ProjectTitle": {
+    "xml_transform": {
+      "target": "ProjectTitle"
+    }
+  },
+  "ProposedProjectPeriod": {
+    "ProposedEndDate": {
+      "xml_transform": {
+        "target": "ProposedEndDate"
+      }
+    },
+    "ProposedStartDate": {
+      "xml_transform": {
+        "target": "ProposedStartDate"
+      }
+    },
+    "xml_transform": {
+      "target": "ProposedProjectPeriod",
+      "type": "nested_object"
+    }
+  },
+  "StateID": {
+    "xml_transform": {
+      "target": "StateID"
+    }
+  },
+  "StateReceivedDate": {
+    "xml_transform": {
+      "target": "StateReceivedDate"
+    }
+  },
+  "StateReview": {
+    "StateReviewCodeType": {
+      "xml_transform": {
+        "target": "StateReviewCodeType"
+      }
+    },
+    "StateReviewDate": {
+      "xml_transform": {
+        "target": "StateReviewDate"
+      }
+    },
+    "xml_transform": {
+      "target": "StateReview",
+      "type": "nested_object"
+    }
+  },
+  "SubmissionTypeCode": {
+    "xml_transform": {
+      "target": "SubmissionTypeCode"
+    }
+  },
+  "SubmittedDate": {
+    "xml_transform": {
+      "target": "SubmittedDate"
+    }
+  },
+  "TrustAgree": {
+    "xml_transform": {
+      "target": "TrustAgree"
+    }
+  },
+  "_xml_config": {
+    "attachment_fields": {
+      "CoverLetterAttachment": {
+        "entries": [
+          {
+            "source_path": "CoverLetterAttachment",
+            "type": "single",
+            "xml_element": "CoverLetterAttachment",
+            "xml_parent_path": []
+          }
+        ]
+      },
+      "PreApplicationAttachment": {
+        "entries": [
+          {
+            "source_path": "PreApplicationAttachment",
+            "type": "single",
+            "xml_element": "PreApplicationAttachment",
+            "xml_parent_path": []
+          }
+        ]
+      },
+      "SFLLLAttachment": {
+        "entries": [
+          {
+            "source_path": "SFLLLAttachment",
+            "type": "single",
+            "xml_element": "SFLLLAttachment",
+            "xml_parent_path": []
+          }
+        ]
+      }
+    },
+    "description": "Generated from source-pinned XML plan for RR_SF424_5_0",
+    "form_name": "RR_SF424_5_0",
+    "namespaces": {
+      "RR_SF424_5_0": "http://apply.grants.gov/forms/RR_SF424_5_0-V5.0",
+      "att": "http://apply.grants.gov/system/Attachments-V1.0",
+      "default": "http://apply.grants.gov/forms/RR_SF424_5_0-V5.0",
+      "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0"
+    },
+    "null_handling_options": {
+      "exclude": "Default - exclude field entirely from XML (recommended)"
+    },
+    "version": "1.0",
+    "xml_structure": {
+      "root_attributes": {
+        "FormVersion": "5.0"
+      },
+      "root_element": "RR_SF424_5_0",
+      "root_namespace_prefix": "RR_SF424_5_0"
+    },
+    "xsd_url": "https://apply07.grants.gov/apply/forms/schemas/RR_SF424_5_0-V5.0.xsd"
+  },
+  "attachment_slot_22_SFLLLAttachment": {
+    "xml_transform": {
+      "target": "SFLLLAttachment",
+      "type": "attachment_slot"
+    }
+  },
+  "attachment_slot_26_PreApplicationAttachment": {
+    "xml_transform": {
+      "target": "PreApplicationAttachment",
+      "type": "attachment_slot"
+    }
+  },
+  "attachment_slot_27_CoverLetterAttachment": {
+    "xml_transform": {
+      "target": "CoverLetterAttachment",
+      "type": "attachment_slot"
+    }
+  }
+}

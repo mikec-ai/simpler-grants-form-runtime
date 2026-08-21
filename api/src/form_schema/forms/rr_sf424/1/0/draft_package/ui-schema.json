@@ -1,0 +1,503 @@
+[
+  {
+    "children": [
+      {
+        "definition": "/properties/AORInfo/properties/Address/properties/City",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/AORInfo/properties/Address/properties/Country",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/AORInfo/properties/Address/properties/County",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/AORInfo/properties/Address/properties/Province",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/AORInfo/properties/Address/properties/State",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/AORInfo/properties/Address/properties/Street1",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/AORInfo/properties/Address/properties/Street2",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/AORInfo/properties/Address/properties/ZipPostalCode",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/AORInfo/properties/Department",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/AORInfo/properties/Division",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/AORInfo/properties/Email",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/AORInfo/properties/Fax",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/AORInfo/properties/Name/properties/FirstName",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/AORInfo/properties/Name/properties/LastName",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/AORInfo/properties/Name/properties/MiddleName",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/AORInfo/properties/Name/properties/PrefixName",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/AORInfo/properties/Name/properties/SuffixName",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/AORInfo/properties/OrganizationName",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/AORInfo/properties/Phone",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/AORInfo/properties/Title",
+        "type": "field"
+      }
+    ],
+    "label": "AORInfo",
+    "name": "aorinfo",
+    "type": "section"
+  },
+  {
+    "children": [
+      {
+        "definition": "/properties/AOR_Signature",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/AOR_SignedDate",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ActivityTitle",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/AgencyRoutingNumber",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantID",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/CFDANumber",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/CoverLetterAttachment",
+        "type": "field",
+        "widget": "Attachment"
+      },
+      {
+        "definition": "/properties/EmployerID",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/FederalAgencyName",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/FederalID",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/GGTrackingID",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/PreApplicationAttachment",
+        "type": "field",
+        "widget": "Attachment"
+      },
+      {
+        "definition": "/properties/ProjectTitle",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/SFLLLAttachment",
+        "type": "field",
+        "widget": "Attachment"
+      },
+      {
+        "definition": "/properties/StateID",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/StateReceivedDate",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/SubmissionTypeCode",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/SubmittedDate",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/TrustAgree",
+        "type": "field"
+      }
+    ],
+    "label": "General",
+    "name": "general",
+    "type": "section"
+  },
+  {
+    "children": [
+      {
+        "definition": "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Address/properties/City",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Address/properties/Country",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Address/properties/County",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Address/properties/Province",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Address/properties/State",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Address/properties/Street1",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Address/properties/Street2",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Address/properties/ZipPostalCode",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Email",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Fax",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Name/properties/FirstName",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Name/properties/LastName",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Name/properties/MiddleName",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Name/properties/PrefixName",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Name/properties/SuffixName",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Phone",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/ContactPersonInfo/properties/Title",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/OrganizationInfo/properties/Address/properties/City",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/OrganizationInfo/properties/Address/properties/Country",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/OrganizationInfo/properties/Address/properties/County",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/OrganizationInfo/properties/Address/properties/Province",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/OrganizationInfo/properties/Address/properties/State",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/OrganizationInfo/properties/Address/properties/Street1",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/OrganizationInfo/properties/Address/properties/Street2",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/OrganizationInfo/properties/Address/properties/ZipPostalCode",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/OrganizationInfo/properties/Department",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/OrganizationInfo/properties/Division",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/OrganizationInfo/properties/EIN",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/OrganizationInfo/properties/OrganizationName",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantInfo/properties/OrganizationInfo/properties/SAMUEI",
+        "type": "field"
+      }
+    ],
+    "label": "ApplicantInfo",
+    "name": "applicantinfo",
+    "type": "section"
+  },
+  {
+    "children": [
+      {
+        "definition": "/properties/ApplicantType/properties/ApplicantTypeCode",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantType/properties/ApplicantTypeCodeOtherExplanation",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantType/properties/SmallBusinessOrganizationType/properties/isSociallyEconomicallyDisadvantaged",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicantType/properties/SmallBusinessOrganizationType/properties/isWomenOwned",
+        "type": "field"
+      }
+    ],
+    "label": "ApplicantType",
+    "name": "applicanttype",
+    "type": "section"
+  },
+  {
+    "children": [
+      {
+        "definition": "/properties/ApplicationType/properties/ApplicationTypeCode",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicationType/properties/OtherAgencySubmissionExplanation",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicationType/properties/RevisionCode",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicationType/properties/RevisionCodeOtherExplanation",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ApplicationType/properties/isOtherAgencySubmission",
+        "type": "field"
+      }
+    ],
+    "label": "ApplicationType",
+    "name": "applicationtype",
+    "type": "section"
+  },
+  {
+    "children": [
+      {
+        "definition": "/properties/CongressionalDistrict/properties/ApplicantCongressionalDistrict",
+        "type": "field"
+      }
+    ],
+    "label": "CongressionalDistrict",
+    "name": "congressionaldistrict",
+    "type": "section"
+  },
+  {
+    "children": [
+      {
+        "definition": "/properties/EstimatedProjectFunding/properties/EstimatedProgramIncome",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/EstimatedProjectFunding/properties/TotalEstimatedAmount",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/EstimatedProjectFunding/properties/TotalNonfedrequested",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/EstimatedProjectFunding/properties/TotalfedNonfedrequested",
+        "type": "field"
+      }
+    ],
+    "label": "EstimatedProjectFunding",
+    "name": "estimatedprojectfunding",
+    "type": "section"
+  },
+  {
+    "children": [
+      {
+        "definition": "/properties/PDPIContactInfo/properties/Address/properties/City",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/PDPIContactInfo/properties/Address/properties/Country",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/PDPIContactInfo/properties/Address/properties/County",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/PDPIContactInfo/properties/Address/properties/Province",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/PDPIContactInfo/properties/Address/properties/State",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/PDPIContactInfo/properties/Address/properties/Street1",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/PDPIContactInfo/properties/Address/properties/Street2",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/PDPIContactInfo/properties/Address/properties/ZipPostalCode",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/PDPIContactInfo/properties/Department",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/PDPIContactInfo/properties/Division",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/PDPIContactInfo/properties/Email",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/PDPIContactInfo/properties/Fax",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/PDPIContactInfo/properties/Name/properties/FirstName",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/PDPIContactInfo/properties/Name/properties/LastName",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/PDPIContactInfo/properties/Name/properties/MiddleName",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/PDPIContactInfo/properties/Name/properties/PrefixName",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/PDPIContactInfo/properties/Name/properties/SuffixName",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/PDPIContactInfo/properties/OrganizationName",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/PDPIContactInfo/properties/Phone",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/PDPIContactInfo/properties/Title",
+        "type": "field"
+      }
+    ],
+    "label": "PDPIContactInfo",
+    "name": "pdpicontactinfo",
+    "type": "section"
+  },
+  {
+    "children": [
+      {
+        "definition": "/properties/ProposedProjectPeriod/properties/ProposedEndDate",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/ProposedProjectPeriod/properties/ProposedStartDate",
+        "type": "field"
+      }
+    ],
+    "label": "ProposedProjectPeriod",
+    "name": "proposedprojectperiod",
+    "type": "section"
+  },
+  {
+    "children": [
+      {
+        "definition": "/properties/StateReview/properties/StateReviewCodeType",
+        "type": "field"
+      },
+      {
+        "definition": "/properties/StateReview/properties/StateReviewDate",
+        "type": "field"
+      }
+    ],
+    "label": "StateReview",
+    "name": "statereview",
+    "type": "section"
+  }
+]

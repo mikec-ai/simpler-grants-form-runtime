@@ -1,0 +1,39 @@
+{
+  "contract": "simpler-draft-form-package/v1",
+  "form": {
+    "form_id": "RRSF424",
+    "form_version": "5.0",
+    "wire_form_name": "RR_SF424_5_0"
+  },
+  "source_evidence": {
+    "xsd": {
+      "path": "work/grantsgov-xsds/RR_SF424_5_0-V5.0.xsd",
+      "sha256": "f140f32afed9d7efbe30fc8f299542bbbc3121dbc87a79aa351fcf096163d3bc"
+    },
+    "dat": {
+      "path": "work/form-metadata/batch-2/RR_SF424_5_0-V5.0_F768.xls",
+      "sha256": "532938a75c587bdc8813fd3af625be4338281d0491999fc39aeaaac51b79c9c1"
+    },
+    "records": {
+      "count": 139,
+      "sha256": "582e9ec8e943e1c5a1fbef991b77f2a1dd626e3dbdd0fc41d52bbf8044e9b55b"
+    },
+    "questions": 107,
+    "behavior_records": 145
+  },
+  "review_boundary": {
+    "structural_extraction": "deterministic_from_pinned_sources",
+    "semantic_mapping": "agent_proposed",
+    "ui_projection": "agent_proposed",
+    "policy_and_instructions": "not_reviewed",
+    "published_coverage_eligible": false,
+    "production_ready": false
+  },
+  "artifacts": {
+    "json-schema.json": "085c292acf2390c40789a29c5e6f8137a5da0766a82c447abb760371e6a5977a",
+    "projection-report.json": "233d7d1f4a4c4acd1ea329502e590b325fc1d308e2e8e44936d43b837df206e8",
+    "rule-schema.json": "cfdbf76fc763dee265d647357cd917caae90625a97b8e6c46502661cb4c43848",
+    "ui-schema.json": "063862f153feca2b1e5d587f95301d6e1b8bd5f371650b177d90d3ac83ce7aaf",
+    "xml-transform.json": "320de410ee9d15cc117e19aa504bd4dd185ea3edae61116e16b5a33a7fb46815"
+  }
+}

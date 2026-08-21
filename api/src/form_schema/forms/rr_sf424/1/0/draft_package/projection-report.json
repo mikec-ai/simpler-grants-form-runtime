@@ -1,0 +1,40 @@
+{
+  "claims_boundary": "structural-identity-contact/v1 is an agent-proposed local-lab projection. Structural reuse and typed attachment validation are executable; labels, sections, field modes, and all remaining behavior require review before published coverage.",
+  "form_id": "RRSF424",
+  "format_version": 1,
+  "layers": {
+    "behavior_projection": {
+      "candidate_digest": "sha256:28badf63970ef5ec5183839dec84812cc777825a349277eaff6b23c802f96698"
+    },
+    "json_schema": {
+      "candidate_digest": "sha256:6ac28ebcd5e030895b88a747d962a60784e6c79ed7da7f8c26e026d8a929e0ea"
+    },
+    "rule_provenance": {
+      "candidate_digest": "sha256:6ee23e42b6503c5bd4a855ae2aa79a7214b2e8a2daea49b4dc0ecfb0cf7d1916"
+    },
+    "rule_schema": {
+      "candidate_digest": "sha256:4aea2ef10ccae2ba89ebad8aa1c11aa3e7aaa3958c40414cc3d93a721a9d4a3c"
+    },
+    "ui_projection": {
+      "candidate_digest": "sha256:c7ac557af705cf3cfe9569fe4d9c56deb303be1563ee75ea387d49fbbc2fbce0"
+    },
+    "ui_schema": {
+      "candidate_digest": "sha256:bfc93233b7181822e52ad03ac6286b1011173207e3663e4581bd8b612ef9be34"
+    },
+    "unresolved_behaviors": {
+      "candidate_digest": "sha256:17fe22cb5fd6f18665b55fa3f93b8d2fefdae34f114bdec6c21d76b14ca1432a"
+    },
+    "xml_plan": {
+      "candidate_digest": "sha256:d9aec2e609c4c520418c6312d0bc93465dbe11417f1795c4c4bc7baa087b4da8"
+    },
+    "xml_transform": {
+      "candidate_digest": "sha256:4264e239d72bfcc22865556ab808119436a043911dce23b35e4edf24c04d85bb"
+    }
+  },
+  "production_ready": false,
+  "semantic_mapping_status": "agent_proposed",
+  "wire_form": {
+    "form_id": "RR_SF424_5_0",
+    "form_version": "5.0"
+  }
+}
