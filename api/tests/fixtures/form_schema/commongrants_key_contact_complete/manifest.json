@@ -10,7 +10,7 @@
     },
     "projection_report": {
       "path": "projection-report.json",
-      "sha256": "e68bc1490f29b9a1c20bd0a12c87e7b6a549d66b541f83c35d9022bc57a0c2b9"
+      "sha256": "72513a8aa84181e1edb200221a31a19ef275b996d953ad04b0eee17e384e9c3f"
     },
     "rule_schema": null,
     "ui_schema": {
@@ -33,7 +33,7 @@
       },
       {
         "package_path": "compiler/website/src/lib/forms/materialize.ts",
-        "sha256": "2bb292f0cabee27b66085badd45bfc9faf314e85016e10910bc58a14bff49716",
+        "sha256": "9425a0477ac3c9c3e230791e3e459da987d6e471befc54c70f7025c5f3b76bb0",
         "source_path": "website/src/lib/forms/materialize.ts"
       },
       {
@@ -468,7 +468,7 @@
       "sha256": "57987951466d84a9f272d65551f7def987ec3b26d15c6fc2f4b5bebac9bdc1e6",
       "source_path": "website/src/specs/forms/key-contact.tsp"
     },
-    "graph_sha256": "21eceb1d77c3dbd38640ce7462d1b456c7b2faf81702aaf653db0f0bef500100",
+    "graph_sha256": "cb5925ebe1f56dedd9a64be99df374e0d0c707a3c659cb0e4ef158ca71de5acf",
     "questions": [
       {
         "package_path": "sources/website/src/specs/question-bank/primary-org/org-name.tsp",
@@ -484,6 +484,6 @@
       }
     ],
     "repository": "https://github.com/HHS/simpler-grants-protocol.git",
-    "revision": "0fb92b128f7a492b0bf408f7226427e8c8cb04ba"
+    "revision": "65a4de852c96d35e946e8dde9f7a9864f718d8bb"
   }
 }

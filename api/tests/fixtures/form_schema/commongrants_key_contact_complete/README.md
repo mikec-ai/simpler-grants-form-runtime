@@ -1,7 +1,7 @@
 # CommonGrants Key Contact compatibility canary
 
 This package is a self-contained snapshot of CommonGrants `KeyContact`, produced by
-local materializer revision `0fb92b128f7a492b0bf408f7226427e8c8cb04ba` based on HHS
+local materializer revision `9fe4212` with TypeSpec inputs verified at HHS
 revision `65a4de852c96d35e946e8dde9f7a9864f718d8bb`. It hashes the captured local
 TypeSpec/emitted-schema inputs and materializer inputs, exact question bindings,
 composed mappings, and deterministic Simpler UI projection. The manifest deliberately
