@@ -1,17 +1,29 @@
 from pathlib import Path
 
+from src.form_schema.components import (
+    OrganizationIdentityComponentConfig,
+    build_organization_identity_component,
+)
 from src.form_schema.resolved_form_package import load_resolved_form_package
 from src.form_schema.shared import ADDRESS_SHARED_V1, COMMON_SHARED_V1
 from src.services.xml_generation.constants import NO_VALUE
+
+_ORGANIZATION_IDENTITY = build_organization_identity_component(
+    OrganizationIdentityComponentConfig(
+        organization_name_description="Enter the legal name of the applicant that will undertake the assistance activity. This is the organization that has registered with the System for Award Management (SAM). Information on registering with SAM may be obtained by visiting SAM.gov.",
+        sam_uei_description="UEI of the applicant organization. This field is pre-populated from the Application cover sheet.",
+        sam_uei_interaction="field",
+    )
+)
 
 FORM_JSON_SCHEMA = {
     "type": "object",
     "required": [
         "submission_type",
         "application_type",
-        "organization_name",
+        _ORGANIZATION_IDENTITY.required[0],
         "employer_taxpayer_identification_number",
-        "sam_uei",
+        _ORGANIZATION_IDENTITY.required[1],
         "applicant",
         "contact_person",
         "phone_number",
@@ -183,11 +195,7 @@ FORM_JSON_SCHEMA = {
             "maxLength": 30,
             "readOnly": True,
         },
-        "organization_name": {
-            "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("organization_name")}],
-            "title": "Legal Name",
-            "description": "Enter the legal name of the applicant that will undertake the assistance activity. This is the organization that has registered with the System for Award Management (SAM). Information on registering with SAM may be obtained by visiting SAM.gov.",
-        },
+        "organization_name": _ORGANIZATION_IDENTITY.json_schema_properties["organization_name"],
         "employer_taxpayer_identification_number": {
             "type": "string",
             "title": "EIN/TIN",
@@ -195,11 +203,7 @@ FORM_JSON_SCHEMA = {
             "minLength": 9,
             "maxLength": 30,
         },
-        "sam_uei": {
-            "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("sam_uei")}],
-            "title": "SAM UEI",
-            "description": "UEI of the applicant organization. This field is pre-populated from the Application cover sheet.",
-        },
+        "sam_uei": _ORGANIZATION_IDENTITY.json_schema_properties["sam_uei"],
         "applicant": {
             "allOf": [{"$ref": ADDRESS_SHARED_V1.field_ref("address")}],
             "title": "Applicant",
@@ -558,9 +562,9 @@ FORM_UI_SCHEMA = [
         "name": "applicant_information",
         "label": "8. Applicant Information",
         "children": [
-            {"type": "field", "definition": "/properties/organization_name"},
+            _ORGANIZATION_IDENTITY.ui_schema_fields["organization_name"],
             {"type": "field", "definition": "/properties/employer_taxpayer_identification_number"},
-            {"type": "field", "definition": "/properties/sam_uei"},
+            _ORGANIZATION_IDENTITY.ui_schema_fields["sam_uei"],
             {"type": "field", "definition": "/properties/applicant/properties/street1"},
             {"type": "field", "definition": "/properties/applicant/properties/street2"},
             {"type": "field", "definition": "/properties/applicant/properties/city"},
@@ -786,7 +790,7 @@ FORM_UI_SCHEMA = [
 
 FORM_RULE_SCHEMA = {
     ##### PRE-POPULATION RULES
-    "sam_uei": {"gg_pre_population": {"rule": "uei"}},
+    "sam_uei": _ORGANIZATION_IDENTITY.rule_schema["sam_uei"],
     "agency_name": {"gg_pre_population": {"rule": "agency_name"}},
     "assistance_listing_number": {"gg_pre_population": {"rule": "assistance_listing_number"}},
     "assistance_listing_program_title": {
@@ -869,11 +873,11 @@ FORM_XML_TRANSFORM_RULES = {
         }
     },
     # Applicant information - direct field mappings
-    "organization_name": {"xml_transform": {"target": "OrganizationName"}},
+    "organization_name": _ORGANIZATION_IDENTITY.xml_transform_rules["organization_name"],
     "employer_taxpayer_identification_number": {
         "xml_transform": {"target": "EmployerTaxpayerIdentificationNumber"}
     },
-    "sam_uei": {"xml_transform": {"target": "SAMUEI"}},
+    "sam_uei": _ORGANIZATION_IDENTITY.xml_transform_rules["sam_uei"],
     # Address information - nested structure with GlobalLibrary namespace
     # Order must match XSD: Street1, Street2, City, County, State/Province, ZipPostalCode, Country
     "applicant": {
@@ -1077,3 +1081,4 @@ FORM_XML_TRANSFORM_RULES = {
 # The constants above remain temporarily as a compatibility oracle. The active
 # runtime form is materialized from the source-pinned resolved package.
 SF424_v4_0 = load_resolved_form_package(Path(__file__).with_name("resolved_package")).to_form()
+del _ORGANIZATION_IDENTITY

@@ -52,12 +52,13 @@ def _get_version_dependencies(version_dir: Path) -> list[tuple[str, Path]]:
             )
         if not candidate.exists():
             raise FileNotFoundError(
-                f"version dependency not found at "
-                f"{manifest_path}:{line_number}: {candidate}"
+                f"version dependency not found at " f"{manifest_path}:{line_number}: {candidate}"
             )
 
-        files = [candidate] if candidate.is_file() else sorted(
-            path.resolve() for path in candidate.rglob("*") if path.is_file()
+        files = (
+            [candidate]
+            if candidate.is_file()
+            else sorted(path.resolve() for path in candidate.rglob("*") if path.is_file())
         )
         for path in files:
             if not path.is_relative_to(root):

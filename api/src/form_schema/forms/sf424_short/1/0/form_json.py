@@ -2,7 +2,19 @@ import uuid
 
 from src.constants.lookup_constants import FormType
 from src.db.models.competition_models import Form
+from src.form_schema.components import (
+    OrganizationIdentityComponentConfig,
+    build_organization_identity_component,
+)
 from src.form_schema.shared import ADDRESS_SHARED_V1, COMMON_SHARED_V1
+
+_ORGANIZATION_IDENTITY = build_organization_identity_component(
+    OrganizationIdentityComponentConfig(
+        organization_name_description="Enter the legal name of applicant that will undertake the assistance activity. This is the name that the organization has registered with the System for Award Management (SAM.gov). Information on registering with SAM may be obtained by visiting the Grants.gov website.",
+        sam_uei_description="UEI of the applicant organization. This field is pre-populated from the Application cover sheet.",
+        sam_uei_interaction="null",
+    )
+)
 
 # Applicant type codes shared by the SF-424 family (globLib:ApplicantTypeCodeDataType).
 APPLICANT_TYPE_CODES = [
@@ -38,11 +50,11 @@ FORM_JSON_SCHEMA = {
         "agency_name",
         "funding_opportunity_number",
         "funding_opportunity_title",
-        "organization_name",
+        _ORGANIZATION_IDENTITY.required[0],
         "applicant",
         "applicant_type_code",
         "employer_taxpayer_identification_number",
-        "sam_uei",
+        _ORGANIZATION_IDENTITY.required[1],
         "congressional_district_applicant",
         "project_title",
         "project_description",
@@ -159,11 +171,7 @@ FORM_JSON_SCHEMA = {
             "minLength": 1,
             "maxLength": 255,
         },
-        "organization_name": {
-            "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("organization_name")}],
-            "title": "Legal Name",
-            "description": "Enter the legal name of applicant that will undertake the assistance activity. This is the name that the organization has registered with the System for Award Management (SAM.gov). Information on registering with SAM may be obtained by visiting the Grants.gov website.",
-        },
+        "organization_name": _ORGANIZATION_IDENTITY.json_schema_properties["organization_name"],
         "applicant": {
             "allOf": [{"$ref": ADDRESS_SHARED_V1.field_ref("address")}],
             "title": "Address",
@@ -204,11 +212,7 @@ FORM_JSON_SCHEMA = {
             "minLength": 9,
             "maxLength": 30,
         },
-        "sam_uei": {
-            "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("sam_uei")}],
-            "title": "SAM UEI",
-            "description": "UEI of the applicant organization. This field is pre-populated from the Application cover sheet.",
-        },
+        "sam_uei": _ORGANIZATION_IDENTITY.json_schema_properties["sam_uei"],
         "congressional_district_applicant": {
             "type": "string",
             "title": "Congressional District of Applicant",
@@ -367,7 +371,7 @@ FORM_UI_SCHEMA = [
         "name": "applicant_information",
         "label": "5. Applicant Information",
         "children": [
-            {"type": "field", "definition": "/properties/organization_name"},
+            _ORGANIZATION_IDENTITY.ui_schema_fields["organization_name"],
             {"type": "field", "definition": "/properties/applicant/properties/street1"},
             {"type": "field", "definition": "/properties/applicant/properties/street2"},
             {"type": "field", "definition": "/properties/applicant/properties/city"},
@@ -384,7 +388,7 @@ FORM_UI_SCHEMA = [
             },
             {"type": "field", "definition": "/properties/applicant_type_other_specify"},
             {"type": "field", "definition": "/properties/employer_taxpayer_identification_number"},
-            {"type": "null", "definition": "/properties/sam_uei"},
+            _ORGANIZATION_IDENTITY.ui_schema_fields["sam_uei"],
             {"type": "field", "definition": "/properties/congressional_district_applicant"},
         ],
     },
@@ -464,7 +468,7 @@ FORM_RULE_SCHEMA = {
     },
     "funding_opportunity_number": {"gg_pre_population": {"rule": "opportunity_number"}},
     "funding_opportunity_title": {"gg_pre_population": {"rule": "opportunity_title"}},
-    "sam_uei": {"gg_pre_population": {"rule": "uei"}},
+    "sam_uei": _ORGANIZATION_IDENTITY.rule_schema["sam_uei"],
     ##### POST-POPULATION RULES
     "date_received": {"gg_post_population": {"rule": "current_date"}},
     "aor_signature": {"gg_post_population": {"rule": "signature"}},
@@ -540,7 +544,7 @@ FORM_XML_TRANSFORM_RULES = {
     "funding_opportunity_number": {"xml_transform": {"target": "FundingOpportunityNumber"}},
     "funding_opportunity_title": {"xml_transform": {"target": "FundingOpportunityTitle"}},
     # Applicant information
-    "organization_name": {"xml_transform": {"target": "OrganizationName"}},
+    "organization_name": _ORGANIZATION_IDENTITY.xml_transform_rules["organization_name"],
     "applicant": {
         # "namespace": "default" forces the Address element into the form's default namespace
         # (SF424_Short_3_0), preventing the globLib namespace used by the contact person group's
@@ -585,7 +589,7 @@ FORM_XML_TRANSFORM_RULES = {
     "employer_taxpayer_identification_number": {
         "xml_transform": {"target": "EmployerTaxpayerIdentificationNumber"}
     },
-    "sam_uei": {"xml_transform": {"target": "SAMUEI"}},
+    "sam_uei": _ORGANIZATION_IDENTITY.xml_transform_rules["sam_uei"],
     "congressional_district_applicant": {
         "xml_transform": {"target": "CongressionalDistrictApplicant"}
     },
@@ -655,3 +659,4 @@ SF424Short_v3_0 = Form(
     sgg_version="1.0",
     is_deprecated=False,
 )
+del _ORGANIZATION_IDENTITY

@@ -70,17 +70,21 @@ def test_declared_version_dependencies_resolve(form_dir: Path, version_dir: Path
     assert checksum_path.read_text().strip() == compute_version_hash(form_dir, version_dir)
 
 
-def test_template_based_forms_declare_version_dependencies() -> None:
+def test_composed_forms_declare_version_dependencies() -> None:
     missing_manifests = []
     for form_json_path in sorted(_FORMS_ROOT.rglob("form_json.py")):
-        if "src.form_schema.templates" not in form_json_path.read_text():
+        source = form_json_path.read_text()
+        if not any(
+            module in source
+            for module in ("src.form_schema.templates", "src.form_schema.components")
+        ):
             continue
         if not (form_json_path.parent / "version_dependencies.txt").exists():
             missing_manifests.append(str(form_json_path))
 
     assert (
         not missing_manifests
-    ), "Template-based forms must declare version_dependencies.txt: " + ", ".join(missing_manifests)
+    ), "Composed forms must declare version_dependencies.txt: " + ", ".join(missing_manifests)
 
 
 def test_compute_version_hash_is_stable(tmp_path: Path) -> None:
@@ -136,6 +140,8 @@ def test_compute_version_hash_changes_when_declared_package_file_changes(tmp_pat
 
     original = compute_version_hash(form_dir, version_dir)
     artifact.write_text('{"changed": true}\n')
+
+    assert compute_version_hash(form_dir, version_dir) != original
 
 
 def test_compute_version_hash_changes_when_declared_dependency_changes(

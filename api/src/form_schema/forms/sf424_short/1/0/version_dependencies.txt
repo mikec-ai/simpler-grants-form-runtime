@@ -1,5 +1,4 @@
-# The resolved package is the active SF-424 runtime definition.
-./resolved_package
+# Shared application-component sources that determine this version's artifacts.
 form_schema/components/__init__.py
 form_schema/components/component_definition.py
 form_schema/components/organization_identity.py
