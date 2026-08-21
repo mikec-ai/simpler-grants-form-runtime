@@ -6,7 +6,11 @@ from typing import Literal
 from src.form_schema.components.component_definition import ComponentDefinitionError
 from src.form_schema.shared import ADDRESS_SHARED_V1, COMMON_SHARED_V1
 
-ContactProfile = Literal["key_contacts", "global_contact_person_v3"]
+ContactProfile = Literal[
+    "key_contacts",
+    "global_contact_person_v3",
+    "sf424_short_contact_person_v3",
+]
 
 _MOUNT_POINTER = re.compile(
     r"^/properties/[a-z][a-z0-9_]*(?:/(?:items|properties/[a-z][a-z0-9_]*))*$"
@@ -24,7 +28,7 @@ class MountedContactProfile:
 
 @dataclasses.dataclass(frozen=True)
 class ContactProfileDefinition:
-    """Immutable profile whose two variants correspond to proven native shapes."""
+    """Immutable profile whose variants correspond to proven native shapes."""
 
     component_id: str
     contract_version: int
@@ -52,10 +56,12 @@ class ContactProfileDefinition:
         )
 
 
-def _field_schema(*, ref: str, title: str | None = None) -> dict:
+def _field_schema(*, ref: str, title: str | None = None, description: str | None = None) -> dict:
     schema: dict = {"allOf": [{"$ref": ref}]}
     if title is not None:
         schema["title"] = title
+    if description is not None:
+        schema["description"] = description
     return schema
 
 
@@ -64,9 +70,13 @@ def _nested_xml(
     target: str,
     children: tuple[tuple[str, str], ...],
     namespace: str | None,
+    namespace_before_type: bool = False,
 ) -> dict:
-    transform: dict = {"target": target, "type": "nested_object"}
-    if namespace is not None:
+    transform: dict = {"target": target}
+    if namespace is not None and namespace_before_type:
+        transform["namespace"] = namespace
+    transform["type"] = "nested_object"
+    if namespace is not None and not namespace_before_type:
         transform["namespace"] = namespace
     result: dict = {"xml_transform": transform}
     for field, child_target in children:
@@ -94,38 +104,61 @@ def _xml_name(field: str) -> str:
 
 
 def build_contact_profile_component(profile: ContactProfile) -> ContactProfileDefinition:
-    """Build one of the two exact contact shapes already present in Simpler."""
+    """Build one of the exact contact shapes already present in Simpler."""
 
-    if profile not in {"key_contacts", "global_contact_person_v3"}:
+    if profile not in {
+        "key_contacts",
+        "global_contact_person_v3",
+        "sf424_short_contact_person_v3",
+    }:
         raise ComponentDefinitionError(f"unsupported contact profile: {profile!r}")
 
     is_key_contacts = profile == "key_contacts"
+    is_sf424_short = profile == "sf424_short_contact_person_v3"
     address_ref = ADDRESS_SHARED_V1.field_ref(
-        "address" if is_key_contacts else "simple_address_with_country"
+        "address" if is_key_contacts or is_sf424_short else "simple_address_with_country"
     )
     required = ["name", "address", "phone"]
     if is_key_contacts:
         required.append("email")
+    elif is_sf424_short:
+        required = ["name", "title", "address", "phone_number", "email"]
+
+    phone_key = "phone_number" if is_sf424_short else "phone"
 
     schema = {
         "type": "object",
         "required": required,
         "properties": {
-            "name": _field_schema(ref=COMMON_SHARED_V1.field_ref("person_name"), title="Name"),
-            "title": _field_schema(
-                ref=COMMON_SHARED_V1.field_ref("contact_person_title"), title="Title"
+            "name": _field_schema(
+                ref=COMMON_SHARED_V1.field_ref("person_name"),
+                title="Name",
+                description="Enter the name." if is_sf424_short else None,
             ),
-            "address": _field_schema(ref=address_ref),
-            "phone": _field_schema(
+            "title": _field_schema(
+                ref=COMMON_SHARED_V1.field_ref("contact_person_title"),
+                title="Title",
+                description="Enter the position title." if is_sf424_short else None,
+            ),
+            "address": _field_schema(
+                ref=address_ref,
+                title="Address" if is_sf424_short else None,
+                description="Enter the address." if is_sf424_short else None,
+            ),
+            phone_key: _field_schema(
                 ref=COMMON_SHARED_V1.field_ref("phone_number"),
-                title="Telephone Number" if is_key_contacts else "Phone Number",
+                title=("Telephone Number" if is_key_contacts or is_sf424_short else "Phone Number"),
+                description=("Enter the daytime Telephone Number." if is_sf424_short else None),
             ),
             "fax": _field_schema(
-                ref=COMMON_SHARED_V1.field_ref("phone_number"), title="Fax Number"
+                ref=COMMON_SHARED_V1.field_ref("phone_number"),
+                title="Fax Number",
+                description="Enter the Fax Number." if is_sf424_short else None,
             ),
             "email": _field_schema(
                 ref=COMMON_SHARED_V1.field_ref("contact_email"),
-                title="Email" if is_key_contacts else "E-mail Address",
+                title="Email" if is_key_contacts or is_sf424_short else "E-mail Address",
+                description="Enter a valid email Address." if is_sf424_short else None,
             ),
         },
     }
@@ -145,7 +178,7 @@ def build_contact_profile_component(profile: ContactProfile) -> ContactProfileDe
             "country",
             "zip_code",
         )
-        if is_key_contacts
+        if is_key_contacts or is_sf424_short
         else ("street1", "street2", "city", "state", "zip_code", "country")
     )
     xml_address_fields = (
@@ -159,14 +192,14 @@ def build_contact_profile_component(profile: ContactProfile) -> ContactProfileDe
             "zip_code",
             "country",
         )
-        if is_key_contacts
+        if is_key_contacts or is_sf424_short
         else ui_address_fields
     )
     ui_suffixes = {
         "name": name_suffixes,
         "title": ("/properties/title",),
         "address": tuple(f"/properties/address/properties/{field}" for field in ui_address_fields),
-        "phone": ("/properties/phone",),
+        phone_key: (f"/properties/{phone_key}",),
         "fax": ("/properties/fax",),
         "email": ("/properties/email",),
     }
@@ -183,6 +216,7 @@ def build_contact_profile_component(profile: ContactProfile) -> ContactProfileDe
                 ("suffix", "SuffixName"),
             ),
             namespace=direct_namespace,
+            namespace_before_type=is_sf424_short,
         ),
         "title": _direct_xml(
             target="ContactTitle" if is_key_contacts else "Title",
@@ -195,8 +229,9 @@ def build_contact_profile_component(profile: ContactProfile) -> ContactProfileDe
                 for field in xml_address_fields
             ),
             namespace=direct_namespace,
+            namespace_before_type=is_sf424_short,
         ),
-        "phone": _direct_xml(
+        phone_key: _direct_xml(
             target="ContactPhone" if is_key_contacts else "Phone",
             namespace=direct_namespace,
         ),

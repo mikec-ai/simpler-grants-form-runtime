@@ -10,6 +10,7 @@ from src.form_schema.components import (
     build_organization_identity_component,
     build_project_identity_period_component,
 )
+from src.form_schema.components.contact_profile import build_contact_profile_component
 from src.form_schema.shared import ADDRESS_SHARED_V1, COMMON_SHARED_V1
 
 _ORGANIZATION_IDENTITY = build_organization_identity_component(
@@ -32,6 +33,8 @@ _PROJECT_IDENTITY_PERIOD = build_project_identity_period_component(
         date_description="Enter the date in the format MM/DD/YYYY."
     )
 ).mount_root()
+_CONTACT_PERSON_DEFINITION = build_contact_profile_component("sf424_short_contact_person_v3")
+_CONTACT_PERSON_PROFILE = _CONTACT_PERSON_DEFINITION.mount("/properties/project_director")
 
 # Applicant type codes shared by the SF-424 family (globLib:ApplicantTypeCodeDataType).
 APPLICANT_TYPE_CODES = [
@@ -108,42 +111,7 @@ FORM_JSON_SCHEMA = {
         # globLib:ContactPersonDataTypeV3 - reused by the project director (item 7) and the
         # primary contact / grants administrator (item 8). Name and Address are required per
         # the XSD; the form additionally marks Title, Email and Telephone Number as required.
-        "contact_person_group": {
-            "type": "object",
-            "required": ["name", "title", "address", "phone_number", "email"],
-            "properties": {
-                "name": {
-                    "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("person_name")}],
-                    "title": "Name",
-                    "description": "Enter the name.",
-                },
-                "title": {
-                    "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("contact_person_title")}],
-                    "title": "Title",
-                    "description": "Enter the position title.",
-                },
-                "address": {
-                    "allOf": [{"$ref": ADDRESS_SHARED_V1.field_ref("address")}],
-                    "title": "Address",
-                    "description": "Enter the address.",
-                },
-                "phone_number": {
-                    "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("phone_number")}],
-                    "title": "Telephone Number",
-                    "description": "Enter the daytime Telephone Number.",
-                },
-                "fax": {
-                    "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("phone_number")}],
-                    "title": "Fax Number",
-                    "description": "Enter the Fax Number.",
-                },
-                "email": {
-                    "allOf": [{"$ref": COMMON_SHARED_V1.field_ref("contact_email")}],
-                    "title": "Email",
-                    "description": "Enter a valid email Address.",
-                },
-            },
-        },
+        "contact_person_group": _CONTACT_PERSON_PROFILE.json_schema_definition,
     },
     "properties": {
         "agency_name": _OPPORTUNITY_IDENTITY.json_schema_properties["agency_name"],
@@ -286,31 +254,16 @@ FORM_JSON_SCHEMA = {
     },
 }
 
-_CONTACT_PERSON_GROUP_UI_CHILDREN = [
-    {"type": "field", "definition": "{base}/properties/name/properties/prefix"},
-    {"type": "field", "definition": "{base}/properties/name/properties/first_name"},
-    {"type": "field", "definition": "{base}/properties/name/properties/middle_name"},
-    {"type": "field", "definition": "{base}/properties/name/properties/last_name"},
-    {"type": "field", "definition": "{base}/properties/name/properties/suffix"},
-    {"type": "field", "definition": "{base}/properties/title"},
-    {"type": "field", "definition": "{base}/properties/email"},
-    {"type": "field", "definition": "{base}/properties/phone_number"},
-    {"type": "field", "definition": "{base}/properties/fax"},
-    {"type": "field", "definition": "{base}/properties/address/properties/street1"},
-    {"type": "field", "definition": "{base}/properties/address/properties/street2"},
-    {"type": "field", "definition": "{base}/properties/address/properties/city"},
-    {"type": "field", "definition": "{base}/properties/address/properties/county"},
-    {"type": "field", "definition": "{base}/properties/address/properties/state"},
-    {"type": "field", "definition": "{base}/properties/address/properties/province"},
-    {"type": "field", "definition": "{base}/properties/address/properties/country"},
-    {"type": "field", "definition": "{base}/properties/address/properties/zip_code"},
-]
-
 
 def _contact_person_ui_children(base: str) -> list[dict]:
+    mounted = _CONTACT_PERSON_DEFINITION.mount(base)
     return [
-        {"type": child["type"], "definition": child["definition"].format(base=base)}
-        for child in _CONTACT_PERSON_GROUP_UI_CHILDREN
+        *mounted.ui_fields["name"],
+        *mounted.ui_fields["title"],
+        *mounted.ui_fields["email"],
+        *mounted.ui_fields["phone_number"],
+        *mounted.ui_fields["fax"],
+        *mounted.ui_fields["address"],
     ]
 
 
@@ -455,39 +408,11 @@ FORM_RULE_SCHEMA = {
 }
 
 
-# The nested name/address groups shared by the project director and contact person.
-_CONTACT_PERSON_GROUP_XML_TRANSFORM = {
-    "xml_transform": {"target": "PLACEHOLDER", "type": "nested_object"},
-    "name": {
-        "xml_transform": {"target": "Name", "namespace": "globLib", "type": "nested_object"},
-        "prefix": {"xml_transform": {"target": "PrefixName", "namespace": "globLib"}},
-        "first_name": {"xml_transform": {"target": "FirstName", "namespace": "globLib"}},
-        "middle_name": {"xml_transform": {"target": "MiddleName", "namespace": "globLib"}},
-        "last_name": {"xml_transform": {"target": "LastName", "namespace": "globLib"}},
-        "suffix": {"xml_transform": {"target": "SuffixName", "namespace": "globLib"}},
-    },
-    "title": {"xml_transform": {"target": "Title", "namespace": "globLib"}},
-    "address": {
-        "xml_transform": {"target": "Address", "namespace": "globLib", "type": "nested_object"},
-        "street1": {"xml_transform": {"target": "Street1", "namespace": "globLib"}},
-        "street2": {"xml_transform": {"target": "Street2", "namespace": "globLib"}},
-        "city": {"xml_transform": {"target": "City", "namespace": "globLib"}},
-        "county": {"xml_transform": {"target": "County", "namespace": "globLib"}},
-        "state": {"xml_transform": {"target": "State", "namespace": "globLib"}},
-        "province": {"xml_transform": {"target": "Province", "namespace": "globLib"}},
-        "zip_code": {"xml_transform": {"target": "ZipPostalCode", "namespace": "globLib"}},
-        "country": {"xml_transform": {"target": "Country", "namespace": "globLib"}},
-    },
-    "phone_number": {"xml_transform": {"target": "Phone", "namespace": "globLib"}},
-    "fax": {"xml_transform": {"target": "Fax", "namespace": "globLib"}},
-    "email": {"xml_transform": {"target": "Email", "namespace": "globLib"}},
-}
-
-
 def _contact_person_group_xml(target: str) -> dict:
-    group = {key: value for key, value in _CONTACT_PERSON_GROUP_XML_TRANSFORM.items()}
-    group["xml_transform"] = {"target": target, "type": "nested_object"}
-    return group
+    return {
+        "xml_transform": {"target": target, "type": "nested_object"},
+        **_CONTACT_PERSON_PROFILE.xml_fields,
+    }
 
 
 # XML Transformation Rules for SF-424 Short Organizational 3.0

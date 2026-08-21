@@ -60,6 +60,38 @@ def test_global_contact_profile_preserves_exact_variant_deltas() -> None:
     }
 
 
+def test_sf424_short_profile_preserves_exact_native_shape() -> None:
+    mounted = build_contact_profile_component("sf424_short_contact_person_v3").mount(
+        "/properties/project_director"
+    )
+
+    assert mounted.json_schema_definition["required"] == [
+        "name",
+        "title",
+        "address",
+        "phone_number",
+        "email",
+    ]
+    properties = mounted.json_schema_definition["properties"]
+    assert properties["name"]["description"] == "Enter the name."
+    assert properties["address"] == {
+        "allOf": [{"$ref": ADDRESS_SHARED_V1.field_ref("address")}],
+        "title": "Address",
+        "description": "Enter the address.",
+    }
+    assert properties["phone_number"]["description"] == ("Enter the daytime Telephone Number.")
+    assert mounted.ui_fields["phone_number"] == (
+        {
+            "type": "field",
+            "definition": "/properties/project_director/properties/phone_number",
+        },
+    )
+    assert mounted.xml_fields["phone_number"] == {
+        "xml_transform": {"target": "Phone", "namespace": "globLib"}
+    }
+    assert list(mounted.xml_fields["address"])[-2:] == ["zip_code", "country"]
+
+
 @pytest.mark.parametrize(
     "pointer",
     ["", "/$defs/contact", "/properties/contacts/0", "/properties/contacts/items/name"],
