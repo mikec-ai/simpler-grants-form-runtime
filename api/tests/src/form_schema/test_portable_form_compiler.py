@@ -139,9 +139,7 @@ def test_generic_compiler_preserves_oracle_drift_assurance(tmp_path: Path) -> No
         for descriptor in catalog["form_declarations"]
         if descriptor["path"].endswith("rr-budget.form.json")
     )
-    budget = json.loads(
-        (bundle / budget_descriptor["path"]).read_text(encoding="utf-8")
-    )
+    budget = json.loads((bundle / budget_descriptor["path"]).read_text(encoding="utf-8"))
     oracle = bundle / budget["supplemental_evidence"][0]["path"]
     oracle.write_bytes(oracle.read_bytes() + b"\n")
 
@@ -166,9 +164,7 @@ def test_compiler_passes_through_new_consumer_adapter_without_code_changes(
     declaration = bundle / descriptor["path"]
     form = json.loads(declaration.read_text(encoding="utf-8"))
     form["adapters"] = {
-        "reference_renderer": {
-            "artifacts": {"behavior_notes": form["supplemental_evidence"][0]}
-        }
+        "reference_renderer": {"artifacts": {"behavior_notes": form["supplemental_evidence"][0]}}
     }
     encoded = (json.dumps(form, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
     declaration.write_bytes(encoded)
@@ -217,9 +213,7 @@ def test_compiler_contains_no_form_or_question_semantic_authority() -> None:
     manifest = json.loads((BUNDLE_ROOT / "manifest.json").read_text(encoding="utf-8"))
     forbidden = {form["form_key"] for form in manifest["forms"]}
     forbidden.update(
-        schema["question_id"]
-        for schema in manifest["schemas"]
-        if schema["kind"] == "question"
+        schema["question_id"] for schema in manifest["schemas"] if schema["kind"] == "question"
     )
 
     assert not [value for value in forbidden if value in source]
