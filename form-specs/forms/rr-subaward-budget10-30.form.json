@@ -3,17 +3,13 @@
   "form_key": "RRSubawardBudget10_30",
   "schema_id": "urn:grants-form-kernel:forms:rr-subaward-budget10-30:v1",
   "metadata": {
-    "form_id": "8e208eec-a423-440b-9596-f71a33cec25f",
     "legacy_form_id": null,
     "form_name": "[Draft] R&R Subaward Budget Attachment(s) Form 10 YR 30 ATT",
     "short_form_name": "RR_SubawardBudget10_30_3_0",
     "form_version": "3.0",
     "agency_code": "GRANTS_GOV",
     "omb_number": "4040-0001",
-    "form_type": "RRSubawardBudget10_30",
-    "sgg_version": "1.0",
-    "is_deprecated": false,
-    "form_instruction_id": "f75a27cd-770b-41e9-bca8-ef0097201852"
+    "is_deprecated": false
   },
   "ui": {
     "path": "ui/rr-subaward-budget10-30.ui.json",
@@ -25,6 +21,12 @@
   },
   "adapters": {
     "simpler": {
+      "configuration": {
+        "form_id": "8e208eec-a423-440b-9596-f71a33cec25f",
+        "form_type": "RRSubawardBudget10_30",
+        "sgg_version": "1.0",
+        "form_instruction_id": "f75a27cd-770b-41e9-bca8-ef0097201852"
+      },
       "artifacts": {
         "rules": {
           "path": "rules/rr-subaward-budget10-30.rules.json",

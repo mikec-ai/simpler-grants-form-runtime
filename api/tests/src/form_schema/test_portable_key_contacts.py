@@ -74,16 +74,18 @@ def test_full_key_contacts_declaration_preserves_occurrences_and_review_boundary
     declaration = bundle.forms_by_key["KeyContacts"].definition
 
     assert declaration["metadata"] == {
-        "form_id": "f140c7db-724d-4954-bebd-081c0527908c",
         "legacy_form_id": 683,
         "form_name": "KEY CONTACTS",
         "short_form_name": "Key_Contacts",
         "form_version": "2.0",
         "agency_code": "SGG",
         "omb_number": "4040-0010",
+        "is_deprecated": False,
+    }
+    assert bundle.forms_by_key["KeyContacts"].adapters["simpler"]["configuration"] == {
+        "form_id": "f140c7db-724d-4954-bebd-081c0527908c",
         "form_type": "KeyContacts",
         "sgg_version": "1.0",
-        "is_deprecated": False,
     }
     assert len(declaration["question_bindings"]) == 20
     assert len({binding["binding_id"] for binding in declaration["question_bindings"]}) == 20

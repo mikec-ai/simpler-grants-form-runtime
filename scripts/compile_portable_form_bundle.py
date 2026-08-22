@@ -79,7 +79,7 @@ def compile_bundle(bundle_root: Path) -> tuple[dict[str, Any], list[str]]:
     exact_keys = {
         "contract",
         "runtime_contract",
-        "authoring_schemas",
+        "contract_schema",
         "bundle",
         "sources",
         "schemas",
@@ -100,34 +100,25 @@ def compile_bundle(bundle_root: Path) -> tuple[dict[str, Any], list[str]]:
         raise CompileError(
             "catalog.runtime_contract must equal portable-grants-form-bundle/v1"
         )
-    schema_descriptors = catalog["authoring_schemas"]
-    if not isinstance(schema_descriptors, dict) or set(schema_descriptors) != {
-        "catalog",
-        "form_declaration",
-    }:
-        raise CompileError(
-            "catalog.authoring_schemas must identify catalog and form_declaration"
-        )
-    authoring_schemas: dict[str, dict[str, Any]] = {}
-    for schema_name, descriptor in schema_descriptors.items():
-        if not isinstance(descriptor, dict) or set(descriptor) != {"path", "sha256"}:
-            raise CompileError(f"authoring schema descriptor is invalid: {schema_name}")
-        schema_path = _resolve_inside(root, descriptor["path"], "authoring schema")
-        if _sha256(schema_path) != descriptor["sha256"]:
-            raise CompileError(f"authoring schema hash mismatch: {descriptor['path']}")
-        schema = _read_object(schema_path, "authoring schema")
-        try:
-            jsonschema.Draft202012Validator.check_schema(schema)
-        except jsonschema.SchemaError as exc:
-            raise CompileError(
-                f"authoring schema is invalid: {schema_name}: {exc.message}"
-            ) from exc
-        authoring_schemas[schema_name] = schema
+    descriptor = catalog["contract_schema"]
+    if not isinstance(descriptor, dict) or set(descriptor) != {"path", "sha256"}:
+        raise CompileError("catalog.contract_schema must contain only path and sha256")
+    schema_path = _resolve_inside(root, descriptor["path"], "contract schema")
+    if _sha256(schema_path) != descriptor["sha256"]:
+        raise CompileError(f"contract schema hash mismatch: {descriptor['path']}")
+    contract_schema = _read_object(schema_path, "contract schema")
     try:
-        jsonschema.Draft202012Validator(authoring_schemas["catalog"]).validate(catalog)
+        jsonschema.Draft202012Validator.check_schema(contract_schema)
+        contract_validator = jsonschema.Draft202012Validator(
+            contract_schema,
+            format_checker=jsonschema.FormatChecker(),
+        )
+        contract_validator.validate(catalog)
+    except jsonschema.SchemaError as exc:
+        raise CompileError(f"contract schema is invalid: {exc.message}") from exc
     except jsonschema.ValidationError as exc:
         raise CompileError(
-            f"catalog violates its authoring schema: {exc.message}"
+            f"catalog violates the portable contract: {exc.message}"
         ) from exc
     descriptors = catalog["form_declarations"]
     if not isinstance(descriptors, list) or not descriptors:
@@ -157,12 +148,10 @@ def compile_bundle(bundle_root: Path) -> tuple[dict[str, Any], list[str]]:
             )
         form = _read_object(path, "form declaration")
         try:
-            jsonschema.Draft202012Validator(
-                authoring_schemas["form_declaration"]
-            ).validate(form)
+            contract_validator.validate(form)
         except jsonschema.ValidationError as exc:
             raise CompileError(
-                f"form declaration violates its authoring schema: {relative}: {exc.message}"
+                f"form declaration violates the portable contract: {relative}: {exc.message}"
             ) from exc
         if form.get("contract") != "portable-grants-form-declaration/v1":
             raise CompileError(
@@ -210,12 +199,19 @@ def compile_bundle(bundle_root: Path) -> tuple[dict[str, Any], list[str]]:
 
     manifest = {
         "contract": catalog["runtime_contract"],
+        "contract_schema": catalog["contract_schema"],
         "bundle": catalog["bundle"],
         "sources": catalog["sources"],
         "schemas": catalog["schemas"],
         "compatibility": catalog["compatibility"],
         "forms": forms,
     }
+    try:
+        contract_validator.validate(manifest)
+    except jsonschema.ValidationError as exc:
+        raise CompileError(
+            f"compiled bundle violates the portable contract: {exc.message}"
+        ) from exc
     return manifest, form_keys
 
 

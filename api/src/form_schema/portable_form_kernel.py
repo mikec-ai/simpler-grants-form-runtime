@@ -7,7 +7,6 @@ import hashlib
 import itertools
 import json
 import re
-import uuid
 from pathlib import Path
 from typing import Any
 
@@ -248,7 +247,7 @@ class PortableFormDeclaration:
     schema: dict[str, Any]
     ui: dict[str, Any]
     mappings: dict[str, Any]
-    adapters: dict[str, dict[str, dict[str, Any]]]
+    adapters: dict[str, dict[str, Any]]
 
 
 @dataclasses.dataclass(frozen=True)
@@ -480,11 +479,31 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
     manifest = _object(_read_json(manifest_path, "manifest"), "manifest")
     _exact_keys(
         manifest,
-        {"contract", "bundle", "sources", "schemas", "compatibility", "forms"},
+        {
+            "contract",
+            "contract_schema",
+            "bundle",
+            "sources",
+            "schemas",
+            "compatibility",
+            "forms",
+        },
         "manifest",
     )
     if manifest["contract"] != CONTRACT:
         raise PortableFormKernelError(f"manifest.contract must equal {CONTRACT}")
+    contract_path, contract_raw = _read_hashed_json(
+        root, manifest["contract_schema"], "contract_schema"
+    )
+    contract_schema = _object(contract_raw, "contract_schema.document")
+    try:
+        jsonschema.Draft202012Validator.check_schema(contract_schema)
+        contract_validator = jsonschema.Draft202012Validator(
+            contract_schema,
+            format_checker=jsonschema.FormatChecker(),
+        )
+    except jsonschema.SchemaError as exc:
+        raise PortableFormKernelError("contract_schema is not valid JSON Schema") from exc
     bundle = _object(manifest["bundle"], "bundle")
     _exact_keys(bundle, {"name", "version"}, "bundle")
     _string(bundle["name"], "bundle.name")
@@ -497,7 +516,7 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
         _string(source_key, "sources key")
         _validate_source_evidence(source, f"sources.{source_key}")
 
-    dependencies: set[Path] = {manifest_path}
+    dependencies: set[Path] = {manifest_path, contract_path}
     schemas_by_id: dict[str, dict[str, Any]] = {}
     schema_kinds: dict[str, str] = {}
     question_ids: dict[str, set[str]] = {}
@@ -613,7 +632,6 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
         compatibility_records.append(record)
 
     forms_by_key: dict[str, PortableFormDeclaration] = {}
-    seen_form_ids: set[str] = set()
     question_schema_ids = {
         schema_id for schema_ids in question_ids.values() for schema_id in schema_ids
     }
@@ -654,86 +672,81 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
 
         metadata = _object(definition["metadata"], f"{label}.metadata")
         required_metadata_keys = {
-            "form_id",
             "legacy_form_id",
             "form_name",
             "short_form_name",
             "form_version",
             "agency_code",
             "omb_number",
-            "form_type",
-            "sgg_version",
             "is_deprecated",
         }
         metadata_keys = set(metadata)
         missing_metadata_keys = required_metadata_keys - metadata_keys
-        unknown_metadata_keys = metadata_keys - required_metadata_keys - {"form_instruction_id"}
+        unknown_metadata_keys = metadata_keys - required_metadata_keys
         if missing_metadata_keys or unknown_metadata_keys:
             raise PortableFormKernelError(
                 f"{label}.metadata has invalid keys; missing={sorted(missing_metadata_keys)}, "
                 f"unknown={sorted(unknown_metadata_keys)}"
             )
-        try:
-            form_id = _string(metadata["form_id"], f"{label}.metadata.form_id")
-            uuid.UUID(form_id)
-        except ValueError as exc:
-            raise PortableFormKernelError(f"{label}.metadata.form_id must be a UUID") from exc
-        if form_id in seen_form_ids:
-            raise PortableFormKernelError(f"duplicate metadata.form_id: {form_id}")
-        seen_form_ids.add(form_id)
         for key in (
             "form_name",
             "short_form_name",
             "form_version",
             "agency_code",
-            "sgg_version",
         ):
             _string(metadata[key], f"{label}.metadata.{key}")
         if not isinstance(metadata["is_deprecated"], bool):
             raise PortableFormKernelError(f"{label}.metadata.is_deprecated must be boolean")
-        instruction_id = metadata.get("form_instruction_id")
-        if instruction_id is not None:
-            try:
-                uuid.UUID(_string(instruction_id, f"{label}.metadata.form_instruction_id"))
-            except ValueError as exc:
-                raise PortableFormKernelError(
-                    f"{label}.metadata.form_instruction_id must be a UUID or null"
-                ) from exc
-
         ui_path, ui_raw = _read_hashed_json(root, definition["ui"], f"{label}.ui")
         mapping_path, mappings_raw = _read_hashed_json(
             root, definition["mappings"], f"{label}.mappings"
         )
         dependencies.update({ui_path, mapping_path})
-        adapters: dict[str, dict[str, dict[str, Any]]] = {}
+        adapters: dict[str, dict[str, Any]] = {}
         if "adapters" in definition:
             raw_adapters = _object(definition["adapters"], f"{label}.adapters")
             for adapter_name, raw_adapter in raw_adapters.items():
                 adapter_name = _string(adapter_name, f"{label}.adapters key")
                 adapter = _object(raw_adapter, f"{label}.adapters.{adapter_name}")
-                _exact_keys(adapter, {"artifacts"}, f"{label}.adapters.{adapter_name}")
-                artifacts = _object(
-                    adapter["artifacts"], f"{label}.adapters.{adapter_name}.artifacts"
+                _exact_keys(
+                    adapter,
+                    {"artifacts", "configuration"},
+                    f"{label}.adapters.{adapter_name}",
+                    optional={"artifacts", "configuration"},
                 )
-                if not artifacts:
+                if not adapter:
                     raise PortableFormKernelError(
-                        f"{label}.adapters.{adapter_name}.artifacts cannot be empty"
+                        f"{label}.adapters.{adapter_name} cannot be empty"
                     )
                 documents: dict[str, dict[str, Any]] = {}
-                for artifact_name, descriptor in artifacts.items():
-                    artifact_name = _string(
-                        artifact_name,
-                        f"{label}.adapters.{adapter_name}.artifacts key",
+                if "artifacts" in adapter:
+                    artifacts = _object(
+                        adapter["artifacts"],
+                        f"{label}.adapters.{adapter_name}.artifacts",
                     )
-                    artifact_path, artifact_raw = _read_hashed_json(
-                        root,
-                        descriptor,
-                        f"{label}.adapters.{adapter_name}.artifacts.{artifact_name}",
-                    )
-                    dependencies.add(artifact_path)
-                    documents[artifact_name] = _object(
-                        artifact_raw,
-                        f"{label}.adapters.{adapter_name}.artifacts.{artifact_name}.document",
+                    if not artifacts:
+                        raise PortableFormKernelError(
+                            f"{label}.adapters.{adapter_name}.artifacts cannot be empty"
+                        )
+                    for artifact_name, descriptor in artifacts.items():
+                        artifact_name = _string(
+                            artifact_name,
+                            f"{label}.adapters.{adapter_name}.artifacts key",
+                        )
+                        artifact_path, artifact_raw = _read_hashed_json(
+                            root,
+                            descriptor,
+                            f"{label}.adapters.{adapter_name}.artifacts.{artifact_name}",
+                        )
+                        dependencies.add(artifact_path)
+                        documents[artifact_name] = _object(
+                            artifact_raw,
+                            f"{label}.adapters.{adapter_name}.artifacts.{artifact_name}.document",
+                        )
+                if "configuration" in adapter:
+                    documents["configuration"] = _object(
+                        adapter["configuration"],
+                        f"{label}.adapters.{adapter_name}.configuration",
                     )
                 adapters[adapter_name] = documents
         for evidence_index, raw_evidence in enumerate(
@@ -920,6 +933,17 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
             mappings=mappings,
             adapters=adapters,
         )
+
+    # Keep the hand-authored semantic checks above because they provide precise,
+    # actionable diagnostics. The language-neutral contract is the final
+    # independent completeness gate and catches structural gaps those checks do
+    # not know about.
+    try:
+        contract_validator.validate(manifest)
+    except jsonschema.ValidationError as exc:
+        raise PortableFormKernelError(
+            f"manifest violates the portable contract: {exc.message}"
+        ) from exc
 
     bundle_digest = hashlib.sha256(canonical_json(manifest).encode("utf-8")).hexdigest()
     return PortableFormKernel(

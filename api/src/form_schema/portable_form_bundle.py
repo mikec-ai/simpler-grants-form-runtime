@@ -6,6 +6,7 @@ import dataclasses
 import hashlib
 import itertools
 import re
+import uuid
 from pathlib import Path
 from typing import Any
 
@@ -150,7 +151,10 @@ def _adapt_ui_node(
 
 
 def _compiler_sha256() -> str:
-    paths = [Path(__file__).resolve(), Path(__file__).with_name("portable_form_kernel.py")]
+    paths = [
+        Path(__file__).resolve(),
+        Path(__file__).with_name("portable_form_kernel.py"),
+    ]
     digest = hashlib.sha256()
     for path in paths:
         digest.update(path.name.encode("utf-8"))
@@ -200,6 +204,7 @@ class PortableFormBundle:
         portable = self.kernel.forms_by_key[form_key]
         definition = portable.definition
         metadata = {**definition["metadata"]}
+        metadata.update(portable.adapters.get("simpler", {}).get("configuration", {}))
         metadata.setdefault("form_instruction_id", None)
         targets = portable.mappings["targets"]
         common_grants = targets.get("common_grants", {"from": {}, "to": {}})
@@ -237,7 +242,10 @@ class PortableFormBundle:
                     itertools.chain.from_iterable(
                         _adapt_ui_node(node, f"forms.{form_key}.ui.elements[{index}]")
                         for index, node in enumerate(
-                            _array(portable.ui.get("elements"), f"forms.{form_key}.ui.elements")
+                            _array(
+                                portable.ui.get("elements"),
+                                f"forms.{form_key}.ui.elements",
+                            )
                         )
                     )
                 )
@@ -265,4 +273,20 @@ class PortableFormBundle:
 def load_portable_form_bundle(root: Path) -> PortableFormBundle:
     """Load portable declarations, then expose the thin Simpler adapter."""
 
-    return PortableFormBundle(kernel=load_portable_form_kernel(root))
+    bundle = PortableFormBundle(kernel=load_portable_form_kernel(root))
+    seen_form_ids: set[str] = set()
+    for form_key, form in bundle.forms_by_key.items():
+        configuration = form.adapters.get("simpler", {}).get("configuration", {})
+        form_id = _string(
+            configuration.get("form_id"), f"forms.{form_key}.adapters.simpler.form_id"
+        )
+        try:
+            uuid.UUID(form_id)
+        except ValueError as exc:
+            raise PortableFormBundleError(
+                f"forms.{form_key}.adapters.simpler.form_id must be a UUID"
+            ) from exc
+        if form_id in seen_form_ids:
+            raise PortableFormBundleError(f"duplicate Simpler form_id: {form_id}")
+        seen_form_ids.add(form_id)
+    return bundle

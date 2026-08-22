@@ -209,6 +209,9 @@ def test_adapter_compiles_through_the_resolved_package_seam() -> None:
 
     assert package.manifest["contract"] == "portable-grants-resolved-form-package/v1"
     assert package.manifest["source_set"]["bundle_digest"] == bundle.bundle_digest
+    assert package.manifest["form"]["form_id"] == "1623b310-85be-496a-b84b-34bdee22a68a"
+    assert package.manifest["form"]["form_type"] == "SF424"
+    assert package.manifest["form"]["sgg_version"] == "1.0"
     assert form.form_json_schema["x-simpler-form-package"]["package_digest"] == (
         package.package_digest
     )

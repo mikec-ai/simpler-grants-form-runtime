@@ -1,15 +1,9 @@
 {
   "contract": "portable-grants-form-catalog/v1",
   "runtime_contract": "portable-grants-form-bundle/v1",
-  "authoring_schemas": {
-    "catalog": {
-      "path": "schemas/authoring/catalog.schema.json",
-      "sha256": "7afe33fc3901117bacee9745d3863d367ea7af41c28fc4e06bd35ae419c5c515"
-    },
-    "form_declaration": {
-      "path": "schemas/authoring/form-declaration.schema.json",
-      "sha256": "a170472c7b0abcc9f45847b6a66a236d263ba5d641a30ecc5fc021894cf2f5a6"
-    }
+  "contract_schema": {
+    "path": "contract/v1/schema.json",
+    "sha256": "733d121d24c8bb4e1047c5bed642cb55ff5c8b5ae60e6bcb4f90d93bad14f87f"
   },
   "bundle": {
     "name": "declarative-grants-form-pilot",
@@ -2890,35 +2884,35 @@
   "form_declarations": [
     {
       "path": "forms/key-contacts.form.json",
-      "sha256": "04bb80c8442bc5f17b6e5aabcd65b9495d8b678b4cce47333372484eb92d589c"
+      "sha256": "ae672b763bb238fd509e6862f655d8c93706f798ec92b364c6e04ec44b68fbe6"
     },
     {
       "path": "forms/sf424.form.json",
-      "sha256": "0f3a15ea6d1e4560af20b4ed99f134202943382247a3257946757aed6b537bfe"
+      "sha256": "6d1b809d3ffe2fffb56e02ac7d8b6572239889e0da1c5bacae50c3ab866cb29d"
     },
     {
       "path": "forms/rr-budget.form.json",
-      "sha256": "c1bd0607c90df8be307f94ad8e5ea15b130100dfd6a9c54102c88bd6b91b8b2d"
+      "sha256": "b0c54a4cd15a029e4bc195784cee4bffe4291dbeabecc159980e1b2cd86051ac"
     },
     {
       "path": "forms/rr-budget10.form.json",
-      "sha256": "48ee6979f85508385712a8da2f7caca7a602ccd0ccb402d1941afa453d382287"
+      "sha256": "5f7cfa0ba2a910700d624307f38765319ebbc75cc9dd6f78e6a349ebc7984a1a"
     },
     {
       "path": "forms/rr-subaward-budget30.form.json",
-      "sha256": "e2f0b307b59e55c6b35f9923eebb953fe522a1baa2b46c5a9161822d36307d66"
+      "sha256": "5af5d167f7107f4c7d5be97273b3c6dd4db38afcd347b8149fa3239c67dcdf5e"
     },
     {
       "path": "forms/rr-subaward-budget10-30.form.json",
-      "sha256": "0834c94505405213f4309f427726798c61a6f5be7eadc8bc0c59ea8304dd2a1b"
+      "sha256": "4b8a899b2f10aeb18a930a4d3a7d94c9f393e19672c07cff3a32ff94209541d9"
     },
     {
       "path": "forms/rr-mp-budget.form.json",
-      "sha256": "9258deea2cd6a302b1b3e40083d5369fd88717056e657cdf63583baf5610b7eb"
+      "sha256": "662d62b2ab7d49ef3b3bf6c10504977d255cf7cef7932fb8f16a5cd8475e010f"
     },
     {
       "path": "forms/rr-mp-subaward-budget.form.json",
-      "sha256": "d395d4c19572f41acbc319498d3232b7cfa4c52a6e292f8e0defe6fe15746b67"
+      "sha256": "4eeea3141c92f431a292f6a94fd3dbc1d000100384f6d5868eddf5e10cf57437"
     }
   ]
 }
