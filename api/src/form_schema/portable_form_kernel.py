@@ -204,6 +204,7 @@ class PortableFormDeclaration:
     schema: dict[str, Any]
     ui: dict[str, Any]
     mappings: dict[str, Any]
+    rules: dict[str, Any] | None
 
 
 @dataclasses.dataclass(frozen=True)
@@ -438,20 +439,25 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
     for index, raw_form in enumerate(_array(manifest["forms"], "forms")):
         label = f"forms[{index}]"
         definition = _object(raw_form, label)
-        _exact_keys(
-            definition,
-            {
-                "form_key",
-                "schema_id",
-                "metadata",
-                "ui",
-                "mappings",
-                "question_bindings",
-                "source_evidence",
-                "review_boundary",
-            },
-            label,
-        )
+        required_definition_keys = {
+            "form_key",
+            "schema_id",
+            "metadata",
+            "ui",
+            "mappings",
+            "question_bindings",
+            "source_evidence",
+            "supplemental_evidence",
+            "review_boundary",
+        }
+        definition_keys = set(definition)
+        missing_definition_keys = required_definition_keys - definition_keys
+        unknown_definition_keys = definition_keys - required_definition_keys - {"rules"}
+        if missing_definition_keys or unknown_definition_keys:
+            raise PortableFormKernelError(
+                f"{label} has invalid keys; missing={sorted(missing_definition_keys)}, "
+                f"unknown={sorted(unknown_definition_keys)}"
+            )
         form_key = _string(definition["form_key"], f"{label}.form_key")
         if form_key in forms_by_key:
             raise PortableFormKernelError(f"duplicate form_key: {form_key}")
@@ -460,22 +466,26 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
             raise PortableFormKernelError(f"{label}.schema_id is not a bundled form schema")
 
         metadata = _object(definition["metadata"], f"{label}.metadata")
-        _exact_keys(
-            metadata,
-            {
-                "form_id",
-                "legacy_form_id",
-                "form_name",
-                "short_form_name",
-                "form_version",
-                "agency_code",
-                "omb_number",
-                "form_type",
-                "sgg_version",
-                "is_deprecated",
-            },
-            f"{label}.metadata",
-        )
+        required_metadata_keys = {
+            "form_id",
+            "legacy_form_id",
+            "form_name",
+            "short_form_name",
+            "form_version",
+            "agency_code",
+            "omb_number",
+            "form_type",
+            "sgg_version",
+            "is_deprecated",
+        }
+        metadata_keys = set(metadata)
+        missing_metadata_keys = required_metadata_keys - metadata_keys
+        unknown_metadata_keys = metadata_keys - required_metadata_keys - {"form_instruction_id"}
+        if missing_metadata_keys or unknown_metadata_keys:
+            raise PortableFormKernelError(
+                f"{label}.metadata has invalid keys; missing={sorted(missing_metadata_keys)}, "
+                f"unknown={sorted(unknown_metadata_keys)}"
+            )
         try:
             uuid.UUID(_string(metadata["form_id"], f"{label}.metadata.form_id"))
         except ValueError as exc:
@@ -484,12 +494,34 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
             _string(metadata[key], f"{label}.metadata.{key}")
         if not isinstance(metadata["is_deprecated"], bool):
             raise PortableFormKernelError(f"{label}.metadata.is_deprecated must be boolean")
+        instruction_id = metadata.get("form_instruction_id")
+        if instruction_id is not None:
+            try:
+                uuid.UUID(_string(instruction_id, f"{label}.metadata.form_instruction_id"))
+            except ValueError as exc:
+                raise PortableFormKernelError(
+                    f"{label}.metadata.form_instruction_id must be a UUID or null"
+                ) from exc
 
         ui_path, ui_raw = _read_hashed_json(root, definition["ui"], f"{label}.ui")
         mapping_path, mappings_raw = _read_hashed_json(
             root, definition["mappings"], f"{label}.mappings"
         )
         dependencies.update({ui_path, mapping_path})
+        rules = None
+        if "rules" in definition:
+            rules_path, rules_raw = _read_hashed_json(root, definition["rules"], f"{label}.rules")
+            dependencies.add(rules_path)
+            rules = _object(rules_raw, f"{label}.rules.document")
+        for evidence_index, raw_evidence in enumerate(
+            _array(definition["supplemental_evidence"], f"{label}.supplemental_evidence")
+        ):
+            evidence_path, _evidence_document = _read_hashed_json(
+                root,
+                raw_evidence,
+                f"{label}.supplemental_evidence[{evidence_index}]",
+            )
+            dependencies.add(evidence_path)
         ui = _object(ui_raw, f"{label}.ui.document")
         mappings = _object(mappings_raw, f"{label}.mappings.document")
         _exact_keys(mappings, {"targets"}, f"{label}.mappings.document")
@@ -643,6 +675,7 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
             schema=schema,
             ui=ui,
             mappings=mappings,
+            rules=rules,
         )
 
     bundle_digest = hashlib.sha256(canonical_json(manifest).encode("utf-8")).hexdigest()

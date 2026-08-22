@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:application-prior-award-id:v1",
+  "type": "string",
+  "title": "Federal Award Identifier",
+  "description": "For new applications leave blank. For a continuation or revision to an existing award, enter the previously assigned Federal award identifier number. If a changed/corrected application, enter the Federal Identifier in accordance with agency instructions.",
+  "minLength": 1,
+  "maxLength": 25,
+  "x-question-id": "question:application:prior-federal-award-id",
+  "x-review-status": "agent_proposed"
+}

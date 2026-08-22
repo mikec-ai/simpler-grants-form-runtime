@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:application-certification-agreement:v1",
+  "type": "boolean",
+  "title": "Certification Agree",
+  "description": "By signing this application, I certify (1) to the statements contained in the list of certifications* and (2) that the statements herein are true, complete and accurate to the best of my knowledge. I also provide the required assurances** and agree to comply with any resulting terms if I accept an award. I am aware that any false, fictitious, or fraudulent statements or claims may subject me to criminal, civil, or administrative penalties. (U.S. Code, Title 18, Section 1001)",
+  "x-question-id": "question:application:certification-agreement",
+  "x-review-status": "agent_proposed"
+}

@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:forms:key-contacts:v2",
+  "title": "Key Contacts",
+  "type": "object",
+  "required": [
+    "applicant_organization_name",
+    "key_contacts"
+  ],
+  "properties": {
+    "applicant_organization_name": {
+      "allOf": [
+        {
+          "$ref": "urn:grants-form-kernel:questions:organization:legal-name:v1"
+        }
+      ],
+      "title": "Applicant Organization Name"
+    },
+    "key_contacts": {
+      "type": "array",
+      "title": "Key Contacts",
+      "description": "Enter between 1 and 4 key contacts and their role on the project.",
+      "minItems": 1,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "required": [
+          "project_role",
+          "name",
+          "address",
+          "phone",
+          "email"
+        ],
+        "properties": {
+          "project_role": {
+            "allOf": [
+              {
+                "$ref": "urn:grants-form-kernel:questions:contact-project-role:v1"
+              }
+            ],
+            "title": "Project Role"
+          },
+          "name": {
+            "type": "object",
+            "title": "Name",
+            "required": [
+              "first_name",
+              "last_name"
+            ],
+            "properties": {
+              "prefix": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:person-name-prefix:v1"
+                  }
+                ],
+                "title": "Prefix"
+              },
+              "first_name": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:person-name-first:v1"
+                  }
+                ],
+                "title": "First Name"
+              },
+              "middle_name": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:person-name-middle:v1"
+                  }
+                ],
+                "title": "Middle Name"
+              },
+              "last_name": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:person-name-last:v1"
+                  }
+                ],
+                "title": "Last Name"
+              },
+              "suffix": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:person-name-suffix:v1"
+                  }
+                ],
+                "title": "Suffix"
+              }
+            }
+          },
+          "title": {
+            "allOf": [
+              {
+                "$ref": "urn:grants-form-kernel:questions:person-title:v1"
+              }
+            ],
+            "title": "Title"
+          },
+          "organizational_affiliation": {
+            "allOf": [
+              {
+                "$ref": "urn:grants-form-kernel:questions:person-organizational-affiliation:v1"
+              }
+            ],
+            "title": "Organizational Affiliation"
+          },
+          "address": {
+            "type": "object",
+            "title": "Address",
+            "description": "Enter an address.",
+            "required": [
+              "street1",
+              "city",
+              "country"
+            ],
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "country": {
+                      "const": "USA: UNITED STATES"
+                    }
+                  },
+                  "required": [
+                    "country"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "state",
+                    "zip_code"
+                  ]
+                }
+              }
+            ],
+            "properties": {
+              "street1": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:address-street-1:v1"
+                  }
+                ],
+                "title": "Street 1"
+              },
+              "street2": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:address-street-2:v1"
+                  }
+                ],
+                "title": "Street 2"
+              },
+              "city": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:address-city:v1"
+                  }
+                ],
+                "title": "City"
+              },
+              "county": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:address-county:v1"
+                  }
+                ],
+                "title": "County/Parish"
+              },
+              "state": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:address-state:v1"
+                  }
+                ],
+                "title": "State"
+              },
+              "province": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:address-province:v1"
+                  }
+                ],
+                "title": "Province"
+              },
+              "country": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:address-country:v1"
+                  }
+                ],
+                "title": "Country"
+              },
+              "zip_code": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:address-postal-code:v1"
+                  }
+                ],
+                "title": "Zip / Postal Code"
+              }
+            }
+          },
+          "phone": {
+            "allOf": [
+              {
+                "$ref": "urn:grants-form-kernel:questions:contact-phone:v1"
+              }
+            ],
+            "title": "Telephone Number"
+          },
+          "fax": {
+            "allOf": [
+              {
+                "$ref": "urn:grants-form-kernel:questions:contact-fax:v1"
+              }
+            ],
+            "title": "Fax Number"
+          },
+          "email": {
+            "allOf": [
+              {
+                "$ref": "urn:grants-form-kernel:questions:contact-email:v1"
+              }
+            ],
+            "title": "Email"
+          }
+        }
+      }
+    }
+  }
+}

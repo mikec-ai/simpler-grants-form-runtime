@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "format": "date",
+  "title": "Date Signed",
+  "description": "Completed by Grants.gov upon submission.",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:application-aor-signed-date:v1",
+  "x-question-id": "question:application:aor-signed-date",
+  "x-review-status": "agent_proposed"
+}

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:authorized-representative-email:v1",
+  "type": "string",
+  "format": "email",
+  "title": "AOR email",
+  "description": "Enter a valid email Address.",
+  "x-question-id": "question:role:authorized-organization-representative:email",
+  "x-review-status": "agent_proposed"
+}

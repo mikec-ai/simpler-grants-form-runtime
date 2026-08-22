@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:contact-email:v1",
+  "title": "Email",
+  "type": "string",
+  "format": "email",
+  "maxLength": 60,
+  "x-question-id": "question:contact:email",
+  "x-review-status": "agent_proposed"
+}

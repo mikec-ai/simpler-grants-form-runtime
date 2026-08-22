@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:contact-project-role:v1",
+  "title": "Project role",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 45,
+  "x-question-id": "question:key-contact:project-role",
+  "x-review-status": "agent_proposed"
+}

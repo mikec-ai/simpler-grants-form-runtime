@@ -1,0 +1,56 @@
+{
+  "contract": "portable-form-behavior-evidence/v1",
+  "form_key": "KeyContacts",
+  "review_status": "agent_proposed",
+  "published_coverage_eligible": false,
+  "authoritative_source": {
+    "url": "https://apply07.grants.gov/apply/forms/sample/Key_Contacts_2_0-V2.0_F683.xls",
+    "sha256": "b4856e146a424bea07ba508c5f261c5756798ed139bef4ea4c66d286fb439543"
+  },
+  "implementation_oracle": {
+    "path": "api/src/form_schema/forms/key_contacts/1/0/form_json.py",
+    "sha256": "ecf819caa437ee831637501d64c2799c0981c35217755cbd4e79f97225bafb22"
+  },
+  "gaps": [
+    {
+      "paths": [
+        "key_contacts[].address.state"
+      ],
+      "source": "Active and conditionally required for USA; inactive otherwise.",
+      "native": "Required for USA by JSON Schema, but remains visible and enabled for all countries.",
+      "disposition": "source_behavior_not_yet_projected"
+    },
+    {
+      "paths": [
+        "key_contacts[].address.province"
+      ],
+      "source": "Inactive for USA; active otherwise.",
+      "native": "Visible and enabled for all countries.",
+      "disposition": "source_behavior_not_yet_projected"
+    },
+    {
+      "paths": [
+        "key_contacts[].address.zip_code"
+      ],
+      "source": "Required for USA with a minimum of nine characters.",
+      "native": "Required for USA, but only global minLength 1 is enforced.",
+      "disposition": "source_constraint_not_yet_projected"
+    },
+    {
+      "paths": [
+        "applicant_organization_name"
+      ],
+      "source": "Forward-populated and non-editable for named SF-424 form families; editable for SF-424 Individual.",
+      "native": "No prepopulation or conditional editability rule is attached to this form.",
+      "disposition": "cross_form_policy_not_yet_projected"
+    },
+    {
+      "paths": [
+        "key_contacts"
+      ],
+      "source": "Add, previous, and delete controls have navigation/visibility rules and validation gates.",
+      "native": "Generic field-list behavior enforces 1..4 entries; source navigation wording is not separately modeled.",
+      "disposition": "presentation_behavior_delegated_to_runtime"
+    }
+  ]
+}

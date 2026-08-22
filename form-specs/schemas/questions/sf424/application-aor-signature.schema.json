@@ -1,0 +1,11 @@
+{
+  "type": "string",
+  "title": "AOR Signature",
+  "description": "Completed by Grants.gov upon submission.",
+  "minLength": 1,
+  "maxLength": 144,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:application-aor-signature:v1",
+  "x-question-id": "question:application:aor-signature",
+  "x-review-status": "agent_proposed"
+}

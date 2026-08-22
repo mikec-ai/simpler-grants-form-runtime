@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:application-federal-entity-id:v1",
+  "type": "string",
+  "title": "Federal Entity Identifier",
+  "minLength": 1,
+  "maxLength": 30,
+  "description": "Enter the number assigned to your organization by the Federal agency.",
+  "x-question-id": "question:application:federal-entity-identifier",
+  "x-review-status": "agent_proposed"
+}

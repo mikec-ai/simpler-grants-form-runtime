@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:address-street-1:v1",
+  "title": "Street 1",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 55,
+  "x-question-id": "question:address:street-1",
+  "x-review-status": "agent_proposed"
+}
