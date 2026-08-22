@@ -253,9 +253,7 @@ class PortableFormKernel:
                     accepted_mappings += 1
                 xml_ref = binding["mapping_refs"].get("grants_gov_xml")
                 xml = (
-                    targets["grants_gov_xml"]["bindings"][xml_ref]
-                    if xml_ref is not None
-                    else None
+                    targets["grants_gov_xml"]["bindings"][xml_ref] if xml_ref is not None else None
                 )
                 associations.append(
                     {
@@ -503,7 +501,12 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
                 _object(target["from"], f"{label}.mappings.targets.{target_name}.from")
                 _object(target["to"], f"{label}.mappings.targets.{target_name}.to")
             elif target_name == "grants_gov_xml":
-                _exact_keys(target, {"bindings"}, f"{label}.mappings.targets.{target_name}")
+                target_keys = set(target)
+                if target_keys not in ({"bindings"}, {"bindings", "runtime_transform"}):
+                    raise PortableFormKernelError(
+                        f"{label}.mappings.targets.{target_name} has invalid keys; "
+                        "expected bindings with optional runtime_transform"
+                    )
                 bindings = _object(
                     target["bindings"], f"{label}.mappings.targets.{target_name}.bindings"
                 )
@@ -516,6 +519,11 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
                     )
                     for key in ("path", "type_source", "type", "xsd_source"):
                         _string(xml[key], f"{label}.mappings.xml.{binding_id}.{key}")
+                if "runtime_transform" in target:
+                    _object(
+                        target["runtime_transform"],
+                        f"{label}.mappings.targets.{target_name}.runtime_transform",
+                    )
             else:
                 raise PortableFormKernelError(f"{label} has unknown mapping target: {target_name}")
 
@@ -584,12 +592,11 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
                     raise PortableFormKernelError(
                         f"{binding_label}.mapping_refs names absent target: {mapping_target}"
                     )
-                mapping_ref = _string(
-                    mapping_ref, f"{binding_label}.mapping_refs.{mapping_target}"
-                )
-                if mapping_target == "grants_gov_xml" and mapping_ref not in targets[
-                    mapping_target
-                ]["bindings"]:
+                mapping_ref = _string(mapping_ref, f"{binding_label}.mapping_refs.{mapping_target}")
+                if (
+                    mapping_target == "grants_gov_xml"
+                    and mapping_ref not in targets[mapping_target]["bindings"]
+                ):
                     raise PortableFormKernelError(
                         f"{binding_label}.mapping_refs.{mapping_target} does not resolve"
                     )
@@ -619,8 +626,7 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
                 f"{label}.review_boundary.production_ready must be boolean"
             )
         if review["published_coverage_eligible"] and any(
-            binding["mapping_status"] != "accepted"
-            for binding in definition["question_bindings"]
+            binding["mapping_status"] != "accepted" for binding in definition["question_bindings"]
         ):
             raise PortableFormKernelError(
                 f"{label} cannot publish coverage with unaccepted occurrence mappings"

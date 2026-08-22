@@ -426,9 +426,7 @@ def create_resolved_form_package(
         "manifest",
     )
     if manifest["contract"] != PORTABLE_RESOLVED_CONTRACT:
-        raise ResolvedFormPackageError(
-            f"manifest.contract must equal {PORTABLE_RESOLVED_CONTRACT}"
-        )
+        raise ResolvedFormPackageError(f"manifest.contract must equal {PORTABLE_RESOLVED_CONTRACT}")
     _object(manifest["source_set"], "source_set")
     compiler = _object(manifest["compiler"], "compiler")
     _exact_keys(compiler, {"name", "version", "verification", "sha256"}, "compiler")
@@ -481,9 +479,7 @@ def create_resolved_form_package(
         _ui_schema_json=_canonical_json(ui_schema),
         _mappings_json=_canonical_json(mappings),
         _rule_schema_json=_canonical_json(rule_schema) if rule_schema is not None else None,
-        _xml_transform_json=(
-            _canonical_json(xml_transform) if xml_transform is not None else None
-        ),
+        _xml_transform_json=(_canonical_json(xml_transform) if xml_transform is not None else None),
     )
 
 
