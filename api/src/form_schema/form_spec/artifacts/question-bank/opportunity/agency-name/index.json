@@ -1,0 +1,11 @@
+{
+  "id": "opportunity/agency-name",
+  "kind": "question",
+  "name": "Agency Name",
+  "description": "The awarding federal agency.",
+  "tags": [
+    "name",
+    "organization"
+  ],
+  "entity": "opportunity"
+}

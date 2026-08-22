@@ -1,0 +1,11 @@
+{
+  "id": "primary-org/uei",
+  "kind": "question",
+  "name": "SAM UEI",
+  "description": "UEI of the applicant organization.",
+  "tags": [
+    "identifier",
+    "organization"
+  ],
+  "entity": "primaryOrg"
+}

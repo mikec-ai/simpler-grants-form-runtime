@@ -132,13 +132,7 @@ def test_structural_differences_are_all_accounted_for(resolved_projected, resolv
 def test_allow_list_has_no_dead_entries(resolved_projected, resolved_golden):
     """An explanation for a difference that no longer exists is an explanation to delete."""
     differences = parity.schema_differences(resolved_projected, resolved_golden)
-    matched = {
-        suffix
-        for difference in differences
-        for suffix in ALLOWED
-        if difference.pointer.endswith(suffix)
-    }
-    assert sorted(set(ALLOWED) - matched) == []
+    assert parity.unused(differences, ALLOWED) == []
 
 
 def test_validation_verdicts_are_identical(resolved_projected, resolved_golden, seeds):

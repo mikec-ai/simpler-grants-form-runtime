@@ -1,0 +1,9 @@
+{
+  "id": "generics/submitted-date",
+  "kind": "question",
+  "name": "Submitted Date",
+  "description": "Completed by Grants.gov upon submission.",
+  "tags": [
+    "date"
+  ]
+}

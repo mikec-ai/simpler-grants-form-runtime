@@ -1,8 +1,8 @@
 import type { Model, ModelProperty, Program } from "@typespec/compiler";
 import { getDoc } from "@typespec/compiler";
 import {
-  Block, childBlock, modelOrder, orderedProps, propHelpText, propLabel, propReadOnly,
-  propSection, propWidget, modelLabel,
+  Block, childBlock, modelOrder, orderedProps, propHelpText, propLabel, propOmit,
+  propReadOnly, propSection, propWidget, modelLabel,
 } from "../model.js";
 
 export interface SggField {
@@ -47,32 +47,55 @@ function allProperties(program: Program, model: Model): ModelProperty[] {
   return out;
 }
 
+/** One form's overrides on the questions it composes, keyed by data path. */
+type Overrides = Record<string, Record<string, unknown>>;
+
+const at = (overrides: Overrides, dataPath: string) => overrides[dataPath] ?? {};
+
 /**
  * Flatten a subtree into SGG's max-depth-1 vocabulary. A target-specific projection
  * of the canonical tree, not a composition semantic.
+ *
+ * `dataPath` is the dotted path an override addresses, so a form can drop or relabel one
+ * field of a question it composes without the question or any other form noticing.
  */
-function walk(program: Program, model: Model, prefix: string, into: SggField[]): void {
+function walk(
+  program: Program,
+  model: Model,
+  prefix: string,
+  dataPath: string,
+  into: SggField[],
+  overrides: Overrides,
+): void {
   for (const prop of allProperties(program, model)) {
+    const here = dataPath ? `${dataPath}.${prop.name}` : prop.name;
+    if (propOmit(program, prop) || at(overrides, here).omit === true) continue;
+
     const path = `${prefix}/properties/${snake(prop.name)}`;
     const child = childBlock(program, prop);
     if (child && !child.scalar && child.model.kind === "Model") {
-      walk(program, child.model, path, into);
+      walk(program, child.model, path, here, into, overrides);
       continue;
     }
     if (!child && prop.type.kind === "Model" && !prop.type.indexer) {
-      walk(program, prop.type, path, into);
+      walk(program, prop.type, path, here, into, overrides);
       continue;
     }
-    into.push(field(program, prop, path));
+    into.push(field(program, prop, path, at(overrides, here)));
   }
 }
 
-function field(program: Program, prop: ModelProperty, definition: string): SggField {
+function field(
+  program: Program,
+  prop: ModelProperty,
+  definition: string,
+  override: Record<string, unknown>,
+): SggField {
   const f: SggField = {
-    type: propReadOnly(program, prop) ? "null" : "field",
+    type: override.readOnly === true || propReadOnly(program, prop) ? "null" : "field",
     definition,
   };
-  const widget = propWidget(program, prop);
+  const widget = (override.widget as string | undefined) ?? propWidget(program, prop);
   if (widget) f.widget = widget;
   return f;
 }
@@ -86,6 +109,7 @@ function itemLabel(program: Program, item: Model): string | undefined {
 function asFieldList(
   program: Program,
   prop: ModelProperty,
+  overrides: Overrides,
 ): SggFieldList | undefined {
   const t = prop.type;
   if (t.kind !== "Model" || !t.indexer) return undefined;
@@ -93,7 +117,7 @@ function asFieldList(
   if (item.kind !== "Model") return undefined;
 
   const children: SggField[] = [];
-  walk(program, item, `/properties/${snake(prop.name)}/items`, children);
+  walk(program, item, `/properties/${snake(prop.name)}/items`, prop.name, children, overrides);
   // The list's label names one entry, so it comes from the item block; the property's
   // own label names the collection and stays on the schema as `title`.
   const list: SggFieldList = {
@@ -118,24 +142,26 @@ export function emitSggUi(program: Program, block: Block): SggSection[] {
     meta.set(name, { label: String(m.value ?? m.name), description: getDoc(program, m) });
   }
 
+  const overrides = block.overrides as Overrides;
   for (const prop of orderedProps(program, block)) {
     const sec = propSection(program, prop);
     if (!sec) continue;
     const bucket = bySection.get(snake(sec.name));
     if (!bucket) continue;
+    if (at(overrides, prop.name).omit === true) continue;
 
-    const list = asFieldList(program, prop);
+    const list = asFieldList(program, prop, overrides);
     if (list) { bucket.push(list); continue; }
 
     const path = `/properties/${snake(prop.name)}`;
     const child = childBlock(program, prop);
     if (child && !child.scalar && child.model.kind === "Model") {
       const flat: SggField[] = [];
-      walk(program, child.model, path, flat);
+      walk(program, child.model, path, prop.name, flat, overrides);
       bucket.push(...flat);
       continue;
     }
-    bucket.push(field(program, prop, path));
+    bucket.push(field(program, prop, path, at(overrides, prop.name)));
   }
 
   const out: SggSection[] = [];

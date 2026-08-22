@@ -1,0 +1,9 @@
+{
+  "id": "generics/monetary-amount",
+  "kind": "question",
+  "name": "generics/monetary-amount",
+  "description": "A dollar amount. Held as a string rather than a number so that a cent is never lost to\nbinary floating point.",
+  "tags": [
+    "money"
+  ]
+}

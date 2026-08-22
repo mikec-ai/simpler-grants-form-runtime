@@ -12,6 +12,7 @@
   },
   "scripts": {
     "build": "npm run build -w @simpler-grants/form-spec",
-    "emit": "tsp compile specs/forms/key-contacts.tsp"
+    "emit": "rm -rf dist && tsp compile specs/main.tsp",
+    "sync": "npm run emit && python3 scripts/sync_to_sgg.py"
   }
 }

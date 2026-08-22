@@ -1,0 +1,9 @@
+{
+  "id": "generics/attachment",
+  "kind": "question",
+  "name": "generics/attachment",
+  "description": "Attach a file.",
+  "tags": [
+    "attachment"
+  ]
+}

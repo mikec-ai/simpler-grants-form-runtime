@@ -193,15 +193,7 @@ export const $computed = (
 
 // --- SGG target vocabulary ------------------------------------------------
 
+/** The rule name is the enum member's *value*, which is SGG's wire spelling. */
 export const $prePopulate = (ctx: Ctx, target: ModelProperty, rule: unknown) =>
-  set(ctx, stateKeys.prePopulate, target, enumValueOf(rule));
+  set(ctx, stateKeys.prePopulate, target, String(literal(rule)));
 
-/** For SggPrePop the *value* is the wire rule name, not the member name. */
-function enumValueOf(v: unknown): string {
-  if (v && typeof v === "object") {
-    const m = v as any;
-    if (m.value !== undefined) return String(m.value);
-    if (m.name !== undefined) return String(m.name);
-  }
-  return String(v);
-}

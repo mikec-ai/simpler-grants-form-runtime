@@ -1,0 +1,10 @@
+{
+  "id": "project/congressional-district",
+  "kind": "question",
+  "name": "project/congressional-district",
+  "description": "A congressional district, as a two-character state abbreviation and a three-character\ndistrict number: `CA-005`.",
+  "tags": [
+    "identifier"
+  ],
+  "entity": "project"
+}
