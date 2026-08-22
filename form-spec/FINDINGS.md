@@ -175,6 +175,65 @@ question browser would use. Current state, with three forms in:
 Three forms is too few to show a curve. What it does show is that the count is measurable
 and that the second and third forms both drew on the first.
 
+## Do the forms disagree with each other, or with grants.gov?
+
+`scripts/scan_shape_agreement.py` compares each form's JSON shape against its own XML
+transform, which stands in for the XSD: a field mapped with `type: "nested_object"` is a
+complex type on the wire, and a field mapped without it is a simple element. The point is to
+separate shape differences that are **upstream reality** from ones SGG introduced, because
+only the second kind should be fixed in the form rather than absorbed by an adapter.
+
+**SGG diverges from its own wire format in two places across fifteen forms.**
+`sf424a.forecasted_cash_needs` groups three columns that the wire keeps flat, and
+`sflll.reporting_entity.tier` is flat where the wire nests. Everything else is faithful.
+
+So where two forms shape the same property differently, the wire says why:
+
+| Property | Members | Wire element | Asked by |
+|---|---|---|---|
+| `contact_person` | the five name parts | `ContactPerson` | sf424 |
+| `contact_person` | the five name parts | `ContactName` | cd511 |
+| `contact_person` | name, title, address, phone, fax, email | `ContactPersonGroup` | sf424_short |
+| `authorized_representative` | the five name parts | `AuthorizedRepresentative` | sf424, sf424_short |
+| `authorized_representative` | name, title, address, phone, fax, email | `AuthorizedRepresentative` | epa_key_contacts |
+
+`ContactPerson` and `ContactPersonGroup` are different XSD types. A form that asks for a name
+element with a title element beside it is not a badly shaped version of a form that asks for
+a contact group -- it is asking a different thing, and the wire format proves it.
+
+### What that means for the bank
+
+**Two granularities, because the domain has two.** `generics/person-name` for the forms whose
+wire has a name element, `poc/details` for the four sites whose wire has a group type:
+`sf424_short.contact_person`, `sf424_short.project_director`,
+`epa_key_contacts.authorized_representative`, and `key_contacts[]`. That is fidelity, not
+duplication.
+
+**Flattening was solving a self-inflicted problem.** SF-424's wire format is a name element
+plus a title element plus a phone element, so composing `generics/person-name` alongside
+`generics/contact-title` and `generics/phone` *is* the faithful model -- which is what the
+form already did before `poc/details` was forced onto it. `@Sgg.flatten` existed only to make
+that forcing work. It is deleted, and the scan is why it is not coming back.
+
+**The `address` case needs no shape mechanism at all.** Three memberships across thirteen
+forms -- five, six and eight parts -- all mapping to a wire element named `Address`, because
+GlobalLibrary has three address types. Every member beyond the first five is optional, so one
+eight-member `generics/address` question with per-form `@UI.overrides` omission is
+behaviorally identical to three questions. Omission is presentation, and SF-424's box 8d
+already demonstrates it by dropping `county`.
+
+### What remains an accommodation
+
+Two, both in the adapter, both attributable, and neither about shape:
+
+| Accommodation | Cause | Exit condition |
+|---|---|---|
+| `camelCase` to `snake_case` | `Budget424aSectionC/D/F.tsx` hardcode field names in frontend source; stored `application_response` and every `json_to_xml_schema` path are keyed by them | the widgets stop hardcoding, and stored responses are migrated |
+| `const` to single-member `enum` | the validator reports the keyword that failed, so the message an applicant reads differs | never; both spellings are correct and this is the one in use |
+
+Plus the fourteen rendered-field differences itemised in each form's parity test, each naming
+one field and one reason, with a test that fails when an entry goes stale.
+
 ## Known gaps
 
 * Linter rules and diagnostics are declared but not implemented.
@@ -184,3 +243,7 @@ and that the second and third forms both drew on the first.
   `json_to_xml_schema` has no producer yet.
 * `@UI.visibleWhen` and `@UI.readOnlyWhen` are declared and stored but no emitter consumes
   them; none of these three forms needs conditional visibility.
+* Nothing checks that a declared property has somewhere to go on the wire. A property with no
+  XML mapping and no `@UI.omit` is a field an applicant can fill in and the submission will
+  drop -- a good candidate for the next validate-time error, and the scan already computes
+  both halves of it.

@@ -39,5 +39,6 @@ for d in sorted(FORMS.iterdir()):
                 "resolved": resolve_jsonschema(getattr(m, "FORM_JSON_SCHEMA", {}) or {}),
                 "ui": getattr(m, "FORM_UI_SCHEMA", None),
                 "rules": getattr(m, "FORM_RULE_SCHEMA", None),
+                "xml": getattr(m, "FORM_XML_TRANSFORM_RULES", None),
             }
 print(json.dumps(out, default=str))
