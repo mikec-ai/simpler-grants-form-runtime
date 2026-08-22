@@ -8,6 +8,7 @@ than code.
 |---|---|
 | [`authoring-model.md`](./authoring-model.md) | **Start here.** Worked reference for the authoring model against real forms — what an author writes, what is emitted, what the build catches, and where it costs more than today. §11 covers canonical schema versus SGG's flat shape, §12 rules by example, §13 the block model. |
 | [`architecture.md`](./architecture.md) | The specification: problem statement, design decisions, artifact contract, TypeSpec library, conditional logic, phased migration, verification. |
+| [`../../form-spec/FINDINGS.md`](../../form-spec/FINDINGS.md) | Implementation findings: what the reference build validated, and the corrections it forced. |
 | [`deferred-designs.md`](./deferred-designs.md) | Designs for the deferred layers — CommonGrants mappings, XML wire model, rule schema, routing — with the evidence and constraints behind each, so they can be resumed without re-deriving them. |
 
 ## Current scope

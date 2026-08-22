@@ -88,8 +88,9 @@ The following decisions establish the architectural direction for the remainder 
 | D6 | **Generated JSON Schema contains no custom keywords** | Standard JSON Schema remains portable. Analysis metadata is stored separately rather than embedded into runtime artifacts. |
 | D7 | **Reference enums are initially generated from Python into TypeSpec** | Reuses existing authoritative sources while preventing drift through CI validation. |
 | D8 | **`fieldList` is inferred from array-of-object structures** | Common cases require no additional authoring; decorators remain available only where inference is insufficient. |
-| D9 | **A *block* is the unit of composition.** A question and a form are both blocks, distinguished only by `@Question.meta` vs `@Form.meta` | Every block emits its own schema, UI, and catalogue entry, so a bank question renders standalone. Composition is uniform at every level (§2.7). Sections are the single grouping mechanism, usable at any level. |
+| D9 | **A *block* is the unit of composition.** A question and a form are both blocks, distinguished only by `@Question.meta` vs `@Form.meta`. A block is a Model when it holds several values and a **Scalar** when it holds one | Every block emits its own schema, UI, and catalogue entry, so a bank question renders standalone. Composition is uniform at every level (§2.7). Sections are the single grouping mechanism, usable at any level. |
 | D10 | **SGG's remaining rule names are declared in an `@Sgg.*` namespace** | Lets the library emit a *complete* SGG rule schema in one pass, so the artifact has one producer and no merge. The surface is 8 names behind one decorator, restricted to `specs/forms/` by lint and counted in CI. Attachment validation and submit stamps need no authoring surface at all — both are inferred (§4.5). |
+| D11 | **Decorators marshal their arguments to plain data; state holds no compiler entities** | `valueof` arguments arrive as graph nodes with parent back-references and cannot be serialized. Normalizing on write keeps the state map a plain-data contract for every emitter, linter rule, and the future form-builder validation API (§3.5). |
 
 Field constraints don't require custom decorators: `@maxLength`, `@pattern`,
 `@minValue`, `@minItems` and `?` are TypeSpec built-ins, so roughly half of what
@@ -594,8 +595,48 @@ operation as a question embedding a question.
 3. **A single granularity throughout.** Blocks compose blocks at every level, so no separate
    notion of primitive versus composite is required in the artifacts or the analysis graph.
 
-**One linter rule:** a block carries at most one of `@Question.meta` / `@Form.meta`. A model
-with neither is a plain nested helper, inlined into its parent rather than published.
+**Blocks are Models or Scalars.** A question holding several values is a Model
+(`generics/address`, `poc/details`); a question holding one is a **Scalar**
+(`generics/phone`, `generics/email`, `generics/organization-name`, `generics/contact-title`).
+Roughly half the bank is single-valued, so this is the common case rather than an edge:
+
+```typespec
+/** Enter the legal name of the organization. */
+@Question.meta(#{ id: "generics/organization-name" })
+@Catalog.tag(TagName.organization, TagName.name)
+@UI.label("Organization Name")
+scalar OrganizationName extends string;
+```
+
+A scalar block emits a leaf `schema.json` rather than an object, and a single Control rather
+than a Group. Every other rule applies unchanged, and a property composing one still emits a
+`$ref` — which is what keeps `generics/phone` one shared definition across every form asking
+for a phone number.
+
+**Extending a block inside a form uses `extends`, never `is`.** A form frequently needs a bank
+question plus a field or two of its own: Key Contacts needs `poc/details` plus `projectRole`
+and `organizationalAffiliation`. `is` is the wrong tool, because it **copies the base's
+decorators** — including `@Question.meta`. The extension silently claims the question's
+identity, two blocks declare the same id, and their artifacts collide on one output path.
+
+```typespec
+// Identity stays with the bank question.
+model KeyContactPerson extends QuestionBank.Poc.QuestionPocDetails {
+  @UI.label("Project Role")
+  projectRole: string;
+}
+```
+
+`extends` also produces the right composition without further work: the derived model emits
+`allOf: [{ $ref: <base> }]` plus its own properties. And because it carries no
+`@Question.meta` it is not a published block, so the schema emitter inlines it into the
+referencing form's `$defs` — exactly the shape the golden artifacts use
+(`items: { $ref: "#/$defs/key_contact_person" }`).
+
+**Two linter rules follow.** A block carries at most one of `@Question.meta` / `@Form.meta`; a
+model with neither is a plain nested helper, inlined into its parent rather than published. And
+no two blocks may declare the same id — `duplicate-block-id` — which is the rule that catches
+the `is` mistake mechanically rather than by review.
 
 ---
 
@@ -659,22 +700,22 @@ declarations, consumed as `@JsonSchema.id(...)`.
 ```typespec
 // lib/block.tsp — a block is a question or a form; these two decide which (D9)
 namespace SimplerForms.Question;
-extern dec meta(target: Model, meta: valueof QuestionMeta);   // { id, version?, status? }
+extern dec meta(target: Model | Scalar, meta: valueof QuestionMeta);  // { id, version?, status? }
 
 namespace SimplerForms.Form;
 extern dec meta(target: Model, meta: valueof FormMeta);       // { id, formId, legacyFormId, … }
 
 // lib/catalog.tsp — facets shared by questions and forms, mirroring CatalogItem
 namespace SimplerForms.Catalog;
-extern dec tag(target: Model, ...tags: valueof TagName[]);
-extern dec entity(target: Model, entity: valueof EntityName);
+extern dec tag(target: Model | Scalar, ...tags: valueof TagName[]);
+extern dec entity(target: Model | Scalar, entity: valueof EntityName);
 
 // lib/ui.tsp
 namespace SimplerForms.UI;
 extern dec sections(target: Model, sections: Enum);                       // D4
 extern dec section(target: ModelProperty, section: valueof EnumMember);
 extern dec overrides(target: Model | ModelProperty, patch: valueof {});   // D3
-extern dec label(target: ModelProperty | Model, text: valueof string);
+extern dec label(target: Model | Scalar | ModelProperty, text: valueof string);
 extern dec helpText(target: ModelProperty, text: valueof string);
 extern dec widget(target: ModelProperty, widget: valueof WidgetName);
 extern dec order(target: Model, ...props: ModelProperty[]);
@@ -742,11 +783,11 @@ inside needs `Model.prop::type`, and that type *is* the shared bank question, so
 through it would mutate the bank for every form. Cloning the outer model does not help:
 
 ```typespec
-model AorAddress is Generics.QuestionAddress;            // clone 1
+model AorAddress extends Generics.QuestionAddress {}          // clone 1
 @@UI.widget(AorAddress.state, WidgetName.Select);
 
-model Sf424Aor is QuestionBank.Aor.QuestionAorDetails {  // clone 2
-  address: AorAddress;                                   // re-declare to use clone 1
+model Sf424Aor extends QuestionBank.Aor.QuestionAorDetails {  // clone 2
+  address: AorAddress;                                        // re-declare to use clone 1
 }
 ```
 
@@ -806,7 +847,58 @@ from the linter into the type system is the preferred direction whenever availab
 also no projection rules here — projection integrity is checked in the SGG repository, where
 the projection lives (§2.5, §7).
 
-### 3.5 Emitters
+### 3.5 Decorators marshal; emitters never do
+
+**Rule: a decorator implementation reduces every argument to plain JSON data before writing it
+to state. State holds values, never compiler entities. No emitter and no linter rule calls
+`serializeValueAsJson`.**
+
+This is not a style preference. A `valueof` argument does not arrive as a JS value — it arrives
+as a node in the compiler's graph. `@Form.meta(#{ id: "key-contacts", legacyFormId: 683 })`
+hands the implementation an `ObjectValue` whose `.type` points at the `FormMeta` model, whose
+namespace's model map points back at `FormMeta`. `JSON.stringify` on it throws
+`Converting circular structure to JSON`. Enum members do the same by a different route:
+`CountryCode.USA` arrives as an `EnumValue` wrapping an `EnumMember` whose `.enum` contains the
+member again.
+
+Three reasons the boundary is the decorator rather than the emitter, in increasing order of
+weight:
+
+1. **One producer, many consumers.** State is read by every emitter, every linter rule,
+   `$onValidate`, and eventually the form builder's validation API (§5). Normalizing on write
+   makes the state map a plain-data contract instead of something each reader must know how to
+   unwrap — and unwrap identically.
+
+2. **Name versus value must be decided where the type is known.** `WidgetName.Select` needs the
+   member *name*, because SGG's widget strings are the member names. `CountryCode.USA` needs the
+   member *value*, because that literal lands in the emitted schema. `SggPrePop.agencyName`
+   needs the value. Choosing wrong produces a schema that compiles, validates, and silently
+   never matches — the worst available failure mode. Three helpers keep the choice explicit:
+   `plain()` for object literals, `enumName()` for names, `literal()` for values.
+
+3. **It is how governing principle 2 is actually enforced.** That principle requires checks to
+   be expressible against the artifact graph rather than the TypeSpec AST, so a second authoring
+   path can reproduce them. If state holds compiler entities, every check is structurally
+   coupled to the compiler and the principle is false in the implementation whatever this
+   document says.
+
+The conditional-logic decorators show the shape. Nothing downstream ever sees a `ModelProperty`:
+
+```ts
+function condition(source: ModelProperty, equals: unknown) {
+  return {
+    sourceName: source.name,
+    sourceIsArray: source.type.kind === "Model" && !!source.type.indexer,  // decided once
+    value: literal(equals),
+  };
+}
+```
+
+Resolving `sourceIsArray` here rather than in each emitter is what stops the JSON Schema
+emitter (`contains` versus `const`) and the UI emitter from disagreeing about the same
+condition.
+
+### 3.6 Emitters
 
 Each validates its output against the §2.1 meta-schema before `emitFile`:
 
@@ -985,7 +1077,7 @@ A census of every rule in every form:
 | `gg_validation` | ~34 | **1** (`attachment`) | inferred, Tier 1 |
 
 The non-calculation surface is 11 distinct rule names, and only 8 require any authoring
-surface. The `rules-sgg` emitter (§3.5) produces all four groups in one pass, so the rule
+surface. The `rules-sgg` emitter (§3.6) produces all four groups in one pass, so the rule
 schema has a single producer and the adapter passes it through without merging.
 
 **Tier 1 — inferred from the property's type.** `gg_validation: {rule: "attachment"}` is emitted
@@ -1088,7 +1180,7 @@ They become the builder's read model.
 2. Write `contract/v1/*.schema.json` (§2.1) and the ajv validator every emitter calls.
 3. **Run three spikes before building on them.** Each has a named fallback, so a negative
    result costs ergonomics rather than the architecture:
-   - Augment isolation across `model X is Y` (§3.3). *Fallback:* `@override` taking a property
+   - Augment isolation across a derived model (§3.3). *Fallback:* `@override` taking a property
      reference.
    - `ModelProperty` as a **non-target** decorator parameter receiving `A.b.c`, needed by
      `@Validation.requiredWhen`, `@Validation.computed`, and `@UI.order`. Verified possible in

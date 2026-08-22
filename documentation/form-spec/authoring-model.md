@@ -27,9 +27,9 @@ what keeps the XML transform working.
 | [2. What comes out](#2-what-comes-out) | emitted bank / form / UI artifacts |
 | [3. Before / after](#3-before--after) | line-count and mechanism comparison |
 | [4. What the compiler catches](#4-what-the-compiler-catches) | the ergonomic payoff |
-| [5. Where this costs more than today](#5-where-this-costs-more-than-today) | authoring overhead |
+| [5. Where this costs more than today](#5-where-this-costs-more-than-today) | authoring overhead, seven items |
 | [6. Out of scope](#6-out-of-scope) | deferred layers |
-| [7. Phase 0 spikes](#7-phase-0-spikes) | three, each with a fallback |
+| [7. Validated assumptions](#7-validated-assumptions) | confirmed against TypeSpec 1.15.0 |
 | [8. How parity is proven](#8-how-parity-is-proven) | golden oracles and passthrough |
 | [9. Design decisions](#9-design-decisions) | D1–D11, with motivating examples |
 | [10. Key Contacts and the mapping layer](#10-key-contacts-as-the-reference-case-for-the-deferred-mapping-layer) | why the repeat is hard |
@@ -225,12 +225,25 @@ enum KeyContactsSection {
   keyContacts: "Key Contacts",
 }
 
-/** One key contact and their role on the project. */
-@UI.order(projectRole, name, title, organizationalAffiliation, address, phone, fax, email)
-@UI.overrides(#{
-  `phone`: #{ label: "Telephone Number" },
-})
-model KeyContactPerson is QuestionBank.Poc.QuestionPocDetails {
+/**
+ * One key contact and their role on the project.
+ *
+ * `extends`, never `is`: `is` copies the base's decorators including `@Question.meta`,
+ * so the extension would claim the bank question's identity. Every `@UI.order`
+ * reference must be qualified — bare property names do not resolve in a decorator
+ * argument. Both are costs recorded in §5.
+ */
+@UI.order(
+  KeyContactPerson.projectRole,
+  KeyContactPerson.name,
+  KeyContactPerson.title,
+  KeyContactPerson.organizationalAffiliation,
+  KeyContactPerson.address,
+  KeyContactPerson.phone,
+  KeyContactPerson.fax,
+  KeyContactPerson.email
+)
+model KeyContactPerson extends QuestionBank.Poc.QuestionPocDetails {
   /** Enter the individual's role on the project (e.g., project manager, fiscal contact). */
   @UI.label("Project Role")
   @minLength(1) @maxLength(45)
@@ -482,10 +495,10 @@ Authoring overhead introduced by this model, relative to the current implementat
 1. **A section enum per form.** ~5 extra lines for Key Contacts, ~26 for SF-424. It buys
    compile-checked section references (D4) and carries name + label + description in one
    declaration, but it is boilerplate that inline labels wouldn't need.
-2. **One extra model per repeatable item.** `KeyContactPerson is QuestionPocDetails { … }`
+2. **One extra model per repeatable item.** `KeyContactPerson extends QuestionPocDetails { … }`
    exists to add `projectRole` and `organizationalAffiliation` to the shared contact. That's
-   genuine composition rather than ceremony — but it is still a named type you wouldn't
-   write if you were hand-authoring JSON.
+   genuine composition rather than ceremony — but it is still a named type you wouldn't write
+   if you were hand-authoring JSON.
 3. **Casing indirection.** Canonical is `camelCase`, SGG is `snake_case` (D5), so what you
    read in the spec is never quite what you read in the emitted artifact. The projection's
    default rule keeps it mechanical, but it's one more hop when debugging a parity failure.
@@ -497,11 +510,11 @@ Authoring overhead introduced by this model, relative to the current implementat
    every form. Cloning the outer model doesn't help; you'd clone every model on the path:
 
    ```typespec
-   model AorAddress is Generics.QuestionAddress;            // clone 1
+   model AorAddress extends Generics.QuestionAddress {}          // clone 1
    @@UI.widget(AorAddress.state, WidgetName.Select);
 
-   model Sf424Aor is QuestionBank.Aor.QuestionAorDetails {  // clone 2
-     address: AorAddress;                                   // re-declare to use clone 1
+   model Sf424Aor extends QuestionBank.Aor.QuestionAorDetails {  // clone 2
+     address: AorAddress;                                        // re-declare to use clone 1
    }
    ```
 
@@ -524,7 +537,16 @@ Authoring overhead introduced by this model, relative to the current implementat
    (`WidgetName.Select`) checked by the checker. Same shape, different guarantees. Augments
    stay available for direct properties of a form, where they read naturally.
 
-5. **Enum members can't hold arbitrary strings as identifiers.** `"USA: UNITED STATES"`
+5. **Qualified property references in `@UI.order`.** Bare names do not resolve in a decorator
+   argument, so every entry reads `KeyContactPerson.projectRole` rather than `projectRole`.
+   Eight properties become eight qualified references. Key Contacts genuinely needs the explicit
+   order — the golden interleaves a form-local field between inherited ones — so this is not
+   avoidable by falling back to declaration order.
+6. **`extends` rather than the more obvious `is`.** `is` reads like the natural way to say "a
+   contact plus two fields," and it compiles. It also copies `@Question.meta`, so the extension
+   claims the bank question's identity and the two collide on one output path. The
+   `duplicate-block-id` rule catches it, but the wrong idiom is the more attractive one.
+7. **Enum members can't hold arbitrary strings as identifiers.** `"USA: UNITED STATES"`
    becomes `CountryCode.USA_UNITED_STATES` with a value of `"USA: UNITED STATES"`. Fine,
    but the identifier↔value mapping is one more thing to get right, and the ~200-member
    country enum and ~60-member state enum have to be generated rather than typed.
@@ -546,26 +568,19 @@ and SF-424A instead.
 
 ---
 
-## 7. Phase 0 spikes
+## 7. Validated assumptions
 
-None of these is load-bearing any more — D3 removed the dependency on augment isolation —
-but each shapes ergonomics, and each has a named fallback.
+All resolved against TypeSpec 1.15.0. Full detail and the corrections each forced are in
+[`form-spec/FINDINGS.md`](../../form-spec/FINDINGS.md).
 
-1. **`ModelProperty` as a non-target decorator parameter** receiving `A.b.c`, needed by
-   `@Validation.requiredWhen`, `@UI.visibleWhen`, and `@UI.order`. Verified possible in
-   principle: `extern dec overload(target: Operation, overloadbase: Operation)` proves
-   reflection types work as non-target parameters, `invisible(target: ModelProperty,
-   visibilityClass: Enum)` proves it for `Enum`, and augment decorators already pass
-   `Model.prop` into `string | ModelProperty` parameters (`@@format`). *Fallback:* `valueof
-   string` paths resolved in `$onValidate` — the same mechanism the override table already
-   uses, so no new machinery.
-2. **`valueof EnumMember` in an object literal** — `#{ section: Sf424Section.organizationalUnit }`
-   inside `@UI.overrides`. Enum-member references in object literals already work in the
-   current bank (`state: USState.CA` in `org-address.tsp`), so this is near-certain.
-   *Fallback:* a string plus a `$onValidate` check against the enum's members.
-3. **`@UI.order` accepting properties inherited via `is`** — `@UI.order(name, title, …)` on a
-   model that acquired those properties from a composed question. *Fallback:* order from
-   declaration position, with `@UI.order` only for exceptions.
+| Assumption | Result |
+|---|---|
+| `ModelProperty` as a **non-target** decorator parameter, via a member expression | Works. `@Validation.requiredWhen(QuestionAddress.country, CountryCode.USA)` resolves and reaches the implementation as a `ModelProperty`. |
+| `valueof EnumMember` as an argument | Works — `@UI.section(KeyContactsSection.keyContacts)`. |
+| Enum-member reference **inside an object literal** | Works — `#{ section: Sf424Section.orgUnit }`. |
+| `$ref` composition survives emission | Works, recursively, at every level. |
+| `@UI.order` accepting properties inherited through `extends` | Works, and is what lets a form interleave its own fields with the question's to match the golden's field order. |
+| A derived model isolating overrides from its base | Works with `extends`; **fails with `is`**, which copies the base's decorators including identity. |
 
 ## 8. How parity is proven
 
@@ -616,8 +631,9 @@ worked examples that motivate each.
 | D6 | Custom keywords in the bank artifact | **Zero.** Composites stay nested (§11.2), so a `$ref` scan recovers the three tables. Tags and entity move to a sidecar bank index the browser reads. The `x-question` block in §2.1's example should be dropped. |
 | D7 | Generated code enums | **Python → TypeSpec** initially, from `shared_form_constants.py` into `question-bank/generics/codes.tsp`, with a CI drift check. Reverse later if the bank becomes authoritative. |
 | D8 | `fieldList` | **Inferred** from "array of object", label and description from `@UI.label` and the doc comment. Explicit decorator only for what inference can't reach (`minItemsHeading`, `maxItemsHelperText`, nested-fieldList `definition`). |
-| D9 | Unit of composition | **A *block*** (§13). Questions and forms are both blocks, distinguished only by `@Question.meta` vs `@Form.meta`. Every block emits its own `schema.json`, `ui.json`, and `index.json`, so a bank question renders standalone in the CommonGrants browser. Sections are the single grouping mechanism, usable at any block level. |
+| D9 | Unit of composition | **A *block*** (§13). Questions and forms are both blocks, distinguished only by `@Question.meta` vs `@Form.meta`. A block is a Model when it holds several values and a **Scalar** when it holds one — roughly half the bank is single-valued. Every block emits its own `schema.json`, `ui.json`, and `index.json`. Sections are the single grouping mechanism, usable at any block level. |
 | D10 | SGG's remaining rule names | **Declared in an `@Sgg.*` namespace** (§12.5), so the library emits a *complete* SGG rule schema in one pass and the adapter merges nothing. 8 names, restricted to `specs/forms/` by lint, counted in CI. Attachment validation and submit stamps are inferred and need no authoring surface. |
+| D11 | Decorator arguments | **Marshalled to plain data on write.** `valueof` arguments arrive as compiler graph nodes with parent back-references and cannot be serialized; state holds values so every emitter and linter rule reads plain JSON. |
 
 Alongside D1: **field constraints need no namespace of this library's own.** `@maxLength`,
 `@pattern`, `@minValue`, `@minItems` and `?` are TypeSpec built-ins, so roughly half of what
@@ -1183,7 +1199,32 @@ assumes. `website/src/lib/catalog/types.ts` defines one `CatalogItem`
 (`{ id, name, description, tags, rawSchema }`) that both question-bank and form items extend,
 and `website/src/lib/question-bank/loader.ts` already reads `uiSchema` per question.
 
-### 13.2 Every block emits the same three artifacts
+### 13.2 A block is a Model or a Scalar
+
+A question holding several values is a Model (`generics/address`, `poc/details`); a question
+holding one is a Scalar (`generics/phone`, `generics/email`, `generics/organization-name`,
+`generics/contact-title`) — roughly half the bank:
+
+```typespec
+/** Enter the legal name of the organization. */
+@Question.meta(#{ id: "generics/organization-name" })
+@Catalog.tag(TagName.organization, TagName.name)
+@UI.label("Organization Name")
+scalar OrganizationName extends string;
+```
+
+A scalar block emits a leaf `schema.json` and a single Control rather than an object and a
+Group. A property composing one still emits a `$ref`, which is what keeps `generics/phone` one
+shared definition across every form asking for a phone number.
+
+**Extending a block inside a form uses `extends`.** `is` copies the base's decorators including
+`@Question.meta`, so the extension would claim the bank question's identity and the two would
+collide on one output path. `extends` leaves identity alone, emits `allOf: [{ $ref: <base> }]`
+plus the extension's own properties, and — carrying no `@Question.meta` — is inlined into the
+referencing form's `$defs`, matching the golden's
+`items: { $ref: "#/$defs/key_contact_person" }`.
+
+### 13.3 Every block emits the same three artifacts
 
 ```
 dist/question-bank/v1/generics/person-name/{schema,ui,index}.json
@@ -1196,7 +1237,7 @@ dist/forms/key-contacts/{schema,ui,index}.json
 
 The first three are identical in kind at every level.
 
-### 13.3 Scopes are relative to the block's own root
+### 13.4 Scopes are relative to the block's own root
 
 `generics/person-name/ui.json` — renders standalone in the browser:
 
@@ -1251,7 +1292,7 @@ levels, one operation.
 already written, already correct. Earlier I proposed porting it as an incidental helper; under
 D9 it is the core of the UI emitter.
 
-### 13.4 The SGG target flattens all of it
+### 13.5 The SGG target flattens all of it
 
 The canonical tree above is 3 levels deep. SGG's vocabulary is max depth 1, so
 `sgg/ui-schema.json` flattens it:
@@ -1274,7 +1315,7 @@ tree, because a block must render standalone — this is also the CommonGrants f
 default, and it is correct. Flattening is what the SGG emitter does, for the same reason the
 projection exists: a target's limitations are the target's business, not the model's.
 
-### 13.5 What actually differs
+### 13.6 What actually differs
 
 | | Question | Form |
 |---|---|---|
@@ -1290,7 +1331,7 @@ projection exists: a target's limitations are the target's business, not the mod
 "forms are configurable collections of questions" works — a form embedding a question is the
 same operation as a question embedding a question.
 
-### 13.6 Consequences
+### 13.7 Consequences
 
 1. **A form can be `$ref`'d into another form.** This is how form *families* are expressed —
    SF-424 and SF-424 Short sharing a core, the four SF-424 assurance variants — and how
