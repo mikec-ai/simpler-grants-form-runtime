@@ -50,4 +50,12 @@ Restart Codex after the first setup so the installed skill, MCP registration, an
 
 Commit canonical declarations, generic compilers/adapters, contracts, tests, and concise design documentation. Publish large resolved artifacts, parity oracles, and analytical workbooks as CI build artifacts. Preserve source hashes and deterministic build receipts so any artifact can be reproduced from a named commit.
 
+Use three artifact classes: canonical authored source; compact generated deployable artifacts that remain available to the runtime without the authoring toolchain; and large reproducible oracles and analytical outputs published as durable build evidence. Do not place runtime-required artifacts only in an expiring CI store.
+
+## Authority boundary
+
+The board owns decisions, tasks, dependencies, and preserved evidence context. Git owns code, versioned contracts, tests, and implementation history. CI owns current build status and generated portfolio metrics. Do not manually copy changing implementation status or form counts into the board when they can be derived from Git or CI.
+
+Billy's proposed architecture documents are immutable evidence snapshots tied to their source PR and commit. Working recommendations belong in review or decision documents rather than edited copies of those snapshots.
+
 [coordinates](../roadmaps/declarative-form-architecture.md)

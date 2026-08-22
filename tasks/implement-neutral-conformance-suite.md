@@ -4,12 +4,15 @@ title: Implement the neutral conformance suite
 priority: P0
 assignee: unassigned
 description: >-
-  Validate and traverse a copied artifact bundle outside Simpler and TypeSpec,
-  then verify the same package compiles through the generic Simpler adapter.
+  Make authored JSON and TypeSpec emit equivalent Key Contacts contract
+  semantics; validate and traverse the result in a genuinely independent
+  consumer that imports neither producer nor the Simpler kernel; then exercise
+  the actual Simpler registry, resolver, processFormSchema, validation,
+  rendering, and XML path.
 superbee_progress_status: todo
 superbee_updated_by: codex
 generated:
   by: 'process:superbee'
-  at: '2026-08-22T12:15:53.035Z'
+  at: '2026-08-22T13:16:31.903Z'
 ---
-[depends on](define-portable-artifact-contract.md)
+[depends on](harden-portable-artifact-contract.md)

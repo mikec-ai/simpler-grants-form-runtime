@@ -4,13 +4,14 @@ title: Migrate the next high-overlap form cohort
 priority: P2
 assignee: unassigned
 description: >-
-  After the checkpoint merges, add forms in overlap order and regenerate the
-  question inventory, pairwise similarity, and form-question association outputs
-  from canonical declarations.
+  After repository consolidation, migrate ten forms in overlap order and
+  regenerate portfolio metrics from implementation evidence. Acceptance: no
+  form-specific compiler, kernel, or adapter branch; record time, new questions,
+  correction cycles, parity, XML status, and mapping-review state.
 superbee_progress_status: todo
 superbee_updated_by: codex
 generated:
   by: 'process:superbee'
-  at: '2026-08-22T12:15:53.712Z'
+  at: '2026-08-22T13:16:32.400Z'
 ---
-[depends on](land-architecture-checkpoint.md)
+[depends on](consolidate-repository-and-pr-stack.md)
