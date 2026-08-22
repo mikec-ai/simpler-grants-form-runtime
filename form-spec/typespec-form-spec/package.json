@@ -11,7 +11,8 @@
   },
   "scripts": {
     "build": "tsc -p .",
-    "spike": "tsp compile spike/spike.tsp --emit @typespec/json-schema --output-dir spike-out"
+    "spike": "tsp compile spike/spike.tsp --emit @typespec/json-schema --output-dir spike-out",
+    "test": "vitest run"
   },
   "peerDependencies": {
     "@typespec/compiler": "^1.13.0",
@@ -20,6 +21,7 @@
   "devDependencies": {
     "@typespec/compiler": "^1.13.0",
     "@typespec/json-schema": "^1.13.0",
-    "typescript": "^5.6.0"
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.9"
   }
 }

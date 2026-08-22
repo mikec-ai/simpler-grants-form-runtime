@@ -2,6 +2,8 @@ export { $onEmit } from "./emitter.js";
 import * as d from "./decorators.js";
 
 export { $lib } from "./lib.js";
+export { $linter } from "./linter.js";
+export { $onValidate } from "./validate.js";
 export * from "./decorators.js";
 
 export const $decorators = {

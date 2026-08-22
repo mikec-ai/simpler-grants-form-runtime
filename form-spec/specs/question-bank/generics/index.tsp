@@ -166,6 +166,8 @@ scalar MonetaryAmount extends string;
 
 /** Completed by Grants.gov upon submission. */
 @Question.meta(#{ id: "generics/signature" })
+@Catalog.entity(EntityName.generic)
+@Catalog.tag(TagName.person, TagName.name)
 @UI.label("Signature")
 @minLength(1)
 @maxLength(144)

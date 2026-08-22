@@ -40,6 +40,9 @@ jobs:
       - name: Build the library
         run: npm run build
 
+      - name: Test the checks
+        run: npm test
+
       # The state and country lists live in the API. Regenerating them here means a change
       # upstream shows up as a diff in this job rather than as a silent divergence.
       - name: Regenerate the code enums

@@ -801,51 +801,61 @@ configuration and live in the SGG repository (§2.5).
 
 ### 3.4 Diagnostics and linter rules
 
-`src/lib.ts` declares named diagnostics and state keys:
+**A TypeSpec linter rule may only be a warning.** `LinterRuleDefinition.severity` is typed
+as the literal `"warning"`, so the severity of a check is not a free choice, and it decides
+where the check lives:
 
-```ts
-export const $lib = createTypeSpecLibrary({
-  name: "@simpler-grants/form-spec",
-  diagnostics: {
-    "form-scoped-question-id": { severity: "error", messages: {
-      default: paramMessage`Question id "${"id"}" names a form. Questions are named for meaning; put form deltas in overrides.` } },
-    "condition-value-not-in-enum": { severity: "error", messages: { default: paramMessage`…` } },
-    "unsupported-widget":          { severity: "error", messages: { default: paramMessage`…` } },
-    "required-but-unreachable":    { severity: "error", messages: { default: paramMessage`…` } },
-    "calculation-cycle":           { severity: "error", messages: { default: paramMessage`…` } },
-  },
-  state: { question: {}, entity: {}, label: {}, widget: {}, effect: {}, section: {}, computed: {} },
-} as const);
-```
+* A check whose failure means the **emitted artifact is wrong** is a named diagnostic
+  reported from `$onValidate`, at `severity: "error"`. It stops the emit.
+* A check that describes a **specification worth tidying** is a linter rule, at warning
+  level, enabled through the `recommended` rule set.
 
-Decorators write to `program.stateMap($lib.stateKeys.…)` — typed state, not string blobs.
+`src/lib.ts` declares the diagnostics and the state keys. Decorators write to
+`program.stateMap($lib.stateKeys.…)` — typed state, not string blobs.
+
+#### Errors, in `src/validate.ts`
+
+| Diagnostic | Catches |
+|---|---|
+| `form-scoped-question-id` | `sf424-profile`, `key_contacts` in a bank id — §2.3 enforced mechanically |
+| `duplicate-block-id` | two blocks claiming one id, so one output path takes both. The usual cause is `model X is Y`, which copies the base's decorators including its identity, where `extends` would not (§2.7) |
+| `condition-value-not-in-enum` | a comparison against a value the source enum does not have, so the condition can never hold. Catches `"Outside the U.S."` against `"Outside the US"` |
+| `calculation-cycle` | a calculated value that depends on itself, which has no evaluation order |
+| `required-but-unreachable` | a field that is always required but only sometimes visible. **Impossible to detect in the shipping architecture**, where requiredness lives in the JSON Schema and visibility in the UI schema, in different languages |
+| `section-orphan` | a field in no section, which renders nowhere. The classic form bug, and nothing detects it today |
+| `override-path-unresolved` | an override path, or a widget declaration naming a section, that does not resolve in the composed model (§3.3) |
+| `sgg-outside-forms` | an `@Sgg.*` decorator on a bank question, which would export one consumer's choices to every form composing it (§4.5) |
+
+#### Warnings, in `src/linter.ts`
 
 | Rule | Catches |
 |---|---|
-| `no-form-scoped-question-id` | `sf424-profile`, `key_contacts` in a bank id — §2.3 enforced mechanically |
-| `no-redeclared-ui` | an entity question re-spelling its base's UI (§2.2 #4) |
-| `order-incomplete` | `@UI.order` omitting a property — with a `defineCodeFix` that appends it |
-| `no-orphan-question` | a bank question no form composes |
-| `require-question-docs` | a question with no doc comment (it becomes the browser description) |
-| `section-orphan` | a field in no section — invisible in the rendered form |
+| `no-orphan-question` | a question nothing composes. Reachability, not property references: composing through a property, through `extends`, through a list, and through a model that is not itself a question all count |
+| `require-question-docs` | a question with no doc comment, which is its description in the browser and on the form |
+| `require-question-tags` | a question with no `@Catalog.tag`, so it appears under no heading |
 | `section-unused` | a declared section no field references — usually a dropped field |
-| `override-path-unresolved` | an override path that does not resolve in the composed model (§3.3) |
-| `attachment-needs-validation` | an attachment-typed property with no attachment validation rule, which `forms/README.md` requires |
-| `no-sgg-in-bank` | an `@Sgg.*` decorator anywhere outside `specs/forms/` — the rule that keeps the target vocabulary out of the bank (§4.5) |
+| `order-incomplete` | `@UI.order` omitting a property, with a `defineCodeFix` that appends it |
+| `no-redeclared-property` | a derived block re-declaring a property it already inherits, which makes a second copy to keep in step by hand (§2.2 #4). TypeSpec permits this, so it needs a rule |
 
-Whole-program checks live in `$onValidate`: calculation dependency cycles, dead rules (the
-compared literal is not in the source property's enum), and required-but-never-visible
-fields. The last is impossible in the current architecture, because requiredness and
-visibility live in different files in different languages.
+Every rule and diagnostic has a fixture that must fire and one that must not, in
+`typespec-form-spec/test/`, driven by `createTester` and `createLinterRuleTester`. A check
+that cannot fire reads as coverage and provides none.
 
-`section-orphan` is the highest-value rule: a field that silently renders nowhere is the
-classic form bug, and nothing detects it today.
+#### Checks that are absent, and why
 
-Note what is absent. There is no `section-unknown` rule, because D4 makes section references
-enum members and the checker rejects an unknown one before the linter runs. Moving a check
-from the linter into the type system is the preferred direction whenever available. There are
-also no projection rules here — projection integrity is checked in the SGG repository, where
-the projection lives (§2.5, §7).
+* **`section-unknown`** — D4 makes a section reference an enum member, so the checker
+  rejects an unknown one before the linter runs. Moving a check into the type system is the
+  preferred direction whenever it is available.
+* **`unsupported-widget`** — same reason: `WidgetName` is an enum.
+* **`attachment-needs-validation`** — `rules-sgg` derives the attachment rule from the
+  question's identity, so a property composing `generics/attachment` always has it. There
+  is nothing left to forget. Inference is a better answer than a rule.
+* **`no-redeclared-ui`** as originally specified — the CommonGrants defect it described is
+  re-spelling a base's whole *UI tree*, which cannot happen here because presentation is
+  decorators rather than a data literal. What remains possible is re-declaring the
+  *properties*, which `no-redeclared-property` covers.
+* **Projection rules** — projection integrity is checked in the SGG repository, where the
+  projection lives (§2.5, §7).
 
 ### 3.5 Decorators marshal; emitters never do
 
