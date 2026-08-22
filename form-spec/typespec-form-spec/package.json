@@ -4,7 +4,10 @@
   "type": "module",
   "main": "dist/src/index.js",
   "exports": {
-    ".": { "typespec": "./lib/main.tsp", "default": "./dist/src/index.js" }
+    ".": {
+      "typespec": "./lib/main.tsp",
+      "default": "./dist/src/index.js"
+    }
   },
   "scripts": {
     "build": "tsc -p .",

@@ -1,0 +1,17 @@
+{
+  "name": "form-spec",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "typespec-form-spec"
+  ],
+  "dependencies": {
+    "@simpler-grants/form-spec": "file:./typespec-form-spec",
+    "@typespec/compiler": "^1.13.0",
+    "@typespec/json-schema": "^1.13.0"
+  },
+  "scripts": {
+    "build": "npm run build -w @simpler-grants/form-spec",
+    "emit": "tsp compile specs/forms/key-contacts.tsp"
+  }
+}

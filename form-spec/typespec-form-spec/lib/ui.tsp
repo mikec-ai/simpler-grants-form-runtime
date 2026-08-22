@@ -13,7 +13,7 @@ extern dec section(target: ModelProperty, section: valueof EnumMember);
 /** Form-scoped override table, keyed by dotted path relative to the target. */
 extern dec overrides(target: Model | ModelProperty, patch: valueof Record<unknown>);
 
-extern dec label(target: Model | ModelProperty, text: valueof string);
+extern dec label(target: Model | Scalar | ModelProperty, text: valueof string);
 extern dec helpText(target: ModelProperty, text: valueof string);
 extern dec widget(target: ModelProperty, widget: valueof WidgetName);
 extern dec order(target: Model, ...props: ModelProperty[]);

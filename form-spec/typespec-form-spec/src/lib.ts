@@ -36,6 +36,7 @@ export const $lib = createTypeSpecLibrary({
     readOnly: {},
     omit: {},
     visibleWhen: {},
+    readOnlyWhen: {},
     requiredWhen: {},
     computed: {},
     prePopulate: {},

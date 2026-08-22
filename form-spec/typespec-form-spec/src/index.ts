@@ -1,3 +1,4 @@
+export { $onEmit } from "./emitter.js";
 import * as d from "./decorators.js";
 
 export { $lib } from "./lib.js";
