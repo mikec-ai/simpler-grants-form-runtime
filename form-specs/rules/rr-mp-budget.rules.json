@@ -1,0 +1,102 @@
+{
+  "budget_summary": {
+    "cumulative_adp_computer_services": {
+      "gg_pre_population": {
+        "fields": [
+          "budget_year[*].other_direct_costs.adp_computer_services"
+        ],
+        "order": 7,
+        "rule": "sum_monetary"
+      }
+    },
+    "cumulative_alterations_and_renovations": {
+      "gg_pre_population": {
+        "fields": [
+          "budget_year[*].other_direct_costs.alterations_renovations"
+        ],
+        "order": 9,
+        "rule": "sum_monetary"
+      }
+    },
+    "cumulative_consultant_services": {
+      "gg_pre_population": {
+        "fields": [
+          "budget_year[*].other_direct_costs.consultant_services"
+        ],
+        "order": 6,
+        "rule": "sum_monetary"
+      }
+    },
+    "cumulative_domestic_travel_costs": {
+      "gg_pre_population": {
+        "fields": [
+          "budget_year[*].travel.domestic_travel_cost"
+        ],
+        "order": 3,
+        "rule": "sum_monetary"
+      }
+    },
+    "cumulative_fee": {
+      "gg_pre_population": {
+        "fields": [
+          "budget_year[*].fee"
+        ],
+        "order": 10,
+        "rule": "sum_monetary"
+      }
+    },
+    "cumulative_foreign_travel_costs": {
+      "gg_pre_population": {
+        "fields": [
+          "budget_year[*].travel.foreign_travel_cost"
+        ],
+        "order": 4,
+        "rule": "sum_monetary"
+      }
+    },
+    "cumulative_publication_costs": {
+      "gg_pre_population": {
+        "fields": [
+          "budget_year[*].other_direct_costs.publication_costs"
+        ],
+        "order": 5,
+        "rule": "sum_monetary"
+      }
+    },
+    "cumulative_subaward_consortium_contractual_costs": {
+      "gg_pre_population": {
+        "fields": [
+          "budget_year[*].other_direct_costs.subaward_consortium_contractual_costs"
+        ],
+        "order": 8,
+        "rule": "sum_monetary"
+      }
+    }
+  },
+  "budget_year": {
+    "gg_type": "array",
+    "indirect_costs": {
+      "total_indirect_costs": {
+        "gg_pre_population": {
+          "fields": [
+            "budget_year[*].indirect_costs.indirect_cost[*].fund_requested"
+          ],
+          "order": 2,
+          "rule": "sum_monetary"
+        }
+      }
+    },
+    "travel": {
+      "total_travel_cost": {
+        "gg_pre_population": {
+          "fields": [
+            "@THIS.domestic_travel_cost",
+            "@THIS.foreign_travel_cost"
+          ],
+          "order": 1,
+          "rule": "sum_monetary"
+        }
+      }
+    }
+  }
+}

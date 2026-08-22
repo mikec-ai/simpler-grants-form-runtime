@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:application-submission-type:v1",
+  "type": "string",
+  "title": "Submission Type",
+  "description": "Select one type of submission in accordance with agency instructions.",
+  "enum": [
+    "Preapplication",
+    "Application",
+    "Changed/Corrected Application"
+  ],
+  "x-question-id": "question:application:submission-type",
+  "x-review-status": "agent_proposed"
+}

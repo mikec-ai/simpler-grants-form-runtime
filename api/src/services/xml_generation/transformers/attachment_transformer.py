@@ -3,6 +3,7 @@
 import logging
 from typing import Any
 
+from grants_shared.util.dict_util import get_nested_value
 from lxml import etree as lxml_etree
 
 from ..utils.attachment_mapping import AttachmentInfo
@@ -55,25 +56,180 @@ class AttachmentTransformer:
             attachment or has no value in ``data``.
         """
         field_config = self.attachment_field_config.get(field_name)
-        if field_config is None or data.get(field_name) is None:
+        if field_config is None:
             return False
+
+        entries = field_config.get("entries")
+        if entries is not None:
+            if not isinstance(entries, list) or not entries:
+                raise ValueError(
+                    f"Attachment field '{field_name}' entries must be a non-empty list"
+                )
+            self._validate_entry_constraints(field_name, entries, data)
+            emitted = False
+            for entry in entries:
+                emitted = (
+                    self._add_attachment_entry(parent, field_name, entry, data, nsmap) or emitted
+                )
+            if emitted:
+                self._emitted_fields.add(field_name)
+            return emitted
+
+        emitted = self._add_attachment_entry(parent, field_name, field_config, data, nsmap)
+        if emitted:
+            self._emitted_fields.add(field_name)
+        return emitted
+
+    @staticmethod
+    def _entry_value(entry: dict[str, Any], data: dict[str, Any], field_name: str) -> Any:
+        source_path = entry.get("source_path", field_name)
+        if not isinstance(source_path, str) or not source_path:
+            raise ValueError(f"Attachment field '{field_name}' source_path must be a string")
+        return get_nested_value(data, source_path.split("."))
+
+    @staticmethod
+    def _attachment_count(value: Any) -> int:
+        if value is None:
+            return 0
+        return len(value) if isinstance(value, list) else 1
+
+    def _validate_entry_constraints(
+        self, field_name: str, entries: list[dict[str, Any]], data: dict[str, Any]
+    ) -> None:
+        """Validate source-pinned child occurrence and choice metadata."""
+
+        groups: dict[str, dict[str, Any]] = {}
+        for entry in entries:
+            if not isinstance(entry, dict):
+                raise ValueError(f"Attachment field '{field_name}' entries must be objects")
+            count = self._attachment_count(self._entry_value(entry, data, field_name))
+            occurs = entry.get("_occurs")
+            if occurs is not None:
+                if not isinstance(occurs, dict):
+                    raise ValueError(f"Attachment field '{field_name}' occurrence is invalid")
+                minimum = occurs.get("min_occurs")
+                maximum = occurs.get("max_occurs")
+                if not isinstance(minimum, int) or isinstance(minimum, bool) or minimum < 0:
+                    raise ValueError(
+                        f"Attachment field '{field_name}' minimum occurrence is invalid"
+                    )
+                if maximum != "unbounded" and (
+                    not isinstance(maximum, int) or isinstance(maximum, bool) or maximum < minimum
+                ):
+                    raise ValueError(
+                        f"Attachment field '{field_name}' maximum occurrence is invalid"
+                    )
+                if count < minimum or (maximum != "unbounded" and count > maximum):
+                    raise ValueError(
+                        f"Attachment field '{field_name}' requires {minimum}..{maximum} "
+                        f"occurrences; found {count}"
+                    )
+
+            choice = entry.get("_choice_group")
+            if choice is None:
+                continue
+            if not isinstance(choice, dict):
+                raise ValueError(f"Attachment field '{field_name}' choice metadata is invalid")
+            group_id = choice.get("group_id")
+            minimum_choice = choice.get("min_occurs")
+            maximum_choice = choice.get("max_occurs")
+            if (
+                not isinstance(group_id, str)
+                or not group_id
+                or minimum_choice not in {0, 1}
+                or maximum_choice != 1
+            ):
+                raise ValueError(f"Attachment field '{field_name}' choice metadata is invalid")
+            group = groups.setdefault(
+                group_id,
+                {
+                    "minimum": minimum_choice,
+                    "maximum": maximum_choice,
+                    "present": 0,
+                },
+            )
+            if group["minimum"] != minimum_choice or group["maximum"] != maximum_choice:
+                raise ValueError(f"Attachment choice group '{group_id}' is inconsistent")
+            group["present"] += int(count > 0)
+
+        for group_id, group in groups.items():
+            if group["present"] < group["minimum"] or group["present"] > group["maximum"]:
+                raise ValueError(
+                    f"Attachment choice group '{group_id}' requires "
+                    f"{group['minimum']}..{group['maximum']} members; "
+                    f"found {group['present']}"
+                )
+
+    def _add_attachment_entry(
+        self,
+        parent: lxml_etree._Element,
+        field_name: str,
+        field_config: dict[str, Any],
+        data: dict[str, Any],
+        nsmap: dict[str, str],
+    ) -> bool:
+        """Emit one attachment entry, including source and XML wrapper paths."""
+
+        field_value = self._entry_value(field_config, data, field_name)
+        if field_value is None:
+            if field_config.get("minimum_files", 0) > 0:
+                raise ValueError(
+                    f"Attachment field '{field_name}' requires at least "
+                    f"{field_config['minimum_files']} file(s)"
+                )
+            return False
+
+        file_count = len(field_value) if isinstance(field_value, list) else 1
+        minimum_files = field_config.get("minimum_files", 0)
+        maximum_files = field_config.get("maximum_files")
+        if not isinstance(minimum_files, int) or minimum_files < 0:
+            raise ValueError(f"Attachment field '{field_name}' minimum_files is invalid")
+        if maximum_files is not None and (
+            not isinstance(maximum_files, int) or maximum_files < minimum_files
+        ):
+            raise ValueError(f"Attachment field '{field_name}' maximum_files is invalid")
+        if file_count < minimum_files or (maximum_files is not None and file_count > maximum_files):
+            maximum_label = maximum_files if maximum_files is not None else "unbounded"
+            raise ValueError(
+                f"Attachment field '{field_name}' requires {minimum_files}..{maximum_label} "
+                f"files; found {file_count}"
+            )
+
+        xml_parent_path = field_config.get("xml_parent_path", [])
+        if not isinstance(xml_parent_path, list) or not all(
+            isinstance(item, str) and item for item in xml_parent_path
+        ):
+            raise ValueError(f"Attachment field '{field_name}' xml_parent_path must be strings")
+        attachment_parent = self._ensure_parent_path(parent, xml_parent_path)
 
         xml_element = field_config["xml_element"]
         field_type = field_config["type"]
-        field_value = data[field_name]
 
         if field_type == "single" or field_type == "single_with_wrapper":
             attachment_dict = self._resolve_attachment_uuid(field_value, field_name)
             self._add_single_attachment_element(
-                parent, xml_element, attachment_dict, nsmap, field_config
+                attachment_parent, xml_element, attachment_dict, nsmap, field_config
             )
         elif field_type == "multiple":
             self._add_multiple_attachment_from_uuids(
-                parent, xml_element, field_value, field_name, nsmap
+                attachment_parent, xml_element, field_value, field_name, nsmap
             )
-
-        self._emitted_fields.add(field_name)
+        else:
+            raise ValueError(f"Attachment field '{field_name}' has unknown type '{field_type}'")
         return True
+
+    def _ensure_parent_path(
+        self, parent: lxml_etree._Element, path: list[str]
+    ) -> lxml_etree._Element:
+        """Find or create a form-namespace wrapper path below parent."""
+
+        current = parent
+        form_namespace = self._get_namespace(parent.tag)
+        for local_name in path:
+            qname = f"{{{form_namespace}}}{local_name}" if form_namespace else local_name
+            existing = current.find(qname)
+            current = existing if existing is not None else lxml_etree.SubElement(current, qname)
+        return current
 
     def add_attachment_elements(
         self, parent: lxml_etree._Element, data: dict[str, Any], nsmap: dict[str, str]

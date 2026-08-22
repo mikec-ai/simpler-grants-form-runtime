@@ -1,0 +1,26 @@
+{
+  "contract": "portable-schema-compatibility/v1",
+  "records": [
+    {
+      "portable_schema_id": "urn:grants-form-kernel:questions:organization:legal-name:v1",
+      "existing_schema_ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/organization_name",
+      "relation": "candidate_alias",
+      "mapping_status": "agent_proposed",
+      "comparison": {
+        "type": "exact",
+        "minLength": "exact",
+        "maxLength": "exact",
+        "portable_description_is_additional": true,
+        "portable_question_identity_is_additional": true
+      },
+      "evidence": {
+        "kind": "implementation_oracle",
+        "repository": "https://github.com/mikec-ai/simpler-grants-form-runtime.git",
+        "revision": "e1739ee54e2d1c964d48b0386a3c0246d3c621d7",
+        "path": "api/src/form_schema/shared/common_shared.py",
+        "sha256": "a4944116280586d541d3f0afb77c67acb123e2004911646d7b98fadd7e701935",
+        "source_version": "COMMON_SHARED_V1"
+      }
+    }
+  ]
+}

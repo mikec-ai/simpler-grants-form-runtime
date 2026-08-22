@@ -52,16 +52,16 @@ export async function handleFormAction(
     formSchema,
   );
 
-  const saveSuccess = await handleSave(
+  const savedFormData = await handleSave(
     applicationFormData,
     applicationId,
     formId,
   );
-  if (saveSuccess) {
+  if (savedFormData) {
     return {
       applicationId,
       error: false,
-      formData: applicationFormData,
+      formData: savedFormData,
       formId,
       saved: true,
     };
@@ -88,15 +88,15 @@ const handleSave = async (
       formId,
     );
     if (resp.status_code === 200) {
-      return true;
+      return resp.data.application_response;
     }
-    return false;
+    return null;
   } catch (e) {
     console.error(
       `Error saving the form (${formId}) for application (${applicationId}):`,
       e,
     );
-    return false;
+    return null;
   }
 };
 

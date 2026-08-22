@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants:portable-form-authoring:catalog:v1",
+  "type": "object",
+  "required": [
+    "contract",
+    "runtime_contract",
+    "authoring_schemas",
+    "bundle",
+    "sources",
+    "schemas",
+    "compatibility",
+    "form_declarations"
+  ],
+  "properties": {
+    "contract": {"const": "portable-grants-form-catalog/v1"},
+    "runtime_contract": {"const": "portable-grants-form-bundle/v1"},
+    "authoring_schemas": {
+      "type": "object",
+      "required": ["catalog", "form_declaration"],
+      "properties": {
+        "catalog": {"$ref": "#/$defs/artifact"},
+        "form_declaration": {"$ref": "#/$defs/artifact"}
+      },
+      "additionalProperties": false
+    },
+    "bundle": {"type": "object"},
+    "sources": {"type": "object", "minProperties": 1},
+    "schemas": {"type": "array", "minItems": 1},
+    "compatibility": {"$ref": "#/$defs/artifact"},
+    "form_declarations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/artifact"}
+    }
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

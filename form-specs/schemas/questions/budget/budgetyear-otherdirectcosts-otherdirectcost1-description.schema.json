@@ -1,0 +1,9 @@
+{
+  "$id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost1-description:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "maxLength": 120,
+  "minLength": 1,
+  "title": "Additional Other Direct Cost Description",
+  "type": "string",
+  "x-question-id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost1-description"
+}

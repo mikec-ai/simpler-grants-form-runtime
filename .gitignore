@@ -160,3 +160,10 @@ frontend/tests/artillery/params.json
 
 # XML validation results
 api/src/services/xml_generation/xsds/validation_results.json
+
+# Portable form build products are published by CI, not committed.
+/build/portable-form-artifacts/
+/form-specs/oracles/
+/documentation/form-analysis/*.csv
+/documentation/form-analysis/*.json
+/documentation/form-analysis/*.xlsx

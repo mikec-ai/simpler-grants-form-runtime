@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:application-revision-other:v1",
+  "type": "string",
+  "title": "Other Explanation",
+  "description": "Please specify the type of revision. This field is required if E. Other is checked.",
+  "x-question-id": "question:application:revision-other",
+  "x-review-status": "agent_proposed"
+}

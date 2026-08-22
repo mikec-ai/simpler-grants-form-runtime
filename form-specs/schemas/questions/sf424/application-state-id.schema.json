@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:application-state-id:v1",
+  "type": "string",
+  "title": "State Application Identifier",
+  "description": "Leave blank, to be filled out by state.",
+  "minLength": 0,
+  "maxLength": 30,
+  "readOnly": true,
+  "x-question-id": "question:application:state-application-id",
+  "x-review-status": "agent_proposed"
+}

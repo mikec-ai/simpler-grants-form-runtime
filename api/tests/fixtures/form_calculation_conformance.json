@@ -1,0 +1,206 @@
+[
+  {
+    "name": "sum nested and wildcard monetary values",
+    "input": {
+      "base": "10.10",
+      "items": [{"cost": "2.20"}, {"cost": "not-money"}]
+    },
+    "rule_schema": {
+      "total": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": ["base", "items[*].cost"]
+        }
+      }
+    },
+    "expected": {
+      "base": "10.10",
+      "items": [{"cost": "2.20"}, {"cost": "not-money"}],
+      "total": "12.30"
+    }
+  },
+  {
+    "name": "execute chained rules in declared order",
+    "input": {"a": "7.25", "b": "2.75", "discount": "1.50"},
+    "rule_schema": {
+      "subtotal": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": ["a", "b"],
+          "order": 1
+        }
+      },
+      "net": {
+        "gg_pre_population": {
+          "rule": "subtract_monetary",
+          "fields": ["subtotal", "discount"],
+          "order": 2
+        }
+      }
+    },
+    "expected": {
+      "a": "7.25",
+      "b": "2.75",
+      "discount": "1.50",
+      "subtotal": "10.00",
+      "net": "8.50"
+    }
+  },
+  {
+    "name": "calculate repeated rows and an aggregate",
+    "input": {
+      "periods": [
+        {"direct": "100.00", "indirect": "25.00"},
+        {"direct": "200.00", "indirect": "50.00"}
+      ]
+    },
+    "rule_schema": {
+      "periods": {
+        "gg_type": "array",
+        "total": {
+          "gg_pre_population": {
+            "rule": "sum_monetary",
+            "fields": ["@THIS.direct", "@THIS.indirect"],
+            "order": 1
+          }
+        }
+      },
+      "grand_total": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": ["periods[*].total"],
+          "order": 2
+        }
+      }
+    },
+    "expected": {
+      "periods": [
+        {"direct": "100.00", "indirect": "25.00", "total": "125.00"},
+        {"direct": "200.00", "indirect": "50.00", "total": "250.00"}
+      ],
+      "grand_total": "375.00"
+    }
+  },
+  {
+    "name": "multiply money by a whole-number percentage",
+    "input": {"amount": "333.33", "rate": 33},
+    "rule_schema": {
+      "share": {
+        "gg_pre_population": {
+          "rule": "multiply_by_percentage",
+          "amount": "amount",
+          "percentage": "rate"
+        }
+      }
+    },
+    "expected": {"amount": "333.33", "rate": 33, "share": "110.00"}
+  },
+  {
+    "name": "leave an existing target unchanged for invalid percentage data",
+    "input": {"amount": "100.00", "rate": "5", "share": "7.00"},
+    "rule_schema": {
+      "share": {
+        "gg_pre_population": {
+          "rule": "multiply_by_percentage",
+          "amount": "amount",
+          "percentage": "rate"
+        }
+      }
+    },
+    "expected": {"amount": "100.00", "rate": "5", "share": "7.00"},
+    "expected_client_errors": [
+      "Unable to evaluate multiply_by_percentage at share"
+    ]
+  },
+  {
+    "name": "use server half-even rounding for positive and negative half cents",
+    "input": {"positive": "0.01", "negative": "-0.01", "rate": 50},
+    "rule_schema": {
+      "positive_share": {
+        "gg_pre_population": {
+          "rule": "multiply_by_percentage",
+          "amount": "positive",
+          "percentage": "rate"
+        }
+      },
+      "negative_share": {
+        "gg_pre_population": {
+          "rule": "multiply_by_percentage",
+          "amount": "negative",
+          "percentage": "rate"
+        }
+      }
+    },
+    "expected": {
+      "positive": "0.01",
+      "negative": "-0.01",
+      "rate": 50,
+      "positive_share": "0.00",
+      "negative_share": "-0.00"
+    }
+  },
+  {
+    "name": "accept leading-decimal monetary values",
+    "input": {"positive": ".50", "negative": "-.25"},
+    "rule_schema": {
+      "total": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": ["positive", "negative"]
+        }
+      }
+    },
+    "expected": {"positive": ".50", "negative": "-.25", "total": "0.25"}
+  },
+  {
+    "name": "preserve negative zero through percentage multiplication",
+    "input": {
+      "negative_zero": "-0.00",
+      "negative_amount": "-0.01",
+      "half_rate": 50,
+      "zero_rate": 0
+    },
+    "rule_schema": {
+      "negative_zero_share": {
+        "gg_pre_population": {
+          "rule": "multiply_by_percentage",
+          "amount": "negative_zero",
+          "percentage": "half_rate"
+        }
+      },
+      "zero_rate_share": {
+        "gg_pre_population": {
+          "rule": "multiply_by_percentage",
+          "amount": "negative_amount",
+          "percentage": "zero_rate"
+        }
+      }
+    },
+    "expected": {
+      "negative_zero": "-0.00",
+      "negative_amount": "-0.01",
+      "half_rate": 50,
+      "zero_rate": 0,
+      "negative_zero_share": "-0.00",
+      "zero_rate_share": "-0.00"
+    }
+  },
+  {
+    "name": "preserve an invalid intermediate target container",
+    "input": {"section": "not-an-object", "amount": "5.00"},
+    "rule_schema": {
+      "section": {
+        "total": {
+          "gg_pre_population": {
+            "rule": "sum_monetary",
+            "fields": ["amount"]
+          }
+        }
+      }
+    },
+    "expected": {"section": "not-an-object", "amount": "5.00"},
+    "expected_client_errors": [
+      "Unable to populate calculated value at section.total"
+    ]
+  }
+]

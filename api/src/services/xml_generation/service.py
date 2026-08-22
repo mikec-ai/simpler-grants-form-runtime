@@ -165,7 +165,10 @@ class XMLGenerationService:
         if root_attr_values:
             for attr_name, attr_value in root_attr_values.items():
                 # Determine namespace for the attribute
-                if ":" in attr_name:
+                if attr_name.startswith("{"):
+                    # Expanded QName (Clark notation) is already namespace-qualified.
+                    attr_qualified_name = attr_name
+                elif ":" in attr_name:
                     # Attribute has explicit namespace prefix (e.g., "glob:coreSchemaVersion")
                     namespace_prefix, attr_local_name = attr_name.split(":", 1)
                     if namespace_prefix in nsmap:
@@ -350,6 +353,13 @@ class XMLGenerationService:
         attributes: dict[str, str] | None = None,
     ) -> None:
         """Add an element to a parent using lxml with proper namespace handling."""
+        if isinstance(value, dict) and "__xml_value__" in value:
+            namespace_scope = value.get("__namespace__")
+            if not isinstance(namespace_scope, str) or not namespace_scope:
+                raise ValueError(f"Scoped XML value for {field_name!r} requires a namespace")
+            namespace_fields = {**namespace_fields, field_name: namespace_scope}
+            value = value["__xml_value__"]
+
         if isinstance(value, list):
             # Items with __wrapper: field_name is an outer container (BudgetSummary > SummaryLineItem).
             # Items without __wrapper: each item is emitted as field_name (multiple OtherSite siblings).

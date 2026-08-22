@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:application-delinquent-debt:v1",
+  "type": "boolean",
+  "title": "Applicant Delinquent on Federal Debt",
+  "description": "If 'Yes,' provide explanation in attachment.",
+  "x-question-id": "question:application:delinquent-federal-debt",
+  "x-review-status": "agent_proposed"
+}

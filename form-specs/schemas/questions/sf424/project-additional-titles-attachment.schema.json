@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:project-additional-titles-attachment:v1",
+  "type": "array",
+  "title": "Additional Project Title",
+  "description": "Attach file(s) using the appropriate buttons.",
+  "maxItems": 100,
+  "items": {
+    "type": "string",
+    "format": "uuid"
+  },
+  "x-question-id": "question:attachment:additional-project-titles",
+  "x-review-status": "agent_proposed"
+}

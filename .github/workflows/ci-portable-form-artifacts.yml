@@ -1,0 +1,86 @@
+name: Portable Form Build Artifacts
+
+on:
+  pull_request:
+    paths:
+      - "form-specs/**"
+      - "api/src/form_schema/**"
+      - "api/tests/src/form_schema/test_portable_*.py"
+      - "scripts/*portable_form*.py"
+      - ".github/workflows/ci-portable-form-artifacts.yml"
+  push:
+    branches:
+      - main
+      - mirror-base
+    paths:
+      - "form-specs/**"
+      - "api/src/form_schema/**"
+      - "scripts/*portable_form*.py"
+      - ".github/workflows/ci-portable-form-artifacts.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-artifacts:
+    name: Build portable form oracles and analysis
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: api/uv.lock
+
+      - name: Install locked build environment
+        run: uv sync --project api --frozen
+
+      - name: Verify compiled runtime bundle
+        run: uv run --project api python scripts/compile_portable_form_bundle.py --check
+
+      - name: Export resolved and native oracles
+        run: >-
+          uv run --project api python scripts/export_portable_form_oracles.py
+          --output-dir build/portable-form-artifacts/oracles
+
+      - name: Export question-level analysis
+        run: >-
+          uv run --project api python scripts/export_portable_form_analysis.py
+          --output-dir build/portable-form-artifacts/analysis
+
+      - name: Build analysis workbook
+        run: >-
+          uv run --project api python scripts/build_portable_form_analysis_workbook.py
+          --analysis-dir build/portable-form-artifacts/analysis
+          --output build/portable-form-artifacts/analysis/form-analysis.xlsx
+
+      - name: Write checksums
+        run: |
+          cd build/portable-form-artifacts/oracles
+          checksum_file=$(mktemp)
+          find . -type f -print0 | sort -z | xargs -0 sha256sum > "$checksum_file"
+          mv "$checksum_file" SHA256SUMS
+          cd ../analysis
+          checksum_file=$(mktemp)
+          find . -type f -print0 | sort -z | xargs -0 sha256sum > "$checksum_file"
+          mv "$checksum_file" SHA256SUMS
+
+      - name: Publish runtime and parity oracles
+        uses: actions/upload-artifact@v7
+        with:
+          name: portable-form-oracles-${{ github.sha }}
+          path: build/portable-form-artifacts/oracles
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Publish implementation-derived analysis
+        uses: actions/upload-artifact@v7
+        with:
+          name: portable-form-analysis-${{ github.sha }}
+          path: build/portable-form-artifacts/analysis
+          if-no-files-found: error
+          retention-days: 30

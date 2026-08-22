@@ -1,0 +1,7 @@
+{
+  "$id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-postdocassociates-numberofpersonnel:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Number of Personnel Post Doctoral Associates",
+  "type": "integer",
+  "x-question-id": "question:budget:budgetyear-otherpersonnel-postdocassociates-numberofpersonnel"
+}

@@ -11,7 +11,24 @@ import {
   UiSchema,
 } from "src/types/applyForm/types";
 import { Attachment } from "src/types/attachmentTypes";
-import { getFieldsForNav } from "src/utils/applyForm/applyFormUtils";
+import {
+  buildWarningTree,
+  getFieldsForNav,
+  shapeFormData,
+} from "src/utils/applyForm/applyFormUtils";
+import {
+  ClientCalculationRuleSchema,
+  evaluateClientCalculations,
+  hasClientCalculationRules,
+} from "src/utils/applyForm/clientCalculationRules";
+import {
+  ConditionalRequiredRule,
+  evaluateConditionalRequiredRules,
+} from "src/utils/applyForm/conditionalRequiredRules";
+import {
+  filterVisibleUiSchema,
+  hasConditionalUi,
+} from "src/utils/applyForm/evaluateConditionalUi";
 import { rebaseFieldListWarningsAfterDelete } from "src/utils/applyForm/rebaseFieldListWarningsAfterDelete";
 import {
   formatTimestamp,
@@ -20,7 +37,15 @@ import {
 
 import { useTranslations } from "next-intl";
 import { useNavigationGuard } from "next-navigation-guard";
-import { ReactNode, useActionState, useEffect, useMemo, useState } from "react";
+import {
+  ReactNode,
+  useActionState,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Alert, FormGroup } from "@trussworks/react-uswds";
 
 import { FormFields } from "src/components/apply-form/FormFields";
@@ -53,13 +78,54 @@ interface WidgetSupport {
 interface ApplyFormFormContext {
   rootSchema: RJSFSchema;
   rootFormData: unknown;
+  activeConditionalRequiredPaths?: string[];
   widgetSupport: WidgetSupport;
 }
+
+export const prepareServerValidationWarnings = ({
+  validationWarnings,
+  deletedEntryIndexesByFieldListPath,
+  managedConditionalPaths,
+  formChanged,
+}: {
+  validationWarnings:
+    FormattedFormValidationWarning[] | FormValidationWarning[];
+  deletedEntryIndexesByFieldListPath: Record<string, number[]>;
+  managedConditionalPaths: string[];
+  formChanged: boolean;
+}): FormattedFormValidationWarning[] | FormValidationWarning[] | null => {
+  const rebasedWarnings = Object.entries(
+    deletedEntryIndexesByFieldListPath,
+  ).reduce<FormattedFormValidationWarning[] | FormValidationWarning[] | null>(
+    (currentWarnings, [fieldListPath, deletedEntryIndexes]) =>
+      deletedEntryIndexes.reduce<
+        FormattedFormValidationWarning[] | FormValidationWarning[] | null
+      >(
+        (warnings, deletedEntryIndex) =>
+          rebaseFieldListWarningsAfterDelete({
+            rawErrors: warnings,
+            fieldListPath,
+            deletedEntryIndex,
+          }),
+        currentWarnings,
+      ),
+    validationWarnings,
+  );
+  return formChanged
+    ? (rebasedWarnings ?? []).filter(
+        (warning) =>
+          warning.type !== "required" ||
+          !managedConditionalPaths.includes(warning.field),
+      )
+    : rebasedWarnings;
+};
 
 const ApplyForm = ({
   applicationId,
   formId,
   formSchema,
+  formRuleSchema = null,
+  conditionalRequiredRules = [],
   savedFormData,
   validationWarnings,
   uiSchema,
@@ -72,6 +138,8 @@ const ApplyForm = ({
   applicationId: string;
   formId: string;
   formSchema: RJSFSchema;
+  formRuleSchema?: ClientCalculationRuleSchema | null;
+  conditionalRequiredRules?: ConditionalRequiredRule[];
   savedFormData: object;
   uiSchema: UiSchema;
   validationWarnings:
@@ -121,6 +189,109 @@ const ApplyForm = ({
     setDeletedEntryIndexesByFieldListPath,
   ] = useState<Record<string, number[]>>({});
   const [attachmentsUploading, setAttachmentsUploading] = useState<number>(0);
+  const formRef = useRef<HTMLFormElement>(null);
+  const recalculationFrameRef = useRef<number | null>(null);
+  const hasCalculations = useMemo(
+    () => hasClientCalculationRules(formRuleSchema),
+    [formRuleSchema],
+  );
+  const hasConditionalBehavior = useMemo(
+    () => hasConditionalUi(uiSchema),
+    [uiSchema],
+  );
+  const hasConditionalRequiredness = conditionalRequiredRules.length > 0;
+
+  const calculateFormData = useCallback(
+    (formData: object): object => {
+      const result = evaluateClientCalculations(formData, formRuleSchema);
+      if (result.errors.length > 0) {
+        console.error(
+          "Unable to evaluate client-side form calculations",
+          result.errors,
+        );
+      }
+      return result.formData;
+    },
+    [formRuleSchema],
+  );
+
+  const [liveFormData, setLiveFormData] = useState<object>(() =>
+    calculateFormData(savedFormData || {}),
+  );
+  const [lastSavedFormData, setLastSavedFormData] =
+    useState<object>(savedFormData);
+  const [lastFormState, setLastFormState] = useState(formState);
+
+  if (lastSavedFormData !== savedFormData) {
+    setLastSavedFormData(savedFormData);
+    setLiveFormData(calculateFormData(savedFormData || {}));
+  }
+
+  if (lastFormState !== formState) {
+    setLastFormState(formState);
+    if (formState.saved) {
+      setLiveFormData(formState.formData);
+    } else if (formState.error) {
+      setFormChanged(true);
+    }
+  }
+
+  const recalculateFromForm = useCallback(
+    (formElement: HTMLFormElement | null = formRef.current): void => {
+      if (!formElement) {
+        return;
+      }
+      const disabledControls = Array.from(
+        formElement.querySelectorAll<
+          HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+        >(
+          "input:disabled:not([data-disabled-value-mirrored]), select:disabled, textarea:disabled",
+        ),
+      );
+      disabledControls.forEach((control) => {
+        control.disabled = false;
+      });
+      let rawFormData: FormData;
+      try {
+        rawFormData = new FormData(formElement);
+      } finally {
+        disabledControls.forEach((control) => {
+          control.disabled = true;
+        });
+      }
+      const currentFormData = shapeFormData<object>(rawFormData, formSchema);
+      setLiveFormData(calculateFormData(currentFormData));
+    },
+    [calculateFormData, formSchema],
+  );
+
+  const scheduleRecalculation = useCallback((): void => {
+    if (
+      (!hasCalculations &&
+        !hasConditionalBehavior &&
+        !hasConditionalRequiredness) ||
+      recalculationFrameRef.current !== null
+    ) {
+      return;
+    }
+    recalculationFrameRef.current = requestAnimationFrame(() => {
+      recalculationFrameRef.current = null;
+      recalculateFromForm();
+    });
+  }, [
+    hasCalculations,
+    hasConditionalBehavior,
+    hasConditionalRequiredness,
+    recalculateFromForm,
+  ]);
+
+  useEffect(() => {
+    return () => {
+      if (recalculationFrameRef.current !== null) {
+        cancelAnimationFrame(recalculationFrameRef.current);
+      }
+    };
+  }, []);
 
   useNavigationGuard({
     enabled: formChanged || attachmentsChanged,
@@ -135,49 +306,65 @@ const ApplyForm = ({
    * Used by FieldList and other widgets to signal that local form state
    * has been modified, enabling unsaved-change indicators and navigation guards.
    */
-  const handleFormEdited = (): void => {
+  const handleFormEdited = useCallback((): void => {
     setFormChanged(true);
-  };
+  }, []);
 
-  const handleFieldListEntryDelete = (
-    fieldListPath: string,
-    deletedEntryIndex: number,
-  ): void => {
-    setDeletedEntryIndexesByFieldListPath((previousValue) => ({
-      ...previousValue,
-      [fieldListPath]: [
-        ...(previousValue[fieldListPath] ?? []),
-        deletedEntryIndex,
-      ],
-    }));
-  };
-
-  const formObject = useMemo(
-    () => savedFormData || new FormData(),
-    [savedFormData],
+  const handleFieldListEntryDelete = useCallback(
+    (fieldListPath: string, deletedEntryIndex: number): void => {
+      setDeletedEntryIndexesByFieldListPath((previousValue) => ({
+        ...previousValue,
+        [fieldListPath]: [
+          ...(previousValue[fieldListPath] ?? []),
+          deletedEntryIndex,
+        ],
+      }));
+    },
+    [],
   );
 
-  const navFields = useMemo(() => getFieldsForNav(uiSchema), [uiSchema]);
+  const formObject = liveFormData;
+
+  const conditionalRequiredEvaluation = useMemo(
+    () =>
+      evaluateConditionalRequiredRules(conditionalRequiredRules, liveFormData),
+    [conditionalRequiredRules, liveFormData],
+  );
+
+  const navFields = useMemo(
+    () => getFieldsForNav(filterVisibleUiSchema(uiSchema, liveFormData)),
+    [liveFormData, uiSchema],
+  );
 
   const displayValidationWarnings = useMemo(() => {
-    if (!validationWarnings) {
-      return null;
-    }
+    if (!validationWarnings && !formChanged) return null;
 
-    return Object.entries(deletedEntryIndexesByFieldListPath).reduce<
-      FormattedFormValidationWarning[] | FormValidationWarning[] | null
-    >((currentWarnings, [fieldListPath, deletedEntryIndexes]) => {
-      return deletedEntryIndexes.reduce<
-        FormattedFormValidationWarning[] | FormValidationWarning[] | null
-      >((rebasedWarnings, deletedEntryIndex) => {
-        return rebaseFieldListWarningsAfterDelete({
-          rawErrors: rebasedWarnings,
-          fieldListPath,
-          deletedEntryIndex,
-        });
-      }, currentWarnings);
-    }, validationWarnings);
-  }, [validationWarnings, deletedEntryIndexesByFieldListPath]);
+    const retainedServerWarnings = prepareServerValidationWarnings({
+      validationWarnings: validationWarnings ?? [],
+      deletedEntryIndexesByFieldListPath,
+      managedConditionalPaths: conditionalRequiredEvaluation.managedPaths,
+      formChanged,
+    });
+
+    return formChanged
+      ? [
+          ...(retainedServerWarnings ?? []),
+          ...buildWarningTree(
+            uiSchema,
+            null,
+            conditionalRequiredEvaluation.warnings,
+            formSchema,
+          ),
+        ]
+      : retainedServerWarnings;
+  }, [
+    conditionalRequiredEvaluation,
+    deletedEntryIndexesByFieldListPath,
+    formChanged,
+    formSchema,
+    uiSchema,
+    validationWarnings,
+  ]);
 
   const attachmentsUploadingCounter: AttachmentsUploadingCounter = useMemo(
     () => ({
@@ -195,10 +382,13 @@ const ApplyForm = ({
     () => ({
       rootSchema: formSchema,
       rootFormData: formObject,
+      activeConditionalRequiredPaths:
+        conditionalRequiredEvaluation.activeRequiredPaths,
       widgetSupport: {
         validationWarnings: displayValidationWarnings ?? [],
         deletedEntryIndexesByFieldListPath,
         onFieldListEntryDelete: handleFieldListEntryDelete,
+        onFieldListChange: scheduleRecalculation,
         markFormDirty: handleFormEdited,
         attachmentsUploadingCounter,
       },
@@ -209,6 +399,10 @@ const ApplyForm = ({
       formObject,
       formSchema,
       attachmentsUploadingCounter,
+      conditionalRequiredEvaluation.activeRequiredPaths,
+      handleFieldListEntryDelete,
+      handleFormEdited,
+      scheduleRecalculation,
     ],
   );
 
@@ -228,10 +422,36 @@ const ApplyForm = ({
 
   return (
     <form
+      ref={formRef}
       className="flex-1 margin-top-2 simpler-apply-form"
       action={formAction}
-      onChange={() => {
+      onChange={(event) => {
         setFormChanged(true);
+        if (
+          hasCalculations ||
+          hasConditionalBehavior ||
+          hasConditionalRequiredness ||
+          formState.saved
+        ) {
+          recalculateFromForm(event.currentTarget);
+        }
+      }}
+      onSubmit={(event) => {
+        const disabledControls = Array.from(
+          event.currentTarget.querySelectorAll<
+            HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+          >(
+            "input:disabled:not([data-disabled-value-mirrored]), select:disabled, textarea:disabled",
+          ),
+        );
+        disabledControls.forEach((control) => {
+          control.disabled = false;
+        });
+        window.setTimeout(() => {
+          disabledControls.forEach((control) => {
+            control.disabled = true;
+          });
+        }, 0);
       }}
       noValidate
     >
@@ -274,7 +494,7 @@ const ApplyForm = ({
           >
             <FormFields
               key={saved ? "after-save" : "before-save"}
-              errors={saved ? displayValidationWarnings : null}
+              errors={saved || formChanged ? displayValidationWarnings : null}
               formData={formObject}
               schema={formSchema}
               uiSchema={uiSchema}

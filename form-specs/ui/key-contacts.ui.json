@@ -1,0 +1,100 @@
+{
+  "type": "Group",
+  "label": "Key Contacts",
+  "description": "Enter between 1 and 4 key contacts and their role on the project.",
+  "elements": [
+    {
+      "type": "Control",
+      "scope": "#/properties/applicant_organization_name"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/key_contacts",
+      "description": "You may enter up to four (4) Key Contacts. At least 1 (one) contact person is required. Additional contacts are optional.",
+      "options": {
+        "itemLabel": "Key Contact",
+        "detail": {
+          "type": "VerticalLayout",
+          "elements": [
+            {
+              "type": "Control",
+              "scope": "#/properties/project_role"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/name/properties/prefix"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/name/properties/first_name"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/name/properties/middle_name"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/name/properties/last_name"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/name/properties/suffix"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/title"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/organizational_affiliation"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/address/properties/street1"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/address/properties/street2"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/address/properties/city"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/address/properties/county"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/address/properties/state"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/address/properties/province"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/address/properties/country"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/address/properties/zip_code"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/phone"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/fax"
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/email"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

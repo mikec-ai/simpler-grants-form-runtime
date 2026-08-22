@@ -1,0 +1,9 @@
+{
+  "$id": "urn:grants-form-kernel:questions:budget:samuei:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "maxLength": 12,
+  "minLength": 12,
+  "title": "UEI:",
+  "type": "string",
+  "x-question-id": "question:budget:samuei"
+}

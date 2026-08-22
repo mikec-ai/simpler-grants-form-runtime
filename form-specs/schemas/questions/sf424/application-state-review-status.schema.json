@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:application-state-review-status:v1",
+  "type": "string",
+  "title": "Is Application Subject to Review By State Under Executive Order 12372 Process?",
+  "description": "One selection is required.",
+  "enum": [
+    "a. This application was made available to the state under the Executive Order 12372 Process for review on",
+    "b. Program is subject to E.O. 12372 but has not been selected by the state for review.",
+    "c. Program is not covered by E.O. 12372."
+  ],
+  "x-question-id": "question:application:state-review-status",
+  "x-review-status": "agent_proposed"
+}

@@ -1,0 +1,54 @@
+{
+  "accepted_mappings": 0,
+  "behavior_boundary": {
+    "blocked_each": 26,
+    "executable_exact_sums_each": 30,
+    "rr_budget10_target_dat_parity": "not_established_in_pinned_evidence",
+    "source_calculations_each": 56
+  },
+  "contract": "portable-budget-family-profile-evidence/v1",
+  "implementation_oracle_revision": "51f76027d560353531db161040431d3138c71ca3",
+  "profiles": [
+    {
+      "applicant_inputs": 101,
+      "blocked_calculations": 26,
+      "budget_periods": 5,
+      "computed_outputs": 56,
+      "executable_calculations": 30,
+      "form_key": "RRBudget",
+      "question_bindings": 101,
+      "structural_leaves": 157
+    },
+    {
+      "applicant_inputs": 101,
+      "blocked_calculations": 26,
+      "budget_periods": 10,
+      "computed_outputs": 56,
+      "executable_calculations": 30,
+      "form_key": "RRBudget10",
+      "question_bindings": 101,
+      "structural_leaves": 157
+    }
+  ],
+  "published_coverage_eligible": false,
+  "runtime_boundaries": {
+    "attachment_fields": "portable scalar declarations only; attachment upload/runtime parity is not established",
+    "nested_repeating_ui": "generic structural projection; exact native custom-widget parity is not claimed"
+  },
+  "source_question_count_discrepancy": {
+    "previous_semantic_counts": {
+      "RRBudget": 97,
+      "RRBudget10": 107
+    },
+    "resolution": "portable declarations classify identical input structure consistently; semantic acceptance remains agent_proposed",
+    "structural_applicant_input_count_each": 101
+  },
+  "template": {
+    "only_runtime_parameter": "budget_year.maxItems",
+    "profile_id": "profile:rr-budget-family:v1",
+    "shared_executable_rule_graph": true,
+    "shared_question_count": 101,
+    "shared_ui": true
+  },
+  "xml_projection": "not_available_in_pinned_implementation_oracle"
+}

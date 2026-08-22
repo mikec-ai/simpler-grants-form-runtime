@@ -1,0 +1,2900 @@
+{
+  "$id": "urn:grants-form-kernel:forms:rrbudget:v3",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "budget_justification_attachment": {
+      "allOf": [
+        {
+          "$ref": "urn:grants-form-kernel:questions:budget:budgetjustificationattachment:v1"
+        }
+      ],
+      "title": "L. Budget Justification (Only attach one file.)",
+      "x-interaction": "input",
+      "x-question-key": "question:sha256:ec3e5402d25b65f7947669e108b27e913d30f2012c6cb5678bfeabf65adb9013",
+      "x-semantic-mapping": {
+        "concept_id": "concept:attachment:budget-narrative",
+        "confidence": 0.99,
+        "evidence": "exact path: RR_Budget_3_0.BudgetJustificationAttachment",
+        "status": "agent_proposed"
+      },
+      "x-source-path": "RR_Budget_3_0.BudgetJustificationAttachment"
+    },
+    "budget_summary": {
+      "additionalProperties": false,
+      "properties": {
+        "cumulative_adp_computer_services": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "4. ADP/Computer Services",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:964913076f9a6b26dcc1c2711bdc3899b1a54aaf4861573acd4725bc2c4a4fa4",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeADPComputerServices"
+        },
+        "cumulative_alterations_and_renovations": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "7. Alterations and Renovations",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:867bc24bb7f82d847f1727b8c6a5fdd40b3a13b3d8ef1f862676299eb180578c",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeAlterationsAndRenovations"
+        },
+        "cumulative_consultant_services": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "3. Consultant Services",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:91c436ff4dd98553348a0d115899ef7d6b1c72abc2d0e1496fac29d0a29468e3",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeConsultantServices"
+        },
+        "cumulative_domestic_travel_costs": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "1. Domestic",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:27367b468b418eaa94b39a71508b6c8c5442b09413164d12cdac1d7e2bfe452f",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeDomesticTravelCosts"
+        },
+        "cumulative_equipment_facility_rental_fees": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "6. Equipment or Facility Rental/User Fees",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:83792514222c3708a8bdf29bebfe86b507d4771db58e4d8888d844784e75adc0",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeEquipmentFacilityRentalFees"
+        },
+        "cumulative_fee": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "Section J, Fee",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:78f6f7db3800913dff39f6c9cd32c7a98480e6bfd5d849d1cfe7fc5acfb190f8",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeFee"
+        },
+        "cumulative_foreign_travel_costs": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "2. Foreign",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:00452722eab886308a28478a39298d3946f34890761b687e506b6ed3ed2999fd",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeForeignTravelCosts"
+        },
+        "cumulative_material_and_supplies": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "1. Materials and Supplies",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:ec34c6757d63b68e17bd9e517bc02df88912c48648dcbc5cea146271db8c3ba6",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeMaterialAndSupplies"
+        },
+        "cumulative_noof_trainees": {
+          "readOnly": true,
+          "title": "6. Number of Participants/Trainees",
+          "type": "integer",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:fc543a22d22b7ccd65e9ddb91941493c2d60c921b1e0875e66e6bc51c47db77f",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeNoofTrainees"
+        },
+        "cumulative_other_10_direct_cost": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "17. Other 10",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:5289ea92548f9bfa0db6538f9747acde46a61a55d19d5f8883c527112168ebec",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeOther10DirectCost"
+        },
+        "cumulative_other_1_direct_cost": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "8. Other 1",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:4e99e1a48562264e37170a18d501238687818476207044fbed13670eaea4804f",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeOther1DirectCost"
+        },
+        "cumulative_other_2_direct_cost": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "9. Other 2",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:31d20cd5e0e5395fbf3ac9a8d4d7587b540bf2d282443dee79eadd5436c486ac",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeOther2DirectCost"
+        },
+        "cumulative_other_3_direct_cost": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "10. Other 3",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:6d59f5a7cdf6c295e281d7ab923a4844930f34b20941a87d4816bfd8ba03e3e9",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeOther3DirectCost"
+        },
+        "cumulative_other_4_direct_cost": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "11. Other 4",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:d20cfe63ee21e3dd308f366aa2dae0daa829bf388536022b2dfb201463fe2801",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeOther4DirectCost"
+        },
+        "cumulative_other_5_direct_cost": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "12. Other 5",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:b06d989c53ba18313da085153b08e59f471d94831e12118fd857ff6690bbbfdd",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeOther5DirectCost"
+        },
+        "cumulative_other_6_direct_cost": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "13. Other 6",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:f2e7818030d65cd0ce6e3f23c65c8e20d3d0275be78e7efa27affaae946bc617",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeOther6DirectCost"
+        },
+        "cumulative_other_7_direct_cost": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "14. Other 7",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:ab93eb401c211e882e7421842cc00b1071ce34742ebf2e4e51c19c8caea1ab13",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeOther7DirectCost"
+        },
+        "cumulative_other_8_direct_cost": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "15. Other 8",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:a0f554e655f16af273daf2c751c225e5a7e1a9b94ba337d95cc1a918e85b33f6",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeOther8DirectCost"
+        },
+        "cumulative_other_9_direct_cost": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "16. Other 9",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:e7f6e5ae53d3361c6748fa217d00be51184ff88fc755a45bc6638d56a3cb293f",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeOther9DirectCost"
+        },
+        "cumulative_other_trainee_cost": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "5. Other",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:fedb76773be76e4bc28650ea638eae09d75898cd0f819164414049fdd2ea962b",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeOtherTraineeCost"
+        },
+        "cumulative_publication_costs": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "2. Publication Costs",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:c6beeaec4f660a0d04db7c4875d56a00585cff83a59bc2330901534fb80ed9b9",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativePublicationCosts"
+        },
+        "cumulative_subaward_consortium_contractual_costs": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "5. Subawards/Consortium/Contractual Costs",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:e43b96d92bf3e372860353ff9398f6d9a4f034da7df601a23fb521dc80f51c30",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeSubawardConsortiumContractualCosts"
+        },
+        "cumulative_total_costs_fee": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "Section K, Total Costs and Fee (I + J)",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:43f5a2aa43ec002564e2d55b2216a0c67512dbf17503cbda5bbc9e2b41399648",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeTotalCostsFee"
+        },
+        "cumulative_total_funds_requested_direct_costs": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "Section G, Direct Costs (A thru F)",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:d2997bbc17ff7eed0832783ea25d36b177a6f4e1fb2cfb29a8e83aa567cceacb",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedDirectCosts"
+        },
+        "cumulative_total_funds_requested_direct_indirect_costs": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "Section I, Total Direct and Indirect Costs (G + H)",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:1ff24e00558b06465d04236b271eced3a816197d464a59bfab8de0473709f48e",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedDirectIndirectCosts"
+        },
+        "cumulative_total_funds_requested_equipment": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "Section C, Equipment",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:a5afe4afeaceaba37a6366f54759302bb6a18d025d0e92df090755d1565cbdca",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedEquipment"
+        },
+        "cumulative_total_funds_requested_indirect_cost": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "Section H, Indirect Costs",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:de50fc26adb1ac8168e27e5be583532a67b2659b3335f000a24019c7deed59cf",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedIndirectCost"
+        },
+        "cumulative_total_funds_requested_other_direct_costs": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "Section F, Other Direct Costs",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:6917091397c702155bd6f4965d84d034e9c47cc7230be72c0a6f5b0ddd359baf",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedOtherDirectCosts"
+        },
+        "cumulative_total_funds_requested_other_personnel": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "Section B, Other Personnel",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:886d3301cec5c016a25abcf1fb8bdbb1dedb734d7f203d315988743de46940e5",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedOtherPersonnel"
+        },
+        "cumulative_total_funds_requested_personnel": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "Total Salary, Wages and Fringe Benefits (A + B)",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:4c5634aaf835e0b03d11be232701abe0373768d9371d82f6606a6ff985f99ea5",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedPersonnel"
+        },
+        "cumulative_total_funds_requested_senior_key_person": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "Section A, Senior/Key Person",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:1ab25bfd77c7ca7e535fd2582a158f5d3585f74819db68d33512e8a45dcaea63",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedSeniorKeyPerson"
+        },
+        "cumulative_total_funds_requested_trainee_costs": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "Section E, Participant/Trainee Support Costs",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:17a0d32fd88055f73d87538dd8144996b529354ad30a0c087936b904442cacbf",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedTraineeCosts"
+        },
+        "cumulative_total_funds_requested_travel": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "Section D, Travel",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:3ff91a3d6a4b82724b79282ad804c0247459bcb533ad1e36d2678e2fe514f693",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedTravel"
+        },
+        "cumulative_total_no_other_personnel": {
+          "readOnly": true,
+          "title": "Total Number Other Personnel",
+          "type": "integer",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:41b609be0496a9549327ab274b87a3385c213d7a9c3fb6bacb50cf7ff55c518a",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeTotalNoOtherPersonnel"
+        },
+        "cumulative_trainee_stipends": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "2. Stipends",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:c33af90c01304442853575d7c59eb11ec1ba3c584e3aaaeb71ac03e935a324ae",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeTraineeStipends"
+        },
+        "cumulative_trainee_subsistence": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "4. Subsistence",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:34105aa3d8a5000576a4d9b93e0ab3f0cb81b92f65a1947d14d8dafef421891f",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeTraineeSubsistence"
+        },
+        "cumulative_trainee_travel": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "3. Travel",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:b44ab7c2ef4b5eb00e095f3602b36af3501b3160a6dde46a60d2ae5e97a33edc",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeTraineeTravel"
+        },
+        "cumulative_trainee_tuition_fees_health_insurance": {
+          "maxLength": 16,
+          "minLength": 1,
+          "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+          "readOnly": true,
+          "title": "1. Tuition/Fees/Health Insurance",
+          "type": "string",
+          "x-interaction": "computed",
+          "x-question-key": "question:sha256:d0921546af2c3108c3a7d23527ff31abc7e8b8e15229b86e44202edab25d5a0f",
+          "x-semantic-mapping": null,
+          "x-source-path": "RR_Budget_3_0.BudgetSummary.CumulativeTraineeTuitionFeesHealthInsurance"
+        }
+      },
+      "required": [
+        "cumulative_total_funds_requested_senior_key_person",
+        "cumulative_total_funds_requested_personnel",
+        "cumulative_total_funds_requested_direct_costs",
+        "cumulative_total_funds_requested_direct_indirect_costs",
+        "cumulative_total_costs_fee"
+      ],
+      "title": "Budget Summary",
+      "type": "object",
+      "x-cardinality": {
+        "maximum": 1,
+        "minimum": 1
+      },
+      "x-source-path": "RR_Budget_3_0.BudgetSummary"
+    },
+    "budget_type": {
+      "allOf": [
+        {
+          "$ref": "urn:grants-form-kernel:questions:budget:budgettype:v1"
+        }
+      ],
+      "title": "Budget Type:",
+      "x-interaction": "input",
+      "x-question-key": "question:sha256:4b46303d0401459e4637c62ea6381f5b27c53f967a7db8c6f814ae795b2512ef",
+      "x-semantic-mapping": {
+        "concept_id": "concept:budget:research:budget-type",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: BudgetType",
+        "status": "agent_proposed"
+      },
+      "x-source-path": "RR_Budget_3_0.BudgetType"
+    },
+    "budget_year": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "budget_period_end_date": {
+            "allOf": [
+              {
+                "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-budgetperiodenddate:v1"
+              }
+            ],
+            "title": "End Date:",
+            "x-interaction": "input",
+            "x-question-key": "question:sha256:3da68056e85947646b8c11f66a27fa9a96996173b00caa8d7ca567f206e7468b",
+            "x-semantic-mapping": {
+              "concept_id": "concept:budget:period:end-date",
+              "confidence": 0.99,
+              "evidence": "exact leaf alias: BudgetPeriodEndDate",
+              "status": "agent_proposed"
+            },
+            "x-source-path": "RR_Budget_3_0.BudgetYear.BudgetPeriodEndDate"
+          },
+          "budget_period_start_date": {
+            "allOf": [
+              {
+                "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-budgetperiodstartdate:v1"
+              }
+            ],
+            "title": "Start Date:",
+            "x-interaction": "input",
+            "x-question-key": "question:sha256:346b1cd9185e2aed58ae7607f041b4130fb557990030dbb1d6b6fa5af417a17e",
+            "x-semantic-mapping": {
+              "concept_id": "concept:budget:period:start-date",
+              "confidence": 0.99,
+              "evidence": "exact leaf alias: BudgetPeriodStartDate",
+              "status": "agent_proposed"
+            },
+            "x-source-path": "RR_Budget_3_0.BudgetYear.BudgetPeriodStartDate"
+          },
+          "cognizant_federal_agency": {
+            "allOf": [
+              {
+                "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-cognizantfederalagency:v1"
+              }
+            ],
+            "title": "Cognizant Federal Agency (Agency Name, POC Name, and POC Phone Number)",
+            "x-interaction": "input",
+            "x-question-key": "question:sha256:437fe4272b22e8d65d80558398e78e536855b36bfc46699cd992a181312d1413",
+            "x-semantic-mapping": {
+              "concept_id": "concept:budget:indirect:cognizant-agency",
+              "confidence": 0.99,
+              "evidence": "exact leaf alias: CognizantFederalAgency",
+              "status": "agent_proposed"
+            },
+            "x-source-path": "RR_Budget_3_0.BudgetYear.CognizantFederalAgency"
+          },
+          "direct_costs": {
+            "maxLength": 16,
+            "minLength": 1,
+            "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+            "readOnly": true,
+            "title": "Total Direct Costs (A thru F)",
+            "type": "string",
+            "x-interaction": "computed",
+            "x-question-key": "question:sha256:fb088a05a87e3f701662695897c5a8dbc489f3bc01f9b140062723dc7c30c501",
+            "x-semantic-mapping": null,
+            "x-source-path": "RR_Budget_3_0.BudgetYear.DirectCosts"
+          },
+          "equipment": {
+            "additionalProperties": false,
+            "properties": {
+              "additional_equipments_attachment": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-equipment-additionalequipmentsattachment:v1"
+                  }
+                ],
+                "title": "Additional Equipment:",
+                "x-interaction": "input",
+                "x-question-key": "question:sha256:7584d2da46facb04747a1df59c53f3e26ecf9a99ade6172a22a34ce7b333f203",
+                "x-semantic-mapping": {
+                  "concept_id": "concept:attachment:equipment-list",
+                  "confidence": 0.99,
+                  "evidence": "exact path: RR_Budget_3_0.BudgetYear.Equipment.AdditionalEquipmentsAttachment",
+                  "status": "agent_proposed"
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.Equipment.AdditionalEquipmentsAttachment"
+              },
+              "equipment_list": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "equipment_item": {
+                      "allOf": [
+                        {
+                          "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-equipment-equipmentlist-equipmentitem:v1"
+                        }
+                      ],
+                      "title": "Equipment Item",
+                      "x-interaction": "input",
+                      "x-question-key": "question:sha256:56c633e193fe06116c918b9b97fd4ad102fee27b646a8c6475c40a33e0980811",
+                      "x-semantic-mapping": {
+                        "concept_id": "concept:budget:equipment:item",
+                        "confidence": 0.99,
+                        "evidence": "exact leaf alias: EquipmentItem",
+                        "status": "agent_proposed"
+                      },
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.Equipment.EquipmentList.EquipmentItem"
+                    },
+                    "funds_requested": {
+                      "allOf": [
+                        {
+                          "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-equipment-equipmentlist-fundsrequested:v1"
+                        }
+                      ],
+                      "title": "Equipment Item Funds Requested",
+                      "x-interaction": "input",
+                      "x-question-key": "question:sha256:2c567d7c3da18ef49fdc71ecbc91d97341cd4f335922502032d276c9fc736518",
+                      "x-semantic-mapping": {
+                        "concept_id": "concept:budget:equipment:funds-requested",
+                        "confidence": 0.95,
+                        "evidence": "agent remediation from review-specs/validation/forms-06-10-agent-adjudication.json; replaces agent_proposed:concept:budget:funds-requested. Exact form/path: RRBudget RR_Budget_3_0.BudgetYear.Equipment.EquipmentList.FundsRequested. Exact source path: RR_Budget_3_0.BudgetYear.Equipment.EquipmentList.FundsRequested. The generic funds-requested concept merges amounts from distinct personnel, equipment, and indirect-cost contexts; the correction retains the source category.",
+                        "status": "agent_proposed"
+                      },
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.Equipment.EquipmentList.FundsRequested"
+                    }
+                  },
+                  "required": [
+                    "equipment_item",
+                    "funds_requested"
+                  ],
+                  "title": "Equipment List",
+                  "type": "object",
+                  "x-cardinality": {
+                    "maximum": 10,
+                    "minimum": 0
+                  },
+                  "x-source-path": "RR_Budget_3_0.BudgetYear.Equipment.EquipmentList"
+                },
+                "maxItems": 10,
+                "minItems": 0,
+                "type": "array"
+              },
+              "total_fund": {
+                "maxLength": 16,
+                "minLength": 1,
+                "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+                "readOnly": true,
+                "title": "Total Equipment",
+                "type": "string",
+                "x-interaction": "computed",
+                "x-question-key": "question:sha256:e8339f6efe4f12f59816dbe8a76cc2859338e8255609cd9dd24a1a03f8e8ef7a",
+                "x-semantic-mapping": null,
+                "x-source-path": "RR_Budget_3_0.BudgetYear.Equipment.TotalFund"
+              },
+              "total_fund_for_attached_equipment": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-equipment-totalfundforattachedequipment:v1"
+                  }
+                ],
+                "title": "Total funds requested for all equipment listed in the attached file",
+                "x-interaction": "input",
+                "x-question-key": "question:sha256:e601e1ea24e5d6f950b5c56e918c9ce1912bb4ff0702fdc33cf75b5f767d4679",
+                "x-semantic-mapping": {
+                  "concept_id": "concept:budget:research:attached-equipment-total",
+                  "confidence": 0.99,
+                  "evidence": "exact leaf alias: TotalFundForAttachedEquipment",
+                  "status": "agent_proposed"
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.Equipment.TotalFundForAttachedEquipment"
+              }
+            },
+            "required": [
+              "total_fund"
+            ],
+            "title": "Equipment",
+            "type": "object",
+            "x-cardinality": {
+              "maximum": 1,
+              "minimum": 0
+            },
+            "x-source-path": "RR_Budget_3_0.BudgetYear.Equipment"
+          },
+          "fee": {
+            "allOf": [
+              {
+                "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-fee:v1"
+              }
+            ],
+            "title": "Fee",
+            "x-interaction": "input",
+            "x-question-key": "question:sha256:a056c3c651763e2085f6be56d533a1d8aa8bf669ee4801c88d7df041019eaf34",
+            "x-semantic-mapping": {
+              "concept_id": "concept:budget:fee",
+              "confidence": 0.99,
+              "evidence": "exact leaf alias: Fee",
+              "status": "agent_proposed"
+            },
+            "x-source-path": "RR_Budget_3_0.BudgetYear.Fee"
+          },
+          "indirect_costs": {
+            "additionalProperties": false,
+            "properties": {
+              "indirect_cost": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "base": {
+                      "allOf": [
+                        {
+                          "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-indirectcosts-indirectcost-base:v1"
+                        }
+                      ],
+                      "title": "Indirect Cost Base",
+                      "x-interaction": "input",
+                      "x-question-key": "question:sha256:1d21a163a608e488f40de21e1e5672325277deb579047f3e49b07e2a8b07480a",
+                      "x-semantic-mapping": {
+                        "concept_id": "concept:budget:indirect:base",
+                        "confidence": 0.96,
+                        "evidence": "exact leaf alias: Base",
+                        "status": "agent_proposed"
+                      },
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.IndirectCosts.IndirectCost.Base"
+                    },
+                    "cost_type": {
+                      "allOf": [
+                        {
+                          "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-indirectcosts-indirectcost-costtype:v1"
+                        }
+                      ],
+                      "title": "Indirect Cost Type",
+                      "x-interaction": "input",
+                      "x-question-key": "question:sha256:465fc30143dcabda5e15ac2b74d3f2073727bd986c39c0fb5f1db061cb7cbdae",
+                      "x-semantic-mapping": {
+                        "concept_id": "concept:budget:indirect:cost-type",
+                        "confidence": 0.99,
+                        "evidence": "exact leaf alias: CostType",
+                        "status": "agent_proposed"
+                      },
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.IndirectCosts.IndirectCost.CostType"
+                    },
+                    "fund_requested": {
+                      "allOf": [
+                        {
+                          "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-indirectcosts-indirectcost-fundrequested:v1"
+                        }
+                      ],
+                      "title": "Indirect Costs Funds Requested",
+                      "x-interaction": "input",
+                      "x-question-key": "question:sha256:2e9463db01b406ed453d43d99f9199fa51c220cfde3ea58f740b20c29d3679e5",
+                      "x-semantic-mapping": {
+                        "concept_id": "concept:budget:indirect:funds-requested",
+                        "confidence": 0.95,
+                        "evidence": "agent remediation from review-specs/validation/forms-06-10-agent-adjudication.json; replaces agent_proposed:concept:budget:funds-requested. Exact form/path: RRBudget RR_Budget_3_0.BudgetYear.IndirectCosts.IndirectCost.FundRequested. Exact source path: RR_Budget_3_0.BudgetYear.IndirectCosts.IndirectCost.FundRequested. The generic funds-requested concept merges amounts from distinct personnel, equipment, and indirect-cost contexts; the correction retains the source category.",
+                        "status": "agent_proposed"
+                      },
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.IndirectCosts.IndirectCost.FundRequested"
+                    },
+                    "rate": {
+                      "allOf": [
+                        {
+                          "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-indirectcosts-indirectcost-rate:v1"
+                        }
+                      ],
+                      "title": "Indirect Cost Rate",
+                      "x-interaction": "input",
+                      "x-question-key": "question:sha256:1367a1de6b866eae6a5924849d675107954a9febe9b8714ff298d120d1d8e883",
+                      "x-semantic-mapping": {
+                        "concept_id": "concept:budget:indirect:rate",
+                        "confidence": 0.96,
+                        "evidence": "exact leaf alias: Rate",
+                        "status": "agent_proposed"
+                      },
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.IndirectCosts.IndirectCost.Rate"
+                    }
+                  },
+                  "required": [
+                    "cost_type",
+                    "fund_requested"
+                  ],
+                  "title": "Indirect Cost",
+                  "type": "object",
+                  "x-cardinality": {
+                    "maximum": 4,
+                    "minimum": 1
+                  },
+                  "x-source-path": "RR_Budget_3_0.BudgetYear.IndirectCosts.IndirectCost"
+                },
+                "maxItems": 4,
+                "minItems": 1,
+                "type": "array"
+              },
+              "total_indirect_costs": {
+                "maxLength": 16,
+                "minLength": 1,
+                "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+                "readOnly": true,
+                "title": "Total Indirect Costs",
+                "type": "string",
+                "x-interaction": "computed",
+                "x-question-key": "question:sha256:5b9bc4d79e6b7975b3415b6998961bcf1c5879ae1e701ddcbd31b2f70056800b",
+                "x-semantic-mapping": null,
+                "x-source-path": "RR_Budget_3_0.BudgetYear.IndirectCosts.TotalIndirectCosts"
+              }
+            },
+            "required": [
+              "indirect_cost",
+              "total_indirect_costs"
+            ],
+            "title": "Indirect Costs",
+            "type": "object",
+            "x-cardinality": {
+              "maximum": 1,
+              "minimum": 0
+            },
+            "x-source-path": "RR_Budget_3_0.BudgetYear.IndirectCosts"
+          },
+          "key_persons": {
+            "additionalProperties": false,
+            "properties": {
+              "attached_key_persons": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-attachedkeypersons:v1"
+                  }
+                ],
+                "title": "Additional Senior Key Persons:",
+                "x-interaction": "input",
+                "x-question-key": "question:sha256:650dcc49153b813376e50c5b79c73bf9ff81ca41374256ebcc2aa4147d2d5482",
+                "x-semantic-mapping": {
+                  "concept_id": "concept:attachment:key-person-list",
+                  "confidence": 0.99,
+                  "evidence": "exact path: RR_Budget_3_0.BudgetYear.KeyPersons.AttachedKeyPersons",
+                  "status": "agent_proposed"
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.KeyPersons.AttachedKeyPersons"
+              },
+              "key_person": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "academic_months": {
+                      "allOf": [
+                        {
+                          "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-academicmonths:v1"
+                        }
+                      ],
+                      "title": "Senior/Key Person Academic Months",
+                      "x-interaction": "input",
+                      "x-question-key": "question:sha256:8bba63e64e91536964da8cfba3128f1555557806c4f6603c73f491d0cd11f5fb",
+                      "x-semantic-mapping": {
+                        "concept_id": "concept:budget:personnel:academic-months",
+                        "confidence": 0.99,
+                        "evidence": "exact leaf alias: AcademicMonths",
+                        "status": "agent_proposed"
+                      },
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.AcademicMonths"
+                    },
+                    "base_salary": {
+                      "allOf": [
+                        {
+                          "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-basesalary:v1"
+                        }
+                      ],
+                      "title": "Senior/Key Person Base Salary",
+                      "x-interaction": "input",
+                      "x-question-key": "question:sha256:2a68fe5613e427e4f3dd8caa46b443fb1289885a030e98a2509758419aaa880b",
+                      "x-semantic-mapping": {
+                        "concept_id": "concept:budget:personnel:base-salary",
+                        "confidence": 0.99,
+                        "evidence": "exact leaf alias: BaseSalary",
+                        "status": "agent_proposed"
+                      },
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.BaseSalary"
+                    },
+                    "calendar_months": {
+                      "allOf": [
+                        {
+                          "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-calendarmonths:v1"
+                        }
+                      ],
+                      "title": "Senior/Key Person Calendar Months",
+                      "x-interaction": "input",
+                      "x-question-key": "question:sha256:b15fbabf40f95bd0bba707f27ce381e8730911b79ce89c528b472350313761fe",
+                      "x-semantic-mapping": {
+                        "concept_id": "concept:budget:personnel:calendar-months",
+                        "confidence": 0.99,
+                        "evidence": "exact leaf alias: CalendarMonths",
+                        "status": "agent_proposed"
+                      },
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.CalendarMonths"
+                    },
+                    "fringe_benefits": {
+                      "allOf": [
+                        {
+                          "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-fringebenefits:v1"
+                        }
+                      ],
+                      "title": "Senior/Key Person Fringe Benefits",
+                      "x-interaction": "input",
+                      "x-question-key": "question:sha256:be121844b1c71c24f75b6f551edc6cbd7a7f0396f2507012e58d36f56b229fc5",
+                      "x-semantic-mapping": {
+                        "concept_id": "concept:budget:personnel:fringe-benefits",
+                        "confidence": 0.99,
+                        "evidence": "exact leaf alias: FringeBenefits",
+                        "status": "agent_proposed"
+                      },
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.FringeBenefits"
+                    },
+                    "funds_requested": {
+                      "maxLength": 16,
+                      "minLength": 1,
+                      "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+                      "readOnly": true,
+                      "title": "Senior/Key Person Funds Requested",
+                      "type": "string",
+                      "x-interaction": "computed",
+                      "x-question-key": "question:sha256:c71e8264bf938a0f3e10ad662d88becacf271fbff56fa1434bef0cc045dab672",
+                      "x-semantic-mapping": null,
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.FundsRequested"
+                    },
+                    "name": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "first_name": {
+                          "allOf": [
+                            {
+                              "$ref": "urn:grants-form-kernel:questions:person-name-first:v1"
+                            }
+                          ],
+                          "title": "First Name",
+                          "x-interaction": "input",
+                          "x-question-key": "question:sha256:35d684408447fa77e4df69687c5483463c7fd43f3ca3439403432c259ba8e871",
+                          "x-semantic-mapping": {
+                            "concept_id": "concept:role:key-person:name:first",
+                            "confidence": 0.99,
+                            "evidence": "exact leaf alias: FirstName; semantic role from exact path: key-person",
+                            "status": "agent_proposed"
+                          },
+                          "x-source-path": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.Name.FirstName"
+                        },
+                        "last_name": {
+                          "allOf": [
+                            {
+                              "$ref": "urn:grants-form-kernel:questions:person-name-last:v1"
+                            }
+                          ],
+                          "title": "Last Name",
+                          "x-interaction": "input",
+                          "x-question-key": "question:sha256:32e121773481d4ee4f3bf2913384a0f7a9dfbc8e2fb449bf0a149316c8f41d17",
+                          "x-semantic-mapping": {
+                            "concept_id": "concept:role:key-person:name:last",
+                            "confidence": 0.99,
+                            "evidence": "exact leaf alias: LastName; semantic role from exact path: key-person",
+                            "status": "agent_proposed"
+                          },
+                          "x-source-path": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.Name.LastName"
+                        },
+                        "middle_name": {
+                          "allOf": [
+                            {
+                              "$ref": "urn:grants-form-kernel:questions:person-name-middle:v1"
+                            }
+                          ],
+                          "title": "Middle Name",
+                          "x-interaction": "input",
+                          "x-question-key": "question:sha256:824af1e10ee6fffce06923755978099616712d985d2ee25cabf44aead44fd479",
+                          "x-semantic-mapping": {
+                            "concept_id": "concept:role:key-person:name:middle",
+                            "confidence": 0.99,
+                            "evidence": "exact leaf alias: MiddleName; semantic role from exact path: key-person",
+                            "status": "agent_proposed"
+                          },
+                          "x-source-path": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.Name.MiddleName"
+                        },
+                        "prefix_name": {
+                          "allOf": [
+                            {
+                              "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-name-prefixname:v1"
+                            }
+                          ],
+                          "title": "Prefix",
+                          "x-interaction": "input",
+                          "x-question-key": "question:sha256:55b5db9d1913687a2c6a14358f9a0cd87abe340bf4c5635bf566f36d9a4e2ecc",
+                          "x-semantic-mapping": {
+                            "concept_id": "concept:role:key-person:name:prefix",
+                            "confidence": 0.99,
+                            "evidence": "exact leaf alias: PrefixName; semantic role from exact path: key-person",
+                            "status": "agent_proposed"
+                          },
+                          "x-source-path": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.Name.PrefixName"
+                        },
+                        "suffix_name": {
+                          "allOf": [
+                            {
+                              "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-name-suffixname:v1"
+                            }
+                          ],
+                          "title": "Suffix",
+                          "x-interaction": "input",
+                          "x-question-key": "question:sha256:e6f89d501f1a02f1d1e6a7a131b3bb73137fac6eda2c830a650c3a708a6b2ad2",
+                          "x-semantic-mapping": {
+                            "concept_id": "concept:role:key-person:name:suffix",
+                            "confidence": 0.99,
+                            "evidence": "exact leaf alias: SuffixName; semantic role from exact path: key-person",
+                            "status": "agent_proposed"
+                          },
+                          "x-source-path": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.Name.SuffixName"
+                        }
+                      },
+                      "required": [
+                        "first_name",
+                        "last_name"
+                      ],
+                      "title": "Name",
+                      "type": "object",
+                      "x-cardinality": {
+                        "maximum": 1,
+                        "minimum": 1
+                      },
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.Name"
+                    },
+                    "project_role": {
+                      "allOf": [
+                        {
+                          "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-projectrole:v1"
+                        }
+                      ],
+                      "title": "Project Role:",
+                      "x-interaction": "input",
+                      "x-question-key": "question:sha256:3e0f698082f5906b9a2e25af74be349f18f46dc8bedcb0f434094851bbbb6af0",
+                      "x-semantic-mapping": {
+                        "concept_id": "concept:research-person:project-role",
+                        "confidence": 0.99,
+                        "evidence": "exact leaf alias: ProjectRole",
+                        "status": "agent_proposed"
+                      },
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.ProjectRole"
+                    },
+                    "requested_salary": {
+                      "allOf": [
+                        {
+                          "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-requestedsalary:v1"
+                        }
+                      ],
+                      "title": "Senior/Key Person Requested Salary",
+                      "x-interaction": "input",
+                      "x-question-key": "question:sha256:c003af85d121bbc507b0a3ffb532b88ca3899d77e7461236711ef42080ab2a63",
+                      "x-semantic-mapping": {
+                        "concept_id": "concept:budget:personnel:requested-salary",
+                        "confidence": 0.99,
+                        "evidence": "exact leaf alias: RequestedSalary",
+                        "status": "agent_proposed"
+                      },
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.RequestedSalary"
+                    },
+                    "summer_months": {
+                      "allOf": [
+                        {
+                          "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-summermonths:v1"
+                        }
+                      ],
+                      "title": "Senior/Key Person Summer Months",
+                      "x-interaction": "input",
+                      "x-question-key": "question:sha256:0d1dcfdb946ee4671089959dce93a136f98e01580ee0d4dde94e26c9f114e3af",
+                      "x-semantic-mapping": {
+                        "concept_id": "concept:budget:personnel:summer-months",
+                        "confidence": 0.99,
+                        "evidence": "exact leaf alias: SummerMonths",
+                        "status": "agent_proposed"
+                      },
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.SummerMonths"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "project_role",
+                    "requested_salary",
+                    "fringe_benefits",
+                    "funds_requested"
+                  ],
+                  "title": "Key Person",
+                  "type": "object",
+                  "x-cardinality": {
+                    "maximum": 8,
+                    "minimum": 1
+                  },
+                  "x-source-path": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson"
+                },
+                "maxItems": 8,
+                "minItems": 1,
+                "type": "array"
+              },
+              "total_fund_for_attached_key_persons": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-totalfundforattachedkeypersons:v1"
+                  }
+                ],
+                "title": "Total Funds requested for all Senior Key Persons in the attached file",
+                "x-interaction": "input",
+                "x-question-key": "question:sha256:d31a037f276008d8f38bb5995d1df7c9a154d9f3abe76fa3d26a7eed6f96b6c8",
+                "x-semantic-mapping": {
+                  "concept_id": "concept:budget:research:attached-key-person-total",
+                  "confidence": 0.99,
+                  "evidence": "exact leaf alias: TotalFundForAttachedKeyPersons",
+                  "status": "agent_proposed"
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.KeyPersons.TotalFundForAttachedKeyPersons"
+              },
+              "total_fund_for_key_persons": {
+                "maxLength": 16,
+                "minLength": 1,
+                "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+                "readOnly": true,
+                "title": "Total Senior/Key Person",
+                "type": "string",
+                "x-interaction": "computed",
+                "x-question-key": "question:sha256:afa90d7a39191933fb83e1e700f5879579624f9e376a025cd325601ceb6f70f3",
+                "x-semantic-mapping": null,
+                "x-source-path": "RR_Budget_3_0.BudgetYear.KeyPersons.TotalFundForKeyPersons"
+              }
+            },
+            "required": [
+              "key_person",
+              "total_fund_for_key_persons"
+            ],
+            "title": "Key Persons",
+            "type": "object",
+            "x-cardinality": {
+              "maximum": 1,
+              "minimum": 1
+            },
+            "x-source-path": "RR_Budget_3_0.BudgetYear.KeyPersons"
+          },
+          "other_direct_costs": {
+            "additionalProperties": false,
+            "properties": {
+              "adp_computer_services": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-adpcomputerservices:v1"
+                  }
+                ],
+                "title": "4. ADP/Computer Services",
+                "x-interaction": "input",
+                "x-question-key": "question:sha256:dd39b3878655050617137f9a0a55d16667724f0fa092d0ed8cdd9242c2f9b443",
+                "x-semantic-mapping": {
+                  "concept_id": "concept:budget:other-direct:computer-services",
+                  "confidence": 0.99,
+                  "evidence": "exact leaf alias: ADPComputerServices",
+                  "status": "agent_proposed"
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.ADPComputerServices"
+              },
+              "alterations_renovations": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-alterationsrenovations:v1"
+                  }
+                ],
+                "title": "7. Alterations and Renovations",
+                "x-interaction": "input",
+                "x-question-key": "question:sha256:d424621139468df9d14c879e5f5dd22c10e45bb459d503e3956d8e53b76346df",
+                "x-semantic-mapping": {
+                  "concept_id": "concept:budget:other-direct:alterations-renovations",
+                  "confidence": 0.99,
+                  "evidence": "exact leaf alias: AlterationsRenovations",
+                  "status": "agent_proposed"
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.AlterationsRenovations"
+              },
+              "consultant_services": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-consultantservices:v1"
+                  }
+                ],
+                "title": "3. Consultant Services",
+                "x-interaction": "input",
+                "x-question-key": "question:sha256:32fcec38d0a96080c6755fb6f754a62de9f7110099478943ba9236f3c7aedb5e",
+                "x-semantic-mapping": {
+                  "concept_id": "concept:budget:other-direct:consultant",
+                  "confidence": 0.99,
+                  "evidence": "exact leaf alias: ConsultantServices",
+                  "status": "agent_proposed"
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.ConsultantServices"
+              },
+              "equipment_rental_fee": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-equipmentrentalfee:v1"
+                  }
+                ],
+                "title": "6. Equipment or Facility Rental/User Fees",
+                "x-interaction": "input",
+                "x-question-key": "question:sha256:7667d782f53fd910d3b323a48de6b9e45012f181c624b938922414d3ab9267c7",
+                "x-semantic-mapping": {
+                  "concept_id": "concept:budget:other-direct:equipment-rental",
+                  "confidence": 0.99,
+                  "evidence": "exact leaf alias: EquipmentRentalFee",
+                  "status": "agent_proposed"
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.EquipmentRentalFee"
+              },
+              "materials_supplies": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-materialssupplies:v1"
+                  }
+                ],
+                "title": "1. Materials and Supplies",
+                "x-interaction": "input",
+                "x-question-key": "question:sha256:18058bdb7ea3f12618ed9fc14a4c49473316eac3148a3ee710a15b499b3812df",
+                "x-semantic-mapping": {
+                  "concept_id": "concept:budget:other-direct:materials-supplies",
+                  "confidence": 0.99,
+                  "evidence": "exact leaf alias: MaterialsSupplies",
+                  "status": "agent_proposed"
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.MaterialsSupplies"
+              },
+              "other_direct_cost_1": {
+                "additionalProperties": false,
+                "properties": {
+                  "cost": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost1-cost:v1"
+                      }
+                    ],
+                    "title": "Additional Other Direct Cost Funds Requested",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:5f9c3af7a715afed9fea48f38aa43f067013b98c26a5c2ba229a26100f0c2fd4",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:cost",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Cost",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost1.Cost"
+                  },
+                  "description": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost1-description:v1"
+                      }
+                    ],
+                    "title": "Additional Other Direct Cost Description",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:88b6fac7675ce711681c2ba65fe7a506908f1135621abfc411e4d3848039c0ae",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:description",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Description",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost1.Description"
+                  }
+                },
+                "required": [
+                  "description",
+                  "cost"
+                ],
+                "title": "Other Direct Cost1",
+                "type": "object",
+                "x-cardinality": {
+                  "maximum": 1,
+                  "minimum": 0
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost1"
+              },
+              "other_direct_cost_10": {
+                "additionalProperties": false,
+                "properties": {
+                  "cost": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost10-cost:v1"
+                      }
+                    ],
+                    "title": "Additional Other Direct Cost Funds Requested",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:474b8f91d74014d14fbdcb69e4fac5c5ceb09bda2f2ee3d1cd97af58af0cab9b",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:cost",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Cost",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost10.Cost"
+                  },
+                  "description": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost10-description:v1"
+                      }
+                    ],
+                    "title": "Additional Other Direct Cost Description",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:684ecbc50eacf7755b801a73cf49a1be965349ed8d26241be541f154eabbab95",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:description",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Description",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost10.Description"
+                  }
+                },
+                "required": [
+                  "description",
+                  "cost"
+                ],
+                "title": "Other Direct Cost10",
+                "type": "object",
+                "x-cardinality": {
+                  "maximum": 1,
+                  "minimum": 0
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost10"
+              },
+              "other_direct_cost_2": {
+                "additionalProperties": false,
+                "properties": {
+                  "cost": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost2-cost:v1"
+                      }
+                    ],
+                    "title": "Additional Other Direct Cost Funds Requested",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:0221b63bfe92fd480c669986ccc157f6827aad73645eb897f428b21a54400ece",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:cost",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Cost",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost2.Cost"
+                  },
+                  "description": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost2-description:v1"
+                      }
+                    ],
+                    "title": "Additional Other Direct Cost Description",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:4382f9c3e8b507b2d6a13de1d1592eac96d0b347939b8118bcd88bd333a525e0",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:description",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Description",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost2.Description"
+                  }
+                },
+                "required": [
+                  "description",
+                  "cost"
+                ],
+                "title": "Other Direct Cost2",
+                "type": "object",
+                "x-cardinality": {
+                  "maximum": 1,
+                  "minimum": 0
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost2"
+              },
+              "other_direct_cost_3": {
+                "additionalProperties": false,
+                "properties": {
+                  "cost": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost3-cost:v1"
+                      }
+                    ],
+                    "title": "Additional Other Direct Cost Funds Requested",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:f5054928f6884c17aded93662f8da2b8ff14ada1ef68c34c1773a7fa825d0aee",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:cost",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Cost",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost3.Cost"
+                  },
+                  "description": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost3-description:v1"
+                      }
+                    ],
+                    "title": "Additional Other Direct Cost Description",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:51f4dbe3e433ecc9fa1caba5981a0d367179b65f9876baeb7e8f4de6e76f140c",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:description",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Description",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost3.Description"
+                  }
+                },
+                "required": [
+                  "description",
+                  "cost"
+                ],
+                "title": "Other Direct Cost3",
+                "type": "object",
+                "x-cardinality": {
+                  "maximum": 1,
+                  "minimum": 0
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost3"
+              },
+              "other_direct_cost_4": {
+                "additionalProperties": false,
+                "properties": {
+                  "cost": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost4-cost:v1"
+                      }
+                    ],
+                    "title": "Additional Other Direct Cost Funds Requested",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:9b5b56359f529f6f1f7bb63fce9ca5590b1b935032c390d9a01620abd5c77848",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:cost",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Cost",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost4.Cost"
+                  },
+                  "description": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost4-description:v1"
+                      }
+                    ],
+                    "title": "Additional Other Direct Cost Description",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:b9afc7898963e9bb3fb5e29c46b465643a6a5fc789eae8138c3ee54439665ada",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:description",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Description",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost4.Description"
+                  }
+                },
+                "required": [
+                  "description",
+                  "cost"
+                ],
+                "title": "Other Direct Cost4",
+                "type": "object",
+                "x-cardinality": {
+                  "maximum": 1,
+                  "minimum": 0
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost4"
+              },
+              "other_direct_cost_5": {
+                "additionalProperties": false,
+                "properties": {
+                  "cost": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost5-cost:v1"
+                      }
+                    ],
+                    "title": "Additional Other Direct Cost Funds Requested",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:357ea6681f70dacfa07cbb91a7ca86ba3bf1f3d59fd9fe41c3e767d79c6fe90c",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:cost",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Cost",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost5.Cost"
+                  },
+                  "description": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost5-description:v1"
+                      }
+                    ],
+                    "title": "Additional Other Direct Cost Description",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:2297cc9e3011434412be38891be7ea762da6248ca26760240553abfe81ccd797",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:description",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Description",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost5.Description"
+                  }
+                },
+                "required": [
+                  "description",
+                  "cost"
+                ],
+                "title": "Other Direct Cost5",
+                "type": "object",
+                "x-cardinality": {
+                  "maximum": 1,
+                  "minimum": 0
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost5"
+              },
+              "other_direct_cost_6": {
+                "additionalProperties": false,
+                "properties": {
+                  "cost": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost6-cost:v1"
+                      }
+                    ],
+                    "title": "Additional Other Direct Cost Funds Requested",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:cd90d24fa8c9e1ffc8971c9fda6786a080ba23d7ae7d3605af536c04ad22b105",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:cost",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Cost",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost6.Cost"
+                  },
+                  "description": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost6-description:v1"
+                      }
+                    ],
+                    "title": "Additional Other Direct Cost Description",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:884940ae9c4f2bcc7d45630ff4afc1b051e93c59272a347ec8294749ee48b616",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:description",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Description",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost6.Description"
+                  }
+                },
+                "required": [
+                  "description",
+                  "cost"
+                ],
+                "title": "Other Direct Cost6",
+                "type": "object",
+                "x-cardinality": {
+                  "maximum": 1,
+                  "minimum": 0
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost6"
+              },
+              "other_direct_cost_7": {
+                "additionalProperties": false,
+                "properties": {
+                  "cost": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost7-cost:v1"
+                      }
+                    ],
+                    "title": "Additional Other Direct Cost Funds Requested",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:aa52f6b2322b074df111305605dbfc1ad41e7aabb431ec43c9887f7801ad24ab",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:cost",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Cost",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost7.Cost"
+                  },
+                  "description": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost7-description:v1"
+                      }
+                    ],
+                    "title": "Additional Other Direct Cost Description",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:b7c603796637afacfff68b8224f834abab9295dfbfcf1f148c1e1459e3a19681",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:description",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Description",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost7.Description"
+                  }
+                },
+                "required": [
+                  "description",
+                  "cost"
+                ],
+                "title": "Other Direct Cost7",
+                "type": "object",
+                "x-cardinality": {
+                  "maximum": 1,
+                  "minimum": 0
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost7"
+              },
+              "other_direct_cost_8": {
+                "additionalProperties": false,
+                "properties": {
+                  "cost": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost8-cost:v1"
+                      }
+                    ],
+                    "title": "Additional Other Direct Cost Funds Requested",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:167f8153a407a59d9a932b8c849575a74df6c9a7181f974c5fd414590e2d64d2",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:cost",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Cost",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost8.Cost"
+                  },
+                  "description": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost8-description:v1"
+                      }
+                    ],
+                    "title": "Additional Other Direct Cost Description",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:f5be98c50f0ee51a89a7ad4f93de22b1391a904b60caf67a8389556eb3d8b640",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:description",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Description",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost8.Description"
+                  }
+                },
+                "required": [
+                  "description",
+                  "cost"
+                ],
+                "title": "Other Direct Cost8",
+                "type": "object",
+                "x-cardinality": {
+                  "maximum": 1,
+                  "minimum": 0
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost8"
+              },
+              "other_direct_cost_9": {
+                "additionalProperties": false,
+                "properties": {
+                  "cost": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost9-cost:v1"
+                      }
+                    ],
+                    "title": "Additional Other Direct Cost Funds Requested",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:447dae9212ecb26fab44d328b8b097b170a4a648df3e2a16ebe1247aebb4f588",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:cost",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Cost",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost9.Cost"
+                  },
+                  "description": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost9-description:v1"
+                      }
+                    ],
+                    "title": "Additional Other Direct Cost Description",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:46fe9d458dfef5c1033d613a8a3e9764f1e7e1454992bc43f81250843c059ebd",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:description",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Description",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost9.Description"
+                  }
+                },
+                "required": [
+                  "description",
+                  "cost"
+                ],
+                "title": "Other Direct Cost9",
+                "type": "object",
+                "x-cardinality": {
+                  "maximum": 1,
+                  "minimum": 0
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost9"
+              },
+              "publication_costs": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-publicationcosts:v1"
+                  }
+                ],
+                "title": "2. Publication Costs",
+                "x-interaction": "input",
+                "x-question-key": "question:sha256:120b91762a5d481405c0b9ea1fbce0292fd70839d9d4664fa9ef04a405528886",
+                "x-semantic-mapping": {
+                  "concept_id": "concept:budget:other-direct:publication",
+                  "confidence": 0.99,
+                  "evidence": "exact leaf alias: PublicationCosts",
+                  "status": "agent_proposed"
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.PublicationCosts"
+              },
+              "subaward_consortium_contractual_costs": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-subawardconsortiumcontractualcosts:v1"
+                  }
+                ],
+                "title": "5. Subawards/Consortium/Contractual Costs",
+                "x-interaction": "input",
+                "x-question-key": "question:sha256:3b7c3678353c47f10c340e71ed26a7aee05afad8ba7fb7c049c232d5e56637a0",
+                "x-semantic-mapping": {
+                  "concept_id": "concept:budget:other-direct:subaward-contractual",
+                  "confidence": 0.99,
+                  "evidence": "exact leaf alias: SubawardConsortiumContractualCosts",
+                  "status": "agent_proposed"
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.SubawardConsortiumContractualCosts"
+              },
+              "total_other_direct_cost": {
+                "maxLength": 16,
+                "minLength": 1,
+                "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+                "readOnly": true,
+                "title": "Total Other Direct Costs",
+                "type": "string",
+                "x-interaction": "computed",
+                "x-question-key": "question:sha256:9a71f894a8f7c53bddf38e234b38b48d487226ec3b7f9d65d95d81fb8d12b877",
+                "x-semantic-mapping": null,
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.TotalOtherDirectCost"
+              }
+            },
+            "required": [
+              "total_other_direct_cost"
+            ],
+            "title": "Other Direct Costs",
+            "type": "object",
+            "x-cardinality": {
+              "maximum": 1,
+              "minimum": 0
+            },
+            "x-source-path": "RR_Budget_3_0.BudgetYear.OtherDirectCosts"
+          },
+          "other_personnel": {
+            "additionalProperties": false,
+            "properties": {
+              "graduate_students": {
+                "additionalProperties": false,
+                "properties": {
+                  "academic_months": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-graduatestudents-academicmonths:v1"
+                      }
+                    ],
+                    "title": "Academic Months Graduate Students",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:a7f527c90c600ec682a5954777230fc5fb2e7760513aef915effd864d8f0ae91",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:academic-months",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: AcademicMonths",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.GraduateStudents.AcademicMonths"
+                  },
+                  "calendar_months": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-graduatestudents-calendarmonths:v1"
+                      }
+                    ],
+                    "title": "Calendar Months Graduate Students",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:d495902ead64875624b21827a8b42b0532eeb4080c58949de76e414b0a7efb15",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:calendar-months",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: CalendarMonths",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.GraduateStudents.CalendarMonths"
+                  },
+                  "fringe_benefits": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-graduatestudents-fringebenefits:v1"
+                      }
+                    ],
+                    "title": "Fringe Benefits Graduate Students",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:fce8e5bd98a4ed31fae06cc2f4404c1b80d0deb50afedb6583916232d5b8e966",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:fringe-benefits",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: FringeBenefits",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.GraduateStudents.FringeBenefits"
+                  },
+                  "funds_requested": {
+                    "maxLength": 16,
+                    "minLength": 1,
+                    "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+                    "readOnly": true,
+                    "title": "Funds Requested Graduate Students",
+                    "type": "string",
+                    "x-interaction": "computed",
+                    "x-question-key": "question:sha256:32b4788b3ff659cf4d6b81e29105df9a96eac1c1cada6581ee70a695081eae62",
+                    "x-semantic-mapping": null,
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.GraduateStudents.FundsRequested"
+                  },
+                  "number_of_personnel": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-graduatestudents-numberofpersonnel:v1"
+                      }
+                    ],
+                    "title": "Number of Personnel Graduate Students",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:91dda16b88559cee29dc8ac6e70aeb49b78c9a77b30f0d02b57eb120118bc4aa",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:count",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: NumberOfPersonnel",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.GraduateStudents.NumberOfPersonnel"
+                  },
+                  "project_role": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-graduatestudents-projectrole:v1"
+                      }
+                    ],
+                    "title": "Project Role Graduate Students",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:d9d1fd383a3e006b8891cad04cd60d69dbb280277dfd8e00d9894ade25566d3e",
+                    "x-semantic-mapping": null,
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.GraduateStudents.ProjectRole"
+                  },
+                  "requested_salary": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-graduatestudents-requestedsalary:v1"
+                      }
+                    ],
+                    "title": "Requested Salary Graduate Students",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:1b69e28d334d94cf90e87352ebff81fcc16abff8812478d39beaaf458ee871c4",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:requested-salary",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: RequestedSalary",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.GraduateStudents.RequestedSalary"
+                  },
+                  "summer_months": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-graduatestudents-summermonths:v1"
+                      }
+                    ],
+                    "title": "Summer Months Graduate Students",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:86c4282b209a5999cbfefad4275f2501e064a4513040c0f2179b3d93b93b46d6",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:summer-months",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: SummerMonths",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.GraduateStudents.SummerMonths"
+                  }
+                },
+                "required": [
+                  "number_of_personnel",
+                  "project_role",
+                  "requested_salary",
+                  "fringe_benefits",
+                  "funds_requested"
+                ],
+                "title": "Graduate Students",
+                "type": "object",
+                "x-cardinality": {
+                  "maximum": 1,
+                  "minimum": 0
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.GraduateStudents"
+              },
+              "other": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "academic_months": {
+                      "allOf": [
+                        {
+                          "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-other-academicmonths:v1"
+                        }
+                      ],
+                      "title": "Academic Months Additional Project Role",
+                      "x-interaction": "input",
+                      "x-question-key": "question:sha256:7314058afca0ca32241852b8228ad1c81ad01d3622bca6501d57be279e92fe3f",
+                      "x-semantic-mapping": {
+                        "concept_id": "concept:budget:personnel:academic-months",
+                        "confidence": 0.99,
+                        "evidence": "exact leaf alias: AcademicMonths",
+                        "status": "agent_proposed"
+                      },
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.Other.AcademicMonths"
+                    },
+                    "calendar_months": {
+                      "allOf": [
+                        {
+                          "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-other-calendarmonths:v1"
+                        }
+                      ],
+                      "title": "Calendar Months Additional Project Role",
+                      "x-interaction": "input",
+                      "x-question-key": "question:sha256:061364e2d5b98419b83a6ec07c7416c1020d794777e36f8797781874db2e64d6",
+                      "x-semantic-mapping": {
+                        "concept_id": "concept:budget:personnel:calendar-months",
+                        "confidence": 0.99,
+                        "evidence": "exact leaf alias: CalendarMonths",
+                        "status": "agent_proposed"
+                      },
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.Other.CalendarMonths"
+                    },
+                    "fringe_benefits": {
+                      "allOf": [
+                        {
+                          "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-other-fringebenefits:v1"
+                        }
+                      ],
+                      "title": "Fringe Benefits Additional Project Role",
+                      "x-interaction": "input",
+                      "x-question-key": "question:sha256:04679b43891ab78e392ffa039dc8fae71ac4cddc1cff212a9ba41c47d5c5537d",
+                      "x-semantic-mapping": {
+                        "concept_id": "concept:budget:personnel:fringe-benefits",
+                        "confidence": 0.99,
+                        "evidence": "exact leaf alias: FringeBenefits",
+                        "status": "agent_proposed"
+                      },
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.Other.FringeBenefits"
+                    },
+                    "funds_requested": {
+                      "maxLength": 16,
+                      "minLength": 1,
+                      "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+                      "readOnly": true,
+                      "title": "Funds Requested Additional Project Role",
+                      "type": "string",
+                      "x-interaction": "computed",
+                      "x-question-key": "question:sha256:497ea03320184f02766252a7101314b18ab77ca6cc39b85724c1d448698ad159",
+                      "x-semantic-mapping": null,
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.Other.FundsRequested"
+                    },
+                    "number_of_personnel": {
+                      "allOf": [
+                        {
+                          "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-other-numberofpersonnel:v1"
+                        }
+                      ],
+                      "title": "Number of Personnel Additional Project Role",
+                      "x-interaction": "input",
+                      "x-question-key": "question:sha256:272f4d82e8f7fc64aa68a4b8f0a48d318f611e7f8d969f622ffa6a5e2feb1f0b",
+                      "x-semantic-mapping": {
+                        "concept_id": "concept:budget:personnel:count",
+                        "confidence": 0.99,
+                        "evidence": "exact leaf alias: NumberOfPersonnel",
+                        "status": "agent_proposed"
+                      },
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.Other.NumberOfPersonnel"
+                    },
+                    "project_role": {
+                      "allOf": [
+                        {
+                          "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-other-projectrole:v1"
+                        }
+                      ],
+                      "title": "Additional Project Role Description",
+                      "x-interaction": "input",
+                      "x-question-key": "question:sha256:7774a1dbe19e18780f9d855754d07b1a1b49d34123829275528dfd7495678398",
+                      "x-semantic-mapping": {
+                        "concept_id": "concept:research-person:project-role",
+                        "confidence": 0.99,
+                        "evidence": "exact leaf alias: ProjectRole",
+                        "status": "agent_proposed"
+                      },
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.Other.ProjectRole"
+                    },
+                    "requested_salary": {
+                      "allOf": [
+                        {
+                          "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-other-requestedsalary:v1"
+                        }
+                      ],
+                      "title": "Requested Salary Additional Project Role",
+                      "x-interaction": "input",
+                      "x-question-key": "question:sha256:3dc5a1e71395e4d462d9654964caa03b2eb6bc5f598fa4960e22d8525399533e",
+                      "x-semantic-mapping": {
+                        "concept_id": "concept:budget:personnel:requested-salary",
+                        "confidence": 0.99,
+                        "evidence": "exact leaf alias: RequestedSalary",
+                        "status": "agent_proposed"
+                      },
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.Other.RequestedSalary"
+                    },
+                    "summer_months": {
+                      "allOf": [
+                        {
+                          "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-other-summermonths:v1"
+                        }
+                      ],
+                      "title": "Summer Months Additional Project Role",
+                      "x-interaction": "input",
+                      "x-question-key": "question:sha256:a721b9c892a2063e7f05196dcd15933922de2ad0fa58f74c3bf80bd81372bf23",
+                      "x-semantic-mapping": {
+                        "concept_id": "concept:budget:personnel:summer-months",
+                        "confidence": 0.99,
+                        "evidence": "exact leaf alias: SummerMonths",
+                        "status": "agent_proposed"
+                      },
+                      "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.Other.SummerMonths"
+                    }
+                  },
+                  "required": [
+                    "number_of_personnel",
+                    "project_role",
+                    "requested_salary",
+                    "fringe_benefits",
+                    "funds_requested"
+                  ],
+                  "title": "Other",
+                  "type": "object",
+                  "x-cardinality": {
+                    "maximum": 6,
+                    "minimum": 0
+                  },
+                  "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.Other"
+                },
+                "maxItems": 6,
+                "minItems": 0,
+                "type": "array"
+              },
+              "other_personnel_total_number": {
+                "readOnly": true,
+                "title": "Total Number Other Personnel",
+                "type": "integer",
+                "x-interaction": "computed",
+                "x-question-key": "question:sha256:5dd06d8f37c1b90fe9b1c8b607bd5cd0291886853a2800bb2131f4aab3bc73a9",
+                "x-semantic-mapping": null,
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.OtherPersonnelTotalNumber"
+              },
+              "post_doc_associates": {
+                "additionalProperties": false,
+                "properties": {
+                  "academic_months": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-postdocassociates-academicmonths:v1"
+                      }
+                    ],
+                    "title": "Academic Months Post Doctoral Associates",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:ef80423fb6b7889093f2747a63a1def846e0ac17e87f8e0a24339a2aed551f47",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:academic-months",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: AcademicMonths",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.PostDocAssociates.AcademicMonths"
+                  },
+                  "calendar_months": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-postdocassociates-calendarmonths:v1"
+                      }
+                    ],
+                    "title": "Calendar Months Post Doctoral Associates",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:54d3a68e197d64f8bb8ae9b859dcc1879042057a8b934e6f5ff771c433c88fa4",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:calendar-months",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: CalendarMonths",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.PostDocAssociates.CalendarMonths"
+                  },
+                  "fringe_benefits": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-postdocassociates-fringebenefits:v1"
+                      }
+                    ],
+                    "title": "Fringe Benefits Post Doctoral Associates",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:982d428092bd5ff9a231fbed78396b0124f7799e00bff065e873b447b56efc94",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:fringe-benefits",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: FringeBenefits",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.PostDocAssociates.FringeBenefits"
+                  },
+                  "funds_requested": {
+                    "maxLength": 16,
+                    "minLength": 1,
+                    "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+                    "readOnly": true,
+                    "title": "Funds Requested Post Doctoral Associates",
+                    "type": "string",
+                    "x-interaction": "computed",
+                    "x-question-key": "question:sha256:9554189c077a955da65ee184d89cea1cdee866e3381e0c7c62d1bdd29b97237e",
+                    "x-semantic-mapping": null,
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.PostDocAssociates.FundsRequested"
+                  },
+                  "number_of_personnel": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-postdocassociates-numberofpersonnel:v1"
+                      }
+                    ],
+                    "title": "Number of Personnel Post Doctoral Associates",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:51c14fb0af4aa31147c3800d9c89b7b1491a89ff8af1ba87e993520ff5986c57",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:count",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: NumberOfPersonnel",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.PostDocAssociates.NumberOfPersonnel"
+                  },
+                  "project_role": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-postdocassociates-projectrole:v1"
+                      }
+                    ],
+                    "title": "Project Role Post Doctoral Associates",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:193b4a0faafea948b3713e9607e375f31fad26820a335871cc766853ad1e67bb",
+                    "x-semantic-mapping": null,
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.PostDocAssociates.ProjectRole"
+                  },
+                  "requested_salary": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-postdocassociates-requestedsalary:v1"
+                      }
+                    ],
+                    "title": "Requested Salary Post Doctoral Associates",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:c93eeea3d639e84e6a5682860b06fbca2bf5b04d9df34dcefabc44ebad7dbec1",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:requested-salary",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: RequestedSalary",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.PostDocAssociates.RequestedSalary"
+                  },
+                  "summer_months": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-postdocassociates-summermonths:v1"
+                      }
+                    ],
+                    "title": "Summer Months Post Doctoral Associates",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:e957d98a2e2d8262993b621e82c992e4f9684fc6c19dcad6bfd02c64e1426de2",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:summer-months",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: SummerMonths",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.PostDocAssociates.SummerMonths"
+                  }
+                },
+                "required": [
+                  "number_of_personnel",
+                  "project_role",
+                  "requested_salary",
+                  "fringe_benefits",
+                  "funds_requested"
+                ],
+                "title": "Post Doc Associates",
+                "type": "object",
+                "x-cardinality": {
+                  "maximum": 1,
+                  "minimum": 0
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.PostDocAssociates"
+              },
+              "secretarial_clerical": {
+                "additionalProperties": false,
+                "properties": {
+                  "academic_months": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-secretarialclerical-academicmonths:v1"
+                      }
+                    ],
+                    "title": "Academic Months Secretarial/Clerical",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:1d758529c84b04bb6ff985165ddd6fdb3cbf722d3d924962242c909d5481ef8b",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:academic-months",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: AcademicMonths",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.SecretarialClerical.AcademicMonths"
+                  },
+                  "calendar_months": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-secretarialclerical-calendarmonths:v1"
+                      }
+                    ],
+                    "title": "Calendar Months Secretarial/Clerical",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:13514e8e9657c172aa528baaa25a02811b9f9b59f16eccdc0eee6e2158e487c4",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:calendar-months",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: CalendarMonths",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.SecretarialClerical.CalendarMonths"
+                  },
+                  "fringe_benefits": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-secretarialclerical-fringebenefits:v1"
+                      }
+                    ],
+                    "title": "Fringe Benefits Secretarial/Clerical",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:6b1ce39067b08d1a7be67b690f521cf9ab0c64f5683594ef2c2bb773cb947a92",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:fringe-benefits",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: FringeBenefits",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.SecretarialClerical.FringeBenefits"
+                  },
+                  "funds_requested": {
+                    "maxLength": 16,
+                    "minLength": 1,
+                    "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+                    "readOnly": true,
+                    "title": "Funds Requested Secretarial/Clerical",
+                    "type": "string",
+                    "x-interaction": "computed",
+                    "x-question-key": "question:sha256:3fe614edc252b3dada2e2e7b32fffd9c2183175ea044498f0dc1b6719422a542",
+                    "x-semantic-mapping": null,
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.SecretarialClerical.FundsRequested"
+                  },
+                  "number_of_personnel": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-secretarialclerical-numberofpersonnel:v1"
+                      }
+                    ],
+                    "title": "Number of Personnel Secretarial/Clerical",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:53fa7f92047f80031fd1388a3f440fcd8278be85d7b3c8d1e67d07068dcc20d6",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:count",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: NumberOfPersonnel",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.SecretarialClerical.NumberOfPersonnel"
+                  },
+                  "project_role": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-secretarialclerical-projectrole:v1"
+                      }
+                    ],
+                    "title": "Project Role Secretarial/Clerical",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:7efd34e510cc5e43d64725be1ce6ccc1f5e1c08c9f3223a0f329e5eddb4da591",
+                    "x-semantic-mapping": null,
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.SecretarialClerical.ProjectRole"
+                  },
+                  "requested_salary": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-secretarialclerical-requestedsalary:v1"
+                      }
+                    ],
+                    "title": "Requested Salary Secretarial/Clerical",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:fcbe5f10c9b21110afc318e1570a405aa82737398aff15287df3be75b0fad3e6",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:requested-salary",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: RequestedSalary",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.SecretarialClerical.RequestedSalary"
+                  },
+                  "summer_months": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-secretarialclerical-summermonths:v1"
+                      }
+                    ],
+                    "title": "Summer Months Secretarial/Clerical",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:e509327c4c4f62152bf1f67fe0e1940eca3351f394a2ea145dfe952c7433407d",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:summer-months",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: SummerMonths",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.SecretarialClerical.SummerMonths"
+                  }
+                },
+                "required": [
+                  "number_of_personnel",
+                  "project_role",
+                  "requested_salary",
+                  "fringe_benefits",
+                  "funds_requested"
+                ],
+                "title": "Secretarial Clerical",
+                "type": "object",
+                "x-cardinality": {
+                  "maximum": 1,
+                  "minimum": 0
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.SecretarialClerical"
+              },
+              "total_other_personnel_fund": {
+                "maxLength": 16,
+                "minLength": 1,
+                "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+                "readOnly": true,
+                "title": "Total Other Personnel",
+                "type": "string",
+                "x-interaction": "computed",
+                "x-question-key": "question:sha256:87b2e209a69eda6682584816260de8cc090d4c4f9e6c5d2d71d7d7b24276b187",
+                "x-semantic-mapping": null,
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.TotalOtherPersonnelFund"
+              },
+              "undergraduate_students": {
+                "additionalProperties": false,
+                "properties": {
+                  "academic_months": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-undergraduatestudents-academicmonths:v1"
+                      }
+                    ],
+                    "title": "Academic Months Undergraduate Students",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:34b1ec770a1a4c9160d216ea7ae7e3be0d8550c64900a43a814b8899bf45e8ea",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:academic-months",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: AcademicMonths",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.UndergraduateStudents.AcademicMonths"
+                  },
+                  "calendar_months": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-undergraduatestudents-calendarmonths:v1"
+                      }
+                    ],
+                    "title": "Calendar Months Undergraduate Students",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:e4481446512be046feb998f17072a0e0ceb74fbc578f3c4143c22b1b956ae460",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:calendar-months",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: CalendarMonths",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.UndergraduateStudents.CalendarMonths"
+                  },
+                  "fringe_benefits": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-undergraduatestudents-fringebenefits:v1"
+                      }
+                    ],
+                    "title": "Fringe Benefits Undergraduate Students",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:4f8364b6ff7c8934737dc9388d8282befa9f530e940b5a6f4604244d508b46a4",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:fringe-benefits",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: FringeBenefits",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.UndergraduateStudents.FringeBenefits"
+                  },
+                  "funds_requested": {
+                    "maxLength": 16,
+                    "minLength": 1,
+                    "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+                    "readOnly": true,
+                    "title": "Funds Requested Undergraduate Students",
+                    "type": "string",
+                    "x-interaction": "computed",
+                    "x-question-key": "question:sha256:0f4534a2ca4e9a9a4cbe8ad991bcf828694bc767174ecb16e6cfc9bb8a96835a",
+                    "x-semantic-mapping": null,
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.UndergraduateStudents.FundsRequested"
+                  },
+                  "number_of_personnel": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-undergraduatestudents-numberofpersonnel:v1"
+                      }
+                    ],
+                    "title": "Number of Personnel Undergraduate Students",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:88f169d0bdd93896489200f2c382804460b2100e6cbcea91b966ded309313d11",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:count",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: NumberOfPersonnel",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.UndergraduateStudents.NumberOfPersonnel"
+                  },
+                  "project_role": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-undergraduatestudents-projectrole:v1"
+                      }
+                    ],
+                    "title": "Project Role Undergraduate Students",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:6a1b8dbd7d6516baf3970b8414318721bc6cca37cbf29a533c997c8c2b6323c0",
+                    "x-semantic-mapping": null,
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.UndergraduateStudents.ProjectRole"
+                  },
+                  "requested_salary": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-undergraduatestudents-requestedsalary:v1"
+                      }
+                    ],
+                    "title": "Requested Salary Undergraduate Students",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:7b855f0940ddc00d062bc3a1bf1503c89306588346b82a999a89487f068eee0f",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:requested-salary",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: RequestedSalary",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.UndergraduateStudents.RequestedSalary"
+                  },
+                  "summer_months": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-undergraduatestudents-summermonths:v1"
+                      }
+                    ],
+                    "title": "Summer Months Undergraduate Students",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:c6802b8a7018de4d703f74c9d15b4f845bae3e708cd634ef684b63c9e42cb598",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:personnel:summer-months",
+                      "confidence": 0.99,
+                      "evidence": "exact leaf alias: SummerMonths",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.UndergraduateStudents.SummerMonths"
+                  }
+                },
+                "required": [
+                  "number_of_personnel",
+                  "project_role",
+                  "requested_salary",
+                  "fringe_benefits",
+                  "funds_requested"
+                ],
+                "title": "Undergraduate Students",
+                "type": "object",
+                "x-cardinality": {
+                  "maximum": 1,
+                  "minimum": 0
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel.UndergraduateStudents"
+              }
+            },
+            "required": [
+              "other_personnel_total_number"
+            ],
+            "title": "Other Personnel",
+            "type": "object",
+            "x-cardinality": {
+              "maximum": 1,
+              "minimum": 0
+            },
+            "x-source-path": "RR_Budget_3_0.BudgetYear.OtherPersonnel"
+          },
+          "participant_trainee_support_costs": {
+            "additionalProperties": false,
+            "properties": {
+              "other": {
+                "additionalProperties": false,
+                "properties": {
+                  "cost": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-participanttraineesupportcosts-other-cost:v1"
+                      }
+                    ],
+                    "title": "Other Participant/Trainee Costs",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:bc4a4146cd4a669e9ab268d2136ea42cf68646e8312c12db3f167c06cc6140c4",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:cost",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Cost",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.ParticipantTraineeSupportCosts.Other.Cost"
+                  },
+                  "description": {
+                    "allOf": [
+                      {
+                        "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-participanttraineesupportcosts-other-description:v1"
+                      }
+                    ],
+                    "title": "5. Other",
+                    "x-interaction": "input",
+                    "x-question-key": "question:sha256:d9db81c4cc7269cc3dde4a9f5ef70ff87356cfa2573793894eef31f06c1d0bd5",
+                    "x-semantic-mapping": {
+                      "concept_id": "concept:budget:line:description",
+                      "confidence": 0.96,
+                      "evidence": "exact leaf alias: Description",
+                      "status": "agent_proposed"
+                    },
+                    "x-source-path": "RR_Budget_3_0.BudgetYear.ParticipantTraineeSupportCosts.Other.Description"
+                  }
+                },
+                "required": [
+                  "description",
+                  "cost"
+                ],
+                "title": "Other",
+                "type": "object",
+                "x-cardinality": {
+                  "maximum": 1,
+                  "minimum": 0
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.ParticipantTraineeSupportCosts.Other"
+              },
+              "participant_trainee_number": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-participanttraineesupportcosts-participanttraineenumber:v1"
+                  }
+                ],
+                "title": "Number of Participants/Trainees",
+                "x-interaction": "input",
+                "x-question-key": "question:sha256:dbdb3dc98f47c01d1386c91cc931e394fb3c0df1c1299d6ef464cbefd1fa2e10",
+                "x-semantic-mapping": {
+                  "concept_id": "concept:budget:trainee:count",
+                  "confidence": 0.99,
+                  "evidence": "exact leaf alias: ParticipantTraineeNumber",
+                  "status": "agent_proposed"
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.ParticipantTraineeSupportCosts.ParticipantTraineeNumber"
+              },
+              "stipends": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-participanttraineesupportcosts-stipends:v1"
+                  }
+                ],
+                "title": "2. Stipends",
+                "x-interaction": "input",
+                "x-question-key": "question:sha256:34023cced12cac48d49745758b51fb738c3d7c3569548f01ab73d6e44a5539b1",
+                "x-semantic-mapping": {
+                  "concept_id": "concept:budget:trainee:stipends",
+                  "confidence": 0.99,
+                  "evidence": "exact leaf alias: Stipends",
+                  "status": "agent_proposed"
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.ParticipantTraineeSupportCosts.Stipends"
+              },
+              "subsistence": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-participanttraineesupportcosts-subsistence:v1"
+                  }
+                ],
+                "title": "4. Subsistence",
+                "x-interaction": "input",
+                "x-question-key": "question:sha256:0a3768821475a99902dd5bd5f1f2b743c0c135c50db61042217fb8501343b59a",
+                "x-semantic-mapping": {
+                  "concept_id": "concept:budget:trainee:subsistence",
+                  "confidence": 0.99,
+                  "evidence": "exact leaf alias: Subsistence",
+                  "status": "agent_proposed"
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.ParticipantTraineeSupportCosts.Subsistence"
+              },
+              "total_cost": {
+                "maxLength": 16,
+                "minLength": 1,
+                "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+                "readOnly": true,
+                "title": "Total Participant/Trainee Support Costs",
+                "type": "string",
+                "x-interaction": "computed",
+                "x-question-key": "question:sha256:d5dcbc008ee7e3d9b485d2ee3f7d7e4372644a9a765d4d18b6b2221d7bef01d4",
+                "x-semantic-mapping": null,
+                "x-source-path": "RR_Budget_3_0.BudgetYear.ParticipantTraineeSupportCosts.TotalCost"
+              },
+              "travel": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-participanttraineesupportcosts-travel:v1"
+                  }
+                ],
+                "title": "3. Travel",
+                "x-interaction": "input",
+                "x-question-key": "question:sha256:6441408d5199a795b1fdfae9c48d34f70b02d5346f8f1614349bfac077bd1f2c",
+                "x-semantic-mapping": {
+                  "concept_id": "concept:budget:trainee:travel",
+                  "confidence": 0.99,
+                  "evidence": "exact leaf alias: Travel",
+                  "status": "agent_proposed"
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.ParticipantTraineeSupportCosts.Travel"
+              },
+              "tuition_fee_health_insurance": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-participanttraineesupportcosts-tuitionfeehealthinsurance:v1"
+                  }
+                ],
+                "title": "1. Tuition/Fees/Health Insurance",
+                "x-interaction": "input",
+                "x-question-key": "question:sha256:0b9b07b0aa9d2a27a0c28e4573335e10f2dbe553119cf5bc352b3b1b4cf608f5",
+                "x-semantic-mapping": {
+                  "concept_id": "concept:budget:trainee:tuition-fees-insurance",
+                  "confidence": 0.99,
+                  "evidence": "exact leaf alias: TuitionFeeHealthInsurance",
+                  "status": "agent_proposed"
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.ParticipantTraineeSupportCosts.TuitionFeeHealthInsurance"
+              }
+            },
+            "required": [
+              "total_cost"
+            ],
+            "title": "Participant Trainee Support Costs",
+            "type": "object",
+            "x-cardinality": {
+              "maximum": 1,
+              "minimum": 0
+            },
+            "x-source-path": "RR_Budget_3_0.BudgetYear.ParticipantTraineeSupportCosts"
+          },
+          "total_compensation": {
+            "maxLength": 16,
+            "minLength": 1,
+            "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+            "readOnly": true,
+            "title": "Total Salary, Wages and Fringe Benefits (A+B)",
+            "type": "string",
+            "x-interaction": "computed",
+            "x-question-key": "question:sha256:99a4c5ffc67d76daadb1d9ad417dee64c3902e56944364169d754cd4e7bbad67",
+            "x-semantic-mapping": null,
+            "x-source-path": "RR_Budget_3_0.BudgetYear.TotalCompensation"
+          },
+          "total_costs": {
+            "maxLength": 16,
+            "minLength": 1,
+            "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+            "readOnly": true,
+            "title": "Total Direct and Indirect Institutional Costs (G + H)",
+            "type": "string",
+            "x-interaction": "computed",
+            "x-question-key": "question:sha256:f75d19eb15703c965284fb0ae61a06430318270dd9117481c75a53ebcfb1f1f5",
+            "x-semantic-mapping": null,
+            "x-source-path": "RR_Budget_3_0.BudgetYear.TotalCosts"
+          },
+          "total_costs_fee": {
+            "maxLength": 16,
+            "minLength": 1,
+            "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+            "readOnly": true,
+            "title": "Total Costs and Fee (I + J)",
+            "type": "string",
+            "x-interaction": "computed",
+            "x-question-key": "question:sha256:e1bf434b54dc06090829e5bb3f776ce05f1c8ae5017d4c56a421b0a449238284",
+            "x-semantic-mapping": null,
+            "x-source-path": "RR_Budget_3_0.BudgetYear.TotalCostsFee"
+          },
+          "travel": {
+            "additionalProperties": false,
+            "properties": {
+              "domestic_travel_cost": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-travel-domestictravelcost:v1"
+                  }
+                ],
+                "title": "1. Domestic Travel Costs ( Incl. Canada, Mexico and U.S. Possessions)",
+                "x-interaction": "input",
+                "x-question-key": "question:sha256:d2944dd7a554635547648bf318339d9bd561988131b7cb7c874007ebe1b3e0f2",
+                "x-semantic-mapping": {
+                  "concept_id": "concept:budget:travel:domestic",
+                  "confidence": 0.99,
+                  "evidence": "exact leaf alias: DomesticTravelCost",
+                  "status": "agent_proposed"
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.Travel.DomesticTravelCost"
+              },
+              "foreign_travel_cost": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-travel-foreigntravelcost:v1"
+                  }
+                ],
+                "title": "2. Foreign Travel Costs",
+                "x-interaction": "input",
+                "x-question-key": "question:sha256:51dcc8c4487bf0d8b47f81acb085c3cbd23ade1aee18603b70bfb3463a894a5a",
+                "x-semantic-mapping": {
+                  "concept_id": "concept:budget:travel:foreign",
+                  "confidence": 0.99,
+                  "evidence": "exact leaf alias: ForeignTravelCost",
+                  "status": "agent_proposed"
+                },
+                "x-source-path": "RR_Budget_3_0.BudgetYear.Travel.ForeignTravelCost"
+              },
+              "total_travel_cost": {
+                "maxLength": 16,
+                "minLength": 1,
+                "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+                "readOnly": true,
+                "title": "Total Travel Cost",
+                "type": "string",
+                "x-interaction": "computed",
+                "x-question-key": "question:sha256:99d2d3338f4b354852761563398d014c1fed948c041decb70f56867bb4fb0971",
+                "x-semantic-mapping": null,
+                "x-source-path": "RR_Budget_3_0.BudgetYear.Travel.TotalTravelCost"
+              }
+            },
+            "required": [
+              "total_travel_cost"
+            ],
+            "title": "Travel",
+            "type": "object",
+            "x-cardinality": {
+              "maximum": 1,
+              "minimum": 0
+            },
+            "x-source-path": "RR_Budget_3_0.BudgetYear.Travel"
+          }
+        },
+        "required": [
+          "budget_period_start_date",
+          "budget_period_end_date",
+          "key_persons",
+          "total_compensation",
+          "direct_costs",
+          "total_costs",
+          "total_costs_fee"
+        ],
+        "title": "Budget Year",
+        "type": "object",
+        "x-cardinality": {
+          "maximum": 5,
+          "minimum": 1
+        },
+        "x-source-path": "RR_Budget_3_0.BudgetYear"
+      },
+      "maxItems": 5,
+      "minItems": 1,
+      "type": "array"
+    },
+    "organization_name": {
+      "allOf": [
+        {
+          "$ref": "urn:grants-form-kernel:questions:organization:legal-name:v1"
+        }
+      ],
+      "title": "Enter name of Organization:",
+      "x-interaction": "input",
+      "x-question-key": "question:sha256:04a0d545d68065561a5aa48c2deb619c2d9220c9649f901088d9557d78e29346",
+      "x-semantic-mapping": {
+        "concept_id": "concept:role:applicant-organization:name",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: OrganizationName; semantic role from exact path: applicant-organization",
+        "status": "agent_proposed"
+      },
+      "x-source-path": "RR_Budget_3_0.OrganizationName"
+    },
+    "samuei": {
+      "allOf": [
+        {
+          "$ref": "urn:grants-form-kernel:questions:budget:samuei:v1"
+        }
+      ],
+      "title": "UEI:",
+      "x-interaction": "input",
+      "x-question-key": "question:sha256:ec555684403c6a4c6ed74aedb946de6152ad5bffd6b787885d053e0c1b67990d",
+      "x-semantic-mapping": {
+        "concept_id": "concept:role:applicant-organization:sam-uei",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: SAMUEI; semantic role from exact path: applicant-organization",
+        "status": "agent_proposed"
+      },
+      "x-source-path": "RR_Budget_3_0.SAMUEI"
+    }
+  },
+  "required": [
+    "samuei",
+    "budget_type",
+    "budget_year",
+    "budget_justification_attachment",
+    "budget_summary"
+  ],
+  "title": "[Draft] Research & Related Budget",
+  "type": "object",
+  "x-cardinality": {
+    "maximum": 1,
+    "minimum": 1
+  },
+  "x-contract-sha256": "0f3e71fd70e470e3b2ce3e35be300bc8c7f240369a51aca855ea618c83d508bb",
+  "x-form-id": "RRBudget",
+  "x-portable-profile": {
+    "budget_periods": 5,
+    "form_key": "RRBudget"
+  },
+  "x-portable-template": "profile:rr-budget-family:v1",
+  "x-review-status": "agent_proposed",
+  "x-sgm-candidate": true,
+  "x-source-path": "RR_Budget_3_0"
+}

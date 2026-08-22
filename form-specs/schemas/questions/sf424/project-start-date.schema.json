@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:project-start-date:v1",
+  "type": "string",
+  "title": "Project Start Date",
+  "description": "Enter the date in the format MM/DD/YYYY. ",
+  "format": "date",
+  "x-question-id": "question:project:start-date",
+  "x-review-status": "agent_proposed"
+}

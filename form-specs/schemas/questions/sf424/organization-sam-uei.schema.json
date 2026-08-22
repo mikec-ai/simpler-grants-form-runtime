@@ -1,0 +1,11 @@
+{
+  "type": "string",
+  "title": "SAM UEI",
+  "minLength": 12,
+  "maxLength": 12,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:organization-sam-uei:v1",
+  "description": "UEI of the applicant organization. This field is pre-populated from the Application cover sheet.",
+  "x-question-id": "question:organization:sam-uei",
+  "x-review-status": "agent_proposed"
+}

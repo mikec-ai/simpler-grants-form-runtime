@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:application-state-review-date:v1",
+  "type": "string",
+  "title": "State Review Date",
+  "description": "If 'a' is selected, enter the date the application was submitted to the State.",
+  "format": "date",
+  "x-question-id": "question:application:state-review-date",
+  "x-review-status": "agent_proposed"
+}

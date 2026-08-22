@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:application-received-date:v1",
+  "type": "string",
+  "title": "Date Received",
+  "description": "Completed by Grants.gov upon submission.",
+  "format": "date",
+  "x-question-id": "question:application:received-date",
+  "x-review-status": "agent_proposed"
+}

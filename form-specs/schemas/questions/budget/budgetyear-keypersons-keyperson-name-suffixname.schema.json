@@ -1,0 +1,12 @@
+{
+  "$id": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-name-suffixname:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "enum": [
+    "Jr.; Sr.; MD; PhD; JD"
+  ],
+  "maxLength": 10,
+  "minLength": 1,
+  "title": "Suffix",
+  "type": "string",
+  "x-question-id": "question:person:name:suffix"
+}

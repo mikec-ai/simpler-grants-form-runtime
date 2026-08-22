@@ -1,0 +1,14 @@
+[
+  {
+    "type": "section",
+    "label": "Applicant organization",
+    "name": "applicantOrganization",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/org/properties/name",
+        "label": "Applicant Organization Name"
+      }
+    ]
+  }
+]

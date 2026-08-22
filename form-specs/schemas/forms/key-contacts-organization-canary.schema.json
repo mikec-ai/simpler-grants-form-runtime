@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:forms:key-contacts-organization-canary:v1",
+  "title": "Key Contacts organization canary",
+  "type": "object",
+  "required": ["applicant_organization_name"],
+  "properties": {
+    "applicant_organization_name": {
+      "allOf": [
+        {
+          "$ref": "urn:grants-form-kernel:questions:organization:legal-name:v1"
+        }
+      ],
+      "title": "Applicant Organization Name"
+    }
+  }
+}

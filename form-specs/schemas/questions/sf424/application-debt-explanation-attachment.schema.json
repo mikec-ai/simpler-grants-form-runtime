@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "format": "uuid",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:application-debt-explanation-attachment:v1",
+  "title": "Debt Explanation",
+  "description": "",
+  "x-question-id": "question:attachment:delinquent-federal-debt-explanation",
+  "x-review-status": "agent_proposed"
+}

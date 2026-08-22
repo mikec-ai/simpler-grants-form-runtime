@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:application-type:v1",
+  "type": "string",
+  "title": "Application Type",
+  "description": "Select one type of application in accordance with agency instructions.",
+  "enum": [
+    "New",
+    "Continuation",
+    "Revision"
+  ],
+  "x-question-id": "question:application:type",
+  "x-review-status": "agent_proposed"
+}

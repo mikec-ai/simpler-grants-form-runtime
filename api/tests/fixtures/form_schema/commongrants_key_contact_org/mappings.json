@@ -1,0 +1,18 @@
+{
+  "x-mapping-from-cg": {
+    "org": {
+      "name": {
+        "field": "organizations.primary.name"
+      }
+    }
+  },
+  "x-mapping-to-cg": {
+    "organizations": {
+      "primary": {
+        "name": {
+          "field": "org.name"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "format": "uuid",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:application-areas-affected-attachment:v1",
+  "title": "Areas Affected",
+  "description": "List the areas or entities using the categories (e.g., cities, counties, states, etc.) specified in agency instructions.",
+  "x-question-id": "question:attachment:areas-affected",
+  "x-review-status": "agent_proposed"
+}

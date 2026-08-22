@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:organization-department:v1",
+  "type": "string",
+  "title": "Department Name",
+  "description": "Enter the name of primary organizational department, service, laboratory, or equivalent level within the organization which will undertake the assistance activity.",
+  "minLength": 1,
+  "maxLength": 30,
+  "x-question-id": "question:organization:department",
+  "x-review-status": "agent_proposed"
+}

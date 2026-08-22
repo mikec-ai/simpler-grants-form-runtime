@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:address-county:v1",
+  "title": "County or parish",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 30,
+  "x-question-id": "question:address:county",
+  "x-review-status": "agent_proposed"
+}

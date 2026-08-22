@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:forms:sf424-organization-canary:v1",
+  "title": "SF-424 organization canary",
+  "type": "object",
+  "required": ["organization_name"],
+  "properties": {
+    "organization_name": {
+      "allOf": [
+        {
+          "$ref": "urn:grants-form-kernel:questions:organization:legal-name:v1"
+        }
+      ],
+      "title": "Legal Name"
+    }
+  }
+}

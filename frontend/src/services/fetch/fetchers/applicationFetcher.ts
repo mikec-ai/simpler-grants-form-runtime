@@ -205,13 +205,13 @@ export const handleUpdateApplicationForm = async (
   values: ApplicationResponseDetail,
   applicationId: string,
   applicationFormId: string,
-): Promise<ApplicationStartApiResponse> => {
+): Promise<ApplicationFormDetailApiResponse> => {
   const response = await fetchApplicationWithMethod("PUT")({
     subPath: `${applicationId}/forms/${applicationFormId}`,
     body: { application_response: values },
   });
 
-  return (await response.json()) as ApplicationStartApiResponse;
+  return (await response.json()) as ApplicationFormDetailApiResponse;
 };
 
 export const handleUpdateApplicationFormIncludeInSubmission = async (

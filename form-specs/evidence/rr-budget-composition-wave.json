@@ -1,0 +1,31 @@
+{
+  "accepted_mappings": 0,
+  "contract": "portable-budget-composition-evidence/v1",
+  "forms": {
+    "RRMPBudget": {
+      "calculations_preserved_not_projected": 46,
+      "calculations_projected": 10,
+      "computed_outputs": 56,
+      "conditions_source_bound_not_projected": 55,
+      "exact_schema_reuse": 87,
+      "new_validation_variant_schemas": 12,
+      "semantic_question_occurrences": 101,
+      "source_structural_records": 199,
+      "validation_profile_variants": 14,
+      "validation_variants_reusing_existing_catalog_schemas": 2
+    },
+    "RRSubawardBudget30": {
+      "calculations_projected": 30,
+      "computed_outputs": 56,
+      "conditions_source_bound_not_projected": 20,
+      "content_capture_mechanisms": 30,
+      "exact_budget_payload_reuse": true,
+      "outer_budget_instances_max": 30,
+      "semantic_question_occurrences": 101,
+      "source_structural_records": 231
+    }
+  },
+  "published_coverage_eligible": false,
+  "semantic_identity_status": "agent_proposed",
+  "xml_projection": "not_available_in_pinned_implementation_oracles"
+}

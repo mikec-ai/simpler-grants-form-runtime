@@ -1,0 +1,449 @@
+{
+  "contract": "portable-grants-form-declaration/v1",
+  "form_key": "KeyContacts",
+  "schema_id": "urn:grants-form-kernel:forms:key-contacts:v2",
+  "metadata": {
+    "form_id": "f140c7db-724d-4954-bebd-081c0527908c",
+    "legacy_form_id": 683,
+    "form_name": "KEY CONTACTS",
+    "short_form_name": "Key_Contacts",
+    "form_version": "2.0",
+    "agency_code": "SGG",
+    "omb_number": "4040-0010",
+    "form_type": "KeyContacts",
+    "sgg_version": "1.0",
+    "is_deprecated": false
+  },
+  "ui": {
+    "path": "ui/key-contacts.ui.json",
+    "sha256": "69268a46cf441370ca7811306203d3ef64eb1ac57fe029e57eed4814ccbdd037"
+  },
+  "mappings": {
+    "path": "mappings/key-contacts.mappings.json",
+    "sha256": "f06df076a1b6cf6412803302faa4d2d33d43c9f821eb49433aec94e2514fa76d"
+  },
+  "question_bindings": [
+    {
+      "binding_id": "binding:key-contacts:applicant-organization-name",
+      "question_id": "question:organization:legal-name",
+      "schema_id": "urn:grants-form-kernel:questions:organization:legal-name:v1",
+      "form_pointer": "/properties/applicant_organization_name",
+      "role": "applicant_organization",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "repeat_pointer": null
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:key-contacts:applicant-organization-name"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:key-contacts:project-role",
+      "question_id": "question:key-contact:project-role",
+      "schema_id": "urn:grants-form-kernel:questions:contact-project-role:v1",
+      "form_pointer": "/properties/key_contacts/items/properties/project_role",
+      "role": "key_contact",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "key_contacts_item",
+        "repetition": "within_1_to_4_key_contacts",
+        "repeat_pointer": "/properties/key_contacts"
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:key-contacts:project-role"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:key-contacts:name-prefix",
+      "question_id": "question:person:name:prefix",
+      "schema_id": "urn:grants-form-kernel:questions:person-name-prefix:v1",
+      "form_pointer": "/properties/key_contacts/items/properties/name/properties/prefix",
+      "role": "key_contact",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "key_contacts_item",
+        "repetition": "within_1_to_4_key_contacts",
+        "repeat_pointer": "/properties/key_contacts"
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:key-contacts:name-prefix"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:key-contacts:name-first",
+      "question_id": "question:person:name:first",
+      "schema_id": "urn:grants-form-kernel:questions:person-name-first:v1",
+      "form_pointer": "/properties/key_contacts/items/properties/name/properties/first_name",
+      "role": "key_contact",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "key_contacts_item",
+        "repetition": "within_1_to_4_key_contacts",
+        "repeat_pointer": "/properties/key_contacts"
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:key-contacts:name-first"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:key-contacts:name-middle",
+      "question_id": "question:person:name:middle",
+      "schema_id": "urn:grants-form-kernel:questions:person-name-middle:v1",
+      "form_pointer": "/properties/key_contacts/items/properties/name/properties/middle_name",
+      "role": "key_contact",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "key_contacts_item",
+        "repetition": "within_1_to_4_key_contacts",
+        "repeat_pointer": "/properties/key_contacts"
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:key-contacts:name-middle"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:key-contacts:name-last",
+      "question_id": "question:person:name:last",
+      "schema_id": "urn:grants-form-kernel:questions:person-name-last:v1",
+      "form_pointer": "/properties/key_contacts/items/properties/name/properties/last_name",
+      "role": "key_contact",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "key_contacts_item",
+        "repetition": "within_1_to_4_key_contacts",
+        "repeat_pointer": "/properties/key_contacts"
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:key-contacts:name-last"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:key-contacts:name-suffix",
+      "question_id": "question:person:name:suffix",
+      "schema_id": "urn:grants-form-kernel:questions:person-name-suffix:v1",
+      "form_pointer": "/properties/key_contacts/items/properties/name/properties/suffix",
+      "role": "key_contact",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "key_contacts_item",
+        "repetition": "within_1_to_4_key_contacts",
+        "repeat_pointer": "/properties/key_contacts"
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:key-contacts:name-suffix"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:key-contacts:title",
+      "question_id": "question:person:title",
+      "schema_id": "urn:grants-form-kernel:questions:person-title:v1",
+      "form_pointer": "/properties/key_contacts/items/properties/title",
+      "role": "key_contact",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "key_contacts_item",
+        "repetition": "within_1_to_4_key_contacts",
+        "repeat_pointer": "/properties/key_contacts"
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:key-contacts:title"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:key-contacts:organizational-affiliation",
+      "question_id": "question:person:organizational-affiliation",
+      "schema_id": "urn:grants-form-kernel:questions:person-organizational-affiliation:v1",
+      "form_pointer": "/properties/key_contacts/items/properties/organizational_affiliation",
+      "role": "key_contact",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "key_contacts_item",
+        "repetition": "within_1_to_4_key_contacts",
+        "repeat_pointer": "/properties/key_contacts"
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:key-contacts:organizational-affiliation"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:key-contacts:address-street1",
+      "question_id": "question:address:street-1",
+      "schema_id": "urn:grants-form-kernel:questions:address-street-1:v1",
+      "form_pointer": "/properties/key_contacts/items/properties/address/properties/street1",
+      "role": "key_contact",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "key_contacts_item",
+        "repetition": "within_1_to_4_key_contacts",
+        "repeat_pointer": "/properties/key_contacts"
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:key-contacts:address-street1"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:key-contacts:address-street2",
+      "question_id": "question:address:street-2",
+      "schema_id": "urn:grants-form-kernel:questions:address-street-2:v1",
+      "form_pointer": "/properties/key_contacts/items/properties/address/properties/street2",
+      "role": "key_contact",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "key_contacts_item",
+        "repetition": "within_1_to_4_key_contacts",
+        "repeat_pointer": "/properties/key_contacts"
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:key-contacts:address-street2"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:key-contacts:address-city",
+      "question_id": "question:address:city",
+      "schema_id": "urn:grants-form-kernel:questions:address-city:v1",
+      "form_pointer": "/properties/key_contacts/items/properties/address/properties/city",
+      "role": "key_contact",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "key_contacts_item",
+        "repetition": "within_1_to_4_key_contacts",
+        "repeat_pointer": "/properties/key_contacts"
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:key-contacts:address-city"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:key-contacts:address-county",
+      "question_id": "question:address:county",
+      "schema_id": "urn:grants-form-kernel:questions:address-county:v1",
+      "form_pointer": "/properties/key_contacts/items/properties/address/properties/county",
+      "role": "key_contact",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "key_contacts_item",
+        "repetition": "within_1_to_4_key_contacts",
+        "repeat_pointer": "/properties/key_contacts"
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:key-contacts:address-county"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:key-contacts:address-state",
+      "question_id": "question:address:state",
+      "schema_id": "urn:grants-form-kernel:questions:address-state:v1",
+      "form_pointer": "/properties/key_contacts/items/properties/address/properties/state",
+      "role": "key_contact",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "key_contacts_item",
+        "repetition": "within_1_to_4_key_contacts",
+        "repeat_pointer": "/properties/key_contacts"
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:key-contacts:address-state"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:key-contacts:address-province",
+      "question_id": "question:address:province",
+      "schema_id": "urn:grants-form-kernel:questions:address-province:v1",
+      "form_pointer": "/properties/key_contacts/items/properties/address/properties/province",
+      "role": "key_contact",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "key_contacts_item",
+        "repetition": "within_1_to_4_key_contacts",
+        "repeat_pointer": "/properties/key_contacts"
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:key-contacts:address-province"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:key-contacts:address-country",
+      "question_id": "question:address:country",
+      "schema_id": "urn:grants-form-kernel:questions:address-country:v1",
+      "form_pointer": "/properties/key_contacts/items/properties/address/properties/country",
+      "role": "key_contact",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "key_contacts_item",
+        "repetition": "within_1_to_4_key_contacts",
+        "repeat_pointer": "/properties/key_contacts"
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:key-contacts:address-country"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:key-contacts:address-postal-code",
+      "question_id": "question:address:postal-code",
+      "schema_id": "urn:grants-form-kernel:questions:address-postal-code:v1",
+      "form_pointer": "/properties/key_contacts/items/properties/address/properties/zip_code",
+      "role": "key_contact",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "key_contacts_item",
+        "repetition": "within_1_to_4_key_contacts",
+        "repeat_pointer": "/properties/key_contacts"
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:key-contacts:address-postal-code"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:key-contacts:phone",
+      "question_id": "question:contact:phone",
+      "schema_id": "urn:grants-form-kernel:questions:contact-phone:v1",
+      "form_pointer": "/properties/key_contacts/items/properties/phone",
+      "role": "key_contact",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "key_contacts_item",
+        "repetition": "within_1_to_4_key_contacts",
+        "repeat_pointer": "/properties/key_contacts"
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:key-contacts:phone"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:key-contacts:fax",
+      "question_id": "question:contact:fax",
+      "schema_id": "urn:grants-form-kernel:questions:contact-fax:v1",
+      "form_pointer": "/properties/key_contacts/items/properties/fax",
+      "role": "key_contact",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "key_contacts_item",
+        "repetition": "within_1_to_4_key_contacts",
+        "repeat_pointer": "/properties/key_contacts"
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:key-contacts:fax"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:key-contacts:email",
+      "question_id": "question:contact:email",
+      "schema_id": "urn:grants-form-kernel:questions:contact-email:v1",
+      "form_pointer": "/properties/key_contacts/items/properties/email",
+      "role": "key_contact",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "key_contacts_item",
+        "repetition": "within_1_to_4_key_contacts",
+        "repeat_pointer": "/properties/key_contacts"
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:key-contacts:email"
+      },
+      "mapping_status": "agent_proposed"
+    }
+  ],
+  "source_refs": [
+    "keycontacts-source-1",
+    "keycontacts-source-2",
+    "keycontacts-source-3",
+    "keycontacts-source-4",
+    "keycontacts-source-5"
+  ],
+  "supplemental_evidence": [
+    {
+      "path": "evidence/key-contacts.behavior-evidence.json",
+      "sha256": "5190eeb5f535c1ddb9616fec71f4de72175d30fe2bb25e39aa65326acd56ea33"
+    },
+    {
+      "path": "evidence/key-contacts.parity-exceptions.json",
+      "sha256": "f406749e603825867f095576d11141c501deb2953f0dd31ba34139232264d837"
+    }
+  ],
+  "review_boundary": {
+    "semantic_mappings": "agent_proposed",
+    "published_coverage_eligible": false,
+    "production_ready": false
+  }
+}

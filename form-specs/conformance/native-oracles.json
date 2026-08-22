@@ -1,0 +1,33 @@
+{
+  "contract": "portable-native-oracle-registry/v1",
+  "oracles": [
+    {
+      "form_key": "KeyContacts",
+      "module": "src.form_schema.forms.key_contacts",
+      "implementation_source": {
+        "path": "api/src/form_schema/forms/key_contacts/1/0/form_json.py",
+        "sha256": "ecf819caa437ee831637501d64c2799c0981c35217755cbd4e79f97225bafb22"
+      },
+      "artifacts": {
+        "json_schema": "FORM_JSON_SCHEMA",
+        "ui_schema": "FORM_UI_SCHEMA",
+        "rules": null,
+        "grants_gov_xml": "FORM_XML_TRANSFORM_RULES"
+      }
+    },
+    {
+      "form_key": "SF424",
+      "module": "src.form_schema.forms.sf424",
+      "implementation_source": {
+        "path": "api/src/form_schema/forms/sf424/1/0/form_json.py",
+        "sha256": "442c62f8dad67ad09a8135b3c8d880c6cad8cd6b9f0dd71411ef537b31ebc8e1"
+      },
+      "artifacts": {
+        "json_schema": "FORM_JSON_SCHEMA",
+        "ui_schema": "FORM_UI_SCHEMA",
+        "rules": "FORM_RULE_SCHEMA",
+        "grants_gov_xml": "FORM_XML_TRANSFORM_RULES"
+      }
+    }
+  ]
+}

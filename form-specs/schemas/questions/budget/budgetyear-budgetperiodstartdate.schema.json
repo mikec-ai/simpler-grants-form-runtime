@@ -1,0 +1,8 @@
+{
+  "$id": "urn:grants-form-kernel:questions:budget:budgetyear-budgetperiodstartdate:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "format": "date",
+  "title": "Start Date:",
+  "type": "string",
+  "x-question-id": "question:budget:budgetyear-budgetperiodstartdate"
+}

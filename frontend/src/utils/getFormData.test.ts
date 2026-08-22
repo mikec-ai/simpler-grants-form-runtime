@@ -211,6 +211,14 @@ describe("getFormData", () => {
           form_name: "Test",
           form_json_schema: {},
           form_ui_schema: {},
+          form_rule_schema: {
+            total: {
+              gg_pre_population: {
+                rule: "sum_monetary",
+                fields: ["amount"],
+              },
+            },
+          },
         },
         application_form_id: "form1",
         application_response: { foo: "bar" },
@@ -238,6 +246,15 @@ describe("getFormData", () => {
         formName: "Test",
         formSchema: {},
         formUiSchema: {},
+        formRuleSchema: {
+          total: {
+            gg_pre_population: {
+              rule: "sum_monetary",
+              fields: ["amount"],
+            },
+          },
+        },
+        conditionalRequiredRules: [],
         formValidationWarnings: [],
         createdAt: "2024-01-01T12:00:00Z",
         updatedAt: "2024-01-15T14:30:00Z",
@@ -292,6 +309,8 @@ describe("getFormData", () => {
         formName: "Test",
         formSchema: {},
         formUiSchema: {},
+        formRuleSchema: null,
+        conditionalRequiredRules: [],
         formValidationWarnings: [],
         createdAt: "2024-01-01T12:00:00Z",
         updatedAt: "2024-01-15T14:30:00Z",

@@ -504,6 +504,63 @@ describe("validateFormData", () => {
       expect(hasFieldListChildrenError).toBe(true);
     });
 
+    it("accepts a nested fieldList with an explicit definition", () => {
+      const nestedUiSchema: UiSchema = [
+        {
+          type: "fieldList",
+          label: "Projects",
+          name: "projects",
+          children: [
+            {
+              type: "fieldList",
+              label: "Budget periods",
+              name: "periods",
+              definition: "/properties/projects/items/properties/periods",
+              children: [
+                {
+                  type: "field",
+                  definition:
+                    "/properties/projects/items/properties/periods/items/properties/amount",
+                },
+              ],
+            },
+          ],
+        },
+      ];
+
+      expect(validateUiSchema(nestedUiSchema)).toBe(false);
+    });
+
+    it("rejects a nested fieldList without an explicit definition", () => {
+      const nestedUiSchema = [
+        {
+          type: "fieldList",
+          label: "Projects",
+          name: "projects",
+          children: [
+            {
+              type: "fieldList",
+              label: "Budget periods",
+              name: "periods",
+              children: [],
+            },
+          ],
+        },
+      ] as unknown as UiSchema;
+
+      const errors = validateUiSchema(nestedUiSchema);
+      if (!Array.isArray(errors)) {
+        throw new Error("Expected nested FieldList validation errors");
+      }
+      expect(
+        errors.some(
+          (error) =>
+            error.instancePath === "/0/children/0" &&
+            error.message?.includes("definition"),
+        ),
+      ).toBe(true);
+    });
+
     it("should invalidate fieldList with a Table child", () => {
       const invalidUiSchema = [
         {
@@ -552,5 +609,99 @@ describe("validateFormData", () => {
 
       expect(hasFieldListTableError).toBe(true);
     });
+  });
+});
+
+describe("conditional UI schema validation", () => {
+  it("accepts typed conditions on fields, sections, and FieldList children", () => {
+    const condition = {
+      when: {
+        op: "equals" as const,
+        ref: { scope: "root" as const, pointer: "/kind" },
+        value: "organization",
+      },
+      then: { visible: true, interaction: "readOnly" as const },
+      otherwise: { visible: false },
+    };
+    const schema: UiSchema = [
+      {
+        type: "section",
+        name: "details",
+        label: "Details",
+        conditional: condition,
+        children: [
+          {
+            type: "field",
+            definition: "/properties/name",
+            conditional: condition,
+          },
+          {
+            type: "fieldList",
+            name: "contacts",
+            label: "Contacts",
+            definition: "/properties/contacts",
+            conditional: condition,
+            children: [
+              {
+                type: "field",
+                definition: "/properties/contacts/items/properties/email",
+                conditional: {
+                  when: {
+                    op: "present",
+                    ref: { scope: "item", pointer: "/primary", ancestor: 0 },
+                  },
+                  then: { interaction: "enabled" },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ];
+    expect(validateUiSchema(schema)).toBeFalsy();
+  });
+
+  it.each([
+    {
+      when: {
+        op: "equals",
+        ref: { scope: "root", pointer: "not-a-pointer" },
+        value: true,
+      },
+      then: { visible: true },
+    },
+    {
+      when: {
+        op: "equals",
+        ref: { scope: "root", pointer: "/kind", ancestor: 1 },
+        value: true,
+      },
+      then: { visible: true },
+    },
+    {
+      when: { op: "unknown", ref: { scope: "root", pointer: "/kind" } },
+      then: { visible: true },
+    },
+    {
+      when: { op: "present", ref: { scope: "root", pointer: "/kind" } },
+      then: { visible: true, unexpected: true },
+    },
+    {
+      when: {
+        op: "present",
+        ref: { scope: "item", pointer: "/kind", ancestor: "1" },
+      },
+      then: { visible: true },
+    },
+  ])("rejects malformed typed conditions", (conditional) => {
+    expect(
+      validateUiSchema([
+        {
+          type: "field",
+          definition: "/properties/name",
+          conditional,
+        } as UiSchema[number],
+      ]),
+    ).toBeTruthy();
   });
 });

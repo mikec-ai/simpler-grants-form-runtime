@@ -1,0 +1,78 @@
+{
+  "contract": "common-grants-resolved-form-package/v1",
+  "source_set": {
+    "repository": "https://github.com/HHS/simpler-grants-protocol.git",
+    "revision": "65a4de852c96d35e946e8dde9f7a9864f718d8bb",
+    "attestation": "snapshot_only",
+    "closure": "partial_evidence",
+    "graph_sha256": "16ebbeb687d5317d5fdfd7c1f0240dce109367ecdee8173642f76771dc02b789",
+    "form": {
+      "source_path": "website/src/specs/forms/key-contact.tsp",
+      "package_path": "sources/key-contact.tsp",
+      "sha256": "57987951466d84a9f272d65551f7def987ec3b26d15c6fc2f4b5bebac9bdc1e6"
+    },
+    "questions": [
+      {
+        "question_id": "QuestionOrgName",
+        "source_path": "website/src/specs/question-bank/primary-org/org-name.tsp",
+        "package_path": "sources/org-name.tsp",
+        "sha256": "0bbe115fe13f6827f20483bfd3b864806e9a7a441be296e76dd7dccc69b8901a"
+      }
+    ]
+  },
+  "compiler": {
+    "name": "common-grants-to-simpler-compatibility-canary",
+    "version": "0.1.0",
+    "verification": "manual_canary",
+    "sha256": null
+  },
+  "form": {
+    "form_id": "3636b730-ff99-439e-b11d-7a52607c3fbb",
+    "legacy_form_id": null,
+    "form_name": "CommonGrants Key Contact organization compatibility canary",
+    "short_form_name": "CG_Key_Contact_Org_Canary",
+    "form_version": "0.1",
+    "agency_code": "SGG",
+    "omb_number": null,
+    "form_instruction_id": null,
+    "form_type": null,
+    "sgg_version": "1.0",
+    "is_deprecated": false
+  },
+  "artifacts": {
+    "json_schema": {
+      "path": "json-schema.json",
+      "sha256": "9a04493f3911b712704cfd3c929e0cf35c0c188efc2210990988dc9c67377877"
+    },
+    "ui_schema": {
+      "path": "ui-schema.json",
+      "sha256": "a175af92a4baf6945c5d0c880e4b80450bc488beeb2a15467b5ec70b0e6ad924"
+    },
+    "mappings": {
+      "path": "mappings.json",
+      "sha256": "47184e1d414c38516e1270f19c524b6f8233ab11a9ef1b3c230f6e2c1967d3db"
+    },
+    "rule_schema": null,
+    "xml_transform": null
+  },
+  "question_bindings": [
+    {
+      "question_id": "QuestionOrgName",
+      "form_pointer": "/properties/org",
+      "overrides": {
+        "uiSchema": {
+          "name": {
+            "label": "Applicant Organization Name"
+          }
+        }
+      }
+    }
+  ],
+  "review_boundary": {
+    "semantic_mappings": "source_authored",
+    "mapping_composition": "agent_proposed",
+    "ui_projection": "agent_proposed",
+    "common_grants_model_validation": "not_validated",
+    "published_coverage_eligible": false
+  }
+}

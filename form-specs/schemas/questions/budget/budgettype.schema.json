@@ -1,0 +1,11 @@
+{
+  "$id": "urn:grants-form-kernel:questions:budget:budgettype:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "enum": [
+    "Project",
+    "Subaward/Consortium"
+  ],
+  "title": "Budget Type:",
+  "type": "string",
+  "x-question-id": "question:budget:budgettype"
+}

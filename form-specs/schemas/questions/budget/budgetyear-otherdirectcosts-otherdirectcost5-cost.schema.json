@@ -1,0 +1,10 @@
+{
+  "$id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost5-cost:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "maxLength": 16,
+  "minLength": 1,
+  "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+  "title": "Additional Other Direct Cost Funds Requested",
+  "type": "string",
+  "x-question-id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost5-cost"
+}

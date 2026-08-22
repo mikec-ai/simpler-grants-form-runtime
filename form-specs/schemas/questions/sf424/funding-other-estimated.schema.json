@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "pattern": "^(-)?\\d*([.]\\d{2})?$",
+  "minLength": 1,
+  "maxLength": 14,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:funding-other-estimated:v1",
+  "title": "Other Estimated Funding",
+  "description": "Enter the dollar amount.",
+  "x-question-id": "question:application-funding:other-estimated",
+  "x-review-status": "agent_proposed"
+}

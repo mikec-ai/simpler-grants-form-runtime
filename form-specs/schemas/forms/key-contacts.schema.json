@@ -1,0 +1,251 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:forms:key-contacts:v2",
+  "title": "Key Contacts",
+  "type": "object",
+  "required": [
+    "applicant_organization_name",
+    "key_contacts"
+  ],
+  "properties": {
+    "applicant_organization_name": {
+      "allOf": [
+        {
+          "$ref": "urn:grants-form-kernel:questions:organization:legal-name:v1"
+        }
+      ],
+      "title": "Applicant Organization Name",
+      "description": "Enter the legal name of the applicant that will undertake the assistance activity. This field is required."
+    },
+    "key_contacts": {
+      "type": "array",
+      "title": "Key Contacts",
+      "description": "Enter between 1 and 4 key contacts and their role on the project.",
+      "minItems": 1,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "required": [
+          "project_role",
+          "name",
+          "address",
+          "phone",
+          "email"
+        ],
+        "properties": {
+          "project_role": {
+            "allOf": [
+              {
+                "$ref": "urn:grants-form-kernel:questions:contact-project-role:v1"
+              }
+            ],
+            "title": "Project Role",
+            "description": "Enter the individual's role on the project (e.g., project manager, fiscal contact)."
+          },
+          "name": {
+            "type": "object",
+            "title": "Name",
+            "description": "",
+            "required": [
+              "first_name",
+              "last_name"
+            ],
+            "properties": {
+              "prefix": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:person-name-prefix:v1"
+                  }
+                ],
+                "title": "Prefix",
+                "description": "Enter the Prefix."
+              },
+              "first_name": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:person-name-first:v1"
+                  }
+                ],
+                "title": "First Name",
+                "description": "Enter the First Name."
+              },
+              "middle_name": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:person-name-middle:v1"
+                  }
+                ],
+                "title": "Middle Name",
+                "description": "Enter the Middle Name."
+              },
+              "last_name": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:person-name-last:v1"
+                  }
+                ],
+                "title": "Last Name",
+                "description": "Enter the Last Name."
+              },
+              "suffix": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:person-name-suffix:v1"
+                  }
+                ],
+                "title": "Suffix",
+                "description": "Enter the Suffix."
+              }
+            }
+          },
+          "title": {
+            "allOf": [
+              {
+                "$ref": "urn:grants-form-kernel:questions:person-title:v1"
+              }
+            ],
+            "title": "Title",
+            "description": "Enter the position title."
+          },
+          "organizational_affiliation": {
+            "allOf": [
+              {
+                "$ref": "urn:grants-form-kernel:questions:person-organizational-affiliation:v1"
+              }
+            ],
+            "title": "Organizational Affiliation",
+            "description": "Enter the contact's organizational affiliation."
+          },
+          "address": {
+            "type": "object",
+            "title": "Address",
+            "description": "Enter an address.",
+            "required": [
+              "street1",
+              "city",
+              "country"
+            ],
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "country": {
+                      "const": "USA: UNITED STATES"
+                    }
+                  },
+                  "required": [
+                    "country"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "state",
+                    "zip_code"
+                  ]
+                }
+              }
+            ],
+            "properties": {
+              "street1": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:address-street-1:v1"
+                  }
+                ],
+                "title": "Street 1",
+                "description": "Enter the first line of the Street Address."
+              },
+              "street2": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:address-street-2:v1"
+                  }
+                ],
+                "title": "Street 2",
+                "description": "Enter the second line of the Street Address."
+              },
+              "city": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:address-city:v1"
+                  }
+                ],
+                "title": "City",
+                "description": "Enter the city."
+              },
+              "county": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:address-county:v1"
+                  }
+                ],
+                "title": "County/Parish",
+                "description": "Enter the County or Parish."
+              },
+              "state": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:address-state:v1"
+                  }
+                ],
+                "title": "State",
+                "description": "Enter the state."
+              },
+              "province": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:address-province:v1"
+                  }
+                ],
+                "title": "Province",
+                "description": "Enter the province."
+              },
+              "country": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:address-country:v1"
+                  }
+                ],
+                "title": "Country",
+                "description": "Enter the country."
+              },
+              "zip_code": {
+                "allOf": [
+                  {
+                    "$ref": "urn:grants-form-kernel:questions:address-postal-code:v1"
+                  }
+                ],
+                "title": "Zip / Postal Code",
+                "description": "Enter the nine-digit Postal Code (e.g., ZIP Code). This field is required if the Country is the United States."
+              }
+            }
+          },
+          "phone": {
+            "allOf": [
+              {
+                "$ref": "urn:grants-form-kernel:questions:contact-phone:v1"
+              }
+            ],
+            "title": "Telephone Number"
+          },
+          "fax": {
+            "allOf": [
+              {
+                "$ref": "urn:grants-form-kernel:questions:contact-fax:v1"
+              }
+            ],
+            "title": "Fax Number"
+          },
+          "email": {
+            "allOf": [
+              {
+                "$ref": "urn:grants-form-kernel:questions:contact-email:v1"
+              }
+            ],
+            "title": "Email"
+          }
+        }
+      }
+    }
+  }
+}

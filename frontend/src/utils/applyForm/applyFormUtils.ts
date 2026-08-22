@@ -16,7 +16,6 @@ import {
   FORM_DATA_NESTING_DELIMITER,
   getByPointer,
   JSON_SCHEMA_NESTING_DELIMITER,
-  VALIDATION_ERROR_NESTING_DELIMITER,
 } from "src/utils/formData/formDataUtils";
 import { isBasicallyAnObject } from "src/utils/generalUtils";
 
@@ -131,21 +130,11 @@ export const findValidationErrors = (
     if (error.field === path) {
       return true;
     }
-    const fieldListMatch = definition?.match(
-      /^\/properties\/([^/]+)\/items\/properties\/(.+)$/,
-    );
-
-    if (!fieldListMatch) {
+    if (!definition?.includes("/items/properties/")) {
       return false;
     }
-    const [, fieldListName, childDefinitionPath] = fieldListMatch;
-    const childFieldPath = childDefinitionPath.replace(
-      /\/properties\//g,
-      VALIDATION_ERROR_NESTING_DELIMITER,
-    );
-    return new RegExp(
-      `^\\$\\.${fieldListName}\\[(\\d+)\\]\\.${childFieldPath}$`,
-    ).test(error.field);
+
+    return getIndexedValidationPathPattern(definition).test(error.field);
   });
 
   if (directWarnings.length > 0) {
@@ -203,6 +192,67 @@ const isDefinitionBackedFieldNode = (
   );
 };
 
+const findFieldListValidationErrors = ({
+  errors,
+  fieldList,
+  formSchema,
+}: {
+  errors: FormValidationWarning[];
+  fieldList: Extract<UiSchemaNode, { type: "fieldList" }>;
+  formSchema: RJSFSchema;
+}): FormattedFormValidationWarning[] => {
+  const definition = fieldList.definition ?? `/properties/${fieldList.name}`;
+  const segments = getSchemaPointerDataSegments(definition);
+  const finalSegment = segments.at(-1);
+  if (!finalSegment || finalSegment.type !== "property") {
+    return [];
+  }
+
+  const listPathPattern = getValidationPathPatternFromSegments(segments);
+  const parentPathPattern = getValidationPathPatternFromSegments(
+    segments.slice(0, -1),
+  );
+  const fieldSchema = getFieldSchema({
+    definition,
+    formSchema,
+    schema: undefined,
+  }) as SchemaField;
+
+  return errors.flatMap((error) => {
+    const isListWarning = listPathPattern.test(error.field);
+    const missingPropertyName = error.message.match(
+      /^'([^']+)' is a required property$/,
+    )?.[1];
+    const isMissingListWarning =
+      error.type === "required" &&
+      parentPathPattern.test(error.field) &&
+      missingPropertyName === finalSegment.value;
+
+    if (!isListWarning && !isMissingListWarning) {
+      return [];
+    }
+
+    const field = isMissingListWarning
+      ? `${error.field === "$" ? "$" : error.field}.${finalSegment.value}`
+      : error.field;
+    const formatted = formatValidationWarning(
+      finalSegment.value,
+      error.message,
+      { ...fieldSchema, title: fieldSchema.title ?? fieldList.label },
+    );
+
+    return [
+      {
+        ...error,
+        field,
+        formatted,
+        htmlField: field.replace(/^\$\.?/, "").replace(/\./g, "--"),
+        fieldListLabel: fieldList.label,
+      },
+    ];
+  });
+};
+
 export const buildWarningTree = (
   uiSchema: UiSchema | UiSchemaField[] | UiSchemaNode,
   parent: UiSchema | UiSchemaField[] | UiSchemaNode | null,
@@ -215,7 +265,7 @@ export const buildWarningTree = (
   if (
     !Array.isArray(uiSchema) &&
     typeof uiSchema === "object" &&
-    (uiSchema.type === "section" || uiSchema.type === "fieldList")
+    uiSchema.type === "section"
   ) {
     return buildWarningTree(
       uiSchema.children,
@@ -224,19 +274,40 @@ export const buildWarningTree = (
       formSchema,
       resolvedRootUiSchema,
     );
+  } else if (!Array.isArray(uiSchema) && uiSchema.type === "fieldList") {
+    return findFieldListValidationErrors({
+      errors: formValidationWarnings,
+      fieldList: uiSchema,
+      formSchema,
+    }).concat(
+      buildWarningTree(
+        uiSchema.children,
+        uiSchema,
+        formValidationWarnings,
+        formSchema,
+        resolvedRootUiSchema,
+      ),
+    );
   } else if (Array.isArray(uiSchema)) {
     const childErrors = uiSchema.reduce<FormattedFormValidationWarning[]>(
       (errors, node) => {
         if (node.type === "section" || node.type === "fieldList") {
-          const children = node.children;
           const nodeError = buildWarningTree(
-            children,
+            node.children,
             uiSchema,
             formValidationWarnings,
             formSchema,
             resolvedRootUiSchema,
           );
-          return errors.concat(nodeError);
+          const groupErrors =
+            node.type === "fieldList"
+              ? findFieldListValidationErrors({
+                  errors: formValidationWarnings,
+                  fieldList: node,
+                  formSchema,
+                })
+              : [];
+          return errors.concat(groupErrors, nodeError);
         } else if (!parent && isDefinitionBackedFieldNode(node)) {
           const matchingWarnings = findValidationErrors(
             formValidationWarnings,
@@ -259,14 +330,10 @@ export const buildWarningTree = (
       const parentErrors = uiSchema.reduce<FormattedFormValidationWarning[]>(
         (errors, node) => {
           if (node.type === "section" || node.type === "fieldList") {
-            const nodeError = buildWarningTree(
-              node.children,
-              uiSchema,
-              formValidationWarnings,
-              formSchema,
-              resolvedRootUiSchema,
-            );
-            return errors.concat(nodeError);
+            // Container descendants were already traversed while building
+            // childErrors above. Re-entering them here duplicates warnings
+            // for every additional nesting level.
+            return errors;
           } else if (isDefinitionBackedFieldNode(node)) {
             const matchingWarnings = findValidationErrors(
               formValidationWarnings,
@@ -339,38 +406,75 @@ export function getHtmlFieldForWarning({
   field?: string;
   schema?: SchemaField;
 }): string | undefined {
-  const match = definition
-    ? definition.match(/^\/properties\/([^/]+)\/items\/properties\/(.+)$/)
-    : null;
-
-  if (!match) {
+  if (!definition?.includes("/items/properties/")) {
     return getFieldNameForHtml({
       definition,
       schema,
     });
   }
 
-  const [, fieldListName, childDefinitionPath] = match;
-  const childFieldPath = childDefinitionPath.replace(
-    /\/properties\//g,
-    VALIDATION_ERROR_NESTING_DELIMITER,
-  );
-  const childHtmlPath = childFieldPath.replace(
-    /\./g,
-    FORM_DATA_NESTING_DELIMITER,
-  );
-
-  const entryMatch = field?.match(
-    new RegExp(`^\\$\\.${fieldListName}\\[(\\d+)\\]\\.${childFieldPath}$`),
-  );
-
-  if (entryMatch) {
-    const [, entryIndex] = entryMatch;
-    return `${fieldListName}[${entryIndex}]--${childHtmlPath}`;
+  if (field && getIndexedValidationPathPattern(definition).test(field)) {
+    return field
+      .replace(/^\$\./, "")
+      .replace(/\./g, FORM_DATA_NESTING_DELIMITER);
   }
 
-  return `${fieldListName}[0]--${childHtmlPath}`;
+  return getSchemaPointerDataSegments(definition)
+    .map((segment) => (segment.type === "index" ? "[0]" : segment.value))
+    .join(FORM_DATA_NESTING_DELIMITER)
+    .replaceAll(`${FORM_DATA_NESTING_DELIMITER}[`, "[");
 }
+
+const escapeRegularExpression = (value: string): string =>
+  value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+type SchemaPointerDataSegment =
+  { type: "property"; value: string } | { type: "index" };
+
+/** Parses schema structure without confusing a property named `items`. */
+const getSchemaPointerDataSegments = (
+  definition: string,
+): SchemaPointerDataSegment[] => {
+  const parts = definition.split("/").filter(Boolean);
+  const segments: SchemaPointerDataSegment[] = [];
+
+  for (let index = 0; index < parts.length; index += 1) {
+    const part = parts[index];
+    if (part === "properties") {
+      const propertyName = parts[index + 1];
+      if (propertyName) {
+        segments.push({ type: "property", value: propertyName });
+        index += 1;
+      }
+    } else if (part === "items") {
+      segments.push({ type: "index" });
+    }
+  }
+
+  return segments;
+};
+
+/** Converts a schema pointer containing array items into an indexed data path. */
+const getValidationPathPatternFromSegments = (
+  segments: SchemaPointerDataSegment[],
+): RegExp => {
+  let pattern = "^\\$";
+
+  for (const segment of segments) {
+    if (segment.type === "index") {
+      pattern += "\\[\\d+\\]";
+      continue;
+    }
+    pattern += `\\.${escapeRegularExpression(segment.value)}`;
+  }
+
+  return new RegExp(`${pattern}$`);
+};
+
+const getIndexedValidationPathPattern = (definition: string): RegExp =>
+  getValidationPathPatternFromSegments(
+    getSchemaPointerDataSegments(definition),
+  );
 
 // Finds the parent FieldList label for a child field definition so it can be
 // used in summary text like "First Name is required (Contact People, Entry 2)".
@@ -385,27 +489,28 @@ export function getFieldListLabelFromDefinition({
     return undefined;
   }
 
-  const match = definition.match(
-    /^\/properties\/([^/]+)\/items\/properties\/.+$/,
-  );
-
-  if (!match) {
+  if (!definition.includes("/items/properties/")) {
     return undefined;
   }
 
-  const [, fieldListName] = match;
-
   const findFieldListLabel = (nodes: UiSchema): string | undefined => {
     for (const node of nodes) {
-      if (node.type === "fieldList" && node.name === fieldListName) {
-        return node.label;
+      if (node.type === "fieldList") {
+        const fieldListDefinition =
+          node.definition ?? `/properties/${node.name}`;
+        const nestedLabel = findFieldListLabel(node.children);
+
+        if (nestedLabel) {
+          return nestedLabel;
+        }
+
+        if (definition.startsWith(`${fieldListDefinition}/items/`)) {
+          return node.label;
+        }
       }
 
-      if (
-        (node.type === "section" || node.type === "fieldList") &&
-        Array.isArray(node.children)
-      ) {
-        const nestedLabel = findFieldListLabel(node.children as UiSchema);
+      if (node.type === "section" && Array.isArray(node.children)) {
+        const nestedLabel = findFieldListLabel(node.children);
         if (nestedLabel) {
           return nestedLabel;
         }
@@ -666,9 +771,21 @@ const removePropertyPaths = (path: unknown): string => {
     return "";
   }
 
+  if (path.startsWith("/")) {
+    return getSchemaPointerDataSegments(path)
+      .filter(
+        (
+          segment,
+        ): segment is Extract<SchemaPointerDataSegment, { type: "property" }> =>
+          segment.type === "property",
+      )
+      .map((segment) => segment.value)
+      .join("/");
+  }
+
   return path
-    .replace(/properties\//g, "")
-    .replace(/items\//g, "")
+    .replace(/(^|\/)properties(?=\/|$)/g, "")
+    .replace(/\/{2,}/g, "/")
     .replace(/^\//, "");
 };
 
