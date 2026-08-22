@@ -10,12 +10,12 @@ import jsonschema
 import pytest
 from referencing import Registry, Resource
 
-from src.form_schema.registry.form_template_registry import FormTemplateKey, FormTemplateRegistry
 from src.form_schema.portable_form_bundle import (
     CONTRACT,
     PortableFormBundleError,
     load_portable_form_bundle,
 )
+from src.form_schema.registry.form_template_registry import FormTemplateKey, FormTemplateRegistry
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[4]
 BUNDLE_ROOT = REPOSITORY_ROOT / "form-specs"
