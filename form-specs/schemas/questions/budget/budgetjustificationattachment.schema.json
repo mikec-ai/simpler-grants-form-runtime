@@ -1,0 +1,7 @@
+{
+  "$id": "urn:grants-form-kernel:questions:budget:budgetjustificationattachment:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "L. Budget Justification (Only attach one file.)",
+  "type": "string",
+  "x-question-id": "question:budget:budgetjustificationattachment"
+}

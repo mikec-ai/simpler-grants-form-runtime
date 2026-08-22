@@ -1,0 +1,7 @@
+{
+  "$id": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-attachedkeypersons:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Additional Senior Key Persons:",
+  "type": "string",
+  "x-question-id": "question:budget:budgetyear-keypersons-attachedkeypersons"
+}

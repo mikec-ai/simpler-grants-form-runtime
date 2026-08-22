@@ -1,0 +1,12 @@
+{
+  "$id": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-name-prefixname:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "enum": [
+    "Mr.; Mrs.; Miss; Ms.; Dr.; Rev."
+  ],
+  "maxLength": 10,
+  "minLength": 1,
+  "title": "Prefix",
+  "type": "string",
+  "x-question-id": "question:budget:budgetyear-keypersons-keyperson-name-prefixname"
+}

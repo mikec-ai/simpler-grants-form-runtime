@@ -1,0 +1,9 @@
+{
+  "$id": "urn:grants-form-kernel:questions:budget:budgetyear-cognizantfederalagency:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "maxLength": 180,
+  "minLength": 1,
+  "title": "Cognizant Federal Agency (Agency Name, POC Name, and POC Phone Number)",
+  "type": "string",
+  "x-question-id": "question:budget:budgetyear-cognizantfederalagency"
+}
