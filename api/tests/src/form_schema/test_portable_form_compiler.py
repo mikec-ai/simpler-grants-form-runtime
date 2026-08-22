@@ -56,7 +56,7 @@ def test_generic_compiler_check_and_bundle_remain_loadable(tmp_path: Path) -> No
 
     assert result.returncode == 0
     assert "status: current" in result.stdout
-    assert len(load_portable_form_bundle(bundle).forms_by_key) == 6
+    assert len(load_portable_form_bundle(bundle).forms_by_key) == 8
 
 
 def test_generic_compiler_fails_closed_on_declaration_drift(tmp_path: Path) -> None:

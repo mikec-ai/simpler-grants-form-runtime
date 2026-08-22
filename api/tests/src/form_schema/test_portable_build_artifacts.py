@@ -1,5 +1,6 @@
 import hashlib
 import json
+import shutil
 import subprocess
 import sys
 import zipfile
@@ -40,23 +41,25 @@ def test_oracle_export_is_deterministic_and_complete(tmp_path: Path) -> None:
 
     assert first_result.returncode == 0, first_result.stderr
     assert second_result.returncode == 0, second_result.stderr
-    assert "forms: 6" in first_result.stdout
+    assert "forms: 8" in first_result.stdout
     assert _tree_digest(first) == _tree_digest(second)
 
     manifest = json.loads((first / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["summary"] == {
         "accepted_semantic_mappings": 0,
-        "forms": 6,
+        "forms": 8,
         "native_implementation_oracles": 8,
         "published_coverage_eligible": False,
-        "resolved_runtime_oracles": 6,
+        "resolved_runtime_oracles": 8,
     }
     assert {path.stem for path in (first / "resolved").glob("*.json")} == {
         "KeyContacts",
         "RRBudget",
         "RRBudget10",
         "RRMPBudget",
+        "RRMPSubawardBudget",
         "RRSubawardBudget30",
+        "RRSubawardBudget10_30",
         "SF424",
     }
 
@@ -109,6 +112,31 @@ def test_generated_outputs_are_not_tracked_runtime_inputs() -> None:
         for form in manifest["forms"]
         for evidence in form["supplemental_evidence"]
     )
+
+
+def test_native_oracle_selection_is_declarative_and_fails_on_drift(
+    tmp_path: Path,
+) -> None:
+    source = ORACLE_EXPORTER.read_text(encoding="utf-8")
+    assert "src.form_schema.forms.key_contacts" not in source
+    assert "src.form_schema.forms.sf424" not in source
+
+    bundle = tmp_path / "form-specs"
+    shutil.copytree(BUNDLE, bundle)
+    registry_path = bundle / "conformance/native-oracles.json"
+    registry = json.loads(registry_path.read_text(encoding="utf-8"))
+    registry["oracles"][0]["implementation_source"]["sha256"] = "0" * 64
+    registry_path.write_text(json.dumps(registry), encoding="utf-8")
+    result = _run(
+        str(ORACLE_EXPORTER),
+        "--bundle",
+        str(bundle),
+        "--output-dir",
+        str(tmp_path / "oracles"),
+    )
+
+    assert result.returncode == 1
+    assert "native oracle implementation source drift" in result.stderr
 
 
 @pytest.mark.parametrize(

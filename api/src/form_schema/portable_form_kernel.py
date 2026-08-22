@@ -160,6 +160,42 @@ def _references(value: object) -> list[str]:
     return references
 
 
+def _expand_form_references(
+    value: object,
+    schemas_by_id: dict[str, dict[str, Any]],
+    schema_kinds: dict[str, str],
+    stack: tuple[str, ...] = (),
+) -> object:
+    """Inline form composition while preserving question references for accounting."""
+
+    if isinstance(value, dict):
+        reference = value.get("$ref")
+        if isinstance(reference, str) and schema_kinds.get(reference) == "form":
+            if set(value) != {"$ref"}:
+                raise PortableFormKernelError(
+                    f"form schema reference cannot have sibling keywords: {reference}"
+                )
+            if reference in stack:
+                raise PortableFormKernelError(
+                    f"circular form schema composition: {' -> '.join((*stack, reference))}"
+                )
+            return _expand_form_references(
+                schemas_by_id[reference],
+                schemas_by_id,
+                schema_kinds,
+                (*stack, reference),
+            )
+        return {
+            key: _expand_form_references(child, schemas_by_id, schema_kinds, stack)
+            for key, child in value.items()
+        }
+    if isinstance(value, list):
+        return [
+            _expand_form_references(child, schemas_by_id, schema_kinds, stack) for child in value
+        ]
+    return value
+
+
 def _validate_source_evidence(value: object, label: str) -> None:
     source = _object(value, label)
     _exact_keys(
@@ -747,7 +783,12 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
             else:
                 raise PortableFormKernelError(f"{label} has unknown mapping target: {target_name}")
 
-        schema = schemas_by_id[schema_id]
+        schema = _object(
+            _expand_form_references(
+                schemas_by_id[schema_id], schemas_by_id, schema_kinds, (schema_id,)
+            ),
+            f"{label}.composed_schema",
+        )
         all_references = dict(_question_references(schema, question_schema_ids))
         covered_references: set[str] = set()
         seen_binding_ids: set[str] = set()

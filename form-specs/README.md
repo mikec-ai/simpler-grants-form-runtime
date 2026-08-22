@@ -35,6 +35,11 @@ declarations and current native implementation, then publishes commit-addressed 
 SHA-256 manifests. See `documentation/form-analysis/README.md` for local commands and artifact
 names.
 
+`conformance/native-oracles.json` is a compact declarative registry, not an emitted oracle. It
+identifies the native implementation modules and constants used by the generic build exporter and
+pins each implementation source file by SHA-256. Adding another native parity comparison changes
+that registry, not Python branching. The large resolved and native values remain CI artifacts.
+
 The earlier budget-specific Python builders were migration scaffolding used to discover and
 materialize the current declarations. They have been removed from the supported build path; their
 exact history remains available in Git. New forms must be added by declarations and processed by
@@ -65,7 +70,7 @@ The adapter resolves the referenced schema and compiles it through the same immu
 `ResolvedFormPackage` seam used by the native runtime. It does not construct a parallel native
 `Form` path.
 
-The pilot contains complete portable declarations for Key Contacts and SF-424. Key Contacts
+The first pilot contains complete portable declarations for Key Contacts and SF-424. Key Contacts
 binds 20 question occurrences, including its one-to-four repeated contact group. SF-424 binds
 73 occurrences covering all 75 countable source paths, including role-distinct contacts,
 conditions, a calculation, static content, and Grants.gov XML declarations. Nineteen of the 20
@@ -112,6 +117,24 @@ The composition wave adds two less-trivial forms without adding form-specific ru
   Two of those differences reuse an existing catalog schema and twelve emit explicit variants.
   Ten calculations are projected, while 46 calculations and 55 conditions remain preserved in
   evidence rather than inferred.
+
+The next declaration-only expansion adds two more complete portable forms without adding a Python
+form builder:
+
+- R&R Subaward Budget 10-Year 30 composes the existing ten-year R&R Budget form schema inside the
+  same bounded 30-instance subaward shell. The canonical wrapper schema contains a standard JSON
+  Schema `$ref` to the existing form schema, rather than another expanded copy. Its applicant-input
+  structure, UI, and 30-rule calculation graph are the same as the five-year/30-attachment sibling;
+  only the embedded source-wire identity and five-to-ten period limit differ.
+- R&R Multi-Project Subaward Budget composes the existing R&R Multi-Project Budget schema inside a
+  30-instance subaward shell. Its target DAT contains seven wrapper behaviors and does not establish
+  inheritance of the embedded form's calculations or conditions, so the declaration deliberately
+  projects no inherited rule graph.
+
+The dependency-neutral kernel resolves transitive form `$ref` declarations for validation,
+question accounting, analysis, and downstream adapters. It rejects form references with sibling
+keywords and circular form composition. Form-specific semantic choices remain in versioned JSON
+declarations and evidence; the Python compiler performs generic validation and assembly only.
 
 Question identity and validation schema identity are intentionally separate. A proposed question
 may have more than one schema variant when form-specific constraints differ. Organization legal

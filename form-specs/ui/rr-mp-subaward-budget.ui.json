@@ -1,0 +1,981 @@
+{
+  "elements": [
+    {
+      "scope": "#/properties/att_1",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_10",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_11",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_12",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_13",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_14",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_15",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_16",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_17",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_18",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_19",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_2",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_20",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_21",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_22",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_23",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_24",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_25",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_26",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_27",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_28",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_29",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_3",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_30",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_4",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_5",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_6",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_7",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_8",
+      "type": "Control"
+    },
+    {
+      "scope": "#/properties/att_9",
+      "type": "Control"
+    },
+    {
+      "elements": [
+        {
+          "label": "Rr Mp Budget 3 0",
+          "options": {
+            "detail": {
+              "elements": [
+                {
+                  "scope": "#/properties/budget_justification_attachment",
+                  "type": "Control"
+                },
+                {
+                  "elements": [
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_adp_computer_services",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_alterations_and_renovations",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_consultant_services",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_domestic_travel_costs",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_equipment_facility_rental_fees",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_fee",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_foreign_travel_costs",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_material_and_supplies",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_noof_trainees",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_other_10_direct_cost",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_other_1_direct_cost",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_other_2_direct_cost",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_other_3_direct_cost",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_other_4_direct_cost",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_other_5_direct_cost",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_other_6_direct_cost",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_other_7_direct_cost",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_other_8_direct_cost",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_other_9_direct_cost",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_other_trainee_cost",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_publication_costs",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_subaward_consortium_contractual_costs",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_total_costs_fee",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_total_funds_requested_direct_costs",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_total_funds_requested_direct_indirect_costs",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_total_funds_requested_equipment",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_total_funds_requested_indirect_cost",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_total_funds_requested_other_direct_costs",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_total_funds_requested_other_personnel",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_total_funds_requested_personnel",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_total_funds_requested_senior_key_person",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_total_funds_requested_trainee_costs",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_total_funds_requested_travel",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_total_no_other_personnel",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_trainee_stipends",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_trainee_subsistence",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_trainee_travel",
+                      "type": "Control"
+                    },
+                    {
+                      "scope": "#/properties/budget_summary/properties/cumulative_trainee_tuition_fees_health_insurance",
+                      "type": "Control"
+                    }
+                  ],
+                  "label": "Budget Summary",
+                  "type": "Group"
+                },
+                {
+                  "scope": "#/properties/budget_type",
+                  "type": "Control"
+                },
+                {
+                  "label": "Budget Year",
+                  "options": {
+                    "detail": {
+                      "elements": [
+                        {
+                          "scope": "#/properties/budget_period_end_date",
+                          "type": "Control"
+                        },
+                        {
+                          "scope": "#/properties/budget_period_start_date",
+                          "type": "Control"
+                        },
+                        {
+                          "scope": "#/properties/cognizant_federal_agency",
+                          "type": "Control"
+                        },
+                        {
+                          "scope": "#/properties/direct_costs",
+                          "type": "Control"
+                        },
+                        {
+                          "elements": [
+                            {
+                              "scope": "#/properties/equipment/properties/additional_equipments_attachment",
+                              "type": "Control"
+                            },
+                            {
+                              "label": "Equipment List",
+                              "options": {
+                                "detail": {
+                                  "elements": [
+                                    {
+                                      "scope": "#/properties/equipment_item",
+                                      "type": "Control"
+                                    },
+                                    {
+                                      "scope": "#/properties/funds_requested",
+                                      "type": "Control"
+                                    }
+                                  ],
+                                  "type": "VerticalLayout"
+                                },
+                                "itemLabel": "Equipment List"
+                              },
+                              "scope": "#/properties/equipment/properties/equipment_list",
+                              "type": "Control"
+                            },
+                            {
+                              "scope": "#/properties/equipment/properties/total_fund",
+                              "type": "Control"
+                            },
+                            {
+                              "scope": "#/properties/equipment/properties/total_fund_for_attached_equipment",
+                              "type": "Control"
+                            }
+                          ],
+                          "label": "Equipment",
+                          "type": "Group"
+                        },
+                        {
+                          "scope": "#/properties/fee",
+                          "type": "Control"
+                        },
+                        {
+                          "elements": [
+                            {
+                              "label": "Indirect Cost",
+                              "options": {
+                                "detail": {
+                                  "elements": [
+                                    {
+                                      "scope": "#/properties/base",
+                                      "type": "Control"
+                                    },
+                                    {
+                                      "scope": "#/properties/cost_type",
+                                      "type": "Control"
+                                    },
+                                    {
+                                      "scope": "#/properties/fund_requested",
+                                      "type": "Control"
+                                    },
+                                    {
+                                      "scope": "#/properties/rate",
+                                      "type": "Control"
+                                    }
+                                  ],
+                                  "type": "VerticalLayout"
+                                },
+                                "itemLabel": "Indirect Cost"
+                              },
+                              "scope": "#/properties/indirect_costs/properties/indirect_cost",
+                              "type": "Control"
+                            },
+                            {
+                              "scope": "#/properties/indirect_costs/properties/total_indirect_costs",
+                              "type": "Control"
+                            }
+                          ],
+                          "label": "Indirect Costs",
+                          "type": "Group"
+                        },
+                        {
+                          "elements": [
+                            {
+                              "scope": "#/properties/key_persons/properties/attached_key_persons",
+                              "type": "Control"
+                            },
+                            {
+                              "label": "Key Person",
+                              "options": {
+                                "detail": {
+                                  "elements": [
+                                    {
+                                      "scope": "#/properties/academic_months",
+                                      "type": "Control"
+                                    },
+                                    {
+                                      "scope": "#/properties/base_salary",
+                                      "type": "Control"
+                                    },
+                                    {
+                                      "scope": "#/properties/calendar_months",
+                                      "type": "Control"
+                                    },
+                                    {
+                                      "scope": "#/properties/fringe_benefits",
+                                      "type": "Control"
+                                    },
+                                    {
+                                      "scope": "#/properties/funds_requested",
+                                      "type": "Control"
+                                    },
+                                    {
+                                      "elements": [
+                                        {
+                                          "scope": "#/properties/name/properties/first_name",
+                                          "type": "Control"
+                                        },
+                                        {
+                                          "scope": "#/properties/name/properties/last_name",
+                                          "type": "Control"
+                                        },
+                                        {
+                                          "scope": "#/properties/name/properties/middle_name",
+                                          "type": "Control"
+                                        },
+                                        {
+                                          "scope": "#/properties/name/properties/prefix_name",
+                                          "type": "Control"
+                                        },
+                                        {
+                                          "scope": "#/properties/name/properties/suffix_name",
+                                          "type": "Control"
+                                        }
+                                      ],
+                                      "label": "Name",
+                                      "type": "Group"
+                                    },
+                                    {
+                                      "scope": "#/properties/project_role",
+                                      "type": "Control"
+                                    },
+                                    {
+                                      "scope": "#/properties/requested_salary",
+                                      "type": "Control"
+                                    },
+                                    {
+                                      "scope": "#/properties/summer_months",
+                                      "type": "Control"
+                                    }
+                                  ],
+                                  "type": "VerticalLayout"
+                                },
+                                "itemLabel": "Key Person"
+                              },
+                              "scope": "#/properties/key_persons/properties/key_person",
+                              "type": "Control"
+                            },
+                            {
+                              "scope": "#/properties/key_persons/properties/total_fund_for_attached_key_persons",
+                              "type": "Control"
+                            },
+                            {
+                              "scope": "#/properties/key_persons/properties/total_fund_for_key_persons",
+                              "type": "Control"
+                            }
+                          ],
+                          "label": "Key Persons",
+                          "type": "Group"
+                        },
+                        {
+                          "elements": [
+                            {
+                              "scope": "#/properties/other_direct_costs/properties/adp_computer_services",
+                              "type": "Control"
+                            },
+                            {
+                              "scope": "#/properties/other_direct_costs/properties/alterations_renovations",
+                              "type": "Control"
+                            },
+                            {
+                              "scope": "#/properties/other_direct_costs/properties/consultant_services",
+                              "type": "Control"
+                            },
+                            {
+                              "scope": "#/properties/other_direct_costs/properties/equipment_rental_fee",
+                              "type": "Control"
+                            },
+                            {
+                              "scope": "#/properties/other_direct_costs/properties/materials_supplies",
+                              "type": "Control"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "scope": "#/properties/other_direct_costs/properties/other_direct_cost_1/properties/cost",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_direct_costs/properties/other_direct_cost_1/properties/description",
+                                  "type": "Control"
+                                }
+                              ],
+                              "label": "Other Direct Cost 1",
+                              "type": "Group"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "scope": "#/properties/other_direct_costs/properties/other_direct_cost_10/properties/cost",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_direct_costs/properties/other_direct_cost_10/properties/description",
+                                  "type": "Control"
+                                }
+                              ],
+                              "label": "Other Direct Cost 10",
+                              "type": "Group"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "scope": "#/properties/other_direct_costs/properties/other_direct_cost_2/properties/cost",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_direct_costs/properties/other_direct_cost_2/properties/description",
+                                  "type": "Control"
+                                }
+                              ],
+                              "label": "Other Direct Cost 2",
+                              "type": "Group"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "scope": "#/properties/other_direct_costs/properties/other_direct_cost_3/properties/cost",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_direct_costs/properties/other_direct_cost_3/properties/description",
+                                  "type": "Control"
+                                }
+                              ],
+                              "label": "Other Direct Cost 3",
+                              "type": "Group"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "scope": "#/properties/other_direct_costs/properties/other_direct_cost_4/properties/cost",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_direct_costs/properties/other_direct_cost_4/properties/description",
+                                  "type": "Control"
+                                }
+                              ],
+                              "label": "Other Direct Cost 4",
+                              "type": "Group"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "scope": "#/properties/other_direct_costs/properties/other_direct_cost_5/properties/cost",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_direct_costs/properties/other_direct_cost_5/properties/description",
+                                  "type": "Control"
+                                }
+                              ],
+                              "label": "Other Direct Cost 5",
+                              "type": "Group"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "scope": "#/properties/other_direct_costs/properties/other_direct_cost_6/properties/cost",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_direct_costs/properties/other_direct_cost_6/properties/description",
+                                  "type": "Control"
+                                }
+                              ],
+                              "label": "Other Direct Cost 6",
+                              "type": "Group"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "scope": "#/properties/other_direct_costs/properties/other_direct_cost_7/properties/cost",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_direct_costs/properties/other_direct_cost_7/properties/description",
+                                  "type": "Control"
+                                }
+                              ],
+                              "label": "Other Direct Cost 7",
+                              "type": "Group"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "scope": "#/properties/other_direct_costs/properties/other_direct_cost_8/properties/cost",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_direct_costs/properties/other_direct_cost_8/properties/description",
+                                  "type": "Control"
+                                }
+                              ],
+                              "label": "Other Direct Cost 8",
+                              "type": "Group"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "scope": "#/properties/other_direct_costs/properties/other_direct_cost_9/properties/cost",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_direct_costs/properties/other_direct_cost_9/properties/description",
+                                  "type": "Control"
+                                }
+                              ],
+                              "label": "Other Direct Cost 9",
+                              "type": "Group"
+                            },
+                            {
+                              "scope": "#/properties/other_direct_costs/properties/publication_costs",
+                              "type": "Control"
+                            },
+                            {
+                              "scope": "#/properties/other_direct_costs/properties/subaward_consortium_contractual_costs",
+                              "type": "Control"
+                            },
+                            {
+                              "scope": "#/properties/other_direct_costs/properties/total_other_direct_cost",
+                              "type": "Control"
+                            }
+                          ],
+                          "label": "Other Direct Costs",
+                          "type": "Group"
+                        },
+                        {
+                          "elements": [
+                            {
+                              "elements": [
+                                {
+                                  "scope": "#/properties/other_personnel/properties/graduate_students/properties/academic_months",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/graduate_students/properties/calendar_months",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/graduate_students/properties/fringe_benefits",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/graduate_students/properties/funds_requested",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/graduate_students/properties/number_of_personnel",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/graduate_students/properties/project_role",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/graduate_students/properties/requested_salary",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/graduate_students/properties/summer_months",
+                                  "type": "Control"
+                                }
+                              ],
+                              "label": "Graduate Students",
+                              "type": "Group"
+                            },
+                            {
+                              "label": "Other",
+                              "options": {
+                                "detail": {
+                                  "elements": [
+                                    {
+                                      "scope": "#/properties/academic_months",
+                                      "type": "Control"
+                                    },
+                                    {
+                                      "scope": "#/properties/calendar_months",
+                                      "type": "Control"
+                                    },
+                                    {
+                                      "scope": "#/properties/fringe_benefits",
+                                      "type": "Control"
+                                    },
+                                    {
+                                      "scope": "#/properties/funds_requested",
+                                      "type": "Control"
+                                    },
+                                    {
+                                      "scope": "#/properties/number_of_personnel",
+                                      "type": "Control"
+                                    },
+                                    {
+                                      "scope": "#/properties/project_role",
+                                      "type": "Control"
+                                    },
+                                    {
+                                      "scope": "#/properties/requested_salary",
+                                      "type": "Control"
+                                    },
+                                    {
+                                      "scope": "#/properties/summer_months",
+                                      "type": "Control"
+                                    }
+                                  ],
+                                  "type": "VerticalLayout"
+                                },
+                                "itemLabel": "Other"
+                              },
+                              "scope": "#/properties/other_personnel/properties/other",
+                              "type": "Control"
+                            },
+                            {
+                              "scope": "#/properties/other_personnel/properties/other_personnel_total_number",
+                              "type": "Control"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "scope": "#/properties/other_personnel/properties/post_doc_associates/properties/academic_months",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/post_doc_associates/properties/calendar_months",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/post_doc_associates/properties/fringe_benefits",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/post_doc_associates/properties/funds_requested",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/post_doc_associates/properties/number_of_personnel",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/post_doc_associates/properties/project_role",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/post_doc_associates/properties/requested_salary",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/post_doc_associates/properties/summer_months",
+                                  "type": "Control"
+                                }
+                              ],
+                              "label": "Post Doc Associates",
+                              "type": "Group"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "scope": "#/properties/other_personnel/properties/secretarial_clerical/properties/academic_months",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/secretarial_clerical/properties/calendar_months",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/secretarial_clerical/properties/fringe_benefits",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/secretarial_clerical/properties/funds_requested",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/secretarial_clerical/properties/number_of_personnel",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/secretarial_clerical/properties/project_role",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/secretarial_clerical/properties/requested_salary",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/secretarial_clerical/properties/summer_months",
+                                  "type": "Control"
+                                }
+                              ],
+                              "label": "Secretarial Clerical",
+                              "type": "Group"
+                            },
+                            {
+                              "scope": "#/properties/other_personnel/properties/total_other_personnel_fund",
+                              "type": "Control"
+                            },
+                            {
+                              "elements": [
+                                {
+                                  "scope": "#/properties/other_personnel/properties/undergraduate_students/properties/academic_months",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/undergraduate_students/properties/calendar_months",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/undergraduate_students/properties/fringe_benefits",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/undergraduate_students/properties/funds_requested",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/undergraduate_students/properties/number_of_personnel",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/undergraduate_students/properties/project_role",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/undergraduate_students/properties/requested_salary",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/other_personnel/properties/undergraduate_students/properties/summer_months",
+                                  "type": "Control"
+                                }
+                              ],
+                              "label": "Undergraduate Students",
+                              "type": "Group"
+                            }
+                          ],
+                          "label": "Other Personnel",
+                          "type": "Group"
+                        },
+                        {
+                          "elements": [
+                            {
+                              "elements": [
+                                {
+                                  "scope": "#/properties/participant_trainee_support_costs/properties/other/properties/cost",
+                                  "type": "Control"
+                                },
+                                {
+                                  "scope": "#/properties/participant_trainee_support_costs/properties/other/properties/description",
+                                  "type": "Control"
+                                }
+                              ],
+                              "label": "Other",
+                              "type": "Group"
+                            },
+                            {
+                              "scope": "#/properties/participant_trainee_support_costs/properties/participant_trainee_number",
+                              "type": "Control"
+                            },
+                            {
+                              "scope": "#/properties/participant_trainee_support_costs/properties/stipends",
+                              "type": "Control"
+                            },
+                            {
+                              "scope": "#/properties/participant_trainee_support_costs/properties/subsistence",
+                              "type": "Control"
+                            },
+                            {
+                              "scope": "#/properties/participant_trainee_support_costs/properties/total_cost",
+                              "type": "Control"
+                            },
+                            {
+                              "scope": "#/properties/participant_trainee_support_costs/properties/travel",
+                              "type": "Control"
+                            },
+                            {
+                              "scope": "#/properties/participant_trainee_support_costs/properties/tuition_fee_health_insurance",
+                              "type": "Control"
+                            }
+                          ],
+                          "label": "Participant Trainee Support Costs",
+                          "type": "Group"
+                        },
+                        {
+                          "scope": "#/properties/total_compensation",
+                          "type": "Control"
+                        },
+                        {
+                          "scope": "#/properties/total_costs",
+                          "type": "Control"
+                        },
+                        {
+                          "scope": "#/properties/total_costs_fee",
+                          "type": "Control"
+                        },
+                        {
+                          "elements": [
+                            {
+                              "scope": "#/properties/travel/properties/domestic_travel_cost",
+                              "type": "Control"
+                            },
+                            {
+                              "scope": "#/properties/travel/properties/foreign_travel_cost",
+                              "type": "Control"
+                            },
+                            {
+                              "scope": "#/properties/travel/properties/total_travel_cost",
+                              "type": "Control"
+                            }
+                          ],
+                          "label": "Travel",
+                          "type": "Group"
+                        }
+                      ],
+                      "type": "VerticalLayout"
+                    },
+                    "itemLabel": "Budget Year"
+                  },
+                  "scope": "#/properties/budget_year",
+                  "type": "Control"
+                },
+                {
+                  "scope": "#/properties/organization_name",
+                  "type": "Control"
+                },
+                {
+                  "scope": "#/properties/samuei",
+                  "type": "Control"
+                }
+              ],
+              "type": "VerticalLayout"
+            },
+            "itemLabel": "Rr Budget 3 0"
+          },
+          "scope": "#/properties/budget_attachments/properties/rr_mp_budget_3_0",
+          "type": "Control"
+        }
+      ],
+      "label": "Budget Attachments",
+      "type": "Group"
+    }
+  ],
+  "type": "VerticalLayout"
+}
