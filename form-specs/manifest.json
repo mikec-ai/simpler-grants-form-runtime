@@ -1596,11 +1596,11 @@
         },
         {
           "path": "oracles/key-contacts-v2.native.schema.json",
-          "sha256": "4ae683d0048bfa28bc842c6ef9ee526e4e061eb2cfd074b6377385316a120301"
+          "sha256": "8baf01802cff98771d7795b6339430c937b13e55660a72301382aeb6602df645"
         },
         {
           "path": "oracles/key-contacts-v2.native.ui.json",
-          "sha256": "6c56034aae852cf4d69717a35f51e93b8f3bb4e870626830db0d72aa809ff1b2"
+          "sha256": "30b6c3f00e2a8fea1658c747acae5139771c7caeade442c6476b41ea0c9c7daa"
         }
       ],
       "review_boundary": {
