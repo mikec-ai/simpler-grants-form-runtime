@@ -200,9 +200,9 @@ def test_budget_builder_is_reproducible_in_an_isolated_copy(tmp_path: Path) -> N
     [
         (
             "oracles/budget/rr-budget10-v3.candidate.json",
-            lambda value: value["artifacts"]["json_schema"]["properties"]["budget_year"].update({
-                "maxItems": 11
-            }),
+            lambda value: value["artifacts"]["json_schema"]["properties"]["budget_year"].update(
+                {"maxItems": 11}
+            ),
             "budget period drift",
         ),
         (
