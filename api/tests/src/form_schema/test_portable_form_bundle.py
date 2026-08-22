@@ -15,7 +15,10 @@ from src.form_schema.portable_form_bundle import (
     PortableFormBundleError,
     load_portable_form_bundle,
 )
-from src.form_schema.registry.form_template_registry import FormTemplateKey, FormTemplateRegistry
+from src.form_schema.registry.form_template_registry import (
+    FormTemplateKey,
+    FormTemplateRegistry,
+)
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[4]
 BUNDLE_ROOT = REPOSITORY_ROOT / "form-specs"
@@ -50,10 +53,17 @@ def test_referenced_question_compiles_into_two_native_forms() -> None:
     key_contacts = bundle.to_form("KeyContacts")
     sf424 = bundle.to_form("SF424")
 
-    key_question = key_contacts.form_json_schema["properties"]["applicant_organization_name"]
+    key_question = key_contacts.form_json_schema["properties"][
+        "applicant_organization_name"
+    ]
     sf424_question = sf424.form_json_schema["properties"]["organization_name"]
-    assert key_question["allOf"][0]["x-question-id"] == "question:organization:legal-name"
-    assert sf424_question["allOf"][0]["x-question-id"] == "question:organization:legal-name"
+    assert (
+        key_question["allOf"][0]["x-question-id"] == "question:organization:legal-name"
+    )
+    assert (
+        sf424_question["allOf"][0]["x-question-id"]
+        == "question:organization:legal-name"
+    )
     assert key_question["allOf"][0] == sf424_question["allOf"][0]
     assert key_question["title"] == "Applicant Organization Name"
     assert sf424_question["title"] == "Legal Name"
@@ -75,13 +85,14 @@ def test_analysis_projection_is_derived_from_the_same_bindings() -> None:
 
     assert projection["contract"] == "portable-grants-form-analysis/v2"
     assert projection["summary"] == {
-        "forms": 4,
-        "proposed_unique_questions": 167,
+        "forms": 6,
+        "proposed_unique_questions": 161,
         "accepted_unique_questions": 0,
         "published_unique_questions": 0,
-        "proposed_associations": 295,
+        "proposed_associations": 497,
         "accepted_associations": 0,
         "published_associations": 0,
+        "content_capture_mechanism_associations": 30,
     }
     legal_name = next(
         row
@@ -90,7 +101,7 @@ def test_analysis_projection_is_derived_from_the_same_bindings() -> None:
     )
     assert legal_name == {
         "question_id": "question:organization:legal-name",
-        "proposed_form_count": 2,
+        "proposed_form_count": 6,
         "accepted_form_count": 0,
         "published_form_count": 0,
     }
@@ -100,7 +111,16 @@ def test_analysis_projection_is_derived_from_the_same_bindings() -> None:
         "/SF424_4_0/OrganizationName",
     }
     assert all(row["mapping_status"] == "agent_proposed" for row in associations)
-    assert all(row["included_in_proposed_overlap"] for row in associations)
+    assert all(
+        row["included_in_proposed_overlap"]
+        for row in associations
+        if row["analysis_classification"] == "semantic_question"
+    )
+    assert not any(
+        row["included_in_proposed_overlap"]
+        for row in associations
+        if row["analysis_classification"] == "content_capture_mechanism"
+    )
     assert not any(row["included_in_accepted_overlap"] for row in associations)
     assert not any(row["included_in_published_overlap"] for row in associations)
 
@@ -153,7 +173,9 @@ def test_existing_simpler_shared_schema_is_explicitly_reconciled() -> None:
     )
 
 
-def test_standard_json_schema_consumer_uses_portable_refs_without_simpler_adapter() -> None:
+def test_standard_json_schema_consumer_uses_portable_refs_without_simpler_adapter() -> (
+    None
+):
     bundle = load_portable_form_bundle(BUNDLE_ROOT)
     registry = Registry().with_resources(
         (schema_id, Resource.from_contents(schema))
@@ -199,32 +221,38 @@ def test_native_forms_are_independent_snapshots() -> None:
     first = bundle.to_form("KeyContacts")
     second = bundle.to_form("KeyContacts")
 
-    first.form_json_schema["properties"]["applicant_organization_name"]["title"] = "Changed"
-    first.form_json_schema["x-portable-form-bundle"]["question_bindings"][0]["role"] = "changed"
+    first.form_json_schema["properties"]["applicant_organization_name"][
+        "title"
+    ] = "Changed"
+    first.form_json_schema["x-portable-form-bundle"]["question_bindings"][0][
+        "role"
+    ] = "changed"
 
-    assert second.form_json_schema["properties"]["applicant_organization_name"]["title"] == (
-        "Applicant Organization Name"
-    )
-    assert second.form_json_schema["x-portable-form-bundle"]["question_bindings"][0]["role"] == (
-        "applicant_organization"
-    )
+    assert second.form_json_schema["properties"]["applicant_organization_name"][
+        "title"
+    ] == ("Applicant Organization Name")
+    assert second.form_json_schema["x-portable-form-bundle"]["question_bindings"][0][
+        "role"
+    ] == ("applicant_organization")
 
 
 def test_portable_specs_do_not_depend_on_simpler_python() -> None:
     assert not list(BUNDLE_ROOT.rglob("*.py"))
-    kernel_source = (REPOSITORY_ROOT / "api/src/form_schema/portable_form_kernel.py").read_text(
-        encoding="utf-8"
-    )
+    kernel_source = (
+        REPOSITORY_ROOT / "api/src/form_schema/portable_form_kernel.py"
+    ).read_text(encoding="utf-8")
     assert "from src." not in kernel_source
     assert "import src." not in kernel_source
-    adapter_source = (REPOSITORY_ROOT / "api/src/form_schema/portable_form_bundle.py").read_text(
-        encoding="utf-8"
-    )
+    adapter_source = (
+        REPOSITORY_ROOT / "api/src/form_schema/portable_form_bundle.py"
+    ).read_text(encoding="utf-8")
     assert "KeyContactsOrganizationCanary" not in adapter_source
     assert "SF424OrganizationCanary" not in adapter_source
 
 
-def test_copied_bundle_and_neutral_kernel_work_without_simpler_checkout(tmp_path: Path) -> None:
+def test_copied_bundle_and_neutral_kernel_work_without_simpler_checkout(
+    tmp_path: Path,
+) -> None:
     isolated = tmp_path / "isolated"
     isolated.mkdir()
     shutil.copytree(BUNDLE_ROOT, isolated / "form-specs")
@@ -288,12 +316,14 @@ print(json.dumps({
     summary = output["summary"]
     assert summary["accepted_associations"] == 0
     assert summary["published_associations"] == 0
-    assert summary["forms"] == 4
-    assert summary["proposed_unique_questions"] == 167
+    assert summary["forms"] == 6
+    assert summary["proposed_unique_questions"] == 161
     assert output["consumed"] == {
         "KeyContacts": {"resolved_properties": 2, "ui_controls": 21},
         "RRBudget": {"resolved_properties": 6, "ui_controls": 162},
         "RRBudget10": {"resolved_properties": 6, "ui_controls": 162},
+        "RRMPBudget": {"resolved_properties": 6, "ui_controls": 162},
+        "RRSubawardBudget30": {"resolved_properties": 31, "ui_controls": 193},
         "SF424": {"resolved_properties": 58, "ui_controls": 72},
     }
 
@@ -307,7 +337,9 @@ def test_same_question_can_have_distinct_occurrence_bindings(tmp_path: Path) -> 
     schema_path = root / schema_relative
     schema = json.loads(schema_path.read_text(encoding="utf-8"))
     schema["properties"]["alternate_organization_name"] = {
-        "allOf": [{"$ref": "urn:grants-form-kernel:questions:organization:legal-name:v1"}],
+        "allOf": [
+            {"$ref": "urn:grants-form-kernel:questions:organization:legal-name:v1"}
+        ],
         "title": "Alternate organization legal name",
     }
     schema_path.write_text(json.dumps(schema), encoding="utf-8")
@@ -316,7 +348,9 @@ def test_same_question_can_have_distinct_occurrence_bindings(tmp_path: Path) -> 
         for descriptor in manifest["schemas"]
         if descriptor["artifact"]["path"] == schema_relative
     )
-    schema_descriptor["artifact"]["sha256"] = hashlib.sha256(schema_path.read_bytes()).hexdigest()
+    schema_descriptor["artifact"]["sha256"] = hashlib.sha256(
+        schema_path.read_bytes()
+    ).hexdigest()
 
     mapping_relative = "mappings/sf424-v4.mappings.json"
     mapping_path = root / mapping_relative
@@ -350,7 +384,8 @@ def test_same_question_can_have_distinct_occurrence_bindings(tmp_path: Path) -> 
     sf424_rows = [
         row
         for row in projection["form_question_associations"]
-        if row["form_key"] == "SF424" and row["question_id"] == "question:organization:legal-name"
+        if row["form_key"] == "SF424"
+        and row["question_id"] == "question:organization:legal-name"
     ]
     assert len(sf424_rows) == 2
     assert {row["binding_id"] for row in sf424_rows} == {
@@ -374,7 +409,9 @@ def test_rejects_unbound_question_occurrence(tmp_path: Path) -> None:
     schema_path.write_text(json.dumps(schema), encoding="utf-8")
     _rewrite_manifest_hash(root, relative_path)
 
-    with pytest.raises(PortableFormBundleError, match=r"unbound question \$ref occurrences"):
+    with pytest.raises(
+        PortableFormBundleError, match=r"unbound question \$ref occurrences"
+    ):
         load_portable_form_bundle(root)
 
 
@@ -386,7 +423,9 @@ def test_common_grants_mapping_profile_is_optional(tmp_path: Path) -> None:
     assert form.form_json_schema["x-mapping-to-cg"] == {}
 
 
-def test_accepted_mapping_count_is_derived_from_occurrence_state(tmp_path: Path) -> None:
+def test_accepted_mapping_count_is_derived_from_occurrence_state(
+    tmp_path: Path,
+) -> None:
     root = _copy_bundle(tmp_path)
     manifest_path = root / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -423,14 +462,18 @@ def test_rejects_published_coverage_before_form_semantics_are_accepted(
     form["review_boundary"]["published_coverage_eligible"] = True
     manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
 
-    with pytest.raises(PortableFormBundleError, match="form semantic mappings are accepted"):
+    with pytest.raises(
+        PortableFormBundleError, match="form semantic mappings are accepted"
+    ):
         load_portable_form_bundle(root)
 
 
 def test_rejects_tampered_schema(tmp_path: Path) -> None:
     root = _copy_bundle(tmp_path)
     schema_path = root / "schemas/questions/organization-legal-name.schema.json"
-    schema_path.write_text(schema_path.read_text(encoding="utf-8") + "\n", encoding="utf-8")
+    schema_path.write_text(
+        schema_path.read_text(encoding="utf-8") + "\n", encoding="utf-8"
+    )
 
     with pytest.raises(PortableFormBundleError, match="sha256 does not match"):
         load_portable_form_bundle(root)
@@ -476,9 +519,11 @@ def test_rejects_invalid_external_source_evidence(tmp_path: Path) -> None:
 
 def test_every_question_descriptor_has_direct_exact_source_provenance() -> None:
     manifest = json.loads((BUNDLE_ROOT / "manifest.json").read_text(encoding="utf-8"))
-    questions = [schema for schema in manifest["schemas"] if schema["kind"] == "question"]
+    questions = [
+        schema for schema in manifest["schemas"] if schema["kind"] == "question"
+    ]
 
-    assert len(questions) == 167
+    assert len(questions) == 176
     assert all(question["source_evidence"] for question in questions)
     assert all(
         source_ref in manifest["sources"]
@@ -496,11 +541,15 @@ def test_rejects_question_with_missing_source_provenance(tmp_path: Path) -> None
     root = _copy_bundle(tmp_path)
     manifest_path = root / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    question = next(schema for schema in manifest["schemas"] if schema["kind"] == "question")
+    question = next(
+        schema for schema in manifest["schemas"] if schema["kind"] == "question"
+    )
     question["source_evidence"] = []
     manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
 
-    with pytest.raises(PortableFormBundleError, match="source_evidence cannot be empty"):
+    with pytest.raises(
+        PortableFormBundleError, match="source_evidence cannot be empty"
+    ):
         load_portable_form_bundle(root)
 
 
@@ -510,7 +559,9 @@ def test_rejects_question_with_dangling_or_malformed_source_provenance(
     root = _copy_bundle(tmp_path)
     manifest_path = root / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    question = next(schema for schema in manifest["schemas"] if schema["kind"] == "question")
+    question = next(
+        schema for schema in manifest["schemas"] if schema["kind"] == "question"
+    )
     question["source_evidence"] = ["missing-source"]
     manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
 

@@ -1,0 +1,12 @@
+{
+  "$id": "urn:grants-form-kernel:questions:budget:budgetyear-indirectcosts-indirectcost-rate:rr-mp:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "maxLength": 16,
+  "maximum": 999.99,
+  "minLength": 1,
+  "minimum": 0,
+  "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+  "title": "Rate",
+  "type": "string",
+  "x-question-id": "question:budget:budgetyear-indirectcosts-indirectcost-rate"
+}

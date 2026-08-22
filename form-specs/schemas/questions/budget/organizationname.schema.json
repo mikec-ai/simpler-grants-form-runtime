@@ -1,9 +1,0 @@
-{
-  "$id": "urn:grants-form-kernel:questions:budget:organizationname:v1",
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "maxLength": 60,
-  "minLength": 1,
-  "title": "Enter name of Organization:",
-  "type": "string",
-  "x-question-id": "question:budget:organizationname"
-}

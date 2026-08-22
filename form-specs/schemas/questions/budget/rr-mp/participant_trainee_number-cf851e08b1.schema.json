@@ -1,0 +1,9 @@
+{
+  "$id": "urn:grants-form-kernel:questions:budget:budgetyear-participanttraineesupportcosts-participanttraineenumber:rr-mp:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "maximum": 9999,
+  "minimum": 0,
+  "title": "ParticipantTraineeNumber",
+  "type": "integer",
+  "x-question-id": "question:budget:budgetyear-participanttraineesupportcosts-participanttraineenumber"
+}
