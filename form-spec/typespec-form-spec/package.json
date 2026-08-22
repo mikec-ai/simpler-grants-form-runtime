@@ -1,0 +1,22 @@
+{
+  "name": "@simpler-grants/form-spec",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "exports": {
+    ".": { "typespec": "./lib/main.tsp", "default": "./dist/src/index.js" }
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "spike": "tsp compile spike/spike.tsp --emit @typespec/json-schema --output-dir spike-out"
+  },
+  "peerDependencies": {
+    "@typespec/compiler": "^1.13.0",
+    "@typespec/json-schema": "^1.13.0"
+  },
+  "devDependencies": {
+    "@typespec/compiler": "^1.13.0",
+    "@typespec/json-schema": "^1.13.0",
+    "typescript": "^5.6.0"
+  }
+}

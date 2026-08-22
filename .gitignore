@@ -24,6 +24,8 @@ eggs/
 .eggs/
 lib/
 !api/tests/lib
+# TypeSpec packages use lib/ for .tsp sources; the pattern above is Python's.
+!form-spec/typespec-form-spec/lib/
 lib64/
 parts/
 sdist/
