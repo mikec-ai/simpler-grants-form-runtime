@@ -1,89 +1,89 @@
 {
-  "date_received": {
+  "dateReceived": {
     "gg_post_population": {
       "rule": "current_date"
     }
   },
-  "sam_uei": {
+  "samUei": {
     "gg_pre_population": {
       "rule": "uei"
     }
   },
-  "agency_name": {
+  "agencyName": {
     "gg_pre_population": {
       "rule": "agency_name"
     }
   },
-  "assistance_listing_number": {
+  "assistanceListingNumber": {
     "gg_pre_population": {
       "rule": "assistance_listing_number"
     }
   },
-  "assistance_listing_program_title": {
+  "assistanceListingProgramTitle": {
     "gg_pre_population": {
       "rule": "assistance_listing_program_title"
     }
   },
-  "funding_opportunity_number": {
+  "fundingOpportunityNumber": {
     "gg_pre_population": {
       "rule": "opportunity_number"
     }
   },
-  "funding_opportunity_title": {
+  "fundingOpportunityTitle": {
     "gg_pre_population": {
       "rule": "opportunity_title"
     }
   },
-  "competition_identification_number": {
+  "competitionIdentificationNumber": {
     "gg_pre_population": {
       "rule": "public_competition_id"
     }
   },
-  "competition_identification_title": {
+  "competitionIdentificationTitle": {
     "gg_pre_population": {
       "rule": "competition_title"
     }
   },
-  "areas_affected": {
+  "areasAffected": {
     "gg_validation": {
       "rule": "attachment"
     }
   },
-  "additional_project_title": {
+  "additionalProjectTitle": {
     "gg_validation": {
       "rule": "attachment"
     }
   },
-  "additional_congressional_districts": {
+  "additionalCongressionalDistricts": {
     "gg_validation": {
       "rule": "attachment"
     }
   },
-  "debt_explanation": {
+  "debtExplanation": {
     "gg_validation": {
       "rule": "attachment"
     }
   },
-  "aor_signature": {
+  "aorSignature": {
     "gg_post_population": {
       "rule": "signature"
     }
   },
-  "date_signed": {
+  "dateSigned": {
     "gg_post_population": {
       "rule": "current_date"
     }
   },
-  "total_estimated_funding": {
+  "totalEstimatedFunding": {
     "gg_pre_population": {
       "rule": "sum_monetary",
       "fields": [
-        "federal_estimated_funding",
-        "applicant_estimated_funding",
-        "state_estimated_funding",
-        "local_estimated_funding",
-        "other_estimated_funding",
-        "program_income_estimated_funding"
+        "federalEstimatedFunding",
+        "applicantEstimatedFunding",
+        "stateEstimatedFunding",
+        "localEstimatedFunding",
+        "otherEstimatedFunding",
+        "programIncomeEstimatedFunding"
       ]
     }
   }

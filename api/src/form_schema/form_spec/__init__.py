@@ -13,12 +13,19 @@ authored. It reads emitted JSON.
 
 from src.form_schema.form_spec.bank import QUESTION_BANK_V1, question_bank_ref
 from src.form_schema.form_spec.loader import load_form
-from src.form_schema.form_spec.projection import Projection, project_schema
+from src.form_schema.form_spec.projection import (
+    Projection,
+    project_rule_schema,
+    project_schema,
+    project_ui_schema,
+)
 
 __all__ = [
     "QUESTION_BANK_V1",
     "Projection",
     "load_form",
+    "project_rule_schema",
     "project_schema",
+    "project_ui_schema",
     "question_bank_ref",
 ]

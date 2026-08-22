@@ -31,15 +31,18 @@ export interface SggSection {
   children: (SggField | SggFieldList | SggMultiField)[];
 }
 
-const snake = (s: string) => s.replace(/([a-z0-9])([A-Z])/g, "$1_$2").toLowerCase();
-
 /**
- * A section's name is a wire identifier rather than a field name, and SGG's forms do not
- * agree on a convention for it: most are snake-cased, SF-424A's are `SectionA`. So a
- * lowerCamel member name is projected, while a member written in any other convention is
- * being written in the wire's convention on purpose and is left alone.
+ * SGG's UI vocabulary with the specification's own names.
+ *
+ * The structure here is SGG's -- flat sections, `fieldList`, `multiField`, `definition`
+ * pointers -- because that is the target's vocabulary and it is derived from decorators only
+ * this emitter can see. The *names* are the specification's, so every artifact this emitter
+ * writes agrees with `schema.json`, and a pointer can be checked against it by reading.
+ *
+ * Spelling those names the way SGG spells them is the adapter's job, and it renames the
+ * schema, these pointers, and the rule keys from one map. That is what stops the three from
+ * drifting apart.
  */
-const sectionName = (s: string) => (/^[a-z]/.test(s) ? snake(s) : s);
 
 /**
  * Every property of a model including those inherited through `extends`, in
@@ -85,7 +88,7 @@ function walk(
     const here = dataPath ? `${dataPath}.${prop.name}` : prop.name;
     if (propOmit(program, prop) || at(overrides, here).omit === true) continue;
 
-    const path = `${prefix}/properties/${snake(prop.name)}`;
+    const path = `${prefix}/properties/${prop.name}`;
     const object = objectBehind(program, prop);
     if (object) {
       walk(program, object, path, here, into, overrides);
@@ -142,12 +145,12 @@ function asFieldList(
   if (item.kind !== "Model") return undefined;
 
   const children: SggField[] = [];
-  walk(program, item, `/properties/${snake(prop.name)}/items`, prop.name, children, overrides);
+  walk(program, item, `/properties/${prop.name}/items`, prop.name, children, overrides);
   // The list's label names one entry, so it comes from the item block; the property's
   // own label names the collection and stays on the schema as `title`.
   const list: SggFieldList = {
     type: "fieldList",
-    name: snake(prop.name),
+    name: prop.name,
     label: itemLabel(program, item) ?? propLabel(program, prop) ?? prop.name,
     children,
   };
@@ -186,7 +189,7 @@ export function emitSggUi(program: Program, block: Block): SggSection[] {
   const bySection = new Map<string, (SggField | SggFieldList | SggMultiField)[]>();
   const meta = new Map<string, { label: string; description?: string }>();
   for (const m of block.sections.members.values()) {
-    const name = sectionName(m.name);
+    const name = m.name;
     order.push(name);
     bySection.set(name, []);
     meta.set(name, { label: String(m.value ?? m.name), description: getDoc(program, m) });
@@ -200,11 +203,11 @@ export function emitSggUi(program: Program, block: Block): SggSection[] {
     const sec = propSection(program, prop);
     if (!sec) continue;
     if (at(overrides, prop.name).omit === true) continue;
-    props.get(sectionName(sec.name))?.push(prop);
+    props.get(sec.name)?.push(prop);
   }
 
   const widgets = new Map(
-    modelMultiFields(program, block.model as Model).map((d) => [sectionName(d.section), d.widget]),
+    modelMultiFields(program, block.model as Model).map((d) => [d.section, d.widget]),
   );
 
   for (const name of order) {
@@ -220,7 +223,7 @@ export function emitSggUi(program: Program, block: Block): SggSection[] {
         type: "multiField",
         name: widget,
         widget,
-        definition: gridProperties(program, block, members).map((p) => `/properties/${snake(p)}`),
+        definition: gridProperties(program, block, members).map((p) => `/properties/${p}`),
       });
       continue;
     }
@@ -231,7 +234,7 @@ export function emitSggUi(program: Program, block: Block): SggSection[] {
         bucket.push(list);
         continue;
       }
-      const path = `/properties/${snake(prop.name)}`;
+      const path = `/properties/${prop.name}`;
       const object = objectBehind(program, prop);
       if (object) {
         const flat: SggField[] = [];

@@ -111,6 +111,125 @@ def _pointer(block_id: str, projection: Projection) -> str:
 _JSON_TYPE = {bool: "boolean", str: "string", int: "integer", float: "number"}
 
 
+def project_ui_schema(ui_schema: Any, projection: Projection) -> Any:
+    """Rename what a UI schema addresses, leaving its structure alone.
+
+    Three things carry a name here and each is a different kind of name. A `definition`
+    pointer and a `fieldList`'s `name` address the schema, so they take the field rename. A
+    `section`'s name is a UI identifier rather than a data key, and this codebase's forms do
+    not agree on a convention for it -- most are snake-cased, SF-424A's are `SectionA` -- so a
+    lowerCamel name is projected and a name written in any other convention is left as it is.
+    A `multiField`'s `name` is the widget it hands the section to, and renaming that would ask
+    for a component that does not exist.
+    """
+    if isinstance(ui_schema, list):
+        return [project_ui_schema(node, projection) for node in ui_schema]
+    if not isinstance(ui_schema, dict):
+        return ui_schema
+
+    out: dict[str, Any] = {}
+    for key, value in ui_schema.items():
+        if key == "definition":
+            out[key] = (
+                [_project_pointer(p, projection) for p in value]
+                if isinstance(value, list)
+                else _project_pointer(value, projection)
+            )
+        elif key == "name":
+            kind = ui_schema.get("type")
+            if kind == "multiField":
+                out[key] = value
+            elif kind == "section":
+                out[key] = _project_identifier(str(value))
+            else:
+                out[key] = projection.rename(str(value), str(value))
+        elif key == "children":
+            out[key] = [project_ui_schema(child, projection) for child in value]
+        else:
+            out[key] = value
+    return out
+
+
+def _project_identifier(name: str) -> str:
+    """A UI identifier: projected when it is lowerCamel, left alone otherwise."""
+    return snake_case(name) if name[:1].islower() else name
+
+
+def _project_pointer(pointer: str, projection: Projection) -> str:
+    """`/properties/keyContacts/items/properties/projectRole` -> the projected spelling.
+
+    The data path is the pointer with its `properties` and `items` steps dropped, which is
+    what the rename table is keyed by -- so a pointer and the property it addresses are
+    always renamed by the same entry.
+    """
+    if not pointer.startswith("/"):
+        return pointer
+    steps = pointer.strip("/").split("/")
+    out: list[str] = []
+    path: list[str] = []
+    for step in steps:
+        if step in ("properties", "items"):
+            out.append(step)
+            continue
+        path.append(step)
+        out.append(projection.rename(".".join(path), step))
+    return "/" + "/".join(out)
+
+
+def project_rule_schema(rules: Any, projection: Projection, path: str = "") -> Any:
+    """Rename a rule schema's keys and the field paths its rules reference."""
+    if not isinstance(rules, dict):
+        return rules
+
+    out: dict[str, Any] = {}
+    for key, value in rules.items():
+        if key.startswith("gg_"):
+            out[key] = _project_rule(value, projection, path)
+        elif key == "gg_type":
+            out[key] = value
+        else:
+            here = _join(path, key)
+            out[projection.rename(here, key)] = project_rule_schema(value, projection, here)
+    return out
+
+
+def _project_rule(rule: Any, projection: Projection, path: str) -> Any:
+    if not isinstance(rule, dict):
+        return rule
+    out = dict(rule)
+    fields = rule.get("fields")
+    if isinstance(fields, list):
+        out["fields"] = [_project_reference(f, projection, path) for f in fields]
+    return out
+
+
+def _project_reference(reference: str, projection: Projection, path: str) -> str:
+    """Rename a calculation's reference, in any of the three spellings SGG uses.
+
+    `@THIS.member` is relative to the object holding the calculation, `a[*].b.c` walks into
+    every entry of a list, and a bare dotted path starts at the form's root. All three are
+    sequences of field names, so all three are renamed segment by segment against the same
+    table.
+    """
+    prefix = ""
+    body = reference
+    if body.startswith("@THIS."):
+        prefix, body = "@THIS.", body[len("@THIS.") :]
+        base = path.split(".")
+    else:
+        base = []
+
+    renamed: list[str] = []
+    walked = list(base)
+    for segment in body.split("."):
+        marker = ""
+        if segment.endswith("[*]"):
+            segment, marker = segment[:-3], "[*]"
+        walked.append(segment)
+        renamed.append(projection.rename(".".join(walked), segment) + marker)
+    return prefix + ".".join(renamed)
+
+
 def project_schema(
     schema: dict[str, Any],
     projection: Projection,

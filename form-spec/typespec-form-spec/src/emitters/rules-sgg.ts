@@ -3,8 +3,6 @@ import {
   Block, childBlock, modelPrePopulate, propComputed, propOmit, propTotals, readBlock,
 } from "../model.js";
 
-const snake = (s: string) => s.replace(/([a-z0-9])([A-Z])/g, "$1_$2").toLowerCase();
-
 const OP_RULE: Record<string, string> = {
   Sum: "sum_monetary",
   Subtract: "subtract_monetary",
@@ -145,7 +143,7 @@ function walk(
 ): void {
   const { calculations, modelPath } = context;
   for (const prop of [...model.properties.values()].filter((p) => !propOmit(program, p))) {
-    const key = snake(prop.name);
+    const key = prop.name;
     const here = [...at, key];
     const path = dataPath ? `${dataPath}.${prop.name}` : prop.name;
     const child = childBlock(program, prop);
@@ -163,8 +161,8 @@ function walk(
         rule: OP_RULE[computed.operator] ?? "sum_monetary",
         refs: computed.refs.map((name) => ({
           // A sibling reference is spelled `@THIS.` everywhere but the form's own root.
-          emit: atRoot ? snake(name) : `@THIS.${snake(name)}`,
-          resolve: [...at, snake(name)].join("."),
+          emit: atRoot ? name : `@THIS.${name}`,
+          resolve: [...at, name].join("."),
         })),
       });
       continue;
@@ -254,15 +252,15 @@ function collectTotals(
         if (item.kind !== "Model") continue;
         const inner = sameBlock(program, item, block);
         if (!inner) continue;
-        const base = [...(modelPath.get(source.model as Model) ?? []), snake(source.name)];
+        const base = [...(modelPath.get(source.model as Model) ?? []), source.name];
         refs.push({
-          emit: `${base.join(".")}[*].${snake(inner.name)}.${field}`,
-          resolve: [...base, snake(inner.name), field].join("."),
+          emit: `${base.join(".")}[*].${inner.name}.${field}`,
+          resolve: [...base, inner.name, field].join("."),
         });
         continue;
       }
       // A peer holding the same block: its path is this target's parent plus its name.
-      const base = [...(modelPath.get(source.model as Model) ?? parent), snake(source.name)];
+      const base = [...(modelPath.get(source.model as Model) ?? parent), source.name];
       refs.push({
         emit: [...base, field].join("."),
         resolve: [...base, field].join("."),
@@ -278,7 +276,7 @@ function moneyFields(program: Program, model: Model): string[] {
   const out: string[] = [];
   for (const prop of model.properties.values()) {
     const child = childBlock(program, prop);
-    if (child?.id === MONEY_QUESTION) out.push(snake(prop.name));
+    if (child?.id === MONEY_QUESTION) out.push(prop.name);
   }
   return out;
 }

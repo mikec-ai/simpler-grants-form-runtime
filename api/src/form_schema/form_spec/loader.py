@@ -13,7 +13,12 @@ from pathlib import Path
 from typing import Any
 
 from src.form_schema.form_spec.bank import ARTIFACTS, _bank_projection
-from src.form_schema.form_spec.projection import Projection, project_schema
+from src.form_schema.form_spec.projection import (
+    Projection,
+    project_rule_schema,
+    project_schema,
+    project_ui_schema,
+)
 
 
 class LoadedForm:
@@ -53,12 +58,15 @@ def load_form(form_id: str, *, artifacts: Path | None = None) -> LoadedForm:
     projection = _projection_for(root)
 
     rule_schema = json.loads((root / "sgg" / "rule-schema.json").read_text())
+    ui_schema = json.loads((root / "sgg" / "ui-schema.json").read_text())
+    # All three from the same projection, so a pointer and the property it addresses cannot
+    # be spelled differently.
     return LoadedForm(
         form_id=form_id,
         manifest=manifest,
         json_schema=project_schema(canonical, projection),
-        ui_schema=json.loads((root / "sgg" / "ui-schema.json").read_text()),
-        rule_schema=rule_schema,
+        ui_schema=project_ui_schema(ui_schema, projection),
+        rule_schema=project_rule_schema(rule_schema, projection) if rule_schema else rule_schema,
     )
 
 

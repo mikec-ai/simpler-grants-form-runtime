@@ -9,8 +9,8 @@
         "name": "Budget424aSectionA",
         "widget": "Budget424aSectionA",
         "definition": [
-          "/properties/activity_line_items",
-          "/properties/total_budget_summary"
+          "/properties/activityLineItems",
+          "/properties/totalBudgetSummary"
         ]
       }
     ]
@@ -25,8 +25,8 @@
         "name": "Budget424aSectionB",
         "widget": "Budget424aSectionB",
         "definition": [
-          "/properties/activity_line_items",
-          "/properties/total_budget_categories"
+          "/properties/activityLineItems",
+          "/properties/totalBudgetCategories"
         ]
       }
     ],
@@ -42,8 +42,8 @@
         "name": "Budget424aSectionC",
         "widget": "Budget424aSectionC",
         "definition": [
-          "/properties/activity_line_items",
-          "/properties/total_non_federal_resources"
+          "/properties/activityLineItems",
+          "/properties/totalNonFederalResources"
         ]
       }
     ],
@@ -59,7 +59,7 @@
         "name": "Budget424aSectionD",
         "widget": "Budget424aSectionD",
         "definition": [
-          "/properties/forecasted_cash_needs"
+          "/properties/forecastedCashNeeds"
         ]
       }
     ]
@@ -74,8 +74,8 @@
         "name": "Budget424aSectionE",
         "widget": "Budget424aSectionE",
         "definition": [
-          "/properties/activity_line_items",
-          "/properties/total_federal_fund_estimates"
+          "/properties/activityLineItems",
+          "/properties/totalFederalFundEstimates"
         ]
       }
     ]
@@ -90,8 +90,8 @@
         "name": "Budget424aSectionF",
         "widget": "Budget424aSectionF",
         "definition": [
-          "/properties/direct_charges_explanation",
-          "/properties/indirect_charges_explanation",
+          "/properties/directChargesExplanation",
+          "/properties/indirectChargesExplanation",
           "/properties/remarks",
           "/properties/confirmation"
         ]
