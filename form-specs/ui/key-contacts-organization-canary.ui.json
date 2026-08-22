@@ -1,0 +1,11 @@
+{
+  "type": "VerticalLayout",
+  "label": "Applicant organization",
+  "elements": [
+    {
+      "type": "Control",
+      "scope": "#/properties/applicant_organization_name",
+      "label": "Applicant Organization Name"
+    }
+  ]
+}
