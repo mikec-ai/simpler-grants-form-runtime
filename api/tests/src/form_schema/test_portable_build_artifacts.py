@@ -4,9 +4,9 @@ import subprocess
 import sys
 import zipfile
 from pathlib import Path
-from xml.etree import ElementTree
 
 import pytest
+from defusedxml import ElementTree
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[4]
 BUNDLE = REPOSITORY_ROOT / "form-specs"
