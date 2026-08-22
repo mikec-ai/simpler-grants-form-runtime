@@ -75,15 +75,15 @@ def test_analysis_projection_is_derived_from_the_same_bindings() -> None:
 
     assert projection["contract"] == "portable-grants-form-analysis/v2"
     assert projection["summary"] == {
-        "forms": 6,
+        "forms": 8,
         "proposed_unique_questions": 161,
-        "proposed_role_qualified_semantics": 394,
+        "proposed_role_qualified_semantics": 495,
         "accepted_unique_questions": 0,
         "published_unique_questions": 0,
-        "proposed_associations": 497,
+        "proposed_associations": 699,
         "accepted_associations": 0,
         "published_associations": 0,
-        "content_capture_mechanism_associations": 30,
+        "content_capture_mechanism_associations": 90,
     }
     legal_name = next(
         row
@@ -92,7 +92,7 @@ def test_analysis_projection_is_derived_from_the_same_bindings() -> None:
     )
     assert legal_name == {
         "question_id": "question:organization:legal-name",
-        "proposed_form_count": 6,
+        "proposed_form_count": 8,
         "accepted_form_count": 0,
         "published_form_count": 0,
     }
@@ -311,14 +311,16 @@ print(json.dumps({
     summary = output["summary"]
     assert summary["accepted_associations"] == 0
     assert summary["published_associations"] == 0
-    assert summary["forms"] == 6
+    assert summary["forms"] == 8
     assert summary["proposed_unique_questions"] == 161
     assert output["consumed"] == {
         "KeyContacts": {"resolved_properties": 2, "ui_controls": 21},
         "RRBudget": {"resolved_properties": 6, "ui_controls": 162},
         "RRBudget10": {"resolved_properties": 6, "ui_controls": 162},
         "RRMPBudget": {"resolved_properties": 6, "ui_controls": 162},
+        "RRMPSubawardBudget": {"resolved_properties": 31, "ui_controls": 193},
         "RRSubawardBudget30": {"resolved_properties": 31, "ui_controls": 193},
+        "RRSubawardBudget10_30": {"resolved_properties": 31, "ui_controls": 193},
         "SF424": {"resolved_properties": 58, "ui_controls": 72},
     }
 

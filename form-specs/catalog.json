@@ -112,6 +112,14 @@
       "sha256": "4aeab4e8d6dc1161ce2cfae3ffb36b9f5aca53472d9fcfbcdacaf881724a8890",
       "source_version": "RR Subaward Budget 30 3.0; XSD sha256:d5d534326e8f7e4416baf98c95c1f9234c0a23628259ee2d7e3199181a24e08a"
     },
+    "subaward10-30-source-ledger": {
+      "kind": "authoritative_source",
+      "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
+      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
+      "path": "artifacts/proof/grantsgov-RRSubawardBudget10_30.jsonl",
+      "sha256": "8e14f59f046ab82857c2eb7f4e24bb09a15df84da86fa66c5272af2f7dae4d76",
+      "source_version": "RR Subaward Budget 10-year/30 attachment 3.0; XSD sha256:0ed112b2e50f0e0c43423f690201b207f5b9c5a85349335260e4fd999f3a611a"
+    },
     "mp-budget-source-xsd": {
       "kind": "authoritative_source",
       "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
@@ -127,6 +135,22 @@
       "path": "harness/portfolio-ingestion/cache/RR_MP_Budget_3_0-V3.0_F788/RR_MP_Budget_3_0-V3.0_F788.xls",
       "sha256": "1b306bea720d7c470b20b2fb6920c76687479dc1ed468caf6d165c02465d6827",
       "source_version": "R&R Multi-Project Budget 3.0 F788 DAT"
+    },
+    "mp-subaward-source-xsd": {
+      "kind": "authoritative_source",
+      "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
+      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
+      "path": "harness/portfolio-ingestion/cache/RR_MP_SubawardBudget_3_0-V3.0_F789/RR_MP_SubawardBudget_3_0-V3.0.xsd",
+      "sha256": "20dce5b3498c809727892ee6cb837db223d687564c5829d94fe481367b7815c4",
+      "source_version": "R&R Multi-Project Subaward Budget 3.0"
+    },
+    "mp-subaward-source-dat": {
+      "kind": "authoritative_source",
+      "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
+      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
+      "path": "harness/portfolio-ingestion/cache/RR_MP_SubawardBudget_3_0-V3.0_F789/RR_MP_SubawardBudget_3_0-V3.0_F789.xls",
+      "sha256": "aa2288490aec0ae2848a803946e6d80633fa90bd0f6bdefe9d515bfc2a800569",
+      "source_version": "R&R Multi-Project Subaward Budget 3.0 F789 DAT"
     }
   },
   "schemas": [
@@ -2830,11 +2854,31 @@
     },
     {
       "kind": "form",
+      "id": "urn:grants-form-kernel:forms:rr-subaward-budget10-30:v1",
+      "question_id": null,
+      "artifact": {
+        "path": "schemas/forms/rr-subaward-budget10-30-v3.schema.json",
+        "sha256": "7fc52b6c647cfdea9a46c6ea828131252c5ce3d78588f15289f9ab9aa361b359"
+      },
+      "source_evidence": []
+    },
+    {
+      "kind": "form",
       "id": "urn:grants-form-kernel:forms:rr-mp-budget:v1",
       "question_id": null,
       "artifact": {
         "path": "schemas/forms/rr-mp-budget-v3.schema.json",
         "sha256": "7255ad98cf0aab3923eb93c765e9399fcbea29ff8e8459cfb67912312c0d6042"
+      },
+      "source_evidence": []
+    },
+    {
+      "kind": "form",
+      "id": "urn:grants-form-kernel:forms:rr-mp-subaward-budget:v1",
+      "question_id": null,
+      "artifact": {
+        "path": "schemas/forms/rr-mp-subaward-budget-v3.schema.json",
+        "sha256": "e73c1c2455a04fcfd73acf2e01cb152ac73ad488b21ff450590b2540031fc9da"
       },
       "source_evidence": []
     }
@@ -2865,8 +2909,16 @@
       "sha256": "e2f0b307b59e55c6b35f9923eebb953fe522a1baa2b46c5a9161822d36307d66"
     },
     {
+      "path": "forms/rr-subaward-budget10-30.form.json",
+      "sha256": "0834c94505405213f4309f427726798c61a6f5be7eadc8bc0c59ea8304dd2a1b"
+    },
+    {
       "path": "forms/rr-mp-budget.form.json",
       "sha256": "9258deea2cd6a302b1b3e40083d5369fd88717056e657cdf63583baf5610b7eb"
+    },
+    {
+      "path": "forms/rr-mp-subaward-budget.form.json",
+      "sha256": "d395d4c19572f41acbc319498d3232b7cfa4c52a6e292f8e0defe6fe15746b67"
     }
   ]
 }

@@ -1,0 +1,312 @@
+{
+  "budget_attachments": {
+    "rr_budget_10_3_0": {
+      "budget_summary": {
+        "cumulative_adp_computer_services": {
+          "gg_pre_population": {
+            "fields": [
+              "budget_year[*].other_direct_costs.adp_computer_services"
+            ],
+            "order": 23,
+            "rule": "sum_monetary"
+          }
+        },
+        "cumulative_alterations_and_renovations": {
+          "gg_pre_population": {
+            "fields": [
+              "budget_year[*].other_direct_costs.alterations_renovations"
+            ],
+            "order": 26,
+            "rule": "sum_monetary"
+          }
+        },
+        "cumulative_consultant_services": {
+          "gg_pre_population": {
+            "fields": [
+              "budget_year[*].other_direct_costs.consultant_services"
+            ],
+            "order": 22,
+            "rule": "sum_monetary"
+          }
+        },
+        "cumulative_domestic_travel_costs": {
+          "gg_pre_population": {
+            "fields": [
+              "budget_year[*].travel.domestic_travel_cost"
+            ],
+            "order": 16,
+            "rule": "sum_monetary"
+          }
+        },
+        "cumulative_equipment_facility_rental_fees": {
+          "gg_pre_population": {
+            "fields": [
+              "budget_year[*].other_direct_costs.equipment_rental_fee"
+            ],
+            "order": 25,
+            "rule": "sum_monetary"
+          }
+        },
+        "cumulative_fee": {
+          "gg_pre_population": {
+            "fields": [
+              "budget_year[*].fee"
+            ],
+            "order": 30,
+            "rule": "sum_monetary"
+          }
+        },
+        "cumulative_foreign_travel_costs": {
+          "gg_pre_population": {
+            "fields": [
+              "budget_year[*].travel.foreign_travel_cost"
+            ],
+            "order": 17,
+            "rule": "sum_monetary"
+          }
+        },
+        "cumulative_material_and_supplies": {
+          "gg_pre_population": {
+            "fields": [
+              "budget_year[*].other_direct_costs.materials_supplies"
+            ],
+            "order": 20,
+            "rule": "sum_monetary"
+          }
+        },
+        "cumulative_noof_trainees": {
+          "gg_pre_population": {
+            "fields": [
+              "budget_year[*].participant_trainee_support_costs.participant_trainee_number"
+            ],
+            "order": 18,
+            "rule": "sum_monetary"
+          }
+        },
+        "cumulative_publication_costs": {
+          "gg_pre_population": {
+            "fields": [
+              "budget_year[*].other_direct_costs.publication_costs"
+            ],
+            "order": 21,
+            "rule": "sum_monetary"
+          }
+        },
+        "cumulative_subaward_consortium_contractual_costs": {
+          "gg_pre_population": {
+            "fields": [
+              "budget_year[*].other_direct_costs.subaward_consortium_contractual_costs"
+            ],
+            "order": 24,
+            "rule": "sum_monetary"
+          }
+        },
+        "cumulative_total_funds_requested_direct_costs": {
+          "gg_pre_population": {
+            "fields": [
+              "budget_year[*].direct_costs"
+            ],
+            "order": 27,
+            "rule": "sum_monetary"
+          }
+        },
+        "cumulative_total_funds_requested_direct_indirect_costs": {
+          "gg_pre_population": {
+            "fields": [
+              "budget_year[*].total_costs"
+            ],
+            "order": 29,
+            "rule": "sum_monetary"
+          }
+        },
+        "cumulative_total_funds_requested_indirect_cost": {
+          "gg_pre_population": {
+            "fields": [
+              "budget_year[*].indirect_costs.total_indirect_costs"
+            ],
+            "order": 28,
+            "rule": "sum_monetary"
+          }
+        },
+        "cumulative_total_funds_requested_other_direct_costs": {
+          "gg_pre_population": {
+            "fields": [
+              "budget_year[*].other_direct_costs.total_other_direct_cost"
+            ],
+            "order": 19,
+            "rule": "sum_monetary"
+          }
+        },
+        "cumulative_total_funds_requested_other_personnel": {
+          "gg_pre_population": {
+            "fields": [
+              "budget_year[*].other_personnel.total_other_personnel_fund"
+            ],
+            "order": 12,
+            "rule": "sum_monetary"
+          }
+        },
+        "cumulative_total_funds_requested_personnel": {
+          "gg_pre_population": {
+            "fields": [
+              "budget_year[*].total_compensation"
+            ],
+            "order": 14,
+            "rule": "sum_monetary"
+          }
+        },
+        "cumulative_total_funds_requested_senior_key_person": {
+          "gg_pre_population": {
+            "fields": [
+              "budget_year[*].key_persons.total_fund_for_key_persons"
+            ],
+            "order": 11,
+            "rule": "sum_monetary"
+          }
+        },
+        "cumulative_total_funds_requested_travel": {
+          "gg_pre_population": {
+            "fields": [
+              "budget_year[*].travel.total_travel_cost"
+            ],
+            "order": 15,
+            "rule": "sum_monetary"
+          }
+        },
+        "cumulative_total_no_other_personnel": {
+          "gg_pre_population": {
+            "fields": [
+              "budget_year[*].other_personnel.other_personnel_total_number"
+            ],
+            "order": 13,
+            "rule": "sum_monetary"
+          }
+        }
+      },
+      "budget_year": {
+        "gg_type": "array",
+        "key_persons": {
+          "key_person": {
+            "funds_requested": {
+              "gg_pre_population": {
+                "fields": [
+                  "@THIS.requested_salary",
+                  "@THIS.fringe_benefits"
+                ],
+                "order": 1,
+                "rule": "sum_monetary"
+              }
+            },
+            "gg_type": "array"
+          }
+        },
+        "other_personnel": {
+          "graduate_students": {
+            "funds_requested": {
+              "gg_pre_population": {
+                "fields": [
+                  "@THIS.requested_salary",
+                  "@THIS.fringe_benefits"
+                ],
+                "order": 3,
+                "rule": "sum_monetary"
+              }
+            }
+          },
+          "other": {
+            "funds_requested": {
+              "gg_pre_population": {
+                "fields": [
+                  "@THIS.requested_salary",
+                  "@THIS.fringe_benefits"
+                ],
+                "order": 6,
+                "rule": "sum_monetary"
+              }
+            },
+            "gg_type": "array"
+          },
+          "post_doc_associates": {
+            "funds_requested": {
+              "gg_pre_population": {
+                "fields": [
+                  "@THIS.requested_salary",
+                  "@THIS.fringe_benefits"
+                ],
+                "order": 2,
+                "rule": "sum_monetary"
+              }
+            }
+          },
+          "secretarial_clerical": {
+            "funds_requested": {
+              "gg_pre_population": {
+                "fields": [
+                  "@THIS.requested_salary",
+                  "@THIS.fringe_benefits"
+                ],
+                "order": 5,
+                "rule": "sum_monetary"
+              }
+            }
+          },
+          "undergraduate_students": {
+            "funds_requested": {
+              "gg_pre_population": {
+                "fields": [
+                  "@THIS.requested_salary",
+                  "@THIS.fringe_benefits"
+                ],
+                "order": 4,
+                "rule": "sum_monetary"
+              }
+            }
+          }
+        },
+        "total_compensation": {
+          "gg_pre_population": {
+            "fields": [
+              "@THIS.key_persons.total_fund_for_key_persons",
+              "@THIS.other_personnel.total_other_personnel_fund"
+            ],
+            "order": 7,
+            "rule": "sum_monetary"
+          }
+        },
+        "total_costs": {
+          "gg_pre_population": {
+            "fields": [
+              "@THIS.direct_costs",
+              "@THIS.indirect_costs.total_indirect_costs"
+            ],
+            "order": 9,
+            "rule": "sum_monetary"
+          }
+        },
+        "total_costs_fee": {
+          "gg_pre_population": {
+            "fields": [
+              "@THIS.total_costs",
+              "@THIS.fee"
+            ],
+            "order": 10,
+            "rule": "sum_monetary"
+          }
+        },
+        "travel": {
+          "total_travel_cost": {
+            "gg_pre_population": {
+              "fields": [
+                "@THIS.domestic_travel_cost",
+                "@THIS.foreign_travel_cost"
+              ],
+              "order": 8,
+              "rule": "sum_monetary"
+            }
+          }
+        }
+      },
+      "gg_type": "array"
+    }
+  }
+}

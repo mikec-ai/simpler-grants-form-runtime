@@ -40,9 +40,9 @@ def test_exporter_emits_complete_analysis_tables(tmp_path: Path) -> None:
     result = _run(output)
 
     assert result.returncode == 0
-    assert "forms: 6" in result.stdout
+    assert "forms: 8" in result.stdout
     assert "questions: 161" in result.stdout
-    assert "associations: 527" in result.stdout
+    assert "associations: 789" in result.stdout
     assert {path.name for path in output.iterdir()} == {
         "analysis.json",
         "form-pairs.csv",
@@ -65,7 +65,7 @@ def test_exporter_emits_complete_analysis_tables(tmp_path: Path) -> None:
     mechanisms = [
         row for row in associations if row["analysis_classification"] == "content_capture_mechanism"
     ]
-    assert len(mechanisms) == 30
+    assert len(mechanisms) == 90
     assert all(row["included_in_proposed_overlap"] == "False" for row in mechanisms)
     assert {"xml_path", "type_source", "type", "xsd_source"} <= set(associations[0])
 

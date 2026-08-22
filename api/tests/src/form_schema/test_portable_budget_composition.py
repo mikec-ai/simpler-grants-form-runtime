@@ -1,3 +1,4 @@
+import hashlib
 import json
 import shutil
 from pathlib import Path
@@ -65,7 +66,7 @@ def test_composition_overlap_is_derived_from_semantic_identities_only() -> None:
     assert multi_project["proposed_overlap"]["questions_in_common"] == 101
     assert multi_project["proposed_overlap"]["similarity"] == pytest.approx(1.0)
     assert subaward["accepted_overlap"]["questions_in_common"] == 0
-    assert projection["summary"]["content_capture_mechanism_associations"] == 30
+    assert projection["summary"]["content_capture_mechanism_associations"] == 90
 
 
 def test_multi_project_preserves_validation_variants_under_shared_identity() -> None:
@@ -130,4 +131,129 @@ def test_unknown_analysis_classification_fails_closed(tmp_path: Path) -> None:
     manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
 
     with pytest.raises(PortableFormKernelError, match="analysis_classification is unknown"):
+        load_portable_form_bundle(root)
+
+
+def test_declaration_only_expansion_composes_existing_form_schemas() -> None:
+    bundle = load_portable_form_bundle(BUNDLE_ROOT)
+    ten_subaward_schema = json.loads(
+        (BUNDLE_ROOT / "schemas/forms/rr-subaward-budget10-30-v3.schema.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    mp_subaward_schema = json.loads(
+        (BUNDLE_ROOT / "schemas/forms/rr-mp-subaward-budget-v3.schema.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    assert ten_subaward_schema["properties"]["budget_attachments"]["properties"][
+        "rr_budget_10_3_0"
+    ]["items"] == {"$ref": "urn:grants-form-kernel:forms:rrbudget10:v3"}
+    assert mp_subaward_schema["properties"]["budget_attachments"]["properties"]["rr_mp_budget_3_0"][
+        "items"
+    ] == {"$ref": "urn:grants-form-kernel:forms:rr-mp-budget:v1"}
+
+    ten = bundle.to_form("RRSubawardBudget10_30")
+    mp = bundle.to_form("RRMPSubawardBudget")
+    assert (
+        ten.form_json_schema["properties"]["budget_attachments"]["properties"]["rr_budget_10_3_0"][
+            "items"
+        ]["properties"]["budget_year"]["maxItems"]
+        == 10
+    )
+    assert (
+        mp.form_json_schema["properties"]["budget_attachments"]["properties"]["rr_mp_budget_3_0"][
+            "items"
+        ]["properties"]["budget_year"]["maxItems"]
+        == 10
+    )
+
+
+def test_expansion_preserves_behavior_boundaries_and_analysis_status() -> None:
+    bundle = load_portable_form_bundle(BUNDLE_ROOT)
+    projection = bundle.analysis_projection()
+
+    ten = bundle.forms_by_key["RRSubawardBudget10_30"].definition
+    mp = bundle.forms_by_key["RRMPSubawardBudget"].definition
+    for form in (ten, mp):
+        semantic = [
+            item
+            for item in form["question_bindings"]
+            if item["analysis_classification"] == "semantic_question"
+        ]
+        capture = [
+            item
+            for item in form["question_bindings"]
+            if item["analysis_classification"] == "content_capture_mechanism"
+        ]
+        assert len(semantic) == 101
+        assert len(capture) == 30
+        assert form["review_boundary"]["published_coverage_eligible"] is False
+
+    assert bundle.to_form("RRSubawardBudget10_30").form_rule_schema is not None
+    assert bundle.to_form("RRMPSubawardBudget").form_rule_schema is None
+    pair = next(
+        row
+        for row in projection["pairwise_form_overlap"]
+        if {row["form_a"], row["form_b"]} == {"RRSubawardBudget30", "RRSubawardBudget10_30"}
+    )
+    assert pair["proposed_overlap"]["questions_in_common"] == 101
+    assert pair["proposed_overlap"]["similarity"] == pytest.approx(1.0)
+    assert pair["accepted_overlap"]["questions_in_common"] == 0
+    assert pair["published_overlap"]["eligible"] is False
+
+    evidence = json.loads(
+        (BUNDLE_ROOT / "evidence/declarative-expansion-wave.json").read_text(encoding="utf-8")
+    )
+    assert (
+        evidence["forms"]["RRMPSubawardBudget"]["behavior"]["sibling_calculation_inheritance"]
+        == "explicitly_forbidden"
+    )
+
+
+def test_form_composition_rejects_sibling_keywords_and_cycles(tmp_path: Path) -> None:
+    root = tmp_path / "bundle"
+    shutil.copytree(BUNDLE_ROOT, root)
+    manifest_path = root / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+    def rewrite(relative: str, mutation) -> None:
+        path = root / relative
+        value = json.loads(path.read_text(encoding="utf-8"))
+        mutation(value)
+        path.write_text(json.dumps(value), encoding="utf-8")
+        descriptor = next(
+            item for item in manifest["schemas"] if item["artifact"]["path"] == relative
+        )
+        descriptor["artifact"]["sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
+
+    rewrite(
+        "schemas/forms/rr-mp-subaward-budget-v3.schema.json",
+        lambda value: value["properties"]["budget_attachments"]["properties"]["rr_mp_budget_3_0"][
+            "items"
+        ].update({"title": "not allowed"}),
+    )
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    with pytest.raises(PortableFormKernelError, match="cannot have sibling keywords"):
+        load_portable_form_bundle(root)
+
+    root = tmp_path / "cycle"
+    shutil.copytree(BUNDLE_ROOT, root)
+    manifest_path = root / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    schema_path = root / "schemas/forms/rr-mp-budget-v3.schema.json"
+    schema = json.loads(schema_path.read_text(encoding="utf-8"))
+    schema["properties"]["cycle"] = {
+        "$ref": "urn:grants-form-kernel:forms:rr-mp-subaward-budget:v1"
+    }
+    schema_path.write_text(json.dumps(schema), encoding="utf-8")
+    descriptor = next(
+        item
+        for item in manifest["schemas"]
+        if item["artifact"]["path"] == "schemas/forms/rr-mp-budget-v3.schema.json"
+    )
+    descriptor["artifact"]["sha256"] = hashlib.sha256(schema_path.read_bytes()).hexdigest()
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    with pytest.raises(PortableFormKernelError, match="circular form schema composition"):
         load_portable_form_bundle(root)

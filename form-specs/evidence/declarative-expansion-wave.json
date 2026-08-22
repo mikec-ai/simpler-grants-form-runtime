@@ -1,0 +1,58 @@
+{
+  "contract": "portable-form-expansion-evidence/v1",
+  "forms": {
+    "RRSubawardBudget10_30": {
+      "source": {
+        "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
+        "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
+        "path": "artifacts/proof/grantsgov-RRSubawardBudget10_30.jsonl",
+        "sha256": "8e14f59f046ab82857c2eb7f4e24bb09a15df84da86fa66c5272af2f7dae4d76",
+        "source_xsd_sha256": "0ed112b2e50f0e0c43423f690201b207f5b9c5a85349335260e4fd999f3a611a"
+      },
+      "composition": {
+        "wrapper_items": 30,
+        "embedded_form_schema": "urn:grants-form-kernel:forms:rrbudget10:v3",
+        "embedded_budget_periods": 10,
+        "shared_structural_nodes_with_rr_subaward_budget30": 231,
+        "source_countable_questions": 142,
+        "sibling_source_countable_questions": 187,
+        "semantic_count_reconciliation": "open"
+      },
+      "behavior": {
+        "source": "inherited_source_bound_budget_family_evidence",
+        "target_form_behavior_parity": "not_established",
+        "technical_attachment_slots": 30
+      }
+    },
+    "RRMPSubawardBudget": {
+      "source": {
+        "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
+        "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
+        "xsd_path": "harness/portfolio-ingestion/cache/RR_MP_SubawardBudget_3_0-V3.0_F789/RR_MP_SubawardBudget_3_0-V3.0.xsd",
+        "xsd_sha256": "20dce5b3498c809727892ee6cb837db223d687564c5829d94fe481367b7815c4",
+        "dat_path": "harness/portfolio-ingestion/cache/RR_MP_SubawardBudget_3_0-V3.0_F789/RR_MP_SubawardBudget_3_0-V3.0_F789.xls",
+        "dat_sha256": "aa2288490aec0ae2848a803946e6d80633fa90bd0f6bdefe9d515bfc2a800569"
+      },
+      "composition": {
+        "wrapper_items": 30,
+        "embedded_form_schema": "urn:grants-form-kernel:forms:rr-mp-budget:v1",
+        "embedded_budget_periods": 10,
+        "source_nodes": 231,
+        "source_countable_questions": 187
+      },
+      "behavior": {
+        "target_form_behavior_records": 7,
+        "target_form_calculations": 0,
+        "target_form_conditions": 0,
+        "sibling_calculation_inheritance": "explicitly_forbidden",
+        "target_form_behavior_parity": "not_established",
+        "technical_attachment_slots": 30
+      }
+    }
+  },
+  "review_boundary": {
+    "semantic_mappings": "agent_proposed",
+    "published_coverage_eligible": false,
+    "production_ready": false
+  }
+}

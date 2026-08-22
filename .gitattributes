@@ -1,1 +1,2 @@
 *.sh text=auto eol=lf
+form-specs/manifest.json linguist-generated=true

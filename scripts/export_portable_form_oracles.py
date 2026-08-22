@@ -5,36 +5,18 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib
 import json
 import shutil
 import sys
 from pathlib import Path
 from typing import Any, Never
 
+import jsonschema
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "api"))
 
-from src.form_schema.forms.key_contacts import (
-    FORM_JSON_SCHEMA as KEY_CONTACTS_SCHEMA,  # ruff: ignore[module-import-not-at-top-of-file]
-)
-from src.form_schema.forms.key_contacts import (
-    FORM_UI_SCHEMA as KEY_CONTACTS_UI,  # ruff: ignore[module-import-not-at-top-of-file]
-)
-from src.form_schema.forms.key_contacts import (
-    FORM_XML_TRANSFORM_RULES as KEY_CONTACTS_XML,  # ruff: ignore[module-import-not-at-top-of-file]
-)
-from src.form_schema.forms.sf424 import (
-    FORM_JSON_SCHEMA as SF424_SCHEMA,  # ruff: ignore[module-import-not-at-top-of-file]
-)
-from src.form_schema.forms.sf424 import (
-    FORM_RULE_SCHEMA as SF424_RULES,  # ruff: ignore[module-import-not-at-top-of-file]
-)
-from src.form_schema.forms.sf424 import (
-    FORM_UI_SCHEMA as SF424_UI,  # ruff: ignore[module-import-not-at-top-of-file]
-)
-from src.form_schema.forms.sf424 import (
-    FORM_XML_TRANSFORM_RULES as SF424_XML,  # ruff: ignore[module-import-not-at-top-of-file]
-)
 from src.form_schema.portable_form_bundle import (  # ruff: ignore[module-import-not-at-top-of-file]
     PortableFormBundleError,
     load_portable_form_bundle,
@@ -42,6 +24,8 @@ from src.form_schema.portable_form_bundle import (  # ruff: ignore[module-import
 
 VERSION = "0.1.0"
 DEFAULT_OUTPUT = ROOT / "build" / "portable-form-artifacts" / "oracles"
+NATIVE_ORACLE_REGISTRY = Path("conformance/native-oracles.json")
+NATIVE_ORACLE_SCHEMA = Path("schemas/authoring/native-oracle-registry.schema.json")
 
 
 def _write_json(path: Path, value: Any) -> str:
@@ -53,6 +37,42 @@ def _write_json(path: Path, value: Any) -> str:
 
 def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _native_oracles(
+    bundle_root: Path, form_keys: set[str]
+) -> dict[str, dict[str, Any]]:
+    registry_path = bundle_root / NATIVE_ORACLE_REGISTRY
+    schema_path = bundle_root / NATIVE_ORACLE_SCHEMA
+    registry = json.loads(registry_path.read_text(encoding="utf-8"))
+    schema = json.loads(schema_path.read_text(encoding="utf-8"))
+    jsonschema.Draft202012Validator.check_schema(schema)
+    jsonschema.Draft202012Validator(schema).validate(registry)
+
+    native: dict[str, dict[str, Any]] = {}
+    for descriptor in registry["oracles"]:
+        form_key = descriptor["form_key"]
+        if form_key not in form_keys:
+            raise ValueError(f"native oracle names unknown form: {form_key}")
+        if form_key in native:
+            raise ValueError(f"duplicate native oracle form_key: {form_key}")
+        source = descriptor["implementation_source"]
+        source_path = ROOT / source["path"]
+        if not source_path.is_file() or _sha256(source_path) != source["sha256"]:
+            raise ValueError(f"native oracle implementation source drift: {form_key}")
+        module = importlib.import_module(descriptor["module"])
+        artifacts: dict[str, Any] = {}
+        for artifact_name, constant_name in descriptor["artifacts"].items():
+            if constant_name is None:
+                artifacts[artifact_name] = None
+                continue
+            if not hasattr(module, constant_name):
+                raise ValueError(
+                    f"native oracle constant is unavailable: {form_key}.{constant_name}"
+                )
+            artifacts[artifact_name] = getattr(module, constant_name)
+        native[form_key] = artifacts
+    return native
 
 
 def export(bundle_root: Path, output_dir: Path) -> dict[str, int]:
@@ -92,20 +112,7 @@ def export(bundle_root: Path, output_dir: Path) -> dict[str, int]:
             }
         )
 
-    native = {
-        "KeyContacts": {
-            "json_schema": KEY_CONTACTS_SCHEMA,
-            "ui_schema": KEY_CONTACTS_UI,
-            "rules": None,
-            "grants_gov_xml": KEY_CONTACTS_XML,
-        },
-        "SF424": {
-            "json_schema": SF424_SCHEMA,
-            "ui_schema": SF424_UI,
-            "rules": SF424_RULES,
-            "grants_gov_xml": SF424_XML,
-        },
-    }
+    native = _native_oracles(bundle_root, set(bundle.forms_by_key))
     parity: list[dict[str, Any]] = []
     for form_key, native_runtime in native.items():
         portable_runtime = json.loads(
@@ -164,7 +171,9 @@ def export(bundle_root: Path, output_dir: Path) -> dict[str, int]:
             "summary": {
                 "forms": len(bundle.forms_by_key),
                 "resolved_runtime_oracles": len(bundle.forms_by_key),
-                "native_implementation_oracles": sum(len(value) for value in native.values()),
+                "native_implementation_oracles": sum(
+                    len(value) for value in native.values()
+                ),
                 "accepted_semantic_mappings": 0,
                 "published_coverage_eligible": False,
             },
