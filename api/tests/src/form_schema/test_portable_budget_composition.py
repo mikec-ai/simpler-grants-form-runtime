@@ -50,8 +50,7 @@ def test_subaward_composes_exact_budget_payload_and_separates_mechanisms() -> No
     semantic = [
         binding
         for binding in form.definition["question_bindings"]
-        if binding.get("analysis_classification", "semantic_question")
-        == "semantic_question"
+        if binding.get("analysis_classification", "semantic_question") == "semantic_question"
     ]
     mechanisms = [
         binding
@@ -61,14 +60,12 @@ def test_subaward_composes_exact_budget_payload_and_separates_mechanisms() -> No
 
     assert len(semantic) == 101
     assert len(mechanisms) == 30
-    assert {binding["context"]["ordinal"] for binding in mechanisms} == set(
-        range(1, 31)
-    )
+    assert {binding["context"]["ordinal"] for binding in mechanisms} == set(range(1, 31))
     assert all(binding["context"]["outer_repeat_max"] == 30 for binding in semantic)
     assert (
-        bundle.to_form("RRSubawardBudget30").form_json_schema["properties"][
-            "budget_attachments"
-        ]["properties"]["rr_budget_3_0"]["maxItems"]
+        bundle.to_form("RRSubawardBudget30").form_json_schema["properties"]["budget_attachments"][
+            "properties"
+        ]["rr_budget_3_0"]["maxItems"]
         == 30
     )
 
@@ -97,15 +94,12 @@ def test_composition_overlap_is_derived_from_semantic_identities_only() -> None:
 def test_multi_project_preserves_validation_variants_under_shared_identity() -> None:
     manifest = json.loads((BUNDLE_ROOT / "manifest.json").read_text(encoding="utf-8"))
     evidence = json.loads(
-        (BUNDLE_ROOT / "evidence/rr-budget-composition-wave.json").read_text(
-            encoding="utf-8"
-        )
+        (BUNDLE_ROOT / "evidence/rr-budget-composition-wave.json").read_text(encoding="utf-8")
     )
     mp = next(form for form in manifest["forms"] if form["form_key"] == "RRMPBudget")
     base = next(form for form in manifest["forms"] if form["form_key"] == "RRBudget")
     base_schemas = {
-        binding["question_id"]: binding["schema_id"]
-        for binding in base["question_bindings"]
+        binding["question_id"]: binding["schema_id"] for binding in base["question_bindings"]
     }
 
     variants = [
@@ -133,25 +127,16 @@ def test_composed_forms_project_only_source_resolved_calculations() -> None:
     assert sums("RRSubawardBudget30") == 30
     assert sums("RRMPBudget") == 10
     evidence = json.loads(
-        (BUNDLE_ROOT / "evidence/rr-budget-composition-wave.json").read_text(
-            encoding="utf-8"
-        )
+        (BUNDLE_ROOT / "evidence/rr-budget-composition-wave.json").read_text(encoding="utf-8")
     )
     assert evidence["forms"]["RRMPBudget"]["calculations_preserved_not_projected"] == 46
-    assert (
-        evidence["forms"]["RRSubawardBudget30"]["conditions_source_bound_not_projected"]
-        == 20
-    )
+    assert evidence["forms"]["RRSubawardBudget30"]["conditions_source_bound_not_projected"] == 20
 
 
 def test_question_schema_variants_are_supported_but_schema_ids_remain_unique() -> None:
     manifest = json.loads((BUNDLE_ROOT / "manifest.json").read_text(encoding="utf-8"))
     questions = [item for item in manifest["schemas"] if item["kind"] == "question"]
-    prefix = [
-        item
-        for item in questions
-        if item["question_id"] == "question:person:name:prefix"
-    ]
+    prefix = [item for item in questions if item["question_id"] == "question:person:name:prefix"]
 
     assert len(prefix) == 2
     assert len({item["id"] for item in questions}) == len(questions)
@@ -163,15 +148,11 @@ def test_unknown_analysis_classification_fails_closed(tmp_path: Path) -> None:
     shutil.copytree(BUNDLE_ROOT, root)
     manifest_path = root / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    form = next(
-        item for item in manifest["forms"] if item["form_key"] == "RRSubawardBudget30"
-    )
+    form = next(item for item in manifest["forms"] if item["form_key"] == "RRSubawardBudget30")
     form["question_bindings"][0]["analysis_classification"] = "looks_like_a_question"
     manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
 
-    with pytest.raises(
-        PortableFormKernelError, match="analysis_classification is unknown"
-    ):
+    with pytest.raises(PortableFormKernelError, match="analysis_classification is unknown"):
         load_portable_form_bundle(root)
 
 
@@ -179,9 +160,7 @@ def test_composition_build_chain_is_reproducible(tmp_path: Path) -> None:
     root, specs = _copy_builders(tmp_path)
     before = _tree_digest(specs)
 
-    subprocess.run(
-        [sys.executable, "scripts/build_portable_budget_pilot.py"], cwd=root, check=True
-    )
+    subprocess.run([sys.executable, "scripts/build_portable_budget_pilot.py"], cwd=root, check=True)
     subprocess.run(
         [sys.executable, "scripts/build_portable_budget_composition.py"],
         cwd=root,
@@ -195,9 +174,7 @@ def test_composition_builder_fails_closed_on_variant_drift(tmp_path: Path) -> No
     root, specs = _copy_builders(tmp_path)
     path = specs / "oracles/budget/rr-mp-budget-v3.candidate.json"
     candidate = json.loads(path.read_text(encoding="utf-8"))
-    candidate["artifacts"]["json_schema"]["properties"]["organization_name"][
-        "maxLength"
-    ] = 59
+    candidate["artifacts"]["json_schema"]["properties"]["organization_name"]["maxLength"] = 59
     path.write_text(json.dumps(candidate), encoding="utf-8")
 
     result = subprocess.run(
