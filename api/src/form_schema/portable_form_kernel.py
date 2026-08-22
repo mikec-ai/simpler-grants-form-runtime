@@ -242,16 +242,28 @@ class PortableFormKernel:
 
     def analysis_projection(self) -> dict[str, Any]:
         associations: list[dict[str, Any]] = []
-        form_questions: dict[str, set[str]] = {}
-        accepted_mappings = 0
+        proposed_form_questions: dict[str, set[str]] = {}
+        accepted_form_questions: dict[str, set[str]] = {}
+        published_form_questions: dict[str, set[str]] = {}
+        form_publishable: dict[str, bool] = {}
         for form_key, portable in sorted(self.forms_by_key.items()):
-            question_ids: set[str] = set()
+            proposed_question_ids: set[str] = set()
+            accepted_question_ids: set[str] = set()
+            review = portable.definition["review_boundary"]
+            publishable = (
+                review["semantic_mappings"] == "accepted"
+                and review["published_coverage_eligible"] is True
+            )
+            form_publishable[form_key] = publishable
             targets = portable.mappings["targets"]
             for binding in portable.definition["question_bindings"]:
                 question_id = binding["question_id"]
-                question_ids.add(question_id)
-                if binding["mapping_status"] == "accepted":
-                    accepted_mappings += 1
+                mapping_status = binding["mapping_status"]
+                if mapping_status not in {"rejected", "superseded"}:
+                    proposed_question_ids.add(question_id)
+                accepted = mapping_status == "accepted"
+                if accepted:
+                    accepted_question_ids.add(question_id)
                 xml_ref = binding["mapping_refs"].get("grants_gov_xml")
                 xml = (
                     targets["grants_gov_xml"]["bindings"][xml_ref] if xml_ref is not None else None
@@ -265,50 +277,91 @@ class PortableFormKernel:
                         "form_pointer": binding["form_pointer"],
                         "cardinality": binding["cardinality"],
                         "context": binding["context"],
-                        "mapping_status": binding["mapping_status"],
+                        "mapping_status": mapping_status,
+                        "included_in_proposed_overlap": mapping_status
+                        not in {"rejected", "superseded"},
+                        "included_in_accepted_overlap": accepted,
+                        "included_in_published_overlap": accepted and publishable,
                         "xml_path": xml["path"] if xml is not None else None,
                         "type_source": xml["type_source"] if xml is not None else None,
                         "type": xml["type"] if xml is not None else None,
                         "xsd_source": xml["xsd_source"] if xml is not None else None,
                     }
                 )
-            form_questions[form_key] = question_ids
+            proposed_form_questions[form_key] = proposed_question_ids
+            accepted_form_questions[form_key] = accepted_question_ids
+            published_form_questions[form_key] = accepted_question_ids if publishable else set()
 
-        question_counts: dict[str, int] = {}
-        for question_ids in form_questions.values():
-            for question_id in question_ids:
-                question_counts[question_id] = question_counts.get(question_id, 0) + 1
+        def question_counts(form_questions: dict[str, set[str]]) -> dict[str, int]:
+            counts: dict[str, int] = {}
+            for question_ids in form_questions.values():
+                for question_id in question_ids:
+                    counts[question_id] = counts.get(question_id, 0) + 1
+            return counts
 
-        pairwise: list[dict[str, Any]] = []
-        for form_a, form_b in itertools.combinations(sorted(form_questions), 2):
-            questions_a = form_questions[form_a]
-            questions_b = form_questions[form_b]
+        proposed_question_counts = question_counts(proposed_form_questions)
+        accepted_question_counts = question_counts(accepted_form_questions)
+        published_question_counts = question_counts(published_form_questions)
+
+        def overlap(questions_a: set[str], questions_b: set[str]) -> dict[str, Any]:
             common = questions_a & questions_b
             union = questions_a | questions_b
+            return {
+                "questions_in_common": len(common),
+                "unique_questions": len(union),
+                "similarity": len(common) / len(union) if union else 0.0,
+                "form_a_coverage": len(common) / len(questions_a) if questions_a else 0.0,
+                "form_b_coverage": len(common) / len(questions_b) if questions_b else 0.0,
+            }
+
+        pairwise: list[dict[str, Any]] = []
+        for form_a, form_b in itertools.combinations(sorted(proposed_form_questions), 2):
             pairwise.append(
                 {
                     "form_a": form_a,
                     "form_b": form_b,
-                    "questions_in_common": len(common),
-                    "unique_questions": len(union),
-                    "similarity": len(common) / len(union) if union else 0.0,
-                    "form_a_coverage": len(common) / len(questions_a) if questions_a else 0.0,
-                    "form_b_coverage": len(common) / len(questions_b) if questions_b else 0.0,
+                    "proposed_overlap": overlap(
+                        proposed_form_questions[form_a], proposed_form_questions[form_b]
+                    ),
+                    "accepted_overlap": overlap(
+                        accepted_form_questions[form_a], accepted_form_questions[form_b]
+                    ),
+                    "published_overlap": {
+                        "eligible": form_publishable[form_a] and form_publishable[form_b],
+                        **overlap(
+                            published_form_questions[form_a],
+                            published_form_questions[form_b],
+                        ),
+                    },
                 }
             )
 
         return {
-            "contract": "portable-grants-form-analysis/v1",
+            "contract": "portable-grants-form-analysis/v2",
             "bundle_digest": self.bundle_digest,
             "summary": {
-                "forms": len(form_questions),
-                "unique_questions": len(question_counts),
-                "associations": len(associations),
-                "accepted_mappings": accepted_mappings,
+                "forms": len(proposed_form_questions),
+                "proposed_unique_questions": len(proposed_question_counts),
+                "accepted_unique_questions": len(accepted_question_counts),
+                "published_unique_questions": len(published_question_counts),
+                "proposed_associations": sum(
+                    row["included_in_proposed_overlap"] for row in associations
+                ),
+                "accepted_associations": sum(
+                    row["included_in_accepted_overlap"] for row in associations
+                ),
+                "published_associations": sum(
+                    row["included_in_published_overlap"] for row in associations
+                ),
             },
             "questions": [
-                {"question_id": question_id, "form_count": count}
-                for question_id, count in sorted(question_counts.items())
+                {
+                    "question_id": question_id,
+                    "proposed_form_count": proposed_question_counts.get(question_id, 0),
+                    "accepted_form_count": accepted_question_counts.get(question_id, 0),
+                    "published_form_count": published_question_counts.get(question_id, 0),
+                }
+                for question_id in sorted(proposed_question_counts)
             ],
             "form_question_associations": associations,
             "pairwise_form_overlap": pairwise,
@@ -323,7 +376,7 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
     manifest = _object(_read_json(manifest_path, "manifest"), "manifest")
     _exact_keys(
         manifest,
-        {"contract", "bundle", "schemas", "compatibility", "forms"},
+        {"contract", "bundle", "sources", "schemas", "compatibility", "forms"},
         "manifest",
     )
     if manifest["contract"] != CONTRACT:
@@ -333,6 +386,13 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
     _string(bundle["name"], "bundle.name")
     _string(bundle["version"], "bundle.version")
 
+    sources = _object(manifest["sources"], "sources")
+    if not sources:
+        raise PortableFormKernelError("sources cannot be empty")
+    for source_key, source in sources.items():
+        _string(source_key, "sources key")
+        _validate_source_evidence(source, f"sources.{source_key}")
+
     dependencies: set[Path] = {manifest_path}
     schemas_by_id: dict[str, dict[str, Any]] = {}
     schema_kinds: dict[str, str] = {}
@@ -340,7 +400,11 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
     for index, raw_schema in enumerate(_array(manifest["schemas"], "schemas")):
         label = f"schemas[{index}]"
         descriptor = _object(raw_schema, label)
-        _exact_keys(descriptor, {"kind", "id", "question_id", "artifact"}, label)
+        _exact_keys(
+            descriptor,
+            {"kind", "id", "question_id", "artifact", "source_evidence"},
+            label,
+        )
         kind = _string(descriptor["kind"], f"{label}.kind")
         if kind not in {"question", "form"}:
             raise PortableFormKernelError(f"{label}.kind is unknown")
@@ -368,8 +432,26 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
             if question_id in question_ids:
                 raise PortableFormKernelError(f"duplicate question id: {question_id}")
             question_ids[question_id] = schema_id
-        elif question_id is not None:
-            raise PortableFormKernelError(f"{label}.question_id must be null for form schemas")
+            question_source_refs = _array(descriptor["source_evidence"], f"{label}.source_evidence")
+            if not question_source_refs:
+                raise PortableFormKernelError(f"{label}.source_evidence cannot be empty")
+            if len(set(question_source_refs)) != len(question_source_refs):
+                raise PortableFormKernelError(
+                    f"{label}.source_evidence cannot contain duplicate source references"
+                )
+            for source_index, source_ref in enumerate(question_source_refs):
+                source_ref = _string(source_ref, f"{label}.source_evidence[{source_index}]")
+                if source_ref not in sources:
+                    raise PortableFormKernelError(
+                        f"{label}.source_evidence[{source_index}] does not resolve: {source_ref}"
+                    )
+        else:
+            if question_id is not None:
+                raise PortableFormKernelError(f"{label}.question_id must be null for form schemas")
+            if descriptor["source_evidence"] != []:
+                raise PortableFormKernelError(
+                    f"{label}.source_evidence must be empty for form schemas"
+                )
         schemas_by_id[schema_id] = document
         schema_kinds[schema_id] = kind
 
@@ -663,11 +745,15 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
             raise PortableFormKernelError(
                 f"{label} cannot publish coverage with unaccepted occurrence mappings"
             )
+        if review["published_coverage_eligible"] and review["semantic_mappings"] != "accepted":
+            raise PortableFormKernelError(
+                f"{label} cannot publish coverage before form semantic mappings are accepted"
+            )
 
-        sources = _array(definition["source_evidence"], f"{label}.source_evidence")
-        if not sources:
+        form_sources = _array(definition["source_evidence"], f"{label}.source_evidence")
+        if not form_sources:
             raise PortableFormKernelError(f"{label}.source_evidence cannot be empty")
-        for source_index, source in enumerate(sources):
+        for source_index, source in enumerate(form_sources):
             _validate_source_evidence(source, f"{label}.source_evidence[{source_index}]")
 
         forms_by_key[form_key] = PortableFormDeclaration(

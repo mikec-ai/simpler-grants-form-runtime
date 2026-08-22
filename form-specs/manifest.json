@@ -2,7 +2,73 @@
   "contract": "portable-grants-form-bundle/v1",
   "bundle": {
     "name": "declarative-grants-form-pilot",
-    "version": "0.4.0"
+    "version": "0.5.0"
+  },
+  "sources": {
+    "keycontacts-source-1": {
+      "kind": "authoritative_source",
+      "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
+      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
+      "path": "work/grantsgov-xsds/Key_Contacts_2_0-V2.0.xsd",
+      "sha256": "d361843ac5acaf39aa58a10d87cb36647e2f834052ef5d7cf9370442908296e6",
+      "source_version": "Key Contacts 2.0"
+    },
+    "keycontacts-source-2": {
+      "kind": "authoritative_source",
+      "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
+      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
+      "path": "work/grantsgov-xsds/dependencies/GlobalLibrary-V2.0.xsd",
+      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8",
+      "source_version": "GlobalLibrary 2.0"
+    },
+    "keycontacts-source-3": {
+      "kind": "authoritative_source",
+      "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
+      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
+      "path": "work/grantsgov-xsds/dependencies/UniversalCodes-V2.0.xsd",
+      "sha256": "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a",
+      "source_version": "UniversalCodes 2.0"
+    },
+    "keycontacts-source-4": {
+      "kind": "authoritative_source",
+      "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
+      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
+      "path": "artifacts/portfolio/top30-behavior-sources/Key_Contacts_2_0-V2.0_F683.xls",
+      "sha256": "b4856e146a424bea07ba508c5f261c5756798ed139bef4ea4c66d286fb439543",
+      "source_version": "Key Contacts 2.0 F683 DAT"
+    },
+    "keycontacts-source-5": {
+      "kind": "implementation_oracle",
+      "repository": "https://github.com/mikec-ai/simpler-grants-form-runtime.git",
+      "revision": "e1739ee54e2d1c964d48b0386a3c0246d3c621d7",
+      "path": "api/src/form_schema/forms/key_contacts/1/0/form_json.py",
+      "sha256": "ecf819caa437ee831637501d64c2799c0981c35217755cbd4e79f97225bafb22",
+      "source_version": "Key Contacts 2.0"
+    },
+    "sf424-source-1": {
+      "kind": "authoritative_source",
+      "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
+      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
+      "path": "work/grantsgov-xsds/SF424_4_0-V4.0.xsd",
+      "sha256": "21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364",
+      "source_version": "SF424 4.0"
+    },
+    "sf424-source-2": {
+      "kind": "authoritative_source",
+      "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
+      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
+      "path": "work/form-metadata/SF424_4_0-V4.0_F713.xls",
+      "sha256": "d6c16b73f5ade8c30bff93163503d1b80a1ee609ea8daa543a90214523b92bde",
+      "source_version": "SF424 4.0 F713 DAT"
+    },
+    "sf424-source-3": {
+      "kind": "implementation_oracle",
+      "repository": "https://github.com/mikec-ai/simpler-grants-form-runtime.git",
+      "revision": "c2380ead0902e94286c874b62e804baac30b2c7d",
+      "path": "api/src/form_schema/forms/sf424/1/0/form_json.py",
+      "sha256": "442c62f8dad67ad09a8135b3c8d880c6cad8cd6b9f0dd71411ef537b31ebc8e1",
+      "source_version": "SF424 4.0"
+    }
   },
   "schemas": [
     {
@@ -12,7 +78,17 @@
       "artifact": {
         "path": "schemas/questions/address-city.schema.json",
         "sha256": "94d03430a84bf5e8eabcbc075fd2bdcfa8e048b7f0a286e42666ebeb25b3949b"
-      }
+      },
+      "source_evidence": [
+        "keycontacts-source-1",
+        "keycontacts-source-2",
+        "keycontacts-source-3",
+        "keycontacts-source-4",
+        "keycontacts-source-5",
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -21,7 +97,17 @@
       "artifact": {
         "path": "schemas/questions/address-country.schema.json",
         "sha256": "c2a0fbf85b40bc54d253b87ea211697fd2966a41fb4354b6d584cc7dce16c3c4"
-      }
+      },
+      "source_evidence": [
+        "keycontacts-source-1",
+        "keycontacts-source-2",
+        "keycontacts-source-3",
+        "keycontacts-source-4",
+        "keycontacts-source-5",
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -30,7 +116,17 @@
       "artifact": {
         "path": "schemas/questions/address-county.schema.json",
         "sha256": "d3dc8e485372a7f348819efa58121f7d9e126476321ee7a4d6cd542176f82929"
-      }
+      },
+      "source_evidence": [
+        "keycontacts-source-1",
+        "keycontacts-source-2",
+        "keycontacts-source-3",
+        "keycontacts-source-4",
+        "keycontacts-source-5",
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -39,7 +135,17 @@
       "artifact": {
         "path": "schemas/questions/address-postal-code.schema.json",
         "sha256": "d4ed8069472c9d3791170295847cd995ee6cd72b8dfe5fbd7f32d86c8d36d5a2"
-      }
+      },
+      "source_evidence": [
+        "keycontacts-source-1",
+        "keycontacts-source-2",
+        "keycontacts-source-3",
+        "keycontacts-source-4",
+        "keycontacts-source-5",
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -48,7 +154,17 @@
       "artifact": {
         "path": "schemas/questions/address-province.schema.json",
         "sha256": "1a3706b1e730fcbec9a7ab9c67766ce4b2834587320f44e7936b0d0baadea2dd"
-      }
+      },
+      "source_evidence": [
+        "keycontacts-source-1",
+        "keycontacts-source-2",
+        "keycontacts-source-3",
+        "keycontacts-source-4",
+        "keycontacts-source-5",
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -57,7 +173,17 @@
       "artifact": {
         "path": "schemas/questions/address-state.schema.json",
         "sha256": "bdae0d34abc7707d0bce697e556427abf1e5c64d366b24f817e05ccc916cb910"
-      }
+      },
+      "source_evidence": [
+        "keycontacts-source-1",
+        "keycontacts-source-2",
+        "keycontacts-source-3",
+        "keycontacts-source-4",
+        "keycontacts-source-5",
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -66,7 +192,17 @@
       "artifact": {
         "path": "schemas/questions/address-street-1.schema.json",
         "sha256": "e188d7ca26b93692c9c5726f36ae9b85e266fb261506ec7a50a574a44ea3f641"
-      }
+      },
+      "source_evidence": [
+        "keycontacts-source-1",
+        "keycontacts-source-2",
+        "keycontacts-source-3",
+        "keycontacts-source-4",
+        "keycontacts-source-5",
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -75,7 +211,17 @@
       "artifact": {
         "path": "schemas/questions/address-street-2.schema.json",
         "sha256": "7f3b18330028841e5e979b54c332c9c06b4076e12c7fcfa0fb1d4a896beed6ad"
-      }
+      },
+      "source_evidence": [
+        "keycontacts-source-1",
+        "keycontacts-source-2",
+        "keycontacts-source-3",
+        "keycontacts-source-4",
+        "keycontacts-source-5",
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -84,7 +230,17 @@
       "artifact": {
         "path": "schemas/questions/contact-email.schema.json",
         "sha256": "2cdcd490980f6d8c1358ef9ef4774777434ada5db383070a44362c23f243b8e5"
-      }
+      },
+      "source_evidence": [
+        "keycontacts-source-1",
+        "keycontacts-source-2",
+        "keycontacts-source-3",
+        "keycontacts-source-4",
+        "keycontacts-source-5",
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -93,7 +249,17 @@
       "artifact": {
         "path": "schemas/questions/contact-fax.schema.json",
         "sha256": "132d62ad5b65e8b7a752f5bed8c4b487663e5ae28dc603c8cf075ffe7ef4badb"
-      }
+      },
+      "source_evidence": [
+        "keycontacts-source-1",
+        "keycontacts-source-2",
+        "keycontacts-source-3",
+        "keycontacts-source-4",
+        "keycontacts-source-5",
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -102,7 +268,17 @@
       "artifact": {
         "path": "schemas/questions/contact-phone.schema.json",
         "sha256": "231b6e70de35a1e46d35ad806b176bca70f55cd4d17d748ab249f5d1c55450ad"
-      }
+      },
+      "source_evidence": [
+        "keycontacts-source-1",
+        "keycontacts-source-2",
+        "keycontacts-source-3",
+        "keycontacts-source-4",
+        "keycontacts-source-5",
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -111,7 +287,14 @@
       "artifact": {
         "path": "schemas/questions/contact-project-role.schema.json",
         "sha256": "87bf0e34bd53ae9caea03501f8cc6cc1f001824c6baa37f984be13eb9a29284c"
-      }
+      },
+      "source_evidence": [
+        "keycontacts-source-1",
+        "keycontacts-source-2",
+        "keycontacts-source-3",
+        "keycontacts-source-4",
+        "keycontacts-source-5"
+      ]
     },
     {
       "kind": "question",
@@ -120,7 +303,17 @@
       "artifact": {
         "path": "schemas/questions/organization-legal-name.schema.json",
         "sha256": "07efd4f256f0f0fd269d9a29389c9da468acb7e620acfdf060027328d1a8f25a"
-      }
+      },
+      "source_evidence": [
+        "keycontacts-source-1",
+        "keycontacts-source-2",
+        "keycontacts-source-3",
+        "keycontacts-source-4",
+        "keycontacts-source-5",
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -129,7 +322,17 @@
       "artifact": {
         "path": "schemas/questions/person-name-first.schema.json",
         "sha256": "9c0c6ffab963f99c57e487d79a77340ba217a5ed6cd17a5fbe387b7faa0d25d2"
-      }
+      },
+      "source_evidence": [
+        "keycontacts-source-1",
+        "keycontacts-source-2",
+        "keycontacts-source-3",
+        "keycontacts-source-4",
+        "keycontacts-source-5",
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -138,7 +341,17 @@
       "artifact": {
         "path": "schemas/questions/person-name-last.schema.json",
         "sha256": "c8d944d8790c2adc1d778c21aab35d7181834b0cc7c8ad72a80c0e938daca3c1"
-      }
+      },
+      "source_evidence": [
+        "keycontacts-source-1",
+        "keycontacts-source-2",
+        "keycontacts-source-3",
+        "keycontacts-source-4",
+        "keycontacts-source-5",
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -147,7 +360,17 @@
       "artifact": {
         "path": "schemas/questions/person-name-middle.schema.json",
         "sha256": "940b221b9ef8f33b46e48ee63410f7352cad185b96b7117f03504887db90fe14"
-      }
+      },
+      "source_evidence": [
+        "keycontacts-source-1",
+        "keycontacts-source-2",
+        "keycontacts-source-3",
+        "keycontacts-source-4",
+        "keycontacts-source-5",
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -156,7 +379,17 @@
       "artifact": {
         "path": "schemas/questions/person-name-prefix.schema.json",
         "sha256": "6d62ae18e47eb23e27a15ea8dddab498121879b20a4dd5d833cb4c9592a1852f"
-      }
+      },
+      "source_evidence": [
+        "keycontacts-source-1",
+        "keycontacts-source-2",
+        "keycontacts-source-3",
+        "keycontacts-source-4",
+        "keycontacts-source-5",
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -165,7 +398,17 @@
       "artifact": {
         "path": "schemas/questions/person-name-suffix.schema.json",
         "sha256": "2bd01db5019da07d80b81125f582ed20f30ec531edb1a648eb84a9566fb6bd1b"
-      }
+      },
+      "source_evidence": [
+        "keycontacts-source-1",
+        "keycontacts-source-2",
+        "keycontacts-source-3",
+        "keycontacts-source-4",
+        "keycontacts-source-5",
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -174,7 +417,17 @@
       "artifact": {
         "path": "schemas/questions/person-organizational-affiliation.schema.json",
         "sha256": "5f2907e9b84fe1a239ec9fbc0b6494d096efccfaea93be16d9f2e2293353179b"
-      }
+      },
+      "source_evidence": [
+        "keycontacts-source-1",
+        "keycontacts-source-2",
+        "keycontacts-source-3",
+        "keycontacts-source-4",
+        "keycontacts-source-5",
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -183,7 +436,17 @@
       "artifact": {
         "path": "schemas/questions/person-title.schema.json",
         "sha256": "c31bb041f0311a28331d15fd0b713327c42a359709f633f99bde17af82fa0562"
-      }
+      },
+      "source_evidence": [
+        "keycontacts-source-1",
+        "keycontacts-source-2",
+        "keycontacts-source-3",
+        "keycontacts-source-4",
+        "keycontacts-source-5",
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "form",
@@ -191,8 +454,9 @@
       "question_id": null,
       "artifact": {
         "path": "schemas/forms/key-contacts.schema.json",
-        "sha256": "f5ac183506f2414b1c9c9915d5a58761bc23ed11d2e4c36fcc3e78bb9dbb879a"
-      }
+        "sha256": "7a4c9ba72458b10fe0ec81cf9e11aa771a3d21bdf637571b9e5e23e3744098c1"
+      },
+      "source_evidence": []
     },
     {
       "kind": "question",
@@ -201,7 +465,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-submission-type.schema.json",
         "sha256": "15cdaf70b6b91b70dfdfa6a7346e173cc8360e45047d1668c4f089e3c3a28d82"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -210,7 +479,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-type.schema.json",
         "sha256": "a5307ee4175fd59e165f30e770d8de6222d665d314fe9647d1f318fd4a1fc6cb"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -219,7 +493,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-revision-type.schema.json",
         "sha256": "8826c41338655c13bfa464e83446e350dd60f21534339ec046fa2cc7e4f04386"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -228,7 +507,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-revision-other.schema.json",
         "sha256": "d963bc978aec8c5603921b410a56f49d7d1559392d68cd49eadc977a9a559465"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -237,7 +521,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-received-date.schema.json",
         "sha256": "62ece57eba03f34cabd2a7caea4becdd2f80d65fb63d320b73130a8a49550131"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -246,7 +535,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-applicant-id.schema.json",
         "sha256": "99db386760fa1e3fcdf5134d46cbf3974a77e1c997e346ef44a13adee9855cda"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -255,7 +549,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-federal-entity-id.schema.json",
         "sha256": "4a925feb0f987c315558e0eeba0a1463d5a808d0579865dbf535ac240dc1e796"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -264,7 +563,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-prior-award-id.schema.json",
         "sha256": "505a5f181bceb72e6b640003c424ff2ea8b87c2fa36a2b7f3edc3402864a16f4"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -273,7 +577,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-state-received-date.schema.json",
         "sha256": "9ba30fc064703c73f82dd9c790e3950388e2a3043b93430d5bc02979854410c3"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -282,7 +591,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-state-id.schema.json",
         "sha256": "29204aef9531a3f041684441bafcac892c0aa135d20487927697ce9a2f73c41e"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -291,7 +605,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/organization-ein.schema.json",
         "sha256": "098496086284d92494c9030dc8c6c44fe0c10803f48e11808c3efeb9bcca0956"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -300,7 +619,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/organization-sam-uei.schema.json",
         "sha256": "0a04cb1d5ab46c7f0d226d11827cc260dd4613c1ef2c4a8a91cddc16fdc6bf47"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -309,7 +633,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/organization-department.schema.json",
         "sha256": "b628481d59821662f7c92c63921bd75a8ae95cf1b883e0ad5bad83de51518ca0"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -318,7 +647,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/organization-division.schema.json",
         "sha256": "efb5203095ec889caa5486faa49fccec65e9090ca363802fe09da7dfac6037de"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -327,7 +661,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/organization-applicant-type.schema.json",
         "sha256": "8c9fcd7b632f5b842cbe1b3c0dffc27101270f02689d197bcd278f4cb7b1c400"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -336,7 +675,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/organization-applicant-type-other.schema.json",
         "sha256": "38245c7f08f676f02973f9948e041a67f96b44938e2a0a00819bbc838d69921b"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -345,7 +689,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-agency-name.schema.json",
         "sha256": "330e71b9c9fc3684f63d0801579304dfe23d4a0f3c7eaf62ae1ad58d3f4760bb"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -354,7 +703,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-assistance-listing-number.schema.json",
         "sha256": "a4d49fb4528d3f3ec75cb0e6b230dab1c201f9eee69819e2bc49f9fabf7efa5d"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -363,7 +717,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-assistance-listing-title.schema.json",
         "sha256": "475ef3718fc8c62d030b980d65fef5552fb6fc1f7d7eebd7c3480a359da94b5d"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -372,7 +731,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-opportunity-number.schema.json",
         "sha256": "0de4313159e9ec2bf45a344feb784e3d6dcefcec19536e8228e3e00bf21d6105"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -381,7 +745,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-opportunity-title.schema.json",
         "sha256": "ad7308677a005f9c806c3e1e9803338ad58475d33367254b0e1d1349abfdf7e2"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -390,7 +759,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-competition-number.schema.json",
         "sha256": "fa0532499bc742122543432187fdbb708b34fbe8500e6409347c24b8f8349e47"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -399,7 +773,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-competition-title.schema.json",
         "sha256": "7b38ce86a625a830eb7d822163e1550daccdef3f0bbde56d34f61b5c3bc31f6f"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -408,7 +787,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-areas-affected-attachment.schema.json",
         "sha256": "4f723ab270a5b1a2379c5c9bd44ff8e15bf4255c2d8ed74b906eb63e32f3ffed"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -417,7 +801,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/project-title.schema.json",
         "sha256": "d58121b2dc40edfdb14d6f4fa13a8c2bb3f647965ba8a57f94f5f9840289c0ae"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -426,7 +815,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/project-additional-titles-attachment.schema.json",
         "sha256": "6250a8d48943e2b2499c949609f878bf7eeda39daa1a167e28db42fc1e627f0c"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -435,7 +829,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/project-applicant-district.schema.json",
         "sha256": "c6a957b145a87582d3f236e75a25529ac931b0f64d25187209eb837f9dff3994"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -444,7 +843,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/project-district.schema.json",
         "sha256": "2b841a96ad04e340fc4ca6a90bee1350d1364f1dda8db244e43a466c768c4295"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -453,7 +857,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/project-additional-districts-attachment.schema.json",
         "sha256": "88cec7baa9034cae51f558ae2c6019ef2229f7791f067e1eb273ef1fe5fb2624"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -462,7 +871,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/project-start-date.schema.json",
         "sha256": "73af69d219b024151f276064da82ed52818dcbad2016963a66c1898cfd5b69c2"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -471,7 +885,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/project-end-date.schema.json",
         "sha256": "1ed1cc161938fc046cf65f115b7cbb00ab74bbe969e9268e7932131d05078f68"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -480,7 +899,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/funding-federal-estimated.schema.json",
         "sha256": "ea91b3c8e46ff44334b7f35638cb58fbe328c8454363eaa61e9d7b7aac528348"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -489,7 +913,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/funding-applicant-estimated.schema.json",
         "sha256": "a14ef26b3083c02386e85b685bdc7ad18de1129f45bb885ccbebca3d86d6c404"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -498,7 +927,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/funding-state-estimated.schema.json",
         "sha256": "7907b425529a43ebd9a49a6449937be31d7a50f9b343cc1f8e3d3cb414c9abf9"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -507,7 +941,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/funding-local-estimated.schema.json",
         "sha256": "69da272c0960ba2d04916b6abbea8a74af67fff2f7a51ac57baa66c6abc44676"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -516,7 +955,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/funding-other-estimated.schema.json",
         "sha256": "3dc218088595f48ec2c18abe11cdf1762c3187dbc213c4a07a5e3f46c77ef35c"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -525,7 +969,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/funding-program-income-estimated.schema.json",
         "sha256": "f92c6e898655ab18a737dfdeefe4975777a246b4a348f5070ae991ac5a88ceeb"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -534,7 +983,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/funding-total.schema.json",
         "sha256": "003a0a203000547d4226bfc29438834ba32b1af96e4b645d4a8b46697c441d8f"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -543,7 +997,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-state-review-status.schema.json",
         "sha256": "efd65fe53b1dd662089b56519e5137ebee91ec9dd6b7a8a9cec6b787622bf27a"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -552,7 +1011,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-state-review-date.schema.json",
         "sha256": "bb07468e4c0a0bf0a34e04838ce8bf31de1f47b2f3a342a5733256a0c6e76b66"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -561,7 +1025,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-delinquent-debt.schema.json",
         "sha256": "fbc17861519ab7b820f24409ddb644d89ef74780805cc5fa5df3e681dc6bbe3f"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -570,7 +1039,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-debt-explanation-attachment.schema.json",
         "sha256": "8201de2fc70d39a13b32b4e4100cdef4bc8bc46437aa5068fd7d0c3873a3844a"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -579,7 +1053,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-certification-agreement.schema.json",
         "sha256": "bdd44a44785583205a85a99ae85b9ed3aa39983eab130970e426a4afe2c6b671"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -588,7 +1067,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-aor-signature.schema.json",
         "sha256": "d4ed8612653d2dc79b4156cb0f1a7249043a3d334d12b906c65ebd8aab8015d5"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -597,7 +1081,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/application-aor-signed-date.schema.json",
         "sha256": "55ffd8dc90b1b9cc7739e5c4c17489809bfbc6b7e8b2bd3ff35aa692b04afd12"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "question",
@@ -606,7 +1095,12 @@
       "artifact": {
         "path": "schemas/questions/sf424/authorized-representative-email.schema.json",
         "sha256": "07cb0f3cab3c34e5643496eb23176590af13ffcec0d8eea4630e77410faf8d09"
-      }
+      },
+      "source_evidence": [
+        "sf424-source-1",
+        "sf424-source-2",
+        "sf424-source-3"
+      ]
     },
     {
       "kind": "form",
@@ -615,7 +1109,8 @@
       "artifact": {
         "path": "schemas/forms/sf424-v4.schema.json",
         "sha256": "9a38e378f709bf18dd57adc000ed379f889cc03fd3461e9fa5d03fe2c4418d6f"
-      }
+      },
+      "source_evidence": []
     }
   ],
   "compatibility": {
@@ -640,7 +1135,7 @@
       },
       "ui": {
         "path": "ui/key-contacts.ui.json",
-        "sha256": "6166b9aa891c3018f616060ce7ce196fd59808ed39fce9356720d5c64b88feaf"
+        "sha256": "69268a46cf441370ca7811306203d3ef64eb1ac57fe029e57eed4814ccbdd037"
       },
       "mappings": {
         "path": "mappings/key-contacts.mappings.json",
@@ -1094,6 +1589,18 @@
         {
           "path": "evidence/key-contacts.behavior-evidence.json",
           "sha256": "5190eeb5f535c1ddb9616fec71f4de72175d30fe2bb25e39aa65326acd56ea33"
+        },
+        {
+          "path": "evidence/key-contacts.parity-exceptions.json",
+          "sha256": "82423d2b8bcea07e59c916930adf61555b97584ddd0d36ae48a41565891d874c"
+        },
+        {
+          "path": "oracles/key-contacts-v2.native.schema.json",
+          "sha256": "4ae683d0048bfa28bc842c6ef9ee526e4e061eb2cfd074b6377385316a120301"
+        },
+        {
+          "path": "oracles/key-contacts-v2.native.ui.json",
+          "sha256": "6c56034aae852cf4d69717a35f51e93b8f3bb4e870626830db0d72aa809ff1b2"
         }
       ],
       "review_boundary": {

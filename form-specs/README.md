@@ -16,6 +16,11 @@ cardinality, context, mapping references, and review state. Validation fails unl
 question `$ref` occurrence is bound exactly once. This preserves repeated and role-distinct uses
 without inflating the unique-question analysis.
 
+Every canonical question descriptor directly references one or more exact source records in the
+manifest source catalog. Each record pins repository, full revision, repository-relative path,
+SHA-256 digest, and source version. Loading fails when a question has no provenance, a reference is
+dangling, or any source record is incomplete or has a malformed revision or digest.
+
 The adapter resolves the referenced schema and compiles it through the same immutable
 `ResolvedFormPackage` seam used by the native runtime. It does not construct a parallel native
 `Form` path.
@@ -33,6 +38,13 @@ checks compare the declarations with pinned XSD, behavior, and rendered-source e
 implementation can omit source fields, so passing the first check never silently implies passing
 the second. All semantic mappings in this pilot remain agent-proposed, with zero reviewed mappings
 contributing to published coverage.
+
+The analytical projection reports three separate views. Proposed overlap is working evidence and
+includes non-rejected occurrence bindings. Accepted overlap includes only occurrence bindings with
+an `accepted` mapping status. Published overlap is additionally gated on each form's semantic
+review state being `accepted` and its explicit published-coverage flag. The current 19 shared
+questions and 95% Key Contacts coverage are therefore proposed findings; accepted and published
+overlap are both zero.
 
 TypeSpec and CommonGrants are optional compatibility inputs. Neither is required to author,
 validate, analyze, or load this bundle.
