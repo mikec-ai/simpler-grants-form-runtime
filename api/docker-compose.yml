@@ -104,6 +104,7 @@ services:
     volumes:
       - .:/api
       - ../form-specs:/form-specs:ro
+      - ../scripts:/scripts:ro
     depends_on:
       - opensearch-node
       - s3mock

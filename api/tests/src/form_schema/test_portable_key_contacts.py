@@ -202,7 +202,7 @@ def test_key_contacts_resolved_schema_parity_is_exhaustive_and_fail_closed() -> 
         return shared[uri.split("#", 1)[0]]
 
     native = jsonref.replace_refs(
-        FORM_JSON_SCHEMA,
+        _read("oracles/key-contacts-v2.native.schema.json"),
         loader=loader,
         lazy_load=False,
         proxies=False,
