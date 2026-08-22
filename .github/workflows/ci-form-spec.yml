@@ -47,7 +47,6 @@ jobs:
       # upstream shows up as a diff in this job rather than as a silent divergence.
       - name: Regenerate the code enums
         run: python3 scripts/gen_code_enums.py
-        working-directory: .
 
       # The scripts read and write the API's data, so they follow the API's style.
       - name: Lint the scripts
@@ -63,14 +62,14 @@ jobs:
       - name: Check that every file compiles on its own
         run: |
           status=0
-          for file in $(find typespec-form-spec/lib specs -name '*.tsp'); do
+          while IFS= read -r -d '' file; do
             if ! npx tsp compile "$file" --no-emit >/dev/null 2>&1; then
               echo "::error file=form-spec/$file::does not compile on its own"
               npx tsp compile "$file" --no-emit 2>&1 | sed -n '/error/,+3p'
               status=1
             fi
-          done
-          exit $status
+          done < <(find typespec-form-spec/lib specs -name '*.tsp' -print0)
+          exit "$status"
 
       - name: Emit the artifacts and vendor them into the adapter
         run: npm run sync
