@@ -1,0 +1,9 @@
+emit:
+  - "@simpler-grants/form-spec"
+options:
+  "@simpler-grants/form-spec":
+    emitter-output-dir: "{project-root}/dist"
+
+linter:
+  extends:
+    - "@simpler-grants/form-spec/recommended"

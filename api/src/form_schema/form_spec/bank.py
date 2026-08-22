@@ -1,0 +1,102 @@
+"""Register the question bank with this codebase's JSON Schema resolver.
+
+The bank is published as **one** shared schema document, nested by block id, so a
+reference into it is an ordinary JSON pointer:
+
+    https://files.simpler.grants.gov/schemas/question_bank_v1.json#/poc/details
+
+That is deliberately the same mechanism `common_shared_v1` and `address_shared_v1`
+already use -- a document of named definitions, referenced by pointer, resolved offline
+by `jsonschema_resolver._loader`. The bank is those schemas one level up in granularity:
+semantic questions rather than primitives. Consequences:
+
+* Publishing the bank is a registration change. `form_template_registry` already
+  dereferences every form at registration time, so the API, the renderer, the validator,
+  and XML generation keep receiving the same fully inlined schema they receive today.
+* A block's cross-references become same-document pointers (`#/generics/person-name`),
+  exactly like `address_shared_v1`'s `{"$ref": "#/street1"}`.
+* No custom keyword carries question identity. The pointer *is* the identity.
+"""
+
+from __future__ import annotations
+
+import dataclasses
+import functools
+import json
+from pathlib import Path
+from typing import Any
+
+from src.form_schema.form_spec.projection import Projection, project_schema
+from src.form_schema.shared.shared_schema import SharedSchema, get_shared_schema_config
+
+#: Emitted artifacts, vendored from `form-spec/dist` by `scripts/sync_to_sgg.py`.
+ARTIFACTS = Path(__file__).parent / "artifacts"
+
+BANK_SCHEMA_NAME = "question_bank_v1"
+
+
+def bank_uri() -> str:
+    """The bank document's URI, honouring the configured shared-schema base."""
+    base = get_shared_schema_config().shared_schema_base_uri.rstrip("/")
+    return f"{base}/{BANK_SCHEMA_NAME}.json"
+
+
+def question_bank_ref(block_id: str) -> str:
+    """The reference a form uses to compose a bank question."""
+    return f"{bank_uri()}#/{block_id}"
+
+
+def _block_index() -> dict[str, str]:
+    """Canonical artifact path -> block id, for every published block."""
+    index: dict[str, str] = {}
+    for kind in ("question-bank", "forms"):
+        root = ARTIFACTS / kind
+        if not root.is_dir():
+            continue
+        for schema_path in sorted(root.rglob("schema.json")):
+            block_id = str(schema_path.parent.relative_to(root))
+            index[f"{kind}/{block_id}/schema.json"] = block_id
+    return index
+
+
+@functools.cache
+def _bank_projection() -> Projection:
+    """A projection that knows every block, so refs and composition can be resolved."""
+    index = _block_index()
+    blocks = {
+        block_id: json.loads((ARTIFACTS / path).read_text())
+        for path, block_id in index.items()
+        if path.startswith("question-bank/")
+    }
+    return Projection(
+        bank_uri=bank_uri(),
+        block_ids=index,
+        blocks=blocks,
+    )
+
+
+def _within_bank_projection() -> Projection:
+    """The same projection, but emitting same-document pointers between blocks."""
+    return dataclasses.replace(_bank_projection(), within_bank=True, hoisted_defs={})
+
+
+def build_bank_document() -> dict[str, Any]:
+    """Assemble every bank block into one document, nested by block id."""
+    projection = _within_bank_projection()
+    document: dict[str, Any] = {}
+    for block_id, schema in sorted(projection.blocks.items()):
+        node = document
+        *parents, leaf = block_id.split("/")
+        for parent in parents:
+            node = node.setdefault(parent, {})
+        node[leaf] = project_schema(schema, projection, local_prefix=block_id)
+    assert projection.hoisted_defs is not None
+    if projection.hoisted_defs:
+        document["$defs"] = projection.hoisted_defs
+    return document
+
+
+QUESTION_BANK_V1 = SharedSchema(
+    schema_name=BANK_SCHEMA_NAME,
+    json_schema=build_bank_document(),
+)

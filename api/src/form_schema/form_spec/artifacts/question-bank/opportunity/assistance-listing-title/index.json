@@ -1,0 +1,10 @@
+{
+  "id": "opportunity/assistance-listing-title",
+  "kind": "question",
+  "name": "Assistance Listing Title",
+  "description": "The Assistance Listing program title.",
+  "tags": [
+    "title"
+  ],
+  "entity": "opportunity"
+}

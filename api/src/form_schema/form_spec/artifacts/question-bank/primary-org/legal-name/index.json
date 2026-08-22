@@ -1,0 +1,11 @@
+{
+  "id": "primary-org/legal-name",
+  "kind": "question",
+  "name": "Legal Name",
+  "description": "Enter the legal name of the applicant that will undertake the assistance activity.",
+  "tags": [
+    "organization",
+    "name"
+  ],
+  "entity": "primaryOrg"
+}

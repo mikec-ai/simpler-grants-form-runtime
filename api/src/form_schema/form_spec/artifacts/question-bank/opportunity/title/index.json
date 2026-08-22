@@ -1,0 +1,10 @@
+{
+  "id": "opportunity/title",
+  "kind": "question",
+  "name": "Opportunity title",
+  "description": "The funding opportunity title.",
+  "tags": [
+    "title"
+  ],
+  "entity": "opportunity"
+}

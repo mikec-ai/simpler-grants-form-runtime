@@ -1,0 +1,10 @@
+{
+  "id": "generics/phone",
+  "kind": "question",
+  "name": "generics/phone",
+  "description": "A telephone or fax number.",
+  "tags": [
+    "phone"
+  ],
+  "entity": "generic"
+}

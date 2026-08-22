@@ -1,0 +1,1075 @@
+{
+  "fieldCount": 528,
+  "formCount": 20,
+  "candidates": [
+    {
+      "signal": "shared reference",
+      "key": "common_shared_v1#organization_name",
+      "forms": [
+        "cd511",
+        "epa_form_4700_4",
+        "gg_lobbying_form",
+        "key_contacts",
+        "project_abstract_summary",
+        "project_performance_site_location",
+        "sf424",
+        "sf424_short",
+        "sf424b",
+        "sf424d",
+        "sflll"
+      ],
+      "fields": [
+        "additional_sites.[].organization_name",
+        "applicant_name",
+        "applicant_organization",
+        "applicant_organization_name",
+        "key_contacts.[].organizational_affiliation",
+        "organization_name",
+        "primary_site.organization_name",
+        "reporting_entity.applicant_reporting_entity.organization_name",
+        "reporting_entity.prime_reporting_entity.organization_name"
+      ]
+    },
+    {
+      "signal": "shared reference",
+      "key": "common_shared_v1#contact_person_title",
+      "forms": [
+        "cd511",
+        "epa_form_4700_4",
+        "epa_key_contacts",
+        "gg_lobbying_form",
+        "key_contacts",
+        "sf424",
+        "sf424_short",
+        "sf424b",
+        "sf424d",
+        "sflll"
+      ],
+      "fields": [
+        "administrative_contact.title",
+        "applicant_signature.aor_title",
+        "authorized_representative.title",
+        "authorized_representative_title",
+        "contact_person.title",
+        "contact_person_title",
+        "key_contacts.[].title",
+        "payee.title",
+        "point_of_contact_title",
+        "project_director.title",
+        "project_manager.title",
+        "signature_block.title",
+        "title"
+      ]
+    },
+    {
+      "signal": "shared reference",
+      "key": "common_shared_v1#signature",
+      "forms": [
+        "cd511",
+        "epa_form_4700_4",
+        "gg_lobbying_form",
+        "sf424",
+        "sf424_short",
+        "sf424b",
+        "sf424d",
+        "sflll"
+      ],
+      "fields": [
+        "aor_signature",
+        "applicant_signature.aor_signature",
+        "authorized_representative_signature",
+        "signature",
+        "signature_block.signature"
+      ]
+    },
+    {
+      "signal": "shared reference",
+      "key": "common_shared_v1#submitted_date",
+      "forms": [
+        "cd511",
+        "epa_form_4700_4",
+        "gg_lobbying_form",
+        "sf424",
+        "sf424_short",
+        "sf424b",
+        "sf424d",
+        "sflll"
+      ],
+      "fields": [
+        "applicant_signature.submitted_date",
+        "authorized_representative_date_signed",
+        "date_signed",
+        "signature_block.signed_date",
+        "submitted_date"
+      ]
+    },
+    {
+      "signal": "shared reference",
+      "key": "common_shared_v1#attachment",
+      "forms": [
+        "attachment_form",
+        "budget_narrative_attachment",
+        "other_narrative_attachment",
+        "project_abstract",
+        "project_narrative_attachment",
+        "project_performance_site_location",
+        "sf424"
+      ],
+      "fields": [
+        "additional_congressional_districts",
+        "additional_locations_attachment",
+        "additional_project_title.[]",
+        "areas_affected",
+        "att1",
+        "att10",
+        "att11",
+        "att12",
+        "att13",
+        "att14",
+        "att15",
+        "att2",
+        "att3",
+        "att4",
+        "att5",
+        "att6",
+        "att7",
+        "att8",
+        "att9",
+        "attachment",
+        "attachments.[]",
+        "debt_explanation"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "Prefix",
+        "{\"maxLength\": 10, \"minLength\": 1, \"type\": \"string\"}"
+      ],
+      "forms": [
+        "cd511",
+        "epa_key_contacts",
+        "gg_lobbying_form",
+        "key_contacts",
+        "sf424",
+        "sf424_short",
+        "sflll"
+      ],
+      "fields": [
+        "administrative_contact.name.prefix",
+        "authorized_representative.name.prefix",
+        "authorized_representative.prefix",
+        "authorized_representative_name.prefix",
+        "contact_person.name.prefix",
+        "contact_person.prefix",
+        "individual_performing_service.individual.prefix",
+        "key_contacts.[].name.prefix",
+        "lobbying_registrant.individual.prefix",
+        "payee.name.prefix",
+        "project_director.name.prefix",
+        "project_manager.name.prefix",
+        "signature_block.name.prefix"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "First Name",
+        "{\"maxLength\": 35, \"minLength\": 1, \"type\": \"string\"}"
+      ],
+      "forms": [
+        "cd511",
+        "epa_key_contacts",
+        "gg_lobbying_form",
+        "key_contacts",
+        "sf424",
+        "sf424_short",
+        "sflll"
+      ],
+      "fields": [
+        "administrative_contact.name.first_name",
+        "authorized_representative.first_name",
+        "authorized_representative.name.first_name",
+        "authorized_representative_name.first_name",
+        "contact_person.first_name",
+        "contact_person.name.first_name",
+        "individual_performing_service.individual.first_name",
+        "key_contacts.[].name.first_name",
+        "lobbying_registrant.individual.first_name",
+        "payee.name.first_name",
+        "project_director.name.first_name",
+        "project_manager.name.first_name",
+        "signature_block.name.first_name"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "Middle Name",
+        "{\"maxLength\": 25, \"minLength\": 1, \"type\": \"string\"}"
+      ],
+      "forms": [
+        "cd511",
+        "epa_key_contacts",
+        "gg_lobbying_form",
+        "key_contacts",
+        "sf424",
+        "sf424_short",
+        "sflll"
+      ],
+      "fields": [
+        "administrative_contact.name.middle_name",
+        "authorized_representative.middle_name",
+        "authorized_representative.name.middle_name",
+        "authorized_representative_name.middle_name",
+        "contact_person.middle_name",
+        "contact_person.name.middle_name",
+        "individual_performing_service.individual.middle_name",
+        "key_contacts.[].name.middle_name",
+        "lobbying_registrant.individual.middle_name",
+        "payee.name.middle_name",
+        "project_director.name.middle_name",
+        "project_manager.name.middle_name",
+        "signature_block.name.middle_name"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "Last Name",
+        "{\"maxLength\": 60, \"minLength\": 1, \"type\": \"string\"}"
+      ],
+      "forms": [
+        "cd511",
+        "epa_key_contacts",
+        "gg_lobbying_form",
+        "key_contacts",
+        "sf424",
+        "sf424_short",
+        "sflll"
+      ],
+      "fields": [
+        "administrative_contact.name.last_name",
+        "authorized_representative.last_name",
+        "authorized_representative.name.last_name",
+        "authorized_representative_name.last_name",
+        "contact_person.last_name",
+        "contact_person.name.last_name",
+        "individual_performing_service.individual.last_name",
+        "key_contacts.[].name.last_name",
+        "lobbying_registrant.individual.last_name",
+        "payee.name.last_name",
+        "project_director.name.last_name",
+        "project_manager.name.last_name",
+        "signature_block.name.last_name"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "Suffix",
+        "{\"maxLength\": 10, \"minLength\": 1, \"type\": \"string\"}"
+      ],
+      "forms": [
+        "cd511",
+        "epa_key_contacts",
+        "gg_lobbying_form",
+        "key_contacts",
+        "sf424",
+        "sf424_short",
+        "sflll"
+      ],
+      "fields": [
+        "administrative_contact.name.suffix",
+        "authorized_representative.name.suffix",
+        "authorized_representative.suffix",
+        "authorized_representative_name.suffix",
+        "contact_person.name.suffix",
+        "contact_person.suffix",
+        "individual_performing_service.individual.suffix",
+        "key_contacts.[].name.suffix",
+        "lobbying_registrant.individual.suffix",
+        "payee.name.suffix",
+        "project_director.name.suffix",
+        "project_manager.name.suffix",
+        "signature_block.name.suffix"
+      ]
+    },
+    {
+      "signal": "shared reference",
+      "key": "common_shared_v1#phone_number",
+      "forms": [
+        "epa_form_4700_4",
+        "epa_key_contacts",
+        "key_contacts",
+        "sf424",
+        "sf424_short",
+        "sflll"
+      ],
+      "fields": [
+        "administrative_contact.fax",
+        "administrative_contact.phone",
+        "authorized_representative.fax",
+        "authorized_representative.phone",
+        "authorized_representative_fax",
+        "authorized_representative_phone_number",
+        "contact_person.fax",
+        "contact_person.phone_number",
+        "fax",
+        "key_contacts.[].fax",
+        "key_contacts.[].phone",
+        "payee.fax",
+        "payee.phone",
+        "phone_number",
+        "point_of_contact_phone_number",
+        "project_director.fax",
+        "project_director.phone_number",
+        "project_manager.fax",
+        "project_manager.phone",
+        "signature_block.telephone"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "Street 1",
+        "{\"maxLength\": 55, \"minLength\": 1, \"type\": \"string\"}"
+      ],
+      "forms": [
+        "epa_key_contacts",
+        "key_contacts",
+        "project_performance_site_location",
+        "sf424",
+        "sf424_short",
+        "sflll"
+      ],
+      "fields": [
+        "additional_sites.[].address.street1",
+        "administrative_contact.address.street1",
+        "applicant.street1",
+        "authorized_representative.address.street1",
+        "contact_person.address.street1",
+        "individual_performing_service.address.street1",
+        "key_contacts.[].address.street1",
+        "lobbying_registrant.address.street1",
+        "payee.address.street1",
+        "primary_site.address.street1",
+        "project_director.address.street1",
+        "project_manager.address.street1",
+        "reporting_entity.applicant_reporting_entity.address.street1",
+        "reporting_entity.prime_reporting_entity.address.street1"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "Street 2",
+        "{\"maxLength\": 55, \"minLength\": 1, \"type\": \"string\"}"
+      ],
+      "forms": [
+        "epa_key_contacts",
+        "key_contacts",
+        "project_performance_site_location",
+        "sf424",
+        "sf424_short",
+        "sflll"
+      ],
+      "fields": [
+        "additional_sites.[].address.street2",
+        "administrative_contact.address.street2",
+        "applicant.street2",
+        "authorized_representative.address.street2",
+        "contact_person.address.street2",
+        "individual_performing_service.address.street2",
+        "key_contacts.[].address.street2",
+        "lobbying_registrant.address.street2",
+        "payee.address.street2",
+        "primary_site.address.street2",
+        "project_director.address.street2",
+        "project_manager.address.street2",
+        "reporting_entity.applicant_reporting_entity.address.street2",
+        "reporting_entity.prime_reporting_entity.address.street2"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "City",
+        "{\"maxLength\": 35, \"minLength\": 1, \"type\": \"string\"}"
+      ],
+      "forms": [
+        "epa_key_contacts",
+        "key_contacts",
+        "project_performance_site_location",
+        "sf424",
+        "sf424_short",
+        "sflll"
+      ],
+      "fields": [
+        "additional_sites.[].address.city",
+        "administrative_contact.address.city",
+        "applicant.city",
+        "authorized_representative.address.city",
+        "contact_person.address.city",
+        "individual_performing_service.address.city",
+        "key_contacts.[].address.city",
+        "lobbying_registrant.address.city",
+        "payee.address.city",
+        "primary_site.address.city",
+        "project_director.address.city",
+        "project_manager.address.city",
+        "reporting_entity.applicant_reporting_entity.address.city",
+        "reporting_entity.prime_reporting_entity.address.city"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "State",
+        "{\"enum\": [\"AL: Alabama\", \"AK: Alaska\", \"AZ: Arizona\", \"AR: Arkansas\", \"CA: California\", \"CO: Colorado\", \"CT: Connecticut\", \"DE: Delaware\", \"DC: District of Columbia\", \"FL: Florida\", \"GA: Georgia\", \"HI: Hawaii\", \"ID: Idaho\", \"IL: Illinois\", \"IN: Indiana\", \"IA: Iowa\", \"KS: Kansas\", \"KY: Kentucky\", \"LA: Louisiana\", \"ME: Maine\", \"MD: Maryland\", \"MA: Massachusetts\", \"MI: Michigan\", \"MN: Minnesota\", \"MS: Mississippi\", \"MO: Missouri\", \"MT: Montana\", \"NE: Nebraska\", \"NV: Nevada\", \"NH: New Hampshire\", \"NJ: New Jersey\", \"NM: New Mexico\", \"NY: New York\", \"NC: North Carolina\", \"ND: North Dakota\", \"OH: Ohio\", \"OK: Oklahoma\", \"OR: Oregon\", \"PA: Pennsylvania\", \"RI: Rhode Island\", \"SC: South Carolina\", \"SD: South Dakota\", \"TN: Tennessee\", \"TX: Texas\", \"UT: Utah\", \"VT: Vermont\", \"VA: Virginia\", \"WA: Washington\", \"WV: West Virginia\", \"WI: Wisconsin\", \"WY: Wyoming\", \"AS: American Samoa\", \"FM: Federated States of Micronesia\", \"GU: Guam\", \"MH: Marshall Islands\", \"MP: Northern Mariana Islands\", \"PW: Palau\", \"PR: Puerto Rico\", \"VI: Virgin Islands\", \"FQ: Baker Island\", \"HQ: Howland Island\", \"DQ: Jarvis Island\", \"JQ: Johnston Atoll\", \"KQ: Kingman Reef\", \"MQ: Midway Islands\", \"BQ: Navassa Island\", \"LQ: Palmyra Atoll\", \"WQ: Wake Island\", \"AA: Armed Forces Americas (except Canada)\", \"AE: Armed Forces Europe, the Middle East, and Canada\", \"AP: Armed Forces Pacific\"], \"type\": \"string\"}"
+      ],
+      "forms": [
+        "epa_key_contacts",
+        "key_contacts",
+        "project_performance_site_location",
+        "sf424",
+        "sf424_short",
+        "sflll"
+      ],
+      "fields": [
+        "additional_sites.[].address.state",
+        "administrative_contact.address.state",
+        "applicant.state",
+        "authorized_representative.address.state",
+        "contact_person.address.state",
+        "individual_performing_service.address.state",
+        "key_contacts.[].address.state",
+        "lobbying_registrant.address.state",
+        "payee.address.state",
+        "primary_site.address.state",
+        "project_director.address.state",
+        "project_manager.address.state",
+        "reporting_entity.applicant_reporting_entity.address.state",
+        "reporting_entity.prime_reporting_entity.address.state"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "Zip / Postal Code",
+        "{\"maxLength\": 30, \"minLength\": 1, \"type\": \"string\"}"
+      ],
+      "forms": [
+        "epa_key_contacts",
+        "key_contacts",
+        "project_performance_site_location",
+        "sf424",
+        "sf424_short",
+        "sflll"
+      ],
+      "fields": [
+        "additional_sites.[].address.zip_code",
+        "administrative_contact.address.zip_code",
+        "applicant.zip_code",
+        "authorized_representative.address.zip_code",
+        "contact_person.address.zip_code",
+        "individual_performing_service.address.zip_code",
+        "key_contacts.[].address.zip_code",
+        "lobbying_registrant.address.zip_code",
+        "payee.address.zip_code",
+        "primary_site.address.zip_code",
+        "project_director.address.zip_code",
+        "project_manager.address.zip_code",
+        "reporting_entity.applicant_reporting_entity.address.zip_code",
+        "reporting_entity.prime_reporting_entity.address.zip_code"
+      ]
+    },
+    {
+      "signal": "shared reference",
+      "key": "common_shared_v1#contact_email",
+      "forms": [
+        "epa_form_4700_4",
+        "epa_key_contacts",
+        "key_contacts",
+        "sf424",
+        "sf424_short"
+      ],
+      "fields": [
+        "administrative_contact.email",
+        "authorized_representative.email",
+        "authorized_representative_email",
+        "contact_person.email",
+        "email",
+        "key_contacts.[].email",
+        "payee.email",
+        "point_of_contact_email",
+        "project_director.email",
+        "project_manager.email"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "Country",
+        "{\"enum\": [\"AFG: AFGHANISTAN\", \"XQZ: AKROTIRI\", \"ALB: ALBANIA\", \"DZA: ALGERIA\", \"AND: ANDORRA\", \"AGO: ANGOLA\", \"AIA: ANGUILLA\", \"ATA: ANTARCTICA\", \"ATG: ANTIGUA AND BARBUDA\", \"ARG: ARGENTINA\", \"ARM: ARMENIA\", \"ABW: ARUBA\", \"XAC: ASHMORE AND CARTIER ISLANDS\", \"AUS: AUSTRALIA\", \"AUT: AUSTRIA\", \"AZE: AZERBAIJAN\", \"BHS: BAHAMAS, THE\", \"BHR: BAHRAIN\", \"BGD: BANGLADESH\", \"BRB: BARBADOS\", \"XBI: BASSAS DA INDIA\", \"BLR: BELARUS\", \"BEL: BELGIUM\", \"BLZ: BELIZE\", \"BEN: BENIN\", \"BMU: BERMUDA\", \"BTN: BHUTAN\", \"BOL: BOLIVIA\", \"BES: BONAIRE, SINT EUSTATIUS, AND SABA\", \"BIH: BOSNIA AND HERZEGOVINA\", \"BWA: BOTSWANA\", \"BVT: BOUVET ISLAND\", \"BRA: BRAZIL\", \"IOT: BRITISH INDIAN OCEAN TERRITORY\", \"BRN: BRUNEI\", \"BGR: BULGARIA\", \"BFA: BURKINA FASO\", \"MMR: BURMA\", \"BDI: BURUNDI\", \"CPV: CABO VERDE\", \"KHM: CAMBODIA\", \"CMR: CAMEROON\", \"CAN: CANADA\", \"CYM: CAYMAN ISLANDS\", \"CAF: CENTRAL AFRICAN REPUBLIC\", \"TCD: CHAD\", \"CHL: CHILE\", \"CHN: CHINA\", \"CXR: CHRISTMAS ISLAND\", \"CPT: CLIPPERTON ISLAND\", \"CCK: COCOS (KEELING) ISLANDS\", \"COL: COLOMBIA\", \"COM: COMOROS\", \"COG: CONGO (BRAZZAVILLE)\", \"COD: CONGO (KINSHASA)\", \"COK: COOK ISLANDS\", \"XCS: CORAL SEA ISLANDS\", \"CRI: COSTA RICA\", \"CIV: C\\u00d4TE D'IVOIRE\", \"HRV: CROATIA\", \"CUB: CUBA\", \"CUW: CURA\\u00c7AO\", \"CYP: CYPRUS\", \"CZE: CZECHIA\", \"DNK: DENMARK\", \"XXD: DHEKELIA\", \"DGA: DIEGO GARCIA\", \"DJI: DJIBOUTI\", \"DMA: DOMINICA\", \"DOM: DOMINICAN REPUBLIC\", \"ECU: ECUADOR\", \"EGY: EGYPT\", \"SLV: EL SALVADOR\", \"XAZ: ENTITY 1\", \"XCR: ENTITY 2\", \"XCY: ENTITY 3\", \"XKM: ENTITY 4\", \"XKN: ENTITY 5\", \"AX3: ENTITY 6\", \"GNQ: EQUATORIAL GUINEA\", \"ERI: ERITREA\", \"EST: ESTONIA\", \"SWZ: ESWATINI\", \"ETH: ETHIOPIA\", \"XEU: EUROPA ISLAND\", \"FLK: FALKLAND ISLANDS (ISLAS MALVINAS)\", \"FRO: FAROE ISLANDS\", \"FJI: FIJI\", \"FIN: FINLAND\", \"FRA: FRANCE\", \"GUF: FRENCH GUIANA\", \"PYF: FRENCH POLYNESIA\", \"ATF: FRENCH SOUTHERN AND ANTARCTIC LANDS\", \"GAB: GABON\", \"GMB: GAMBIA, THE\", \"XGZ: GAZA STRIP\", \"GEO: GEORGIA\", \"DEU: GERMANY\", \"GHA: GHANA\", \"GIB: GIBRALTAR\", \"XGL: GLORIOSO ISLANDS\", \"GRC: GREECE\", \"GRL: GREENLAND\", \"GRD: GRENADA\", \"GLP: GUADELOUPE\", \"GTM: GUATEMALA\", \"GGY: GUERNSEY\", \"GIN: GUINEA\", \"GNB: GUINEA-BISSAU\", \"GUY: GUYANA\", \"HTI: HAITI\", \"HMD: HEARD ISLAND AND MCDONALD ISLANDS\", \"HND: HONDURAS\", \"HKG: HONG KONG\", \"HUN: HUNGARY\", \"ISL: ICELAND\", \"IND: INDIA\", \"IDN: INDONESIA\", \"IRN: IRAN\", \"IRQ: IRAQ\", \"IRL: IRELAND\", \"IMN: ISLE OF MAN\", \"ISR: ISRAEL\", \"ITA: ITALY\", \"JAM: JAMAICA\", \"XJM: JAN MAYEN\", \"JPN: JAPAN\", \"JEY: JERSEY\", \"JOR: JORDAN\", \"XJN: JUAN DE NOVA ISLAND\", \"KAZ: KAZAKHSTAN\", \"KEN: KENYA\", \"KIR: KIRIBATI\", \"PRK: KOREA, NORTH\", \"KOR: KOREA, SOUTH\", \"XKS: KOSOVO\", \"KWT: KUWAIT\", \"KGZ: KYRGYZSTAN\", \"LAO: LAOS\", \"LVA: LATVIA\", \"LBN: LEBANON\", \"LSO: LESOTHO\", \"LBR: LIBERIA\", \"LBY: LIBYA\", \"LIE: LIECHTENSTEIN\", \"LTU: LITHUANIA\", \"LUX: LUXEMBOURG\", \"MAC: MACAU\", \"MDG: MADAGASCAR\", \"MWI: MALAWI\", \"MYS: MALAYSIA\", \"MDV: MALDIVES\", \"MLI: MALI\", \"MLT: MALTA\", \"MTQ: MARTINIQUE\", \"MRT: MAURITANIA\", \"MUS: MAURITIUS\", \"MYT: MAYOTTE\", \"MEX: MEXICO\", \"MDA: MOLDOVA\", \"MCO: MONACO\", \"MNG: MONGOLIA\", \"MNE: MONTENEGRO\", \"MSR: MONTSERRAT\", \"MAR: MOROCCO\", \"MOZ: MOZAMBIQUE\", \"NAM: NAMIBIA\", \"NRU: NAURU\", \"NPL: NEPAL\", \"NLD: NETHERLANDS\", \"NCL: NEW CALEDONIA\", \"NZL: NEW ZEALAND\", \"NIC: NICARAGUA\", \"NER: NIGER\", \"NGA: NIGERIA\", \"NIU: NIUE\", \"NFK: NORFOLK ISLAND\", \"MKD: NORTH MACEDONIA\", \"NOR: NORWAY\", \"OMN: OMAN\", \"PAK: PAKISTAN\", \"PAN: PANAMA\", \"PNG: PAPUA NEW GUINEA\", \"XPR: PARACEL ISLANDS\", \"PRY: PARAGUAY\", \"PER: PERU\", \"PHL: PHILIPPINES\", \"PCN: PITCAIRN ISLANDS\", \"POL: POLAND\", \"PRT: PORTUGAL\", \"QAT: QATAR\", \"REU: REUNION\", \"ROU: ROMANIA\", \"RUS: RUSSIA\", \"RWA: RWANDA\", \"BLM: SAINT BARTHELEMY\", \"SHN: SAINT HELENA, ASCENSION, AND TRISTAN DA CUNHA\", \"KNA: SAINT KITTS AND NEVIS\", \"LCA: SAINT LUCIA\", \"MAF: SAINT MARTIN\", \"SPM: SAINT PIERRE AND MIQUELON\", \"VCT: SAINT VINCENT AND THE GRENADINES\", \"WSM: SAMOA\", \"SMR: SAN MARINO\", \"STP: SAO TOME AND PRINCIPE\", \"SAU: SAUDI ARABIA\", \"SEN: SENEGAL\", \"SRB: SERBIA\", \"SYC: SEYCHELLES\", \"SLE: SIERRA LEONE\", \"SGP: SINGAPORE\", \"SXM: SINT MAARTEN\", \"SVK: SLOVAKIA\", \"SVN: SLOVENIA\", \"SLB: SOLOMON ISLANDS\", \"SOM: SOMALIA\", \"ZAF: SOUTH AFRICA\", \"SGS: SOUTH GEORGIA AND SOUTH SANDWICH ISLANDS\", \"SSD: SOUTH SUDAN\", \"ESP: SPAIN\", \"XSP: SPRATLY ISLANDS\", \"LKA: SRI LANKA\", \"SDN: SUDAN\", \"SUR: SURINAME\", \"XSV: SVALBARD\", \"SWE: SWEDEN\", \"CHE: SWITZERLAND\", \"SYR: SYRIA\", \"TWN: TAIWAN\", \"TJK: TAJIKISTAN\", \"TZA: TANZANIA\", \"THA: THAILAND\", \"TLS: TIMOR-LESTE\", \"TGO: TOGO\", \"TKL: TOKELAU\", \"TON: TONGA\", \"TTO: TRINIDAD AND TOBAGO\", \"XTR: TROMELIN ISLAND\", \"TUN: TUNISIA\", \"TUR: TURKEY\", \"TKM: TURKMENISTAN\", \"TCA: TURKS AND CAICOS ISLANDS\", \"TUV: TUVALU\", \"UGA: UGANDA\", \"UKR: UKRAINE\", \"ARE: UNITED ARAB EMIRATES\", \"GBR: UNITED KINGDOM\", \"USA: UNITED STATES\", \"URY: URUGUAY\", \"UZB: UZBEKISTAN\", \"VUT: VANUATU\", \"VAT: VATICAN CITY\", \"VEN: VENEZUELA\", \"VNM: VIETNAM\", \"VGB: VIRGIN ISLANDS, BRITISH\", \"WLF: WALLIS AND FUTUNA\", \"XWB: WEST BANK\", \"ESH: WESTERN SAHARA\", \"YEM: YEMEN\", \"ZMB: ZAMBIA\", \"ZWE: ZIMBABWE\"], \"type\": \"string\"}"
+      ],
+      "forms": [
+        "epa_key_contacts",
+        "key_contacts",
+        "project_performance_site_location",
+        "sf424",
+        "sf424_short"
+      ],
+      "fields": [
+        "additional_sites.[].address.country",
+        "administrative_contact.address.country",
+        "applicant.country",
+        "authorized_representative.address.country",
+        "contact_person.address.country",
+        "key_contacts.[].address.country",
+        "payee.address.country",
+        "primary_site.address.country",
+        "project_director.address.country",
+        "project_manager.address.country"
+      ]
+    },
+    {
+      "signal": "shared reference",
+      "key": "common_shared_v1#sam_uei",
+      "forms": [
+        "epa_form_4700_4",
+        "project_performance_site_location",
+        "sf424",
+        "sf424_short"
+      ],
+      "fields": [
+        "additional_sites.[].uei",
+        "primary_site.uei",
+        "sam_uei"
+      ]
+    },
+    {
+      "signal": "shared reference",
+      "key": "common_shared_v1#budget_monetary_amount",
+      "forms": [
+        "sf424",
+        "sf424a",
+        "sflll",
+        "supplementary_neh_cover_sheet"
+      ],
+      "fields": [
+        "activity_line_items.[].budget_categories.construction_amount",
+        "activity_line_items.[].budget_categories.contractual_amount",
+        "activity_line_items.[].budget_categories.equipment_amount",
+        "activity_line_items.[].budget_categories.fringe_benefits_amount",
+        "activity_line_items.[].budget_categories.other_amount",
+        "activity_line_items.[].budget_categories.personnel_amount",
+        "activity_line_items.[].budget_categories.program_income_amount",
+        "activity_line_items.[].budget_categories.supplies_amount",
+        "activity_line_items.[].budget_categories.total_amount",
+        "activity_line_items.[].budget_categories.total_direct_charge_amount",
+        "activity_line_items.[].budget_categories.total_indirect_charge_amount",
+        "activity_line_items.[].budget_categories.travel_amount",
+        "activity_line_items.[].budget_summary.federal_estimated_unobligated_amount",
+        "activity_line_items.[].budget_summary.federal_new_or_revised_amount",
+        "activity_line_items.[].budget_summary.non_federal_estimated_unobligated_amount",
+        "activity_line_items.[].budget_summary.non_federal_new_or_revised_amount",
+        "activity_line_items.[].budget_summary.total_amount",
+        "activity_line_items.[].federal_fund_estimates.first_year_amount",
+        "activity_line_items.[].federal_fund_estimates.fourth_year_amount",
+        "activity_line_items.[].federal_fund_estimates.second_year_amount",
+        "activity_line_items.[].federal_fund_estimates.third_year_amount",
+        "activity_line_items.[].non_federal_resources.applicant_amount",
+        "activity_line_items.[].non_federal_resources.other_amount",
+        "activity_line_items.[].non_federal_resources.state_amount",
+        "activity_line_items.[].non_federal_resources.total_amount",
+        "applicant_estimated_funding",
+        "award_amount",
+        "federal_estimated_funding",
+        "forecasted_cash_needs.federal_forecasted_cash_needs.first_quarter_amount",
+        "forecasted_cash_needs.federal_forecasted_cash_needs.fourth_quarter_amount",
+        "forecasted_cash_needs.federal_forecasted_cash_needs.second_quarter_amount",
+        "forecasted_cash_needs.federal_forecasted_cash_needs.third_quarter_amount",
+        "forecasted_cash_needs.federal_forecasted_cash_needs.total_amount",
+        "forecasted_cash_needs.non_federal_forecasted_cash_needs.first_quarter_amount",
+        "forecasted_cash_needs.non_federal_forecasted_cash_needs.fourth_quarter_amount",
+        "forecasted_cash_needs.non_federal_forecasted_cash_needs.second_quarter_amount",
+        "forecasted_cash_needs.non_federal_forecasted_cash_needs.third_quarter_amount",
+        "forecasted_cash_needs.non_federal_forecasted_cash_needs.total_amount",
+        "forecasted_cash_needs.total_forecasted_cash_needs.first_quarter_amount",
+        "forecasted_cash_needs.total_forecasted_cash_needs.fourth_quarter_amount",
+        "forecasted_cash_needs.total_forecasted_cash_needs.second_quarter_amount",
+        "forecasted_cash_needs.total_forecasted_cash_needs.third_quarter_amount",
+        "forecasted_cash_needs.total_forecasted_cash_needs.total_amount",
+        "funding_group.cost_sharing",
+        "funding_group.federal_match",
+        "funding_group.outright_funds",
+        "funding_group.total_from_neh",
+        "funding_group.total_project_costs",
+        "local_estimated_funding",
+        "other_estimated_funding",
+        "program_income_estimated_funding",
+        "state_estimated_funding",
+        "total_budget_categories.construction_amount",
+        "total_budget_categories.contractual_amount",
+        "total_budget_categories.equipment_amount",
+        "total_budget_categories.fringe_benefits_amount",
+        "total_budget_categories.other_amount",
+        "total_budget_categories.personnel_amount",
+        "total_budget_categories.program_income_amount",
+        "total_budget_categories.supplies_amount",
+        "total_budget_categories.total_amount",
+        "total_budget_categories.total_direct_charge_amount",
+        "total_budget_categories.total_indirect_charge_amount",
+        "total_budget_categories.travel_amount",
+        "total_budget_summary.federal_estimated_unobligated_amount",
+        "total_budget_summary.federal_new_or_revised_amount",
+        "total_budget_summary.non_federal_estimated_unobligated_amount",
+        "total_budget_summary.non_federal_new_or_revised_amount",
+        "total_budget_summary.total_amount",
+        "total_estimated_funding",
+        "total_federal_fund_estimates.first_year_amount",
+        "total_federal_fund_estimates.fourth_year_amount",
+        "total_federal_fund_estimates.second_year_amount",
+        "total_federal_fund_estimates.third_year_amount",
+        "total_non_federal_resources.applicant_amount",
+        "total_non_federal_resources.other_amount",
+        "total_non_federal_resources.state_amount",
+        "total_non_federal_resources.total_amount"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "County/Parish",
+        "{\"maxLength\": 30, \"minLength\": 1, \"type\": \"string\"}"
+      ],
+      "forms": [
+        "key_contacts",
+        "project_performance_site_location",
+        "sf424",
+        "sf424_short"
+      ],
+      "fields": [
+        "additional_sites.[].address.county",
+        "applicant.county",
+        "contact_person.address.county",
+        "key_contacts.[].address.county",
+        "primary_site.address.county",
+        "project_director.address.county"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "Province",
+        "{\"maxLength\": 30, \"minLength\": 1, \"type\": \"string\"}"
+      ],
+      "forms": [
+        "key_contacts",
+        "project_performance_site_location",
+        "sf424",
+        "sf424_short"
+      ],
+      "fields": [
+        "additional_sites.[].address.province",
+        "applicant.province",
+        "contact_person.address.province",
+        "key_contacts.[].address.province",
+        "primary_site.address.province",
+        "project_director.address.province"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "Assistance Listing Number",
+        "{\"maxLength\": 15, \"minLength\": 1, \"type\": \"string\"}"
+      ],
+      "forms": [
+        "project_abstract_summary",
+        "sf424",
+        "sf424_short"
+      ],
+      "fields": [
+        "assistance_listing_number"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "Funding Opportunity Number",
+        "{\"maxLength\": 40, \"minLength\": 1, \"type\": \"string\"}"
+      ],
+      "forms": [
+        "project_abstract_summary",
+        "sf424_short"
+      ],
+      "fields": [
+        "funding_opportunity_number"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "Date Received",
+        "{\"format\": \"date\", \"type\": \"string\"}"
+      ],
+      "forms": [
+        "sf424",
+        "sf424_short"
+      ],
+      "fields": [
+        "date_received"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "EIN/TIN",
+        "{\"maxLength\": 30, \"minLength\": 9, \"type\": \"string\"}"
+      ],
+      "forms": [
+        "sf424",
+        "sf424_short"
+      ],
+      "fields": [
+        "employer_taxpayer_identification_number"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "Type of Applicant Other Explanation",
+        "{\"maxLength\": 30, \"minLength\": 0, \"type\": \"string\"}"
+      ],
+      "forms": [
+        "sf424",
+        "sf424_short"
+      ],
+      "fields": [
+        "applicant_type_other_specify"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "Assistance Listing Title",
+        "{\"maxLength\": 120, \"minLength\": 1, \"type\": \"string\"}"
+      ],
+      "forms": [
+        "sf424",
+        "sf424_short"
+      ],
+      "fields": [
+        "assistance_listing_program_title"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "Project Title",
+        "{\"maxLength\": 200, \"minLength\": 1, \"type\": \"string\"}"
+      ],
+      "forms": [
+        "sf424",
+        "sf424_short"
+      ],
+      "fields": [
+        "project_title"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "Project Start Date",
+        "{\"format\": \"date\", \"type\": \"string\"}"
+      ],
+      "forms": [
+        "sf424",
+        "sf424_short"
+      ],
+      "fields": [
+        "project_start_date"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "Project End Date",
+        "{\"format\": \"date\", \"type\": \"string\"}"
+      ],
+      "forms": [
+        "sf424",
+        "sf424_short"
+      ],
+      "fields": [
+        "project_end_date"
+      ]
+    },
+    {
+      "signal": "same title and shape",
+      "key": [
+        "Title",
+        "{\"maxLength\": 45, \"minLength\": 1, \"type\": \"string\"}"
+      ],
+      "forms": [
+        "sf424",
+        "sf424_short"
+      ],
+      "fields": [
+        "authorized_representative_title"
+      ]
+    },
+    {
+      "signal": "same field name and shape",
+      "key": [
+        "agency_name",
+        "{\"maxLength\": 60, \"minLength\": 1, \"type\": \"string\"}"
+      ],
+      "forms": [
+        "sf424",
+        "sf424_short"
+      ],
+      "fields": [
+        "agency_name"
+      ]
+    },
+    {
+      "signal": "same field name and shape",
+      "key": [
+        "funding_opportunity_title",
+        "{\"maxLength\": 255, \"minLength\": 1, \"type\": \"string\"}"
+      ],
+      "forms": [
+        "sf424",
+        "sf424_short"
+      ],
+      "fields": [
+        "funding_opportunity_title"
+      ]
+    },
+    {
+      "signal": "same field name and shape",
+      "key": [
+        "congressional_district_applicant",
+        "{\"maxLength\": 6, \"minLength\": 1, \"type\": \"string\"}"
+      ],
+      "forms": [
+        "sf424",
+        "sf424_short"
+      ],
+      "fields": [
+        "congressional_district_applicant"
+      ]
+    },
+    {
+      "signal": "same field name and shape",
+      "key": [
+        "applicant_type_code",
+        "{\"enum\": [\"A: State Government\", \"B: County Government\", \"C: City or Township Government\", \"D: Special District Government\", \"E: Regional Organization\", \"F: U.S. Territory or Possession\", \"G: Independent School District\", \"H: Public/state Controlled Institution of Higher Education\", \"I: Indian/Native American Tribal Government (Federally Recognized)\", \"J: Indian/Native American Tribal Government (Other than Federally Recognized)\", \"K: Indian/Native American Tribally Designated Organization\", \"L: Public/Indian Housing Authority\", \"M: Nonprofit with 501C3 IRS Status (Other than Institution of Higher Education)\", \"N: Nonprofit without 501C3 IRS Status (Other than Institution of Higher Education)\", \"O: Private Institution of Higher Education\", \"P: Individual\", \"Q: For-Profit Organization (Other than Small Business)\", \"R: Small Business\", \"S: Hispanic-serving Institution\", \"T: Historically Black Colleges and Universities (HBCUs)\", \"U: Tribally Controlled Colleges and Universities (TCCUs)\", \"V: Alaska Native and Native Hawaiian Serving Institutions\", \"W: Non-domestic (non-US) Entity\", \"X: Other (specify)\"], \"type\": \"string\"}"
+      ],
+      "forms": [
+        "sf424",
+        "sf424_short"
+      ],
+      "fields": [
+        "applicant_type_code.[]"
+      ]
+    }
+  ],
+  "packages": [
+    {
+      "prefix": "authorized-representative",
+      "members": [
+        "authorized_representative_date_signed",
+        "authorized_representative_email",
+        "authorized_representative_fax",
+        "authorized_representative_phone_number",
+        "authorized_representative_signature",
+        "authorized_representative_title"
+      ],
+      "forms": [
+        "gg_lobbying_form",
+        "sf424",
+        "sf424_short"
+      ],
+      "adjacentIn": [
+        "gg_lobbying_form",
+        "sf424"
+      ],
+      "kind": "package"
+    },
+    {
+      "prefix": "point-of-contact",
+      "members": [
+        "point_of_contact_email",
+        "point_of_contact_name",
+        "point_of_contact_phone_number",
+        "point_of_contact_title"
+      ],
+      "forms": [
+        "epa_form_4700_4"
+      ],
+      "adjacentIn": [
+        "epa_form_4700_4"
+      ],
+      "kind": "package"
+    },
+    {
+      "prefix": "congressional-district",
+      "members": [
+        "congressional_district",
+        "congressional_district_applicant",
+        "congressional_district_program_project"
+      ],
+      "forms": [
+        "project_performance_site_location",
+        "sf424",
+        "sf424_short",
+        "sflll"
+      ],
+      "adjacentIn": [
+        "sf424"
+      ],
+      "kind": "one question, composed more than once -- CONSTRAINTS DISAGREE"
+    },
+    {
+      "prefix": "civil-rights-lawsuit",
+      "members": [
+        "civil_rights_lawsuit_question1",
+        "civil_rights_lawsuit_question2",
+        "civil_rights_lawsuit_question3"
+      ],
+      "forms": [
+        "epa_form_4700_4"
+      ],
+      "adjacentIn": [
+        "epa_form_4700_4"
+      ],
+      "kind": "one question, composed more than once"
+    },
+    {
+      "prefix": "assistance-listing",
+      "members": [
+        "assistance_listing_number",
+        "assistance_listing_program_title"
+      ],
+      "forms": [
+        "project_abstract_summary",
+        "sf424",
+        "sf424_short",
+        "sf424a",
+        "sflll"
+      ],
+      "adjacentIn": [
+        "sf424",
+        "sf424_short"
+      ],
+      "kind": "package"
+    },
+    {
+      "prefix": "funding-opportunity",
+      "members": [
+        "funding_opportunity_number",
+        "funding_opportunity_title"
+      ],
+      "forms": [
+        "project_abstract_summary",
+        "sf424",
+        "sf424_short"
+      ],
+      "adjacentIn": [
+        "sf424",
+        "sf424_short"
+      ],
+      "kind": "package"
+    },
+    {
+      "prefix": "applicant-type",
+      "members": [
+        "applicant_type_code",
+        "applicant_type_other_specify"
+      ],
+      "forms": [
+        "sf424",
+        "sf424_short"
+      ],
+      "adjacentIn": [
+        "sf424",
+        "sf424_short"
+      ],
+      "kind": "answer and follow-up"
+    },
+    {
+      "prefix": "construction-new-facilities",
+      "members": [
+        "construction_new_facilities",
+        "construction_new_facilities_explanation"
+      ],
+      "forms": [
+        "epa_form_4700_4"
+      ],
+      "adjacentIn": [
+        "epa_form_4700_4"
+      ],
+      "kind": "answer and follow-up"
+    },
+    {
+      "prefix": "additional-funding",
+      "members": [
+        "additional_funding",
+        "additional_funding_explanation"
+      ],
+      "forms": [
+        "supplementary_neh_cover_sheet"
+      ],
+      "adjacentIn": [
+        "supplementary_neh_cover_sheet"
+      ],
+      "kind": "answer and follow-up"
+    },
+    {
+      "prefix": "competition-identification",
+      "members": [
+        "competition_identification_number",
+        "competition_identification_title"
+      ],
+      "forms": [
+        "sf424"
+      ],
+      "adjacentIn": [
+        "sf424"
+      ],
+      "kind": "package"
+    },
+    {
+      "prefix": "material-change",
+      "members": [
+        "material_change_quarter",
+        "material_change_year"
+      ],
+      "forms": [
+        "sflll"
+      ],
+      "adjacentIn": [
+        "sflll"
+      ],
+      "kind": "package"
+    },
+    {
+      "prefix": "state-review",
+      "members": [
+        "state_review",
+        "state_review_available_date"
+      ],
+      "forms": [
+        "sf424"
+      ],
+      "adjacentIn": [
+        "sf424"
+      ],
+      "kind": "answer and follow-up"
+    }
+  ]
+}

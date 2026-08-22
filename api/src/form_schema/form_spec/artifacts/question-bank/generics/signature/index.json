@@ -1,0 +1,11 @@
+{
+  "id": "generics/signature",
+  "kind": "question",
+  "name": "Signature",
+  "description": "Completed by Grants.gov upon submission.",
+  "tags": [
+    "person",
+    "name"
+  ],
+  "entity": "generic"
+}

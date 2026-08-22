@@ -1,0 +1,10 @@
+{
+  "id": "project/title",
+  "kind": "question",
+  "name": "Project Title",
+  "description": "Enter a brief, descriptive title of the project.",
+  "tags": [
+    "title"
+  ],
+  "entity": "project"
+}

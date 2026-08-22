@@ -1,0 +1,10 @@
+{
+  "id": "aor/email",
+  "kind": "question",
+  "name": "Email",
+  "description": "Enter a valid email Address.",
+  "tags": [
+    "email"
+  ],
+  "entity": "authorizedRepresentative"
+}

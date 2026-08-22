@@ -1,0 +1,11 @@
+{
+  "id": "poc/details",
+  "kind": "question",
+  "name": "Point of Contact",
+  "description": "The person to contact about the application.\n\nStructurally a contact plus an address, and distinct from the representative who signs:\na point of contact answers questions, and forms routinely ask for both.",
+  "tags": [
+    "person",
+    "details"
+  ],
+  "entity": "poc"
+}

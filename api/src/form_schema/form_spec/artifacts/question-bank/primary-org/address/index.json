@@ -1,0 +1,10 @@
+{
+  "id": "primary-org/address",
+  "kind": "question",
+  "name": "Address",
+  "description": "Enter the address of the applicant.",
+  "tags": [
+    "address"
+  ],
+  "entity": "primaryOrg"
+}

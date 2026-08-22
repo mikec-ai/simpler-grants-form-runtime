@@ -1,0 +1,10 @@
+{
+  "id": "generics/address",
+  "kind": "question",
+  "name": "Address",
+  "description": "Enter an address.",
+  "tags": [
+    "address"
+  ],
+  "entity": "generic"
+}

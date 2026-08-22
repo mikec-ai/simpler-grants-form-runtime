@@ -1,0 +1,11 @@
+{
+  "id": "generics/person-name",
+  "kind": "question",
+  "name": "Name",
+  "description": "A person's name, in five parts.",
+  "tags": [
+    "person",
+    "name"
+  ],
+  "entity": "generic"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "primary-org/ein",
+  "kind": "question",
+  "name": "EIN/TIN",
+  "description": "Enter either TIN or EIN as assigned by the Internal Revenue Service.",
+  "tags": [
+    "identifier",
+    "organization"
+  ],
+  "entity": "primaryOrg"
+}

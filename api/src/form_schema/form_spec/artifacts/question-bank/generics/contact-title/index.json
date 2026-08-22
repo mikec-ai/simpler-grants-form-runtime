@@ -1,0 +1,10 @@
+{
+  "id": "generics/contact-title",
+  "kind": "question",
+  "name": "Title",
+  "description": "Enter the position title.",
+  "tags": [
+    "title"
+  ],
+  "entity": "generic"
+}

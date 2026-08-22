@@ -1,0 +1,10 @@
+{
+  "id": "aor/fax",
+  "kind": "question",
+  "name": "Fax Number",
+  "description": "Enter the Fax Number.",
+  "tags": [
+    "phone"
+  ],
+  "entity": "authorizedRepresentative"
+}

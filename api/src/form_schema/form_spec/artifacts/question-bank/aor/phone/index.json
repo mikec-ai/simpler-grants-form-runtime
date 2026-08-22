@@ -1,0 +1,10 @@
+{
+  "id": "aor/phone",
+  "kind": "question",
+  "name": "Telephone Number",
+  "description": "Enter the daytime Telephone Number.",
+  "tags": [
+    "phone"
+  ],
+  "entity": "authorizedRepresentative"
+}

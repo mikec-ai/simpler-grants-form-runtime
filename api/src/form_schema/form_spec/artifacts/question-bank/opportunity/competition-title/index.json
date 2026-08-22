@@ -1,0 +1,10 @@
+{
+  "id": "opportunity/competition-title",
+  "kind": "question",
+  "name": "Competition Title",
+  "description": "The competition title within the opportunity.",
+  "tags": [
+    "title"
+  ],
+  "entity": "opportunity"
+}

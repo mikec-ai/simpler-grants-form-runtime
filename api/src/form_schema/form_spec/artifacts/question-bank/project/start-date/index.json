@@ -1,0 +1,10 @@
+{
+  "id": "project/start-date",
+  "kind": "question",
+  "name": "Project Start Date",
+  "description": "Enter the date in the format MM/DD/YYYY.",
+  "tags": [
+    "date"
+  ],
+  "entity": "project"
+}

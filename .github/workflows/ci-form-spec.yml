@@ -1,0 +1,87 @@
+name: CI form-spec
+
+on:
+  push:
+    paths:
+      - form-spec/**
+      - api/src/form_schema/form_spec/**
+      - api/src/form_schema/shared/shared_form_constants.py
+      - .github/workflows/ci-form-spec.yml
+  pull_request:
+    paths:
+      - form-spec/**
+      - api/src/form_schema/form_spec/**
+      - api/src/form_schema/shared/shared_form_constants.py
+      - .github/workflows/ci-form-spec.yml
+
+defaults:
+  run:
+    working-directory: ./form-spec
+
+jobs:
+  build:
+    name: Emit and check for drift
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: form-spec/package-lock.json
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - run: npm ci
+
+      - name: Build the library
+        run: npm run build
+
+      - name: Test the checks
+        run: npm test
+
+      # The state and country lists live in the API. Regenerating them here means a change
+      # upstream shows up as a diff in this job rather than as a silent divergence.
+      - name: Regenerate the code enums
+        run: python3 scripts/gen_code_enums.py
+
+      # The scripts read and write the API's data, so they follow the API's style.
+      - name: Lint the scripts
+        run: |
+          pip install 'ruff>=0.16,<0.17'
+          ruff format --check --config api/pyproject.toml form-spec/scripts
+          ruff check --config api/pyproject.toml --ignore T20 form-spec/scripts
+        working-directory: .
+
+      # An editor opens one file, not an entry point, so every file has to stand alone.
+      # A library file that only type-checks when reached through `main.tsp` shows the
+      # author red squiggles on correct code.
+      - name: Check that every file compiles on its own
+        run: |
+          status=0
+          while IFS= read -r -d '' file; do
+            if ! npx tsp compile "$file" --no-emit >/dev/null 2>&1; then
+              echo "::error file=form-spec/$file::does not compile on its own"
+              npx tsp compile "$file" --no-emit 2>&1 | sed -n '/error/,+3p'
+              status=1
+            fi
+          done < <(find typespec-form-spec/lib specs -name '*.tsp' -print0)
+          exit "$status"
+
+      - name: Emit the artifacts and vendor them into the adapter
+        run: npm run sync
+
+      # The artifacts are the contract, so they are checked in: the API must build without
+      # Node, and the artifact diff is what makes a specification change reviewable. This
+      # step is what keeps the checked-in copy honest.
+      - name: Fail if the checked-in artifacts are stale
+        run: |
+          if ! git diff --exit-code --stat -- api/src/form_schema/form_spec/artifacts form-spec/specs/question-bank/generated; then
+            echo "::error::Emitted artifacts differ from the checked-in copy."
+            echo "Run 'npm run sync' in form-spec/ and commit the result."
+            exit 1
+          fi
+        working-directory: .

@@ -1,0 +1,10 @@
+{
+  "id": "application/date-received",
+  "kind": "question",
+  "name": "Date Received",
+  "description": "Completed by Grants.gov upon submission.",
+  "tags": [
+    "date"
+  ],
+  "entity": "application"
+}
