@@ -14,6 +14,7 @@ from src.constants.lookup_constants import FormType
 from src.db.models.competition_models import Form
 
 CONTRACT = "common-grants-resolved-form-package/v1"
+PORTABLE_RESOLVED_CONTRACT = "portable-grants-resolved-form-package/v1"
 _SHA256 = re.compile(r"^[0-9a-f]{64}$")
 _REVISION = re.compile(r"^[0-9a-f]{40}$")
 
@@ -383,6 +384,107 @@ def _validate_package_cross_references(
 
 def _canonical_json(value: object) -> str:
     return json.dumps(value, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
+
+
+def _contains_question_id(value: object, question_id: str) -> bool:
+    if isinstance(value, dict):
+        if value.get("x-question-id") == question_id:
+            return True
+        return any(_contains_question_id(child, question_id) for child in value.values())
+    if isinstance(value, list):
+        return any(_contains_question_id(child, question_id) for child in value)
+    return False
+
+
+def create_resolved_form_package(
+    *,
+    manifest: dict[str, Any],
+    json_schema: dict[str, Any],
+    ui_schema: list[dict[str, Any]],
+    mappings: dict[str, Any],
+    rule_schema: dict[str, Any] | None = None,
+    xml_transform: dict[str, Any] | None = None,
+    dependency_paths: tuple[Path, ...] = (),
+) -> ResolvedFormPackage:
+    """Create the immutable native package seam from verified portable artifacts.
+
+    This is the in-memory counterpart to :func:`load_resolved_form_package`. It keeps
+    the native ``Form`` materialization boundary in one place while allowing a
+    dependency-neutral compiler to supply already verified artifacts.
+    """
+
+    _exact_keys(
+        manifest,
+        {
+            "contract",
+            "source_set",
+            "compiler",
+            "form",
+            "question_bindings",
+            "review_boundary",
+        },
+        "manifest",
+    )
+    if manifest["contract"] != PORTABLE_RESOLVED_CONTRACT:
+        raise ResolvedFormPackageError(
+            f"manifest.contract must equal {PORTABLE_RESOLVED_CONTRACT}"
+        )
+    _object(manifest["source_set"], "source_set")
+    compiler = _object(manifest["compiler"], "compiler")
+    _exact_keys(compiler, {"name", "version", "verification", "sha256"}, "compiler")
+    _string(compiler["name"], "compiler.name")
+    _string(compiler["version"], "compiler.version")
+    if compiler["verification"] != "content_addressed":
+        raise ResolvedFormPackageError("compiler.verification must be content_addressed")
+    _sha256(compiler["sha256"], "compiler.sha256")
+    _validate_form(manifest["form"])
+
+    if not isinstance(json_schema, dict):
+        raise ResolvedFormPackageError("json_schema must be an object")
+    if not all(isinstance(node, dict) for node in ui_schema):
+        raise ResolvedFormPackageError("ui_schema entries must be objects")
+    _exact_keys(mappings, {"x-mapping-from-cg", "x-mapping-to-cg"}, "mappings")
+    _object(mappings["x-mapping-from-cg"], "mappings.x-mapping-from-cg")
+    _object(mappings["x-mapping-to-cg"], "mappings.x-mapping-to-cg")
+
+    bindings = _array(manifest["question_bindings"], "question_bindings")
+    seen_binding_ids: set[str] = set()
+    for index, raw_binding in enumerate(bindings):
+        label = f"question_bindings[{index}]"
+        binding = _object(raw_binding, label)
+        binding_id = _string(binding.get("binding_id"), f"{label}.binding_id")
+        if binding_id in seen_binding_ids:
+            raise ResolvedFormPackageError(f"duplicate binding_id: {binding_id}")
+        seen_binding_ids.add(binding_id)
+        question_id = _string(binding.get("question_id"), f"{label}.question_id")
+        pointer = _string(binding.get("form_pointer"), f"{label}.form_pointer")
+        target = _resolve_pointer(json_schema, pointer, f"{label}.form_pointer")
+        if not _contains_question_id(target, question_id):
+            raise ResolvedFormPackageError(
+                f"{label}.question_id does not match its resolved schema occurrence"
+            )
+
+    review_boundary = _object(manifest["review_boundary"], "review_boundary")
+    if not isinstance(review_boundary.get("published_coverage_eligible"), bool):
+        raise ResolvedFormPackageError(
+            "review_boundary.published_coverage_eligible must be a boolean"
+        )
+
+    canonical_manifest = _canonical_json(manifest)
+    package_digest = hashlib.sha256(canonical_manifest.encode("utf-8")).hexdigest()
+    return ResolvedFormPackage(
+        package_root=Path(),
+        dependency_paths=tuple(sorted(path.resolve() for path in dependency_paths)),
+        package_digest=package_digest,
+        _manifest_json=canonical_manifest,
+        _json_schema_json=_canonical_json(json_schema),
+        _ui_schema_json=_canonical_json(ui_schema),
+        _mappings_json=_canonical_json(mappings),
+        _rule_schema_json=_canonical_json(rule_schema) if rule_schema is not None else None,
+        _xml_transform_json=(
+            _canonical_json(xml_transform) if xml_transform is not None else None
+        ),
+    )
 
 
 def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:

@@ -2,6 +2,8 @@ import copy
 import hashlib
 import json
 import shutil
+import subprocess
+import sys
 from pathlib import Path
 
 import jsonschema
@@ -40,7 +42,7 @@ def _rewrite_manifest_hash(root: Path, relative_path: str) -> None:
 
 
 def test_referenced_question_compiles_into_two_native_forms() -> None:
-    bundle = load_portable_form_bundle(BUNDLE_ROOT, REPOSITORY_ROOT)
+    bundle = load_portable_form_bundle(BUNDLE_ROOT)
 
     assert bundle.manifest["contract"] == CONTRACT
     assert set(bundle.forms_by_key) == {
@@ -86,7 +88,7 @@ def test_referenced_question_compiles_into_two_native_forms() -> None:
 
 
 def test_analysis_projection_is_derived_from_the_same_bindings() -> None:
-    projection = load_portable_form_bundle(BUNDLE_ROOT, REPOSITORY_ROOT).analysis_projection()
+    projection = load_portable_form_bundle(BUNDLE_ROOT).analysis_projection()
 
     assert projection["summary"] == {
         "forms": 2,
@@ -116,8 +118,39 @@ def test_analysis_projection_is_derived_from_the_same_bindings() -> None:
     assert all(row["mapping_status"] == "agent_proposed" for row in associations)
 
 
+def test_existing_simpler_shared_schema_is_explicitly_reconciled() -> None:
+    bundle = load_portable_form_bundle(BUNDLE_ROOT)
+
+    assert bundle.compatibility_records == (
+        {
+            "portable_schema_id": "urn:grants-form-kernel:questions:organization:legal-name:v1",
+            "existing_schema_ref": (
+                "https://files.simpler.grants.gov/schemas/"
+                "common_shared_v1.json#/organization_name"
+            ),
+            "relation": "candidate_alias",
+            "mapping_status": "agent_proposed",
+            "comparison": {
+                "type": "exact",
+                "minLength": "exact",
+                "maxLength": "exact",
+                "portable_description_is_additional": True,
+                "portable_question_identity_is_additional": True,
+            },
+            "evidence": {
+                "kind": "implementation_oracle",
+                "repository": "https://github.com/mikec-ai/simpler-grants-form-runtime.git",
+                "revision": "e1739ee54e2d1c964d48b0386a3c0246d3c621d7",
+                "path": "api/src/form_schema/shared/common_shared.py",
+                "sha256": "a4944116280586d541d3f0afb77c67acb123e2004911646d7b98fadd7e701935",
+                "source_version": "COMMON_SHARED_V1",
+            },
+        },
+    )
+
+
 def test_standard_json_schema_consumer_uses_portable_refs_without_simpler_adapter() -> None:
-    bundle = load_portable_form_bundle(BUNDLE_ROOT, REPOSITORY_ROOT)
+    bundle = load_portable_form_bundle(BUNDLE_ROOT)
     registry = Registry().with_resources(
         (schema_id, Resource.from_contents(schema))
         for schema_id, schema in bundle.schemas_by_id.items()
@@ -131,9 +164,7 @@ def test_standard_json_schema_consumer_uses_portable_refs_without_simpler_adapte
 
 
 def test_native_registry_accepts_generic_adapter_result() -> None:
-    form = load_portable_form_bundle(BUNDLE_ROOT, REPOSITORY_ROOT).to_form(
-        "KeyContactsOrganizationCanary"
-    )
+    form = load_portable_form_bundle(BUNDLE_ROOT).to_form("KeyContactsOrganizationCanary")
     registry = FormTemplateRegistry()
 
     registry.register(form, major_version=1)
@@ -143,8 +174,24 @@ def test_native_registry_accepts_generic_adapter_result() -> None:
     assert question["allOf"][0]["x-question-id"] == "question:organization:legal-name"
 
 
+def test_adapter_compiles_through_the_resolved_package_seam() -> None:
+    bundle = load_portable_form_bundle(BUNDLE_ROOT)
+
+    package = bundle.to_resolved_package("SF424OrganizationCanary")
+    form = package.to_form()
+
+    assert package.manifest["contract"] == "portable-grants-resolved-form-package/v1"
+    assert package.manifest["source_set"]["bundle_digest"] == bundle.bundle_digest
+    assert form.form_json_schema["x-simpler-form-package"]["package_digest"] == (
+        package.package_digest
+    )
+    assert form.form_json_schema["x-portable-form-bundle"]["form_key"] == (
+        "SF424OrganizationCanary"
+    )
+
+
 def test_native_forms_are_independent_snapshots() -> None:
-    bundle = load_portable_form_bundle(BUNDLE_ROOT, REPOSITORY_ROOT)
+    bundle = load_portable_form_bundle(BUNDLE_ROOT)
     first = bundle.to_form("KeyContactsOrganizationCanary")
     second = bundle.to_form("KeyContactsOrganizationCanary")
 
@@ -163,11 +210,171 @@ def test_native_forms_are_independent_snapshots() -> None:
 
 def test_portable_specs_do_not_depend_on_simpler_python() -> None:
     assert not list(BUNDLE_ROOT.rglob("*.py"))
+    kernel_source = (REPOSITORY_ROOT / "api/src/form_schema/portable_form_kernel.py").read_text(
+        encoding="utf-8"
+    )
+    assert "from src." not in kernel_source
+    assert "import src." not in kernel_source
     adapter_source = (REPOSITORY_ROOT / "api/src/form_schema/portable_form_bundle.py").read_text(
         encoding="utf-8"
     )
     assert "KeyContactsOrganizationCanary" not in adapter_source
     assert "SF424OrganizationCanary" not in adapter_source
+
+
+def test_copied_bundle_and_neutral_kernel_work_without_simpler_checkout(tmp_path: Path) -> None:
+    isolated = tmp_path / "isolated"
+    isolated.mkdir()
+    shutil.copytree(BUNDLE_ROOT, isolated / "form-specs")
+    shutil.copy(
+        REPOSITORY_ROOT / "api/src/form_schema/portable_form_kernel.py",
+        isolated / "portable_form_kernel.py",
+    )
+    script = """
+import json
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path.cwd()))
+from portable_form_kernel import load_portable_form_kernel
+kernel = load_portable_form_kernel(Path('form-specs'))
+print(json.dumps(kernel.analysis_projection()['summary'], sort_keys=True))
+"""
+
+    result = subprocess.run(
+        [sys.executable, "-I", "-c", script],
+        cwd=isolated,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    assert json.loads(result.stdout) == {
+        "accepted_mappings": 0,
+        "associations": 2,
+        "forms": 2,
+        "unique_questions": 1,
+    }
+
+
+def test_same_question_can_have_distinct_occurrence_bindings(tmp_path: Path) -> None:
+    root = _copy_bundle(tmp_path)
+    manifest_path = root / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    form = next(
+        item for item in manifest["forms"] if item["form_key"] == "SF424OrganizationCanary"
+    )
+    schema_relative = "schemas/forms/sf424-organization-canary.schema.json"
+    schema_path = root / schema_relative
+    schema = json.loads(schema_path.read_text(encoding="utf-8"))
+    schema["properties"]["alternate_organization_name"] = {
+        "allOf": [{"$ref": "urn:grants-form-kernel:questions:organization:legal-name:v1"}],
+        "title": "Alternate organization legal name",
+    }
+    schema_path.write_text(json.dumps(schema), encoding="utf-8")
+    schema_descriptor = next(
+        descriptor
+        for descriptor in manifest["schemas"]
+        if descriptor["artifact"]["path"] == schema_relative
+    )
+    schema_descriptor["artifact"]["sha256"] = hashlib.sha256(schema_path.read_bytes()).hexdigest()
+
+    mapping_relative = "mappings/sf424-organization-canary.mappings.json"
+    mapping_path = root / mapping_relative
+    mapping = json.loads(mapping_path.read_text(encoding="utf-8"))
+    binding_id = "binding:sf424:alternate-organization-name"
+    mapping["targets"]["grants_gov_xml"]["bindings"][binding_id] = {
+        "path": "/SF424_4_0/AlternateOrganizationName",
+        "type_source": "GlobalLibrary-V2.0.xsd#OrganizationNameDataType",
+        "type": "string",
+        "xsd_source": "https://example.invalid/SF424_4_0-V4.0.xsd",
+    }
+    mapping_path.write_text(json.dumps(mapping), encoding="utf-8")
+    form["mappings"]["sha256"] = hashlib.sha256(mapping_path.read_bytes()).hexdigest()
+    form["question_bindings"].append(
+        {
+            "binding_id": binding_id,
+            "question_id": "question:organization:legal-name",
+            "schema_id": "urn:grants-form-kernel:questions:organization:legal-name:v1",
+            "form_pointer": "/properties/alternate_organization_name",
+            "role": "alternate_applicant_organization",
+            "cardinality": {"min": 0, "max": 1},
+            "context": {"scope": "form", "repetition": "single"},
+            "mapping_refs": {"grants_gov_xml": binding_id},
+            "mapping_status": "agent_proposed",
+        }
+    )
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    projection = load_portable_form_bundle(root).analysis_projection()
+
+    sf424_rows = [
+        row
+        for row in projection["form_question_associations"]
+        if row["form_key"] == "SF424OrganizationCanary"
+    ]
+    assert len(sf424_rows) == 2
+    assert {row["binding_id"] for row in sf424_rows} == {
+        "binding:sf424:applicant-organization-name",
+        binding_id,
+    }
+    assert {row["role"] for row in sf424_rows} == {
+        "applicant_organization",
+        "alternate_applicant_organization",
+    }
+
+
+def test_rejects_unbound_question_occurrence(tmp_path: Path) -> None:
+    root = _copy_bundle(tmp_path)
+    relative_path = "schemas/forms/sf424-organization-canary.schema.json"
+    schema_path = root / relative_path
+    schema = json.loads(schema_path.read_text(encoding="utf-8"))
+    schema["properties"]["unbound_name"] = {
+        "$ref": "urn:grants-form-kernel:questions:organization:legal-name:v1"
+    }
+    schema_path.write_text(json.dumps(schema), encoding="utf-8")
+    _rewrite_manifest_hash(root, relative_path)
+
+    with pytest.raises(PortableFormBundleError, match=r"unbound question \$ref occurrences"):
+        load_portable_form_bundle(root)
+
+
+def test_common_grants_mapping_profile_is_optional(tmp_path: Path) -> None:
+    root = _copy_bundle(tmp_path)
+    relative_path = "mappings/key-contacts-organization-canary.mappings.json"
+    mapping_path = root / relative_path
+    mapping = json.loads(mapping_path.read_text(encoding="utf-8"))
+    del mapping["targets"]["common_grants"]
+    mapping_path.write_text(json.dumps(mapping), encoding="utf-8")
+    _rewrite_manifest_hash(root, relative_path)
+
+    form = load_portable_form_bundle(root).to_form("KeyContactsOrganizationCanary")
+
+    assert form.form_json_schema["x-mapping-from-cg"] == {}
+    assert form.form_json_schema["x-mapping-to-cg"] == {}
+
+
+def test_accepted_mapping_count_is_derived_from_occurrence_state(tmp_path: Path) -> None:
+    root = _copy_bundle(tmp_path)
+    manifest_path = root / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["forms"][0]["question_bindings"][0]["mapping_status"] = "accepted"
+    manifest["forms"][0]["review_boundary"]["semantic_mappings"] = "accepted"
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    projection = load_portable_form_bundle(root).analysis_projection()
+
+    assert projection["summary"]["accepted_mappings"] == 1
+
+
+def test_rejects_published_coverage_with_unaccepted_occurrence(tmp_path: Path) -> None:
+    root = _copy_bundle(tmp_path)
+    manifest_path = root / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["forms"][0]["review_boundary"]["published_coverage_eligible"] = True
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    with pytest.raises(PortableFormBundleError, match="unaccepted occurrence mappings"):
+        load_portable_form_bundle(root)
 
 
 def test_rejects_tampered_schema(tmp_path: Path) -> None:
@@ -176,7 +383,7 @@ def test_rejects_tampered_schema(tmp_path: Path) -> None:
     schema_path.write_text(schema_path.read_text(encoding="utf-8") + "\n", encoding="utf-8")
 
     with pytest.raises(PortableFormBundleError, match="sha256 does not match"):
-        load_portable_form_bundle(root, REPOSITORY_ROOT)
+        load_portable_form_bundle(root)
 
 
 def test_rejects_dangling_question_reference(tmp_path: Path) -> None:
@@ -191,7 +398,7 @@ def test_rejects_dangling_question_reference(tmp_path: Path) -> None:
     _rewrite_manifest_hash(root, relative_path)
 
     with pytest.raises(PortableFormBundleError, match="unbundled schema reference"):
-        load_portable_form_bundle(root, REPOSITORY_ROOT)
+        load_portable_form_bundle(root)
 
 
 def test_rejects_unknown_manifest_fields(tmp_path: Path) -> None:
@@ -202,16 +409,16 @@ def test_rejects_unknown_manifest_fields(tmp_path: Path) -> None:
     manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
 
     with pytest.raises(PortableFormBundleError, match="invalid keys"):
-        load_portable_form_bundle(root, REPOSITORY_ROOT)
+        load_portable_form_bundle(root)
 
 
-def test_rejects_source_evidence_drift(tmp_path: Path) -> None:
+def test_rejects_invalid_external_source_evidence(tmp_path: Path) -> None:
     root = _copy_bundle(tmp_path)
     manifest_path = root / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     changed = copy.deepcopy(manifest)
-    changed["forms"][0]["source_evidence"][0]["sha256"] = "0" * 64
+    changed["forms"][0]["source_evidence"][0]["revision"] = "not-a-revision"
     manifest_path.write_text(json.dumps(changed), encoding="utf-8")
 
-    with pytest.raises(PortableFormBundleError, match="sha256 does not match source"):
-        load_portable_form_bundle(root, REPOSITORY_ROOT)
+    with pytest.raises(PortableFormBundleError, match="full lowercase git SHA"):
+        load_portable_form_bundle(root)

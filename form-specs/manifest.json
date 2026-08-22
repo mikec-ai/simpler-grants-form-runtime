@@ -2,41 +2,45 @@
   "contract": "portable-grants-form-bundle/v1",
   "bundle": {
     "name": "organization-contact-canary",
-    "version": "0.1.0"
+    "version": "0.2.0"
   },
   "schemas": [
     {
       "kind": "question",
-      "id": "https://schemas.simpler.grants.gov/questions/organization/legal-name/v1",
+      "id": "urn:grants-form-kernel:questions:organization:legal-name:v1",
       "question_id": "question:organization:legal-name",
       "artifact": {
         "path": "schemas/questions/organization-legal-name.schema.json",
-        "sha256": "ac16743083f5bb1c59512b75ac2f66c181947a28c85de264f789e490fa1e20f7"
+        "sha256": "07efd4f256f0f0fd269d9a29389c9da468acb7e620acfdf060027328d1a8f25a"
       }
     },
     {
       "kind": "form",
-      "id": "https://schemas.simpler.grants.gov/forms/key-contacts-organization-canary/v1",
+      "id": "urn:grants-form-kernel:forms:key-contacts-organization-canary:v1",
       "question_id": null,
       "artifact": {
         "path": "schemas/forms/key-contacts-organization-canary.schema.json",
-        "sha256": "4ba6a55a2ae1aef7095bbe0a60ad137de2aeed4e9269dd774adc115baff3d9f4"
+        "sha256": "88b50becdee0aed378aeba7c6a68175b64acff3206f3ad5046785b806b38e2d1"
       }
     },
     {
       "kind": "form",
-      "id": "https://schemas.simpler.grants.gov/forms/sf424-organization-canary/v1",
+      "id": "urn:grants-form-kernel:forms:sf424-organization-canary:v1",
       "question_id": null,
       "artifact": {
         "path": "schemas/forms/sf424-organization-canary.schema.json",
-        "sha256": "3d4ca63af5556b06b91ba683bcaacc5cb43070b6b8ecac40d677aae8c7cf758b"
+        "sha256": "9bf8bd8b4538c17132598c136eb534aa90e64546bd1e358296fc1f73b23a2b92"
       }
     }
   ],
+  "compatibility": {
+    "path": "compatibility/simpler-common-shared-v1.json",
+    "sha256": "4e0bde38f2cd1846ea0322782550d64d76140903c1ace7884d5b7db9860e979d"
+  },
   "forms": [
     {
       "form_key": "KeyContactsOrganizationCanary",
-      "schema_id": "https://schemas.simpler.grants.gov/forms/key-contacts-organization-canary/v1",
+      "schema_id": "urn:grants-form-kernel:forms:key-contacts-organization-canary:v1",
       "metadata": {
         "form_id": "fb8a6279-902a-4adf-a6dc-da5de4873492",
         "legacy_form_id": null,
@@ -55,19 +59,34 @@
       },
       "mappings": {
         "path": "mappings/key-contacts-organization-canary.mappings.json",
-        "sha256": "0c994e1558e7034592dc3369c3ba639daa6ce6e2166803f21f67bde180ad3fe5"
+        "sha256": "7d266b57780fd7daa8c874a2a72fd28d08e6d924037b577b0b8b5133adb21058"
       },
       "question_bindings": [
         {
+          "binding_id": "binding:key-contacts:applicant-organization-name",
           "question_id": "question:organization:legal-name",
-          "schema_id": "https://schemas.simpler.grants.gov/questions/organization/legal-name/v1",
+          "schema_id": "urn:grants-form-kernel:questions:organization:legal-name:v1",
           "form_pointer": "/properties/applicant_organization_name",
           "role": "applicant_organization",
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          },
+          "context": {
+            "scope": "form",
+            "repetition": "single"
+          },
+          "mapping_refs": {
+            "grants_gov_xml": "binding:key-contacts:applicant-organization-name"
+          },
           "mapping_status": "agent_proposed"
         }
       ],
       "source_evidence": [
         {
+          "kind": "implementation_oracle",
+          "repository": "https://github.com/mikec-ai/simpler-grants-form-runtime.git",
+          "revision": "e1739ee54e2d1c964d48b0386a3c0246d3c621d7",
           "path": "api/src/form_schema/forms/key_contacts/1/0/form_json.py",
           "sha256": "ecf819caa437ee831637501d64c2799c0981c35217755cbd4e79f97225bafb22",
           "source_version": "Key Contacts 2.0"
@@ -81,7 +100,7 @@
     },
     {
       "form_key": "SF424OrganizationCanary",
-      "schema_id": "https://schemas.simpler.grants.gov/forms/sf424-organization-canary/v1",
+      "schema_id": "urn:grants-form-kernel:forms:sf424-organization-canary:v1",
       "metadata": {
         "form_id": "01882475-f293-4d6d-99ad-4fe54cee0863",
         "legacy_form_id": null,
@@ -100,19 +119,34 @@
       },
       "mappings": {
         "path": "mappings/sf424-organization-canary.mappings.json",
-        "sha256": "181ad809372d6741bde347e8a5c409c36f77057af47785e7633e6df0df31f40e"
+        "sha256": "810f935f43abfaa7ef5d2b505929ebbed8f6639b80ff2ac63fad19c0b8fef408"
       },
       "question_bindings": [
         {
+          "binding_id": "binding:sf424:applicant-organization-name",
           "question_id": "question:organization:legal-name",
-          "schema_id": "https://schemas.simpler.grants.gov/questions/organization/legal-name/v1",
+          "schema_id": "urn:grants-form-kernel:questions:organization:legal-name:v1",
           "form_pointer": "/properties/organization_name",
           "role": "applicant_organization",
+          "cardinality": {
+            "min": 1,
+            "max": 1
+          },
+          "context": {
+            "scope": "form",
+            "repetition": "single"
+          },
+          "mapping_refs": {
+            "grants_gov_xml": "binding:sf424:applicant-organization-name"
+          },
           "mapping_status": "agent_proposed"
         }
       ],
       "source_evidence": [
         {
+          "kind": "implementation_oracle",
+          "repository": "https://github.com/mikec-ai/simpler-grants-form-runtime.git",
+          "revision": "e1739ee54e2d1c964d48b0386a3c0246d3c621d7",
           "path": "api/src/form_schema/forms/sf424/1/0/form_json.py",
           "sha256": "442c62f8dad67ad09a8135b3c8d880c6cad8cd6b9f0dd71411ef537b31ebc8e1",
           "source_version": "SF-424 4.0"
