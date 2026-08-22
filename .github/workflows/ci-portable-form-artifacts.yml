@@ -61,9 +61,13 @@ jobs:
       - name: Write checksums
         run: |
           cd build/portable-form-artifacts/oracles
-          find . -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS
+          checksum_file=$(mktemp)
+          find . -type f -print0 | sort -z | xargs -0 sha256sum > "$checksum_file"
+          mv "$checksum_file" SHA256SUMS
           cd ../analysis
-          find . -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS
+          checksum_file=$(mktemp)
+          find . -type f -print0 | sort -z | xargs -0 sha256sum > "$checksum_file"
+          mv "$checksum_file" SHA256SUMS
 
       - name: Publish runtime and parity oracles
         uses: actions/upload-artifact@v7
