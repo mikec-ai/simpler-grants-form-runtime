@@ -13,6 +13,7 @@ namespace QuestionBank.Poc;
 @Catalog.tag(TagName.person, TagName.details)
 @UI.label("Point of Contact")
 model QuestionPocDetails {
+  @UI.label("Name")
   name: QuestionPersonName;
 
   @UI.label("Title")

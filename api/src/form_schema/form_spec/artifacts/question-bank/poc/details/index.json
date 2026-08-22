@@ -1,0 +1,11 @@
+{
+  "id": "poc/details",
+  "kind": "question",
+  "name": "Point of Contact",
+  "description": "A point of contact: name, title, address, and contact methods.",
+  "tags": [
+    "person",
+    "details"
+  ],
+  "entity": "poc"
+}

@@ -1,8 +1,8 @@
 import type { Model, ModelProperty, Program } from "@typespec/compiler";
 import { getDoc } from "@typespec/compiler";
 import {
-  Block, childBlock, modelOrder, orderedProps, propLabel, propReadOnly, propSection,
-  propWidget,
+  Block, childBlock, modelOrder, orderedProps, propHelpText, propLabel, propReadOnly,
+  propSection, propWidget, modelLabel,
 } from "../model.js";
 
 export interface SggField {
@@ -77,6 +77,11 @@ function field(program: Program, prop: ModelProperty, definition: string): SggFi
   return f;
 }
 
+/** A model's own `@UI.label`, whether or not it is a published block. */
+function itemLabel(program: Program, item: Model): string | undefined {
+  return modelLabel(program, item);
+}
+
 /** An array of objects becomes a repeatable fieldList (D8: inferred, not declared). */
 function asFieldList(
   program: Program,
@@ -89,14 +94,16 @@ function asFieldList(
 
   const children: SggField[] = [];
   walk(program, item, `/properties/${snake(prop.name)}/items`, children);
+  // The list's label names one entry, so it comes from the item block; the property's
+  // own label names the collection and stays on the schema as `title`.
   const list: SggFieldList = {
     type: "fieldList",
     name: snake(prop.name),
-    label: propLabel(program, prop) ?? prop.name,
+    label: itemLabel(program, item) ?? propLabel(program, prop) ?? prop.name,
     children,
   };
-  const doc = getDoc(program, prop);
-  if (doc) list.description = doc;
+  const description = propHelpText(program, prop) ?? getDoc(program, prop);
+  if (description) list.description = description;
   return list;
 }
 

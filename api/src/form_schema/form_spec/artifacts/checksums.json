@@ -1,0 +1,21 @@
+{
+  "forms/key-contacts/index.json": "6f0045363504ab84f0d55283be676b96c8f5b8e83b73183cdba8e305bd6493ca",
+  "forms/key-contacts/manifest.json": "0cbd5e8ab5d333d7d3a3732a020a6a9920e203653b8b4c539f93f9b936e55d06",
+  "forms/key-contacts/schema.json": "75869fd0c94f8bee4afcb8a213f84157a2aea55f2b7cf75f74cfd4d42878dbb9",
+  "forms/key-contacts/sgg/rule-schema.json": "38e0b9de817f645c4bec37c0d4a3e58baecccb040f5718dc069a72c7385a0bed",
+  "forms/key-contacts/sgg/ui-schema.json": "51c0dedbd26430c89a1c55071172a1806fdeab9d9dace61bacf3fedf32667785",
+  "question-bank/generics/address/index.json": "06865058e24f65289039c2d010bfbdcee7ffe35d22b521bc7640dc2ce1ac2c90",
+  "question-bank/generics/address/schema.json": "12436d2b7304bb8bf0c6b69f4807ca4602942be443dcffa1652451743d25d622",
+  "question-bank/generics/contact-title/index.json": "c1224f018d0595333f3978138b422601682516407f3986ad00a58d0ba377b5ea",
+  "question-bank/generics/contact-title/schema.json": "71e433c6dcaf0f26222ec450ace3eb388d96217a662c0b9d11e0bbb55cc23f30",
+  "question-bank/generics/email/index.json": "454ffcb8a33508d0e815ee4bc312fe651bca497272375a96ce2c7205611a9e30",
+  "question-bank/generics/email/schema.json": "56b16051b0af9dedf47ed22dc096a53918f3bd47afac81c34764d845c5841cb5",
+  "question-bank/generics/organization-name/index.json": "a8933f7eaad74bae16e0f797ecf46285101a5c459fc48ae414c88c3cd7f17bda",
+  "question-bank/generics/organization-name/schema.json": "ee043744a2c4fe4ba584b3f526bdc39c487226edde15b64ba2d6809c9559e08f",
+  "question-bank/generics/person-name/index.json": "d3c0fb2a1e1287e367a23b0bb55554bae9440d2d9c62b2b91037a25df70921f8",
+  "question-bank/generics/person-name/schema.json": "a757c56c4194e1d969129513acd9f7fc13909d2861ee86594c126b0e1b32fa6e",
+  "question-bank/generics/phone/index.json": "51874a5d610b3ae465ff491d0f689c53e9eb3020fe18636e6c3cb58b1bdb9533",
+  "question-bank/generics/phone/schema.json": "26e199be6aa30efdf2063a497a2b339aa4b4982524809aef3b5c5d7f7ef495ec",
+  "question-bank/poc/details/index.json": "97170ad888ab833d7c8dc051134cee34ebd46c91bbee66beccb3783469192ce6",
+  "question-bank/poc/details/schema.json": "4778a9543311f4864eaa480b5e41fef409b8b16baeef5b87288063ae8c936f47"
+}

@@ -16,6 +16,7 @@ enum KeyContactsSection {
 }
 
 /** One key contact and their role on the project. */
+@UI.label("Key Contact")
 @UI.order(
   KeyContactPerson.projectRole,
   KeyContactPerson.name,
@@ -59,7 +60,8 @@ model KeyContacts {
   applicantOrganizationName: OrganizationName;
 
   /** Enter between 1 and 4 key contacts and their role on the project. */
-  @UI.label("Key Contact")
+  @UI.label("Key Contacts")
+  @UI.helpText("You may enter up to four (4) Key Contacts. At least 1 (one) contact person is required. Additional contacts are optional.")
   @UI.section(KeyContactsSection.keyContacts)
   @minItems(1)
   @maxItems(4)

@@ -28,6 +28,7 @@ export const $lib = createTypeSpecLibrary({
     tags: {},
     entity: {},
     label: {},
+    helpText: {},
     widget: {},
     sections: {},
     section: {},

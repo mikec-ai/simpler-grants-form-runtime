@@ -1,0 +1,10 @@
+{
+  "id": "generics/organization-name",
+  "kind": "question",
+  "name": "Organization Name",
+  "description": "Enter the legal name of the organization.",
+  "tags": [
+    "organization",
+    "name"
+  ]
+}

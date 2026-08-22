@@ -70,6 +70,8 @@ export function allBlocks(program: Program): Block[] {
 
 export const propLabel = (p: Program, prop: ModelProperty) =>
   g(p, stateKeys.label, prop) as string | undefined;
+export const propHelpText = (p: Program, prop: ModelProperty) =>
+  g(p, stateKeys.helpText, prop) as string | undefined;
 export const propWidget = (p: Program, prop: ModelProperty) =>
   g(p, stateKeys.widget, prop) as string | undefined;
 export const propSection = (p: Program, prop: ModelProperty) =>
@@ -88,6 +90,9 @@ export const propComputed = (p: Program, prop: ModelProperty) =>
   g(p, stateKeys.computed, prop) as { operator: string; refs: string[] } | undefined;
 export const propPrePopulate = (p: Program, prop: ModelProperty) =>
   g(p, stateKeys.prePopulate, prop) as string | undefined;
+/** `@UI.label` for any model, block or not. */
+export const modelLabel = (p: Program, model: Model) =>
+  g(p, stateKeys.label, model) as string | undefined;
 /** `@UI.order` for any model, block or not. */
 export const modelOrder = (p: Program, model: Model) =>
   g(p, stateKeys.order, model) as string[] | undefined;

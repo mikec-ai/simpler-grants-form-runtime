@@ -1,0 +1,66 @@
+"""Build a runtime `Form` from a form's emitted artifacts.
+
+The artifacts are the contract. This loader reads JSON and applies the projection; it
+does not know how the JSON was produced, and adding a second authoring path would not
+touch it.
+"""
+
+from __future__ import annotations
+
+import json
+import uuid
+from pathlib import Path
+from typing import Any
+
+from src.form_schema.form_spec.bank import ARTIFACTS, _bank_projection
+from src.form_schema.form_spec.projection import Projection, project_schema
+
+
+class LoadedForm:
+    """A form's projected artifacts, in the shapes `Form` columns expect."""
+
+    def __init__(self, form_id: str, manifest: dict[str, Any], **artifacts: Any) -> None:
+        self.form_id = form_id
+        self.manifest = manifest
+        self.form_json_schema: dict[str, Any] = artifacts["json_schema"]
+        self.form_ui_schema: list[Any] = artifacts["ui_schema"]
+        self.form_rule_schema: dict[str, Any] | None = artifacts["rule_schema"]
+
+    @property
+    def meta(self) -> dict[str, Any]:
+        return self.manifest["form"]
+
+
+def _projection_for(form_dir: Path) -> Projection:
+    """The bank's projection, extended with this form's declared name exceptions."""
+    bank = _bank_projection()
+    overrides_path = form_dir / "projection.json"
+    renames: dict[str, str] = {}
+    if overrides_path.is_file():
+        renames = json.loads(overrides_path.read_text()).get("renames", {})
+    return Projection(
+        renames=renames,
+        bank_uri=bank.bank_uri,
+        block_ids=bank.block_ids,
+        blocks=bank.blocks,
+    )
+
+
+def load_form(form_id: str, *, artifacts: Path | None = None) -> LoadedForm:
+    root = (artifacts or ARTIFACTS) / "forms" / form_id
+    manifest = json.loads((root / "manifest.json").read_text())
+    canonical = json.loads((root / "schema.json").read_text())
+    projection = _projection_for(root)
+
+    rule_schema = json.loads((root / "sgg" / "rule-schema.json").read_text())
+    return LoadedForm(
+        form_id=form_id,
+        manifest=manifest,
+        json_schema=project_schema(canonical, projection),
+        ui_schema=json.loads((root / "sgg" / "ui-schema.json").read_text()),
+        rule_schema=rule_schema,
+    )
+
+
+def form_uuid(loaded: LoadedForm) -> uuid.UUID:
+    return uuid.UUID(loaded.meta["formId"])

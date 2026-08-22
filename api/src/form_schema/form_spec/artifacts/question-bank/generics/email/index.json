@@ -1,0 +1,9 @@
+{
+  "id": "generics/email",
+  "kind": "question",
+  "name": "Email",
+  "description": "An email address.",
+  "tags": [
+    "email"
+  ]
+}

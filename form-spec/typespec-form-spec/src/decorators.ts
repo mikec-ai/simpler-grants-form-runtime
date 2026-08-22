@@ -137,8 +137,12 @@ export const $label = (ctx: Ctx, target: Model | Scalar | ModelProperty, text: s
   $summary(ctx as any, target as any, text);
 };
 
+/**
+ * Secondary guidance shown with the field. Distinct from the doc comment, which is the
+ * question's own description: help text is what a form says *about asking it here*.
+ */
 export const $helpText = (ctx: Ctx, target: ModelProperty, text: string) =>
-  set(ctx, stateKeys.label, target, text);
+  set(ctx, stateKeys.helpText, target, text);
 
 export const $widget = (ctx: Ctx, target: ModelProperty, widget: unknown) =>
   set(ctx, stateKeys.widget, target, enumName(widget));
