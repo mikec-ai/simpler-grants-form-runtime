@@ -212,7 +212,7 @@ class PortableFormDeclaration:
     schema: dict[str, Any]
     ui: dict[str, Any]
     mappings: dict[str, Any]
-    rules: dict[str, Any] | None
+    adapters: dict[str, dict[str, dict[str, Any]]]
 
 
 @dataclasses.dataclass(frozen=True)
@@ -253,10 +253,16 @@ class PortableFormKernel:
         proposed_form_questions: dict[str, set[str]] = {}
         accepted_form_questions: dict[str, set[str]] = {}
         published_form_questions: dict[str, set[str]] = {}
+        proposed_form_semantics: dict[str, set[str]] = {}
+        accepted_form_semantics: dict[str, set[str]] = {}
+        published_form_semantics: dict[str, set[str]] = {}
+        semantic_parts: dict[str, tuple[str, str]] = {}
         form_publishable: dict[str, bool] = {}
         for form_key, portable in sorted(self.forms_by_key.items()):
             proposed_question_ids: set[str] = set()
             accepted_question_ids: set[str] = set()
+            proposed_semantic_ids: set[str] = set()
+            accepted_semantic_ids: set[str] = set()
             review = portable.definition["review_boundary"]
             publishable = (
                 review["semantic_mappings"] == "accepted"
@@ -266,14 +272,19 @@ class PortableFormKernel:
             targets = portable.mappings["targets"]
             for binding in portable.definition["question_bindings"]:
                 question_id = binding["question_id"]
+                role = binding["role"]
+                semantic_identity = f"{question_id}::role:{role}"
+                semantic_parts[semantic_identity] = (question_id, role)
                 mapping_status = binding["mapping_status"]
                 classification = binding.get("analysis_classification", "semantic_question")
                 is_question = classification == "semantic_question"
                 if is_question and mapping_status not in {"rejected", "superseded"}:
                     proposed_question_ids.add(question_id)
+                    proposed_semantic_ids.add(semantic_identity)
                 accepted = is_question and mapping_status == "accepted"
                 if accepted:
                     accepted_question_ids.add(question_id)
+                    accepted_semantic_ids.add(semantic_identity)
                 xml_ref = binding["mapping_refs"].get("grants_gov_xml")
                 xml = (
                     targets["grants_gov_xml"]["bindings"][xml_ref] if xml_ref is not None else None
@@ -283,6 +294,7 @@ class PortableFormKernel:
                         "binding_id": binding["binding_id"],
                         "form_key": form_key,
                         "question_id": question_id,
+                        "semantic_identity": semantic_identity,
                         "schema_id": binding["schema_id"],
                         "role": binding["role"],
                         "form_pointer": binding["form_pointer"],
@@ -303,6 +315,9 @@ class PortableFormKernel:
             proposed_form_questions[form_key] = proposed_question_ids
             accepted_form_questions[form_key] = accepted_question_ids
             published_form_questions[form_key] = accepted_question_ids if publishable else set()
+            proposed_form_semantics[form_key] = proposed_semantic_ids
+            accepted_form_semantics[form_key] = accepted_semantic_ids
+            published_form_semantics[form_key] = accepted_semantic_ids if publishable else set()
 
         def question_counts(form_questions: dict[str, set[str]]) -> dict[str, int]:
             counts: dict[str, int] = {}
@@ -314,6 +329,9 @@ class PortableFormKernel:
         proposed_question_counts = question_counts(proposed_form_questions)
         accepted_question_counts = question_counts(accepted_form_questions)
         published_question_counts = question_counts(published_form_questions)
+        proposed_semantic_counts = question_counts(proposed_form_semantics)
+        accepted_semantic_counts = question_counts(accepted_form_semantics)
+        published_semantic_counts = question_counts(published_form_semantics)
 
         def overlap(questions_a: set[str], questions_b: set[str]) -> dict[str, Any]:
             common = questions_a & questions_b
@@ -327,6 +345,7 @@ class PortableFormKernel:
             }
 
         pairwise: list[dict[str, Any]] = []
+        pairwise_semantics: list[dict[str, Any]] = []
         for form_a, form_b in itertools.combinations(sorted(proposed_form_questions), 2):
             pairwise.append(
                 {
@@ -347,6 +366,26 @@ class PortableFormKernel:
                     },
                 }
             )
+            pairwise_semantics.append(
+                {
+                    "form_a": form_a,
+                    "form_b": form_b,
+                    "comparison_basis": "question_id_plus_role",
+                    "proposed_overlap": overlap(
+                        proposed_form_semantics[form_a], proposed_form_semantics[form_b]
+                    ),
+                    "accepted_overlap": overlap(
+                        accepted_form_semantics[form_a], accepted_form_semantics[form_b]
+                    ),
+                    "published_overlap": {
+                        "eligible": form_publishable[form_a] and form_publishable[form_b],
+                        **overlap(
+                            published_form_semantics[form_a],
+                            published_form_semantics[form_b],
+                        ),
+                    },
+                }
+            )
 
         return {
             "contract": "portable-grants-form-analysis/v2",
@@ -354,6 +393,7 @@ class PortableFormKernel:
             "summary": {
                 "forms": len(proposed_form_questions),
                 "proposed_unique_questions": len(proposed_question_counts),
+                "proposed_role_qualified_semantics": len(proposed_semantic_counts),
                 "accepted_unique_questions": len(accepted_question_counts),
                 "published_unique_questions": len(published_question_counts),
                 "proposed_associations": sum(
@@ -379,8 +419,20 @@ class PortableFormKernel:
                 }
                 for question_id in sorted(proposed_question_counts)
             ],
+            "role_qualified_semantics": [
+                {
+                    "semantic_identity": semantic_identity,
+                    "question_id": semantic_parts[semantic_identity][0],
+                    "role": semantic_parts[semantic_identity][1],
+                    "proposed_form_count": proposed_semantic_counts.get(semantic_identity, 0),
+                    "accepted_form_count": accepted_semantic_counts.get(semantic_identity, 0),
+                    "published_form_count": published_semantic_counts.get(semantic_identity, 0),
+                }
+                for semantic_identity in sorted(proposed_semantic_counts)
+            ],
             "form_question_associations": associations,
             "pairwise_form_overlap": pairwise,
+            "pairwise_role_qualified_overlap": pairwise_semantics,
         }
 
 
@@ -525,6 +577,7 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
         compatibility_records.append(record)
 
     forms_by_key: dict[str, PortableFormDeclaration] = {}
+    seen_form_ids: set[str] = set()
     question_schema_ids = {
         schema_id for schema_ids in question_ids.values() for schema_id in schema_ids
     }
@@ -550,7 +603,7 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
         }
         definition_keys = set(definition)
         missing_definition_keys = required_definition_keys - definition_keys
-        unknown_definition_keys = definition_keys - required_definition_keys - {"rules"}
+        unknown_definition_keys = definition_keys - required_definition_keys - {"adapters"}
         if missing_definition_keys or unknown_definition_keys:
             raise PortableFormKernelError(
                 f"{label} has invalid keys; missing={sorted(missing_definition_keys)}, "
@@ -585,9 +638,13 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
                 f"unknown={sorted(unknown_metadata_keys)}"
             )
         try:
-            uuid.UUID(_string(metadata["form_id"], f"{label}.metadata.form_id"))
+            form_id = _string(metadata["form_id"], f"{label}.metadata.form_id")
+            uuid.UUID(form_id)
         except ValueError as exc:
             raise PortableFormKernelError(f"{label}.metadata.form_id must be a UUID") from exc
+        if form_id in seen_form_ids:
+            raise PortableFormKernelError(f"duplicate metadata.form_id: {form_id}")
+        seen_form_ids.add(form_id)
         for key in (
             "form_name",
             "short_form_name",
@@ -612,11 +669,37 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
             root, definition["mappings"], f"{label}.mappings"
         )
         dependencies.update({ui_path, mapping_path})
-        rules = None
-        if "rules" in definition:
-            rules_path, rules_raw = _read_hashed_json(root, definition["rules"], f"{label}.rules")
-            dependencies.add(rules_path)
-            rules = _object(rules_raw, f"{label}.rules.document")
+        adapters: dict[str, dict[str, dict[str, Any]]] = {}
+        if "adapters" in definition:
+            raw_adapters = _object(definition["adapters"], f"{label}.adapters")
+            for adapter_name, raw_adapter in raw_adapters.items():
+                adapter_name = _string(adapter_name, f"{label}.adapters key")
+                adapter = _object(raw_adapter, f"{label}.adapters.{adapter_name}")
+                _exact_keys(adapter, {"artifacts"}, f"{label}.adapters.{adapter_name}")
+                artifacts = _object(
+                    adapter["artifacts"], f"{label}.adapters.{adapter_name}.artifacts"
+                )
+                if not artifacts:
+                    raise PortableFormKernelError(
+                        f"{label}.adapters.{adapter_name}.artifacts cannot be empty"
+                    )
+                documents: dict[str, dict[str, Any]] = {}
+                for artifact_name, descriptor in artifacts.items():
+                    artifact_name = _string(
+                        artifact_name,
+                        f"{label}.adapters.{adapter_name}.artifacts key",
+                    )
+                    artifact_path, artifact_raw = _read_hashed_json(
+                        root,
+                        descriptor,
+                        f"{label}.adapters.{adapter_name}.artifacts.{artifact_name}",
+                    )
+                    dependencies.add(artifact_path)
+                    documents[artifact_name] = _object(
+                        artifact_raw,
+                        f"{label}.adapters.{adapter_name}.artifacts.{artifact_name}.document",
+                    )
+                adapters[adapter_name] = documents
         for evidence_index, raw_evidence in enumerate(
             _array(definition["supplemental_evidence"], f"{label}.supplemental_evidence")
         ):
@@ -794,7 +877,7 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
             schema=schema,
             ui=ui,
             mappings=mappings,
-            rules=rules,
+            adapters=adapters,
         )
 
     bundle_digest = hashlib.sha256(canonical_json(manifest).encode("utf-8")).hexdigest()

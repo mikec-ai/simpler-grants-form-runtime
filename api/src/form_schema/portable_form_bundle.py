@@ -249,7 +249,7 @@ class PortableFormBundle:
                 "x-mapping-to-cg": common_grants["to"],
             },
             xml_transform=targets.get("grants_gov_xml", {}).get("runtime_transform"),
-            rule_schema=portable.rules,
+            rule_schema=portable.adapters.get("simpler", {}).get("rules"),
             dependency_paths=self.kernel.dependency_paths,
         )
 

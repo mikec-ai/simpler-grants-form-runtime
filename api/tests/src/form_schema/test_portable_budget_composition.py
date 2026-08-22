@@ -1,8 +1,5 @@
-import hashlib
 import json
 import shutil
-import subprocess
-import sys
 from pathlib import Path
 
 import pytest
@@ -22,26 +19,6 @@ def _walk(node):
     elif isinstance(node, list):
         for child in node:
             yield from _walk(child)
-
-
-def _tree_digest(root: Path) -> str:
-    digest = hashlib.sha256()
-    for path in sorted(item for item in root.rglob("*") if item.is_file()):
-        digest.update(str(path.relative_to(root)).encode())
-        digest.update(path.read_bytes())
-    return digest.hexdigest()
-
-
-def _copy_builders(tmp_path: Path) -> tuple[Path, Path]:
-    root = tmp_path / "portable-composition"
-    shutil.copytree(BUNDLE_ROOT, root / "form-specs")
-    (root / "scripts").mkdir()
-    for name in (
-        "build_portable_budget_pilot.py",
-        "build_portable_budget_composition.py",
-    ):
-        shutil.copy(REPOSITORY_ROOT / "scripts" / name, root / "scripts" / name)
-    return root, root / "form-specs"
 
 
 def test_subaward_composes_exact_budget_payload_and_separates_mechanisms() -> None:
@@ -154,35 +131,3 @@ def test_unknown_analysis_classification_fails_closed(tmp_path: Path) -> None:
 
     with pytest.raises(PortableFormKernelError, match="analysis_classification is unknown"):
         load_portable_form_bundle(root)
-
-
-def test_composition_build_chain_is_reproducible(tmp_path: Path) -> None:
-    root, specs = _copy_builders(tmp_path)
-    before = _tree_digest(specs)
-
-    subprocess.run([sys.executable, "scripts/build_portable_budget_pilot.py"], cwd=root, check=True)
-    subprocess.run(
-        [sys.executable, "scripts/build_portable_budget_composition.py"],
-        cwd=root,
-        check=True,
-    )
-
-    assert _tree_digest(specs) == before
-
-
-def test_composition_builder_fails_closed_on_variant_drift(tmp_path: Path) -> None:
-    root, specs = _copy_builders(tmp_path)
-    path = specs / "oracles/budget/rr-mp-budget-v3.candidate.json"
-    candidate = json.loads(path.read_text(encoding="utf-8"))
-    candidate["artifacts"]["json_schema"]["properties"]["organization_name"]["maxLength"] = 59
-    path.write_text(json.dumps(candidate), encoding="utf-8")
-
-    result = subprocess.run(
-        [sys.executable, "scripts/build_portable_budget_composition.py"],
-        cwd=root,
-        capture_output=True,
-        text=True,
-    )
-
-    assert result.returncode == 1
-    assert "unexpected multi-project reuse partition" in result.stdout

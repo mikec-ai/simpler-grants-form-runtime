@@ -2,6 +2,38 @@
 
 This directory is a dependency-neutral canary for reusable grants-form declarations.
 
+## Authoritative authoring boundary
+
+The versioned JSON declarations are the source of truth:
+
+- `catalog.json` inventories exact source evidence and hashed question and form declarations.
+- `forms/*.form.json` declares which questions a form uses, occurrence roles and context,
+  UI/mapping/rule/evidence sidecars, and review boundaries.
+- `schemas/questions/**/*.schema.json` owns portable question identity and validation.
+- `schemas/forms/*.schema.json` composes questions with standard JSON Schema `$ref`.
+- `ui/`, `rules/`, `mappings/`, and `evidence/` keep separate concerns reviewable.
+
+Consumer-specific artifacts are explicitly namespaced under each form's `adapters` object. The
+current `adapters.simpler.artifacts.rules` files preserve native `gg_*` runtime parity; they are
+not presented as a portable rule language. The compiler passes arbitrary adapter namespaces
+through without knowing their meaning. The thin consumer adapter selects only its own namespace.
+
+`manifest.json` is a compiled runtime index. Regenerate it with:
+
+```shell
+api/.venv/bin/python scripts/compile_portable_form_bundle.py
+```
+
+CI uses `--check` to reject stale output. The compiler performs only generic loading, hash and
+path validation, deterministic assembly, and serialization. It contains no form keys, question
+identities, role rules, validation variants, calculation selection, or source-wire paths.
+
+The earlier budget-specific Python builders were migration scaffolding used to discover and
+materialize the current declarations. They have been removed from the supported build path; their
+exact history remains available in Git. New forms must be added by declarations and processed by
+the same generic compiler. TypeSpec or CommonGrants may produce compatible declarations, but
+neither is required and neither is assumed complete.
+
 The portable contract is referenced JSON Schema Draft 2020-12 plus JSON Forms UI schemas,
 optional target-specific mapping sidecars, exact external source-evidence descriptors, and
 review boundaries. The dependency-neutral loader and analytical projector live in
@@ -10,11 +42,12 @@ Simpler checkout. Simpler consumes the verified kernel through the thin adapter 
 `api/src/form_schema/portable_form_bundle.py`; the specifications do not import or execute
 Simpler code.
 
-Question identity and question occurrence are separate. A stable `question_id` represents the
-reusable semantic question. Every use within a form has its own `binding_id`, role, form pointer,
+Question template identity and question occurrence are separate. A stable `question_id` represents
+the reusable schema/question template. Every use within a form has its own `binding_id`, role, form pointer,
 cardinality, context, mapping references, and review state. Validation fails unless every bundled
-question `$ref` occurrence is bound exactly once. This preserves repeated and role-distinct uses
-without inflating the unique-question analysis.
+question `$ref` occurrence is bound exactly once. Analysis reports template reuse separately from
+the conservative role-qualified semantic identity (`question_id` plus role), so a shared name or
+address schema never silently equates an applicant contact, AOR, key person, or subaward entity.
 
 Every canonical question descriptor directly references one or more exact source records in the
 manifest source catalog. Each record pins repository, full revision, repository-relative path,
@@ -43,8 +76,9 @@ The analytical projection reports three separate views. Proposed overlap is work
 includes non-rejected occurrence bindings. Accepted overlap includes only occurrence bindings with
 an `accepted` mapping status. Published overlap is additionally gated on each form's semantic
 review state being `accepted` and its explicit published-coverage flag. The current 19 shared
-questions and 95% Key Contacts coverage are therefore proposed findings; accepted and published
-overlap are both zero.
+templates and 95% Key Contacts template coverage are proposed structural findings. The conservative
+role-qualified view finds one shared identity (the applicant organization occurrence); accepted
+and published overlap are both zero in either view.
 
 The first cost-curve stress test adds R&R Budget and R&R Budget 10 from one declarative profile.
 Both resolve the same 101 applicant-input question references, five repeating structures, shared
