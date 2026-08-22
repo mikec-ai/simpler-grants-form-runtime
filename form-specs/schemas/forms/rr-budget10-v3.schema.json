@@ -938,7 +938,7 @@
                         "first_name": {
                           "allOf": [
                             {
-                              "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-name-firstname:v1"
+                              "$ref": "urn:grants-form-kernel:questions:person-name-first:v1"
                             }
                           ],
                           "title": "First Name",
@@ -955,7 +955,7 @@
                         "last_name": {
                           "allOf": [
                             {
-                              "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-name-lastname:v1"
+                              "$ref": "urn:grants-form-kernel:questions:person-name-last:v1"
                             }
                           ],
                           "title": "Last Name",
@@ -972,7 +972,7 @@
                         "middle_name": {
                           "allOf": [
                             {
-                              "$ref": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-name-middlename:v1"
+                              "$ref": "urn:grants-form-kernel:questions:person-name-middle:v1"
                             }
                           ],
                           "title": "Middle Name",
@@ -2892,7 +2892,7 @@
     "organization_name": {
       "allOf": [
         {
-          "$ref": "urn:grants-form-kernel:questions:budget:organizationname:v1"
+          "$ref": "urn:grants-form-kernel:questions:organization:legal-name:v1"
         }
       ],
       "title": "Enter name of Organization:",

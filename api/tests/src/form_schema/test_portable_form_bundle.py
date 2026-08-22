@@ -75,13 +75,14 @@ def test_analysis_projection_is_derived_from_the_same_bindings() -> None:
 
     assert projection["contract"] == "portable-grants-form-analysis/v2"
     assert projection["summary"] == {
-        "forms": 4,
-        "proposed_unique_questions": 167,
+        "forms": 6,
+        "proposed_unique_questions": 161,
         "accepted_unique_questions": 0,
         "published_unique_questions": 0,
-        "proposed_associations": 295,
+        "proposed_associations": 497,
         "accepted_associations": 0,
         "published_associations": 0,
+        "content_capture_mechanism_associations": 30,
     }
     legal_name = next(
         row
@@ -90,7 +91,7 @@ def test_analysis_projection_is_derived_from_the_same_bindings() -> None:
     )
     assert legal_name == {
         "question_id": "question:organization:legal-name",
-        "proposed_form_count": 2,
+        "proposed_form_count": 6,
         "accepted_form_count": 0,
         "published_form_count": 0,
     }
@@ -100,7 +101,16 @@ def test_analysis_projection_is_derived_from_the_same_bindings() -> None:
         "/SF424_4_0/OrganizationName",
     }
     assert all(row["mapping_status"] == "agent_proposed" for row in associations)
-    assert all(row["included_in_proposed_overlap"] for row in associations)
+    assert all(
+        row["included_in_proposed_overlap"]
+        for row in associations
+        if row["analysis_classification"] == "semantic_question"
+    )
+    assert not any(
+        row["included_in_proposed_overlap"]
+        for row in associations
+        if row["analysis_classification"] == "content_capture_mechanism"
+    )
     assert not any(row["included_in_accepted_overlap"] for row in associations)
     assert not any(row["included_in_published_overlap"] for row in associations)
 
@@ -224,7 +234,9 @@ def test_portable_specs_do_not_depend_on_simpler_python() -> None:
     assert "SF424OrganizationCanary" not in adapter_source
 
 
-def test_copied_bundle_and_neutral_kernel_work_without_simpler_checkout(tmp_path: Path) -> None:
+def test_copied_bundle_and_neutral_kernel_work_without_simpler_checkout(
+    tmp_path: Path,
+) -> None:
     isolated = tmp_path / "isolated"
     isolated.mkdir()
     shutil.copytree(BUNDLE_ROOT, isolated / "form-specs")
@@ -288,12 +300,14 @@ print(json.dumps({
     summary = output["summary"]
     assert summary["accepted_associations"] == 0
     assert summary["published_associations"] == 0
-    assert summary["forms"] == 4
-    assert summary["proposed_unique_questions"] == 167
+    assert summary["forms"] == 6
+    assert summary["proposed_unique_questions"] == 161
     assert output["consumed"] == {
         "KeyContacts": {"resolved_properties": 2, "ui_controls": 21},
         "RRBudget": {"resolved_properties": 6, "ui_controls": 162},
         "RRBudget10": {"resolved_properties": 6, "ui_controls": 162},
+        "RRMPBudget": {"resolved_properties": 6, "ui_controls": 162},
+        "RRSubawardBudget30": {"resolved_properties": 31, "ui_controls": 193},
         "SF424": {"resolved_properties": 58, "ui_controls": 72},
     }
 
@@ -386,7 +400,9 @@ def test_common_grants_mapping_profile_is_optional(tmp_path: Path) -> None:
     assert form.form_json_schema["x-mapping-to-cg"] == {}
 
 
-def test_accepted_mapping_count_is_derived_from_occurrence_state(tmp_path: Path) -> None:
+def test_accepted_mapping_count_is_derived_from_occurrence_state(
+    tmp_path: Path,
+) -> None:
     root = _copy_bundle(tmp_path)
     manifest_path = root / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -478,7 +494,7 @@ def test_every_question_descriptor_has_direct_exact_source_provenance() -> None:
     manifest = json.loads((BUNDLE_ROOT / "manifest.json").read_text(encoding="utf-8"))
     questions = [schema for schema in manifest["schemas"] if schema["kind"] == "question"]
 
-    assert len(questions) == 167
+    assert len(questions) == 176
     assert all(question["source_evidence"] for question in questions)
     assert all(
         source_ref in manifest["sources"]

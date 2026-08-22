@@ -15,6 +15,7 @@ from src.form_schema.portable_form_bundle import load_portable_form_bundle
 REPOSITORY_ROOT = Path(__file__).resolve().parents[4]
 BUNDLE_ROOT = REPOSITORY_ROOT / "form-specs"
 BUILDER = REPOSITORY_ROOT / "scripts/build_portable_budget_pilot.py"
+COMPOSITION_BUILDER = REPOSITORY_ROOT / "scripts/build_portable_budget_composition.py"
 
 
 def _walk(node: object):
@@ -71,6 +72,10 @@ def _copied_builder(tmp_path: Path) -> tuple[Path, Path]:
     shutil.copytree(BUNDLE_ROOT, root / "form-specs")
     (root / "scripts").mkdir()
     shutil.copy(BUILDER, root / "scripts/build_portable_budget_pilot.py")
+    shutil.copy(
+        COMPOSITION_BUILDER,
+        root / "scripts/build_portable_budget_composition.py",
+    )
     return root, root / "form-specs"
 
 
@@ -188,6 +193,11 @@ def test_budget_builder_is_reproducible_in_an_isolated_copy(tmp_path: Path) -> N
 
     subprocess.run(
         [sys.executable, "scripts/build_portable_budget_pilot.py"],
+        cwd=root,
+        check=True,
+    )
+    subprocess.run(
+        [sys.executable, "scripts/build_portable_budget_composition.py"],
         cwd=root,
         check=True,
     )

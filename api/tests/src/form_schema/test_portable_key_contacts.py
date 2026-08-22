@@ -1,4 +1,5 @@
 import json
+from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
@@ -21,6 +22,8 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[4]
 BUNDLE_ROOT = REPOSITORY_ROOT / "form-specs"
 KC_NS = "http://apply.grants.gov/forms/Key_Contacts_2_0-V2.0"
 GLOB_NS = "http://apply.grants.gov/system/GlobalLibrary-V2.0"
+NATIVE_COMMON_SHARED_SCHEMA = deepcopy(COMMON_SHARED_V1.json_schema)
+NATIVE_ADDRESS_SHARED_SCHEMA = deepcopy(ADDRESS_SHARED_V1.json_schema)
 
 
 def _read(relative: str) -> Any:
@@ -191,10 +194,10 @@ def test_key_contacts_resolved_schema_parity_is_exhaustive_and_fail_closed() -> 
 
     shared = {
         "https://files.simpler.grants.gov/schemas/common_shared_v1.json": (
-            COMMON_SHARED_V1.json_schema
+            NATIVE_COMMON_SHARED_SCHEMA
         ),
         "https://files.simpler.grants.gov/schemas/address_shared_v1.json": (
-            ADDRESS_SHARED_V1.json_schema
+            NATIVE_ADDRESS_SHARED_SCHEMA
         ),
     }
 

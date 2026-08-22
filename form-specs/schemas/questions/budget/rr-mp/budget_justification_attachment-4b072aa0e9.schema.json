@@ -1,0 +1,8 @@
+{
+  "$id": "urn:grants-form-kernel:questions:budget:budgetjustificationattachment:rr-mp:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "format": "attachment",
+  "title": "BudgetJustificationAttachment",
+  "type": "string",
+  "x-question-id": "question:budget:budgetjustificationattachment"
+}

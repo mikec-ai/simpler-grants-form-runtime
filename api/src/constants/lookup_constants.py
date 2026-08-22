@@ -180,6 +180,8 @@ class FormType(StrEnum):
 
     RR_BUDGET = "RRBudget"
     RR_BUDGET_10 = "RRBudget10"
+    RR_SUBAWARD_BUDGET_30 = "RRSubawardBudget30"
+    RR_MP_BUDGET = "RRMPBudget"
 
     ATTACHMENT_FORM = "AttachmentForm"
 

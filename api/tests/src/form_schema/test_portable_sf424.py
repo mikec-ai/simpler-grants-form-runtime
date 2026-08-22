@@ -1,4 +1,5 @@
 import json
+from copy import deepcopy
 from pathlib import Path
 
 import jsonref
@@ -14,6 +15,8 @@ from src.form_schema.shared import ADDRESS_SHARED_V1, COMMON_SHARED_V1
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[4]
 BUNDLE_ROOT = REPOSITORY_ROOT / "form-specs"
+NATIVE_COMMON_SHARED_SCHEMA = deepcopy(COMMON_SHARED_V1.json_schema)
+NATIVE_ADDRESS_SHARED_SCHEMA = deepcopy(ADDRESS_SHARED_V1.json_schema)
 
 
 def _read(relative: str):
@@ -62,10 +65,10 @@ def test_sf424_pinned_native_oracles_still_match_the_implementation() -> None:
 def test_sf424_portable_schema_is_semantically_exact_after_reference_resolution() -> None:
     shared = {
         "https://files.simpler.grants.gov/schemas/common_shared_v1.json": (
-            COMMON_SHARED_V1.json_schema
+            NATIVE_COMMON_SHARED_SCHEMA
         ),
         "https://files.simpler.grants.gov/schemas/address_shared_v1.json": (
-            ADDRESS_SHARED_V1.json_schema
+            NATIVE_ADDRESS_SHARED_SCHEMA
         ),
     }
 

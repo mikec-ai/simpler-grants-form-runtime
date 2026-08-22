@@ -1,0 +1,7 @@
+{
+  "$id": "urn:grants-form-kernel:questions:budget:samuei:rr-mp:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SAMUEI",
+  "type": "string",
+  "x-question-id": "question:budget:samuei"
+}
