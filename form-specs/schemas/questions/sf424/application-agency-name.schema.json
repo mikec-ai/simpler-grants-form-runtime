@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:application-agency-name:v1",
+  "type": "string",
+  "title": "Agency Name",
+  "description": "Pre-populated from the Application cover sheet.",
+  "minLength": 1,
+  "maxLength": 60,
+  "x-question-id": "question:application:agency-name",
+  "x-review-status": "agent_proposed"
+}

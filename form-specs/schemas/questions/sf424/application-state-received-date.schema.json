@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:application-state-received-date:v1",
+  "type": "string",
+  "title": "Date Received By State",
+  "description": "Leave blank, to be filled out by state.",
+  "format": "date",
+  "readOnly": true,
+  "x-question-id": "question:application:state-received-date",
+  "x-review-status": "agent_proposed"
+}

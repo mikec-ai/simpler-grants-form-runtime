@@ -20,9 +20,19 @@ The adapter resolves the referenced schema and compiles it through the same immu
 `ResolvedFormPackage` seam used by the native runtime. It does not construct a parallel native
 `Form` path.
 
-The first canary intentionally models only the applicant organization legal-name question in
-two forms. It proves shared semantic identity and different source-wire bindings without
-claiming either form is complete or that its agent-proposed mapping has been accepted.
+The pilot contains complete portable declarations for Key Contacts and SF-424. Key Contacts
+binds 20 question occurrences, including its one-to-four repeated contact group. SF-424 binds
+73 occurrences covering all 75 countable source paths, including role-distinct contacts,
+conditions, a calculation, static content, and Grants.gov XML declarations. Nineteen of the 20
+Key Contacts questions are reused by SF-424 through the same referenced question schemas; the
+forms retain separate occurrence roles, cardinality, context, and source-wire mappings.
+
+The portable declarations preserve two different verification boundaries. Runtime parity checks
+compare generated Simpler artifacts with the existing native implementations. Source-accounting
+checks compare the declarations with pinned XSD, behavior, and rendered-source evidence. A native
+implementation can omit source fields, so passing the first check never silently implies passing
+the second. All semantic mappings in this pilot remain agent-proposed, with zero reviewed mappings
+contributing to published coverage.
 
 TypeSpec and CommonGrants are optional compatibility inputs. Neither is required to author,
 validate, analyze, or load this bundle.

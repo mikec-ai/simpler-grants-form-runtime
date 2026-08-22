@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "pattern": "^(-)?\\d*([.]\\d{2})?$",
+  "minLength": 1,
+  "maxLength": 14,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:funding-total:v1",
+  "title": "Total Estimated Funding",
+  "description": "This field is automatically calculated by Grants.gov",
+  "x-question-id": "question:budget:total-project-funding",
+  "x-review-status": "agent_proposed"
+}

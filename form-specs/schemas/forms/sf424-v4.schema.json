@@ -1,0 +1,590 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:forms:sf424:v4",
+  "title": "Application for Federal Assistance (SF-424)",
+  "type": "object",
+  "required": [
+    "submission_type",
+    "application_type",
+    "organization_name",
+    "employer_taxpayer_identification_number",
+    "sam_uei",
+    "applicant",
+    "contact_person",
+    "phone_number",
+    "email",
+    "applicant_type_code",
+    "agency_name",
+    "funding_opportunity_number",
+    "funding_opportunity_title",
+    "project_title",
+    "congressional_district_applicant",
+    "congressional_district_program_project",
+    "project_start_date",
+    "project_end_date",
+    "federal_estimated_funding",
+    "applicant_estimated_funding",
+    "state_estimated_funding",
+    "local_estimated_funding",
+    "other_estimated_funding",
+    "program_income_estimated_funding",
+    "total_estimated_funding",
+    "state_review",
+    "delinquent_federal_debt",
+    "certification_agree",
+    "authorized_representative",
+    "authorized_representative_title",
+    "authorized_representative_phone_number",
+    "authorized_representative_email"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "application_type": {
+            "const": "Revision"
+          }
+        },
+        "required": [
+          "application_type"
+        ]
+      },
+      "then": {
+        "required": [
+          "revision_type",
+          "federal_award_identifier"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "application_type": {
+            "const": "Continuation"
+          }
+        },
+        "required": [
+          "application_type"
+        ]
+      },
+      "then": {
+        "required": [
+          "federal_award_identifier"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "revision_type": {
+            "const": "E: Other (specify)"
+          }
+        },
+        "required": [
+          "revision_type"
+        ]
+      },
+      "then": {
+        "required": [
+          "revision_other_specify"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "delinquent_federal_debt": {
+            "const": true
+          }
+        },
+        "required": [
+          "delinquent_federal_debt"
+        ]
+      },
+      "then": {
+        "required": [
+          "debt_explanation"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "state_review": {
+            "const": "a. This application was made available to the state under the Executive Order 12372 Process for review on"
+          }
+        },
+        "required": [
+          "state_review"
+        ]
+      },
+      "then": {
+        "required": [
+          "state_review_available_date"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "applicant_type_code": {
+            "contains": {
+              "const": "X: Other (specify)"
+            }
+          }
+        },
+        "required": [
+          "applicant_type_code"
+        ]
+      },
+      "then": {
+        "required": [
+          "applicant_type_other_specify"
+        ]
+      }
+    }
+  ],
+  "properties": {
+    "submission_type": {
+      "$ref": "urn:grants-form-kernel:questions:application-submission-type:v1"
+    },
+    "application_type": {
+      "$ref": "urn:grants-form-kernel:questions:application-type:v1"
+    },
+    "revision_type": {
+      "$ref": "urn:grants-form-kernel:questions:application-revision-type:v1"
+    },
+    "revision_other_specify": {
+      "$ref": "urn:grants-form-kernel:questions:application-revision-other:v1"
+    },
+    "date_received": {
+      "$ref": "urn:grants-form-kernel:questions:application-received-date:v1"
+    },
+    "applicant_id": {
+      "$ref": "urn:grants-form-kernel:questions:application-applicant-id:v1"
+    },
+    "federal_entity_identifier": {
+      "$ref": "urn:grants-form-kernel:questions:application-federal-entity-id:v1"
+    },
+    "federal_award_identifier": {
+      "$ref": "urn:grants-form-kernel:questions:application-prior-award-id:v1"
+    },
+    "state_receive_date": {
+      "$ref": "urn:grants-form-kernel:questions:application-state-received-date:v1"
+    },
+    "state_application_id": {
+      "$ref": "urn:grants-form-kernel:questions:application-state-id:v1"
+    },
+    "organization_name": {
+      "allOf": [
+        {
+          "$ref": "urn:grants-form-kernel:questions:organization:legal-name:v1"
+        }
+      ],
+      "title": "Legal Name",
+      "description": "Enter the legal name of the applicant that will undertake the assistance activity. This is the organization that has registered with the System for Award Management (SAM). Information on registering with SAM may be obtained by visiting SAM.gov."
+    },
+    "employer_taxpayer_identification_number": {
+      "$ref": "urn:grants-form-kernel:questions:organization-ein:v1"
+    },
+    "sam_uei": {
+      "$ref": "urn:grants-form-kernel:questions:organization-sam-uei:v1"
+    },
+    "department_name": {
+      "$ref": "urn:grants-form-kernel:questions:organization-department:v1"
+    },
+    "division_name": {
+      "$ref": "urn:grants-form-kernel:questions:organization-division:v1"
+    },
+    "contact_person_title": {
+      "allOf": [
+        {
+          "$ref": "urn:grants-form-kernel:questions:person-title:v1"
+        }
+      ],
+      "title": "Title",
+      "description": "Enter the position title."
+    },
+    "organization_affiliation": {
+      "allOf": [
+        {
+          "$ref": "urn:grants-form-kernel:questions:person-organizational-affiliation:v1"
+        }
+      ],
+      "type": "string",
+      "title": "Organizational Affiliation",
+      "description": "Enter the organization if different from the applicant organization.",
+      "minLength": 1,
+      "maxLength": 60
+    },
+    "phone_number": {
+      "allOf": [
+        {
+          "$ref": "urn:grants-form-kernel:questions:contact-phone:v1"
+        }
+      ],
+      "title": "Telephone Number",
+      "description": "Enter the daytime Telephone Number."
+    },
+    "fax": {
+      "allOf": [
+        {
+          "$ref": "urn:grants-form-kernel:questions:contact-fax:v1"
+        }
+      ],
+      "title": "Fax Number",
+      "description": "Enter the fax Number."
+    },
+    "email": {
+      "allOf": [
+        {
+          "$ref": "urn:grants-form-kernel:questions:contact-email:v1"
+        }
+      ],
+      "title": "Email",
+      "description": "Enter a valid email Address."
+    },
+    "applicant_type_code": {
+      "$ref": "urn:grants-form-kernel:questions:organization-applicant-type:v1"
+    },
+    "applicant_type_other_specify": {
+      "$ref": "urn:grants-form-kernel:questions:organization-applicant-type-other:v1"
+    },
+    "agency_name": {
+      "$ref": "urn:grants-form-kernel:questions:application-agency-name:v1"
+    },
+    "assistance_listing_number": {
+      "$ref": "urn:grants-form-kernel:questions:application-assistance-listing-number:v1"
+    },
+    "assistance_listing_program_title": {
+      "$ref": "urn:grants-form-kernel:questions:application-assistance-listing-title:v1"
+    },
+    "funding_opportunity_number": {
+      "$ref": "urn:grants-form-kernel:questions:application-opportunity-number:v1"
+    },
+    "funding_opportunity_title": {
+      "$ref": "urn:grants-form-kernel:questions:application-opportunity-title:v1"
+    },
+    "competition_identification_number": {
+      "$ref": "urn:grants-form-kernel:questions:application-competition-number:v1"
+    },
+    "competition_identification_title": {
+      "$ref": "urn:grants-form-kernel:questions:application-competition-title:v1"
+    },
+    "areas_affected": {
+      "$ref": "urn:grants-form-kernel:questions:application-areas-affected-attachment:v1"
+    },
+    "project_title": {
+      "$ref": "urn:grants-form-kernel:questions:project-title:v1"
+    },
+    "additional_project_title": {
+      "$ref": "urn:grants-form-kernel:questions:project-additional-titles-attachment:v1"
+    },
+    "congressional_district_applicant": {
+      "$ref": "urn:grants-form-kernel:questions:project-applicant-district:v1"
+    },
+    "congressional_district_program_project": {
+      "$ref": "urn:grants-form-kernel:questions:project-district:v1"
+    },
+    "additional_congressional_districts": {
+      "$ref": "urn:grants-form-kernel:questions:project-additional-districts-attachment:v1"
+    },
+    "project_start_date": {
+      "$ref": "urn:grants-form-kernel:questions:project-start-date:v1"
+    },
+    "project_end_date": {
+      "$ref": "urn:grants-form-kernel:questions:project-end-date:v1"
+    },
+    "federal_estimated_funding": {
+      "$ref": "urn:grants-form-kernel:questions:funding-federal-estimated:v1"
+    },
+    "applicant_estimated_funding": {
+      "$ref": "urn:grants-form-kernel:questions:funding-applicant-estimated:v1"
+    },
+    "state_estimated_funding": {
+      "$ref": "urn:grants-form-kernel:questions:funding-state-estimated:v1"
+    },
+    "local_estimated_funding": {
+      "$ref": "urn:grants-form-kernel:questions:funding-local-estimated:v1"
+    },
+    "other_estimated_funding": {
+      "$ref": "urn:grants-form-kernel:questions:funding-other-estimated:v1"
+    },
+    "program_income_estimated_funding": {
+      "$ref": "urn:grants-form-kernel:questions:funding-program-income-estimated:v1"
+    },
+    "total_estimated_funding": {
+      "$ref": "urn:grants-form-kernel:questions:funding-total:v1"
+    },
+    "state_review": {
+      "$ref": "urn:grants-form-kernel:questions:application-state-review-status:v1"
+    },
+    "state_review_available_date": {
+      "$ref": "urn:grants-form-kernel:questions:application-state-review-date:v1"
+    },
+    "delinquent_federal_debt": {
+      "$ref": "urn:grants-form-kernel:questions:application-delinquent-debt:v1"
+    },
+    "debt_explanation": {
+      "$ref": "urn:grants-form-kernel:questions:application-debt-explanation-attachment:v1"
+    },
+    "certification_agree": {
+      "$ref": "urn:grants-form-kernel:questions:application-certification-agreement:v1"
+    },
+    "authorized_representative_title": {
+      "allOf": [
+        {
+          "$ref": "urn:grants-form-kernel:questions:person-title:v1"
+        }
+      ],
+      "type": "string",
+      "title": "Title",
+      "description": "Enter the position title.",
+      "minLength": 1,
+      "maxLength": 45
+    },
+    "authorized_representative_phone_number": {
+      "allOf": [
+        {
+          "$ref": "urn:grants-form-kernel:questions:contact-phone:v1"
+        }
+      ],
+      "title": "AOR Telephone Number",
+      "description": "Enter the daytime Telephone Number."
+    },
+    "authorized_representative_fax": {
+      "allOf": [
+        {
+          "$ref": "urn:grants-form-kernel:questions:contact-fax:v1"
+        }
+      ],
+      "title": "AOR fax Number",
+      "description": "Enter the fax Number."
+    },
+    "authorized_representative_email": {
+      "$ref": "urn:grants-form-kernel:questions:authorized-representative-email:v1"
+    },
+    "aor_signature": {
+      "$ref": "urn:grants-form-kernel:questions:application-aor-signature:v1"
+    },
+    "date_signed": {
+      "$ref": "urn:grants-form-kernel:questions:application-aor-signed-date:v1"
+    },
+    "applicant": {
+      "type": "object",
+      "title": "Applicant",
+      "description": "Enter information about the applicant.",
+      "required": [
+        "street1",
+        "city",
+        "country"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "country": {
+                "const": "USA: UNITED STATES"
+              }
+            },
+            "required": [
+              "country"
+            ]
+          },
+          "then": {
+            "required": [
+              "state",
+              "zip_code"
+            ]
+          }
+        }
+      ],
+      "properties": {
+        "street1": {
+          "allOf": [
+            {
+              "$ref": "urn:grants-form-kernel:questions:address-street-1:v1"
+            }
+          ],
+          "title": "Street 1",
+          "description": "Enter the first line of the Street Address."
+        },
+        "street2": {
+          "allOf": [
+            {
+              "$ref": "urn:grants-form-kernel:questions:address-street-2:v1"
+            }
+          ],
+          "title": "Street 2",
+          "description": "Enter the second line of the Street Address."
+        },
+        "city": {
+          "allOf": [
+            {
+              "$ref": "urn:grants-form-kernel:questions:address-city:v1"
+            }
+          ],
+          "title": "City",
+          "description": "Enter the city."
+        },
+        "county": {
+          "allOf": [
+            {
+              "$ref": "urn:grants-form-kernel:questions:address-county:v1"
+            }
+          ],
+          "title": "County/Parish",
+          "description": "Enter the County or Parish."
+        },
+        "state": {
+          "allOf": [
+            {
+              "$ref": "urn:grants-form-kernel:questions:address-state:v1"
+            }
+          ],
+          "title": "State",
+          "description": "Enter the state."
+        },
+        "province": {
+          "allOf": [
+            {
+              "$ref": "urn:grants-form-kernel:questions:address-province:v1"
+            }
+          ],
+          "title": "Province",
+          "description": "Enter the province."
+        },
+        "zip_code": {
+          "allOf": [
+            {
+              "$ref": "urn:grants-form-kernel:questions:address-postal-code:v1"
+            }
+          ],
+          "title": "Zip / Postal Code",
+          "description": "Enter the nine-digit Postal Code (e.g., ZIP Code). This field is required if the Country is the United States."
+        },
+        "country": {
+          "allOf": [
+            {
+              "$ref": "urn:grants-form-kernel:questions:address-country:v1"
+            }
+          ],
+          "title": "Country",
+          "description": "Enter the country."
+        }
+      }
+    },
+    "contact_person": {
+      "type": "object",
+      "title": "Contact Person",
+      "description": "Enter information about the contact person.",
+      "required": [
+        "first_name",
+        "last_name"
+      ],
+      "properties": {
+        "prefix": {
+          "allOf": [
+            {
+              "$ref": "urn:grants-form-kernel:questions:person-name-prefix:v1"
+            }
+          ],
+          "title": "Prefix",
+          "description": "Enter the Prefix."
+        },
+        "first_name": {
+          "allOf": [
+            {
+              "$ref": "urn:grants-form-kernel:questions:person-name-first:v1"
+            }
+          ],
+          "title": "First Name",
+          "description": "Enter the First Name."
+        },
+        "middle_name": {
+          "allOf": [
+            {
+              "$ref": "urn:grants-form-kernel:questions:person-name-middle:v1"
+            }
+          ],
+          "title": "Middle Name",
+          "description": "Enter the Middle Name."
+        },
+        "last_name": {
+          "allOf": [
+            {
+              "$ref": "urn:grants-form-kernel:questions:person-name-last:v1"
+            }
+          ],
+          "title": "Last Name",
+          "description": "Enter the Last Name."
+        },
+        "suffix": {
+          "allOf": [
+            {
+              "$ref": "urn:grants-form-kernel:questions:person-name-suffix:v1"
+            }
+          ],
+          "title": "Suffix",
+          "description": "Enter the Suffix."
+        }
+      }
+    },
+    "authorized_representative": {
+      "type": "object",
+      "title": "Authorized Representative",
+      "description": "",
+      "required": [
+        "first_name",
+        "last_name"
+      ],
+      "properties": {
+        "prefix": {
+          "allOf": [
+            {
+              "$ref": "urn:grants-form-kernel:questions:person-name-prefix:v1"
+            }
+          ],
+          "title": "Prefix",
+          "description": "Enter the Prefix."
+        },
+        "first_name": {
+          "allOf": [
+            {
+              "$ref": "urn:grants-form-kernel:questions:person-name-first:v1"
+            }
+          ],
+          "title": "First Name",
+          "description": "Enter the First Name."
+        },
+        "middle_name": {
+          "allOf": [
+            {
+              "$ref": "urn:grants-form-kernel:questions:person-name-middle:v1"
+            }
+          ],
+          "title": "Middle Name",
+          "description": "Enter the Middle Name."
+        },
+        "last_name": {
+          "allOf": [
+            {
+              "$ref": "urn:grants-form-kernel:questions:person-name-last:v1"
+            }
+          ],
+          "title": "Last Name",
+          "description": "Enter the Last Name."
+        },
+        "suffix": {
+          "allOf": [
+            {
+              "$ref": "urn:grants-form-kernel:questions:person-name-suffix:v1"
+            }
+          ],
+          "title": "Suffix",
+          "description": "Enter the Suffix."
+        }
+      }
+    }
+  }
+}

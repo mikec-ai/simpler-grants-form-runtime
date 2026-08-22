@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:application-applicant-id:v1",
+  "type": "string",
+  "title": "Applicant Identifier",
+  "description": "Enter the applicant's control number, if applicable.",
+  "minLength": 1,
+  "maxLength": 30,
+  "x-question-id": "question:application:applicant-id",
+  "x-review-status": "agent_proposed"
+}

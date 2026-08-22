@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:person-name-suffix:v1",
+  "title": "Suffix",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 10,
+  "x-question-id": "question:person:name:suffix",
+  "x-review-status": "agent_proposed"
+}

@@ -1,0 +1,10 @@
+{
+  "type": "string",
+  "format": "uuid",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:project-additional-districts-attachment:v1",
+  "title": "Additional Congressional Districts",
+  "description": "Attach an additional list of Program/Project Congressional Districts if needed.",
+  "x-question-id": "question:attachment:additional-congressional-districts",
+  "x-review-status": "agent_proposed"
+}

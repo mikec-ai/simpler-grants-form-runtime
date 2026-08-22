@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:organization-division:v1",
+  "type": "string",
+  "title": "Division Name",
+  "description": "Enter the name of primary organizational division, office, or major subdivision which will undertake the assistance activity.",
+  "minLength": 1,
+  "maxLength": 100,
+  "x-question-id": "question:organization:division",
+  "x-review-status": "agent_proposed"
+}

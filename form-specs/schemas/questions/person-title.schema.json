@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:person-title:v1",
+  "title": "Title",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 45,
+  "x-question-id": "question:person:title",
+  "x-review-status": "agent_proposed"
+}

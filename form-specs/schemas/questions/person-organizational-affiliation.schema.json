@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:person-organizational-affiliation:v1",
+  "title": "Organizational affiliation",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 60,
+  "x-question-id": "question:person:organizational-affiliation",
+  "x-review-status": "agent_proposed"
+}

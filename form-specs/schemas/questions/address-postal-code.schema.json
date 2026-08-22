@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:address-postal-code:v1",
+  "title": "ZIP or postal code",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 30,
+  "x-question-id": "question:address:postal-code",
+  "x-review-status": "agent_proposed"
+}

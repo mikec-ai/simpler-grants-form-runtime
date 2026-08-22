@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:application-revision-type:v1",
+  "type": "string",
+  "title": "Revision Type",
+  "description": "Select a revision type from the list provided. A selection is required if Type of Application is Revision.",
+  "enum": [
+    "A: Increase Award",
+    "B: Decrease Award",
+    "C: Increase Duration",
+    "D: Decrease Duration",
+    "E: Other (specify)",
+    "AC: Increase Award, Increase Duration",
+    "AD: Increase Award, Decrease Duration",
+    "BC: Decrease Award, Increase Duration",
+    "BD: Decrease Award, Decrease Duration"
+  ],
+  "x-question-id": "question:application:revision-type",
+  "x-review-status": "agent_proposed"
+}

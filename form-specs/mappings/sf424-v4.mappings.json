@@ -1,0 +1,855 @@
+{
+  "targets": {
+    "common_grants": {
+      "from": {},
+      "to": {}
+    },
+    "grants_gov_xml": {
+      "bindings": {
+        "binding:sf424:submission_type": {
+          "path": "/SF424_4_0/SubmissionType",
+          "type_source": "SF424_4_0-V4.0.xsd#local",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:application_type": {
+          "path": "/SF424_4_0/ApplicationType",
+          "type_source": "SF424_4_0-V4.0.xsd#local",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:revision_type": {
+          "path": "/SF424_4_0/RevisionType",
+          "type_source": "SF424_4_0-V4.0.xsd#local",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:revision_other_specify": {
+          "path": "/SF424_4_0/RevisionOtherSpecify",
+          "type_source": "SF424_4_0-V4.0.xsd#local",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:date_received": {
+          "path": "/SF424_4_0/DateReceived",
+          "type_source": "XMLSchema#xs:date",
+          "type": "date",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:applicant_id": {
+          "path": "/SF424_4_0/ApplicantID",
+          "type_source": "GlobalLibrary-V2.0.xsd#ApplicantIDDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:federal_entity_identifier": {
+          "path": "/SF424_4_0/FederalEntityIdentifier",
+          "type_source": "GlobalLibrary-V2.0.xsd#FederalIDDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:federal_award_identifier": {
+          "path": "/SF424_4_0/FederalAwardIdentifier",
+          "type_source": "GlobalLibrary-V2.0.xsd#ProjectAwardNumberDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:state_receive_date": {
+          "path": "/SF424_4_0/StateReceiveDate",
+          "type_source": "XMLSchema#xs:date",
+          "type": "date",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:state_application_id": {
+          "path": "/SF424_4_0/StateApplicationID",
+          "type_source": "SF424_4_0-V4.0.xsd#local",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:employer_taxpayer_identification_number": {
+          "path": "/SF424_4_0/EmployerTaxpayerIdentificationNumber",
+          "type_source": "GlobalLibrary-V2.0.xsd#EmployerIDDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:sam_uei": {
+          "path": "/SF424_4_0/SAMUEI",
+          "type_source": "GlobalLibrary-V2.0.xsd#SAMUEIDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:department_name": {
+          "path": "/SF424_4_0/DepartmentName",
+          "type_source": "GlobalLibrary-V2.0.xsd#DepartmentNameDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:division_name": {
+          "path": "/SF424_4_0/DivisionName",
+          "type_source": "GlobalLibrary-V2.0.xsd#DivisionNameDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:applicant_type_code": {
+          "path": "/SF424_4_0/ApplicantTypeCode1",
+          "type_source": "GlobalLibrary-V2.0.xsd#ApplicantTypeCodeDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:applicant_type_other_specify": {
+          "path": "/SF424_4_0/ApplicantTypeOtherSpecify",
+          "type_source": "SF424_4_0-V4.0.xsd#local",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:agency_name": {
+          "path": "/SF424_4_0/AgencyName",
+          "type_source": "GlobalLibrary-V2.0.xsd#AgencyNameDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:assistance_listing_number": {
+          "path": "/SF424_4_0/CFDANumber",
+          "type_source": "GlobalLibrary-V2.0.xsd#CFDANumberDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:assistance_listing_program_title": {
+          "path": "/SF424_4_0/CFDAProgramTitle",
+          "type_source": "GlobalLibrary-V2.0.xsd#CFDATitleDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:funding_opportunity_number": {
+          "path": "/SF424_4_0/FundingOpportunityNumber",
+          "type_source": "GlobalLibrary-V2.0.xsd#OpportunityIDDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:funding_opportunity_title": {
+          "path": "/SF424_4_0/FundingOpportunityTitle",
+          "type_source": "GlobalLibrary-V2.0.xsd#OpportunityTitleDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:competition_identification_number": {
+          "path": "/SF424_4_0/CompetitionIdentificationNumber",
+          "type_source": "GlobalLibrary-V2.0.xsd#CompetitionIDDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:competition_identification_title": {
+          "path": "/SF424_4_0/CompetitionIdentificationTitle",
+          "type_source": "GlobalLibrary-V2.0.xsd#CompetitionTitleDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:areas_affected": {
+          "path": "/SF424_4_0/AreasAffected",
+          "type_source": "Attachments-V1.0.xsd#AttachedFileDataType",
+          "type": "AttachedFileDataType",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:project_title": {
+          "path": "/SF424_4_0/ProjectTitle",
+          "type_source": "GlobalLibrary-V2.0.xsd#ProjectTitleDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:additional_project_title": {
+          "path": "/SF424_4_0/AdditionalProjectTitle",
+          "type_source": "Attachments-V1.0.xsd#AttachmentGroupMin0Max100DataType",
+          "type": "AttachmentGroupMin0Max100DataType",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:congressional_district_applicant": {
+          "path": "/SF424_4_0/CongressionalDistrictApplicant",
+          "type_source": "GlobalLibrary-V2.0.xsd#CongressionalDistrictDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:congressional_district_program_project": {
+          "path": "/SF424_4_0/CongressionalDistrictProgramProject",
+          "type_source": "GlobalLibrary-V2.0.xsd#CongressionalDistrictDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:additional_congressional_districts": {
+          "path": "/SF424_4_0/AdditionalCongressionalDistricts",
+          "type_source": "Attachments-V1.0.xsd#AttachedFileDataType",
+          "type": "AttachedFileDataType",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:project_start_date": {
+          "path": "/SF424_4_0/ProjectStartDate",
+          "type_source": "XMLSchema#xs:date",
+          "type": "date",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:project_end_date": {
+          "path": "/SF424_4_0/ProjectEndDate",
+          "type_source": "XMLSchema#xs:date",
+          "type": "date",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:federal_estimated_funding": {
+          "path": "/SF424_4_0/FederalEstimatedFunding",
+          "type_source": "GlobalLibrary-V2.0.xsd#BudgetAmountDataType",
+          "type": "decimal",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:applicant_estimated_funding": {
+          "path": "/SF424_4_0/ApplicantEstimatedFunding",
+          "type_source": "GlobalLibrary-V2.0.xsd#BudgetAmountDataType",
+          "type": "decimal",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:state_estimated_funding": {
+          "path": "/SF424_4_0/StateEstimatedFunding",
+          "type_source": "GlobalLibrary-V2.0.xsd#BudgetAmountDataType",
+          "type": "decimal",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:local_estimated_funding": {
+          "path": "/SF424_4_0/LocalEstimatedFunding",
+          "type_source": "GlobalLibrary-V2.0.xsd#BudgetAmountDataType",
+          "type": "decimal",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:other_estimated_funding": {
+          "path": "/SF424_4_0/OtherEstimatedFunding",
+          "type_source": "GlobalLibrary-V2.0.xsd#BudgetAmountDataType",
+          "type": "decimal",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:program_income_estimated_funding": {
+          "path": "/SF424_4_0/ProgramIncomeEstimatedFunding",
+          "type_source": "GlobalLibrary-V2.0.xsd#BudgetAmountDataType",
+          "type": "decimal",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:total_estimated_funding": {
+          "path": "/SF424_4_0/TotalEstimatedFunding",
+          "type_source": "GlobalLibrary-V2.0.xsd#BudgetTotalAmountDataType",
+          "type": "decimal",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:state_review": {
+          "path": "/SF424_4_0/StateReview",
+          "type_source": "SF424_4_0-V4.0.xsd#local",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:state_review_available_date": {
+          "path": "/SF424_4_0/StateReviewAvailableDate",
+          "type_source": "XMLSchema#xs:date",
+          "type": "date",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:delinquent_federal_debt": {
+          "path": "/SF424_4_0/DelinquentFederalDebt",
+          "type_source": "GlobalLibrary-V2.0.xsd#YesNoDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:debt_explanation": {
+          "path": "/SF424_4_0/DebtExplanation",
+          "type_source": "Attachments-V1.0.xsd#AttachedFileDataType",
+          "type": "AttachedFileDataType",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:certification_agree": {
+          "path": "/SF424_4_0/CertificationAgree",
+          "type_source": "GlobalLibrary-V2.0.xsd#YesNoDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:aor_signature": {
+          "path": "/SF424_4_0/AORSignature",
+          "type_source": "GlobalLibrary-V2.0.xsd#SignatureDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:date_signed": {
+          "path": "/SF424_4_0/DateSigned",
+          "type_source": "XMLSchema#xs:date",
+          "type": "date",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:organization_name": {
+          "path": "/SF424_4_0/OrganizationName",
+          "type_source": "GlobalLibrary-V2.0.xsd#OrganizationNameDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:contact_person_title": {
+          "path": "/SF424_4_0/Title",
+          "type_source": "GlobalLibrary-V2.0.xsd#HumanTitleDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:organization_affiliation": {
+          "path": "/SF424_4_0/OrganizationAffiliation",
+          "type_source": "GlobalLibrary-V2.0.xsd#OrganizationNameDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:phone_number": {
+          "path": "/SF424_4_0/PhoneNumber",
+          "type_source": "GlobalLibrary-V2.0.xsd#TelephoneNumberDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:fax": {
+          "path": "/SF424_4_0/Fax",
+          "type_source": "GlobalLibrary-V2.0.xsd#TelephoneNumberDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:email": {
+          "path": "/SF424_4_0/Email",
+          "type_source": "GlobalLibrary-V2.0.xsd#EmailDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:authorized_representative_title": {
+          "path": "/SF424_4_0/AuthorizedRepresentativeTitle",
+          "type_source": "GlobalLibrary-V2.0.xsd#HumanTitleDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:authorized_representative_phone_number": {
+          "path": "/SF424_4_0/AuthorizedRepresentativePhoneNumber",
+          "type_source": "GlobalLibrary-V2.0.xsd#TelephoneNumberDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:authorized_representative_fax": {
+          "path": "/SF424_4_0/AuthorizedRepresentativeFax",
+          "type_source": "GlobalLibrary-V2.0.xsd#TelephoneNumberDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:authorized_representative_email": {
+          "path": "/SF424_4_0/AuthorizedRepresentativeEmail",
+          "type_source": "GlobalLibrary-V2.0.xsd#EmailDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:applicant:street1": {
+          "path": "/SF424_4_0/Applicant/Street1",
+          "type_source": "GlobalLibrary-V2.0.xsd#StreetDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:applicant:street2": {
+          "path": "/SF424_4_0/Applicant/Street2",
+          "type_source": "GlobalLibrary-V2.0.xsd#StreetDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:applicant:city": {
+          "path": "/SF424_4_0/Applicant/City",
+          "type_source": "GlobalLibrary-V2.0.xsd#CityDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:applicant:county": {
+          "path": "/SF424_4_0/Applicant/County",
+          "type_source": "GlobalLibrary-V2.0.xsd#CountyDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:applicant:state": {
+          "path": "/SF424_4_0/Applicant/State",
+          "type_source": "UniversalCodes-V2.0.xsd#StateCodeDataTypeV3",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:applicant:province": {
+          "path": "/SF424_4_0/Applicant/Province",
+          "type_source": "GlobalLibrary-V2.0.xsd#ProvinceDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:applicant:zip_code": {
+          "path": "/SF424_4_0/Applicant/ZipPostalCode",
+          "type_source": "GlobalLibrary-V2.0.xsd#ZipPostalCodeDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:applicant:country": {
+          "path": "/SF424_4_0/Applicant/Country",
+          "type_source": "UniversalCodes-V2.0.xsd#CountryCodeDataTypeV3",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:contact_person:prefix": {
+          "path": "/SF424_4_0/ContactPerson/PrefixName",
+          "type_source": "GlobalLibrary-V2.0.xsd#PrefixNameDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:contact_person:first_name": {
+          "path": "/SF424_4_0/ContactPerson/FirstName",
+          "type_source": "GlobalLibrary-V2.0.xsd#FirstNameDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:contact_person:middle_name": {
+          "path": "/SF424_4_0/ContactPerson/MiddleName",
+          "type_source": "GlobalLibrary-V2.0.xsd#MiddleNameDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:contact_person:last_name": {
+          "path": "/SF424_4_0/ContactPerson/LastName",
+          "type_source": "GlobalLibrary-V2.0.xsd#LastNameDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:contact_person:suffix": {
+          "path": "/SF424_4_0/ContactPerson/SuffixName",
+          "type_source": "GlobalLibrary-V2.0.xsd#SuffixNameDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:authorized_representative:prefix": {
+          "path": "/SF424_4_0/AuthorizedRepresentative/PrefixName",
+          "type_source": "GlobalLibrary-V2.0.xsd#PrefixNameDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:authorized_representative:first_name": {
+          "path": "/SF424_4_0/AuthorizedRepresentative/FirstName",
+          "type_source": "GlobalLibrary-V2.0.xsd#FirstNameDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:authorized_representative:middle_name": {
+          "path": "/SF424_4_0/AuthorizedRepresentative/MiddleName",
+          "type_source": "GlobalLibrary-V2.0.xsd#MiddleNameDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:authorized_representative:last_name": {
+          "path": "/SF424_4_0/AuthorizedRepresentative/LastName",
+          "type_source": "GlobalLibrary-V2.0.xsd#LastNameDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        },
+        "binding:sf424:authorized_representative:suffix": {
+          "path": "/SF424_4_0/AuthorizedRepresentative/SuffixName",
+          "type_source": "GlobalLibrary-V2.0.xsd#SuffixNameDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+        }
+      },
+      "runtime_transform": {
+        "_xml_config": {
+          "description": "XML transformation rules for converting Simpler SF-424 JSON to Grants.gov XML format",
+          "version": "1.0",
+          "form_name": "SF424_4_0",
+          "namespaces": {
+            "default": "http://apply.grants.gov/forms/SF424_4_0-V4.0",
+            "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0",
+            "att": "http://apply.grants.gov/system/Attachments-V1.0"
+          },
+          "xsd_url": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+          "xml_structure": {
+            "root_element": "SF424_4_0",
+            "version": "4.0"
+          },
+          "null_handling_options": {
+            "exclude": "Default - exclude field entirely from XML (recommended)",
+            "include_null": "Include empty XML element: <Field></Field>",
+            "default_value": "Use configured default value when field is None"
+          },
+          "attachment_fields": {
+            "areas_affected": {
+              "xml_element": "AreasAffected",
+              "type": "single"
+            },
+            "additional_congressional_districts": {
+              "xml_element": "AdditionalCongressionalDistricts",
+              "type": "single"
+            },
+            "debt_explanation": {
+              "xml_element": "DebtExplanation",
+              "type": "single"
+            },
+            "additional_project_title": {
+              "xml_element": "AdditionalProjectTitle",
+              "type": "multiple"
+            }
+          }
+        },
+        "submission_type": {
+          "xml_transform": {
+            "target": "SubmissionType"
+          }
+        },
+        "application_type": {
+          "xml_transform": {
+            "target": "ApplicationType"
+          }
+        },
+        "date_received": {
+          "xml_transform": {
+            "target": "DateReceived",
+            "null_handling": "include_null"
+          }
+        },
+        "organization_name": {
+          "xml_transform": {
+            "target": "OrganizationName"
+          }
+        },
+        "employer_taxpayer_identification_number": {
+          "xml_transform": {
+            "target": "EmployerTaxpayerIdentificationNumber"
+          }
+        },
+        "sam_uei": {
+          "xml_transform": {
+            "target": "SAMUEI"
+          }
+        },
+        "applicant": {
+          "xml_transform": {
+            "target": "Applicant",
+            "type": "nested_object"
+          },
+          "street1": {
+            "xml_transform": {
+              "target": "Street1",
+              "namespace": "globLib"
+            }
+          },
+          "street2": {
+            "xml_transform": {
+              "target": "Street2",
+              "namespace": "globLib"
+            }
+          },
+          "city": {
+            "xml_transform": {
+              "target": "City",
+              "namespace": "globLib"
+            }
+          },
+          "county": {
+            "xml_transform": {
+              "target": "County",
+              "namespace": "globLib"
+            }
+          },
+          "state": {
+            "xml_transform": {
+              "target": "State",
+              "namespace": "globLib"
+            }
+          },
+          "province": {
+            "xml_transform": {
+              "target": "Province",
+              "namespace": "globLib"
+            }
+          },
+          "zip_code": {
+            "xml_transform": {
+              "target": "ZipPostalCode",
+              "namespace": "globLib"
+            }
+          },
+          "country": {
+            "xml_transform": {
+              "target": "Country",
+              "namespace": "globLib"
+            }
+          }
+        },
+        "contact_person": {
+          "xml_transform": {
+            "target": "ContactPerson",
+            "type": "nested_object"
+          },
+          "first_name": {
+            "xml_transform": {
+              "target": "FirstName",
+              "namespace": "globLib"
+            }
+          },
+          "last_name": {
+            "xml_transform": {
+              "target": "LastName",
+              "namespace": "globLib"
+            }
+          }
+        },
+        "phone_number": {
+          "xml_transform": {
+            "target": "PhoneNumber"
+          }
+        },
+        "fax_number": {
+          "xml_transform": {
+            "target": "Fax"
+          }
+        },
+        "email": {
+          "xml_transform": {
+            "target": "Email"
+          }
+        },
+        "applicant_type_code_mapping": {
+          "xml_transform": {
+            "target": "ApplicantTypeCode",
+            "type": "conditional",
+            "conditional_transform": {
+              "type": "one_to_many",
+              "source_field": "applicant_type_code",
+              "target_pattern": "ApplicantTypeCode{index}",
+              "max_count": 3,
+              "item_value_transform": {
+                "type": "map_values",
+                "params": {
+                  "mappings": {
+                    "H: Public/state Controlled Institution of Higher Education": "H: Public/State Controlled Institution of Higher Education"
+                  },
+                  "passthrough_unknown": true
+                }
+              }
+            }
+          }
+        },
+        "applicant_type_other_specify": {
+          "xml_transform": {
+            "target": "ApplicantTypeOtherSpecify"
+          }
+        },
+        "agency_name": {
+          "xml_transform": {
+            "target": "AgencyName"
+          }
+        },
+        "assistance_listing_number": {
+          "xml_transform": {
+            "target": "CFDANumber"
+          }
+        },
+        "assistance_listing_program_title": {
+          "xml_transform": {
+            "target": "CFDAProgramTitle"
+          }
+        },
+        "funding_opportunity_number": {
+          "xml_transform": {
+            "target": "FundingOpportunityNumber"
+          }
+        },
+        "funding_opportunity_title": {
+          "xml_transform": {
+            "target": "FundingOpportunityTitle"
+          }
+        },
+        "competition_identification_number": {
+          "xml_transform": {
+            "target": "CompetitionIdentificationNumber"
+          }
+        },
+        "competition_identification_title": {
+          "xml_transform": {
+            "target": "CompetitionIdentificationTitle"
+          }
+        },
+        "areas_affected": {
+          "xml_transform": {
+            "target": "areas_affected"
+          }
+        },
+        "project_title": {
+          "xml_transform": {
+            "target": "ProjectTitle"
+          }
+        },
+        "additional_project_title": {
+          "xml_transform": {
+            "target": "additional_project_title"
+          }
+        },
+        "congressional_district_applicant": {
+          "xml_transform": {
+            "target": "CongressionalDistrictApplicant"
+          }
+        },
+        "congressional_district_program_project": {
+          "xml_transform": {
+            "target": "CongressionalDistrictProgramProject"
+          }
+        },
+        "additional_congressional_districts": {
+          "xml_transform": {
+            "target": "additional_congressional_districts"
+          }
+        },
+        "project_start_date": {
+          "xml_transform": {
+            "target": "ProjectStartDate"
+          }
+        },
+        "project_end_date": {
+          "xml_transform": {
+            "target": "ProjectEndDate"
+          }
+        },
+        "federal_estimated_funding": {
+          "xml_transform": {
+            "target": "FederalEstimatedFunding",
+            "value_transform": {
+              "type": "currency_format"
+            }
+          }
+        },
+        "applicant_estimated_funding": {
+          "xml_transform": {
+            "target": "ApplicantEstimatedFunding",
+            "value_transform": {
+              "type": "currency_format"
+            }
+          }
+        },
+        "state_estimated_funding": {
+          "xml_transform": {
+            "target": "StateEstimatedFunding",
+            "value_transform": {
+              "type": "currency_format"
+            }
+          }
+        },
+        "local_estimated_funding": {
+          "xml_transform": {
+            "target": "LocalEstimatedFunding",
+            "value_transform": {
+              "type": "currency_format"
+            }
+          }
+        },
+        "other_estimated_funding": {
+          "xml_transform": {
+            "target": "OtherEstimatedFunding",
+            "value_transform": {
+              "type": "currency_format"
+            }
+          }
+        },
+        "program_income_estimated_funding": {
+          "xml_transform": {
+            "target": "ProgramIncomeEstimatedFunding",
+            "value_transform": {
+              "type": "currency_format"
+            }
+          }
+        },
+        "total_estimated_funding": {
+          "xml_transform": {
+            "target": "TotalEstimatedFunding",
+            "value_transform": {
+              "type": "currency_format"
+            }
+          }
+        },
+        "state_review": {
+          "xml_transform": {
+            "target": "StateReview",
+            "null_handling": "default_value",
+            "default_value": "N: No",
+            "value_transform": {
+              "type": "map_values",
+              "params": {
+                "mappings": {
+                  "a. This application was made available to the state under the Executive Order 12372 Process for review on": "a. This application was made available to the State under the Executive Order 12372 Process for review on",
+                  "b. Program is subject to E.O. 12372 but has not been selected by the state for review.": "b. Program is subject to E.O. 12372 but has not been selected by the State for review."
+                },
+                "passthrough_unknown": true
+              }
+            }
+          }
+        },
+        "state_review_available_date": {
+          "xml_transform": {
+            "target": "StateReviewAvailableDate"
+          }
+        },
+        "delinquent_federal_debt": {
+          "xml_transform": {
+            "target": "DelinquentFederalDebt",
+            "value_transform": {
+              "type": "boolean_to_yes_no"
+            }
+          }
+        },
+        "debt_explanation": {
+          "xml_transform": {
+            "target": "debt_explanation"
+          }
+        },
+        "certification_agree": {
+          "xml_transform": {
+            "target": "CertificationAgree",
+            "value_transform": {
+              "type": "boolean_to_yes_no"
+            }
+          }
+        },
+        "authorized_representative": {
+          "xml_transform": {
+            "target": "AuthorizedRepresentative",
+            "type": "nested_object"
+          },
+          "first_name": {
+            "xml_transform": {
+              "target": "FirstName",
+              "namespace": "globLib",
+              "null_handling": "default_value",
+              "default_value": "John"
+            }
+          },
+          "last_name": {
+            "xml_transform": {
+              "target": "LastName",
+              "namespace": "globLib",
+              "null_handling": "default_value",
+              "default_value": "Doe"
+            }
+          }
+        },
+        "authorized_representative_title": {
+          "xml_transform": {
+            "target": "AuthorizedRepresentativeTitle"
+          }
+        },
+        "authorized_representative_phone_number": {
+          "xml_transform": {
+            "target": "AuthorizedRepresentativePhoneNumber"
+          }
+        },
+        "authorized_representative_email": {
+          "xml_transform": {
+            "target": "AuthorizedRepresentativeEmail"
+          }
+        },
+        "aor_signature": {
+          "xml_transform": {
+            "target": "AORSignature"
+          }
+        },
+        "date_signed": {
+          "xml_transform": {
+            "target": "DateSigned"
+          }
+        }
+      }
+    }
+  }
+}

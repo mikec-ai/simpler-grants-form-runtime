@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:project-title:v1",
+  "type": "string",
+  "title": "Project Title",
+  "description": "Enter a brief, descriptive title of the project.",
+  "minLength": 1,
+  "maxLength": 200,
+  "x-question-id": "question:project:title",
+  "x-review-status": "agent_proposed"
+}

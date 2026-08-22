@@ -386,6 +386,12 @@ def _canonical_json(value: object) -> str:
     return json.dumps(value, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
 
 
+def _ordered_json(value: object) -> str:
+    """Serialize order-sensitive runtime declarations without sorting mapping keys."""
+
+    return json.dumps(value, ensure_ascii=False, separators=(",", ":"), sort_keys=False)
+
+
 def _contains_question_id(value: object, question_id: str) -> bool:
     if isinstance(value, dict):
         if value.get("x-question-id") == question_id:
@@ -479,7 +485,8 @@ def create_resolved_form_package(
         _ui_schema_json=_canonical_json(ui_schema),
         _mappings_json=_canonical_json(mappings),
         _rule_schema_json=_canonical_json(rule_schema) if rule_schema is not None else None,
-        _xml_transform_json=(_canonical_json(xml_transform) if xml_transform is not None else None),
+        # The XML runtime derives XSD sequence from declaration order.
+        _xml_transform_json=_ordered_json(xml_transform) if xml_transform is not None else None,
     )
 
 
@@ -629,5 +636,5 @@ def load_resolved_form_package(package_root: Path) -> ResolvedFormPackage:
         _ui_schema_json=_canonical_json(ui_schema),
         _mappings_json=_canonical_json(mappings),
         _rule_schema_json=_canonical_json(rule_schema) if rule_schema is not None else None,
-        _xml_transform_json=(_canonical_json(xml_transform) if xml_transform is not None else None),
+        _xml_transform_json=_ordered_json(xml_transform) if xml_transform is not None else None,
     )

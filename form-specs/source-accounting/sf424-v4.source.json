@@ -1,0 +1,3321 @@
+{
+  "contract": "portable-sf424-source-accounting/v1",
+  "form": "SF424_4_0",
+  "version": "4.0",
+  "summary": {
+    "countable_source_paths": 75,
+    "native_json_properties": 58,
+    "native_ui_sections": 24,
+    "native_runtime_rules": 16,
+    "native_xml_entries": 46,
+    "native_xml_covered_source_paths": 57,
+    "native_xml_omitted_source_paths": 18,
+    "published_coverage_eligible": false,
+    "accepted_mappings": 0,
+    "enumerated_source_paths": 15,
+    "conditional_source_paths": 9,
+    "calculated_source_paths": 1
+  },
+  "native_xml_omissions": [
+    "SF424_4_0.RevisionType",
+    "SF424_4_0.RevisionOtherSpecify",
+    "SF424_4_0.ApplicantID",
+    "SF424_4_0.FederalEntityIdentifier",
+    "SF424_4_0.FederalAwardIdentifier",
+    "SF424_4_0.StateReceiveDate",
+    "SF424_4_0.StateApplicationID",
+    "SF424_4_0.DepartmentName",
+    "SF424_4_0.DivisionName",
+    "SF424_4_0.ContactPerson.PrefixName",
+    "SF424_4_0.ContactPerson.MiddleName",
+    "SF424_4_0.ContactPerson.SuffixName",
+    "SF424_4_0.Title",
+    "SF424_4_0.OrganizationAffiliation",
+    "SF424_4_0.AuthorizedRepresentative.PrefixName",
+    "SF424_4_0.AuthorizedRepresentative.MiddleName",
+    "SF424_4_0.AuthorizedRepresentative.SuffixName",
+    "SF424_4_0.AuthorizedRepresentativeFax"
+  ],
+  "paths": [
+    {
+      "path": "SF424_4_0.SubmissionType",
+      "question_key": "question:sha256:25237c67652227f469e41b2cf790f646625c8084ca99b442d2b4480d0f5fa20c",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "enumeration": [
+          "Preapplication",
+          "Application",
+          "Changed/Corrected Application"
+        ],
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:submission-type",
+        "confidence": 0.97,
+        "evidence": "exact leaf alias: SubmissionType",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+      ],
+      "enumeration": [
+        "Preapplication",
+        "Application",
+        "Changed/Corrected Application"
+      ],
+      "enumeration_evidence_status": "xsd"
+    },
+    {
+      "path": "SF424_4_0.ApplicationType",
+      "question_key": "question:sha256:45c4fd6d17b5bf87d57833613ab4f43352e2477210d11e340627a0e80aada264",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "enumeration": [
+          "New",
+          "Continuation",
+          "Revision"
+        ],
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:application-type",
+        "confidence": 0.97,
+        "evidence": "exact leaf alias: ApplicationType",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+      ],
+      "enumeration": [
+        "New",
+        "Continuation",
+        "Revision"
+      ],
+      "enumeration_evidence_status": "xsd"
+    },
+    {
+      "path": "SF424_4_0.RevisionType",
+      "question_key": "question:sha256:0f75c7541eb36534b5a674010941e9e56eefd4ea3f2d338cd9b905633afe78a4",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "enumeration": [
+          "A: Increase Award",
+          "B: Decrease Award",
+          "C: Increase Duration",
+          "D: Decrease Duration",
+          "E: Other (specify)",
+          "AC: Increase Award, Increase Duration",
+          "AD: Increase Award, Decrease Duration",
+          "BC: Decrease Award, Increase Duration",
+          "BD: Decrease Award, Decrease Duration"
+        ],
+        "restriction_base": "xs:string"
+      },
+      "conditions": [
+        "required if Type of Application is Revision"
+      ],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:revision-type",
+        "confidence": 0.95,
+        "evidence": "exact leaf alias: RevisionType",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": false,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+      ],
+      "enumeration": [
+        "A: Increase Award",
+        "B: Decrease Award",
+        "C: Increase Duration",
+        "D: Decrease Duration",
+        "E: Other (specify)",
+        "AC: Increase Award, Increase Duration",
+        "AD: Increase Award, Decrease Duration",
+        "BC: Decrease Award, Increase Duration",
+        "BD: Decrease Award, Decrease Duration",
+        "A: Increase Award;",
+        "B: Decrease Award;",
+        "C: Increase Duration;",
+        "D: Decrease Duration;",
+        "E: Other (specify);",
+        "AC: Increase Award, Increase Duration;",
+        "AD: Increase Award, Decrease Duration;",
+        "BC: Decrease Award, Increase Duration;"
+      ],
+      "enumeration_evidence_status": "xsd"
+    },
+    {
+      "path": "SF424_4_0.RevisionOtherSpecify",
+      "question_key": "question:sha256:e39a70a48e4d278396955b42ba30b04190047b2e5315bb543401dddbccfd5032",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "maxLength": 21,
+        "minLength": 0,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [
+        "Enabled and required only when RevisionOther is checked."
+      ],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:revision-other",
+        "confidence": 0.95,
+        "evidence": "exact leaf alias: RevisionOtherSpecify",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": false,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.DateReceived",
+      "question_key": "question:sha256:13af99348e87d9fb18967fa599d9f1e24abcbc6fe50a584c232247866c74ab11",
+      "data_type": "date",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "xs:date"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:received-date",
+        "confidence": 0.99,
+        "evidence": "agent field review: SF424_4_0.DateReceived has the same bounded application meaning as the existing concept; shared wording alone was not used as the basis.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.ApplicantID",
+      "question_key": "question:sha256:b19506af765132dd56066edc846fc008440041432a84f9f4d13d341d53d5d6a6",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:ApplicantIDDataType",
+        "maxLength": 30,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:applicant-id",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: ApplicantID",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": false,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.FederalEntityIdentifier",
+      "question_key": "question:sha256:29796babe643ebba036f33b4f602e2297fb5e0f849684a084cda591a9bc12083",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:FederalIDDataType",
+        "maxLength": 30,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:federal-entity-identifier",
+        "confidence": 0.98,
+        "evidence": "agent field review: SF424_4_0.FederalEntityIdentifier is a bounded SF-424 field represented by this new concept.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": false,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.FederalAwardIdentifier",
+      "question_key": "question:sha256:bca89474b492bb3baabb96b3f4bac742a1bdc3bb6657649600cf501f08d835ea",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:ProjectAwardNumberDataType",
+        "maxLength": 25,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [
+        "Required if ApplicationType = Continuation, or Revision."
+      ],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:prior-federal-award-id",
+        "confidence": 0.94,
+        "evidence": "exact leaf alias: FederalAwardIdentifier",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": false,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.StateReceiveDate",
+      "question_key": "question:sha256:48764de21b89fcdb3b00840a0134cd73b9d786b024ae9f97c72a0180402e0a18",
+      "data_type": "date",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "xs:date"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:state-received-date",
+        "confidence": 0.99,
+        "evidence": "agent field review: SF424_4_0.StateReceiveDate has the same bounded application meaning as the existing concept; shared wording alone was not used as the basis.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": false,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.StateApplicationID",
+      "question_key": "question:sha256:793f997e2b6d946bc84e3b75753c3ae4774ff11c2a262d78bb09af74b97eb5dd",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "maxLength": 30,
+        "minLength": 0,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:state-application-id",
+        "confidence": 0.99,
+        "evidence": "agent field review: SF424_4_0.StateApplicationID has the same bounded application meaning as the existing concept; shared wording alone was not used as the basis.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": false,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.OrganizationName",
+      "question_key": "question:sha256:7ea66f1cf5ef8edad194d1146756668eb486ebcbaa7d1b1c22726d8da0c7d3e3",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:OrganizationNameDataType",
+        "maxLength": 60,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-organization:name",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: OrganizationName; semantic role from exact path: applicant-organization",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.EmployerTaxpayerIdentificationNumber",
+      "question_key": "question:sha256:b04ee02cc6b7b69f757f997db7932af0a9dc38c0ae317cac1262c573565ca8a9",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:EmployerIDDataType",
+        "maxLength": 30,
+        "minLength": 9,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-organization:ein",
+        "confidence": 0.9,
+        "evidence": "exact leaf alias: EmployerTaxpayerIdentificationNumber; semantic role from exact path: applicant-organization",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.SAMUEI",
+      "question_key": "question:sha256:825c4754f0ad700dac1dddb6543c3f0b97407f755d7af798040f6b9ed76a80e1",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:SAMUEIDataType",
+        "length": 12,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-organization:sam-uei",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: SAMUEI; semantic role from exact path: applicant-organization",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.Applicant.Street1",
+      "question_key": "question:sha256:4d618fb921cbe84f16ec06bf1405bcc31c1eda315e3a667481c5c3c614085e98",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:StreetDataType",
+        "maxLength": 55,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-organization:street-1",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: Street1; semantic role from exact path: applicant-organization",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.Applicant.Street2",
+      "question_key": "question:sha256:eafc9314f44422bedeb93ac47f5912525efee02f00c68aafac0589c46ed6c4eb",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:StreetDataType",
+        "maxLength": 55,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-organization:street-2",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: Street2; semantic role from exact path: applicant-organization",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.Applicant.City",
+      "question_key": "question:sha256:b98f3f9ae121c02b9b1f3b8303d9d3e0a78259b9dd3a388e3b3950d9d8141b2a",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:CityDataType",
+        "maxLength": 35,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-organization:city",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: City; semantic role from exact path: applicant-organization",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.Applicant.County",
+      "question_key": "question:sha256:6e9349394057b9eac4142e57e82a4f867912901a7834286072fbda9fa341f30f",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:CountyDataType",
+        "maxLength": 30,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-organization:county",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: County; semantic role from exact path: applicant-organization",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.Applicant.State",
+      "question_key": "question:sha256:424d036fdcabd468ce128787ef363623f8257014b54f989bfda80c84104f933b",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "codes:StateCodeDataTypeV3",
+        "enumeration": [
+          "AL: Alabama",
+          "AK: Alaska",
+          "AZ: Arizona",
+          "AR: Arkansas",
+          "CA: California",
+          "CO: Colorado",
+          "CT: Connecticut",
+          "DE: Delaware",
+          "DC: District of Columbia",
+          "FL: Florida",
+          "GA: Georgia",
+          "HI: Hawaii",
+          "ID: Idaho",
+          "IL: Illinois",
+          "IN: Indiana",
+          "IA: Iowa",
+          "KS: Kansas",
+          "KY: Kentucky",
+          "LA: Louisiana",
+          "ME: Maine",
+          "MD: Maryland",
+          "MA: Massachusetts",
+          "MI: Michigan",
+          "MN: Minnesota",
+          "MS: Mississippi",
+          "MO: Missouri",
+          "MT: Montana",
+          "NE: Nebraska",
+          "NV: Nevada",
+          "NH: New Hampshire",
+          "NJ: New Jersey",
+          "NM: New Mexico",
+          "NY: New York",
+          "NC: North Carolina",
+          "ND: North Dakota",
+          "OH: Ohio",
+          "OK: Oklahoma",
+          "OR: Oregon",
+          "PA: Pennsylvania",
+          "RI: Rhode Island",
+          "SC: South Carolina",
+          "SD: South Dakota",
+          "TN: Tennessee",
+          "TX: Texas",
+          "UT: Utah",
+          "VT: Vermont",
+          "VA: Virginia",
+          "WA: Washington",
+          "WV: West Virginia",
+          "WI: Wisconsin",
+          "WY: Wyoming",
+          "AS: American Samoa",
+          "FM: Federated States of Micronesia",
+          "GU: Guam",
+          "MH: Marshall Islands",
+          "MP: Northern Mariana Islands",
+          "PW: Palau",
+          "PR: Puerto Rico",
+          "VI: Virgin Islands",
+          "FQ: Baker Island",
+          "HQ: Howland Island",
+          "DQ: Jarvis Island",
+          "JQ: Johnston Atoll",
+          "KQ: Kingman Reef",
+          "MQ: Midway Islands",
+          "BQ: Navassa Island",
+          "LQ: Palmyra Atoll",
+          "WQ: Wake Island",
+          "AA: Armed Forces Americas (except Canada)",
+          "AE: Armed Forces Europe, the Middle East, and Canada",
+          "AP: Armed Forces Pacific"
+        ],
+        "restriction_base": "xs:string"
+      },
+      "conditions": [
+        "Conditionally required if Country is US then active. If Country is not US, then inactive"
+      ],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-organization:state",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: State; semantic role from exact path: applicant-organization",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
+        "sha256:78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd"
+      ],
+      "enumeration": [
+        "AL: Alabama",
+        "AK: Alaska",
+        "AZ: Arizona",
+        "AR: Arkansas",
+        "CA: California",
+        "CO: Colorado",
+        "CT: Connecticut",
+        "DE: Delaware",
+        "DC: District of Columbia",
+        "FL: Florida",
+        "GA: Georgia",
+        "HI: Hawaii",
+        "ID: Idaho",
+        "IL: Illinois",
+        "IN: Indiana",
+        "IA: Iowa",
+        "KS: Kansas",
+        "KY: Kentucky",
+        "LA: Louisiana",
+        "ME: Maine",
+        "MD: Maryland",
+        "MA: Massachusetts",
+        "MI: Michigan",
+        "MN: Minnesota",
+        "MS: Mississippi",
+        "MO: Missouri",
+        "MT: Montana",
+        "NE: Nebraska",
+        "NV: Nevada",
+        "NH: New Hampshire",
+        "NJ: New Jersey",
+        "NM: New Mexico",
+        "NY: New York",
+        "NC: North Carolina",
+        "ND: North Dakota",
+        "OH: Ohio",
+        "OK: Oklahoma",
+        "OR: Oregon",
+        "PA: Pennsylvania",
+        "RI: Rhode Island",
+        "SC: South Carolina",
+        "SD: South Dakota",
+        "TN: Tennessee",
+        "TX: Texas",
+        "UT: Utah",
+        "VT: Vermont",
+        "VA: Virginia",
+        "WA: Washington",
+        "WV: West Virginia",
+        "WI: Wisconsin",
+        "WY: Wyoming",
+        "AS: American Samoa",
+        "FM: Federated States of Micronesia",
+        "GU: Guam",
+        "MH: Marshall Islands",
+        "MP: Northern Mariana Islands",
+        "PW: Palau",
+        "PR: Puerto Rico",
+        "VI: Virgin Islands",
+        "FQ: Baker Island",
+        "HQ: Howland Island",
+        "DQ: Jarvis Island",
+        "JQ: Johnston Atoll",
+        "KQ: Kingman Reef",
+        "MQ: Midway Islands",
+        "BQ: Navassa Island",
+        "LQ: Palmyra Atoll",
+        "WQ: Wake Island",
+        "AA: Armed Forces Americas (except Canada)",
+        "AE: Armed Forces Europe, the Middle East, and Canada",
+        "AP: Armed Forces Pacific",
+        "50 US States, US possessions, territories, military codes"
+      ],
+      "enumeration_evidence_status": "xsd"
+    },
+    {
+      "path": "SF424_4_0.Applicant.Province",
+      "question_key": "question:sha256:79bab7b1497657887346c2c23a0168d24a8bdf9d2f092292f88bff45536de69e",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:ProvinceDataType",
+        "maxLength": 30,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [
+        "If Country is US then inactive. If Country is not US, then active"
+      ],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-organization:province",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: Province; semantic role from exact path: applicant-organization",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.Applicant.ZipPostalCode",
+      "question_key": "question:sha256:21ad8e830d378856b7d8ea0ba56c01465f9805be8125f47e49d60cd6e2dd15f5",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:ZipPostalCodeDataType",
+        "maxLength": 30,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [
+        "Conditionally required if Country is US. If Country is not US, then optional. If Country is US, min # of characters is 9."
+      ],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-organization:postal-code",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: ZipPostalCode; semantic role from exact path: applicant-organization",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.Applicant.Country",
+      "question_key": "question:sha256:7c9a83e358a3904b76d76a4422ed0895297a9766668144279824f5e80ffc93b6",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "codes:CountryCodeDataTypeV3",
+        "enumeration": [
+          "AFG: AFGHANISTAN",
+          "XQZ: AKROTIRI",
+          "ALB: ALBANIA",
+          "DZA: ALGERIA",
+          "AND: ANDORRA",
+          "AGO: ANGOLA",
+          "AIA: ANGUILLA",
+          "ATA: ANTARCTICA",
+          "ATG: ANTIGUA AND BARBUDA",
+          "ARG: ARGENTINA",
+          "ARM: ARMENIA",
+          "ABW: ARUBA",
+          "XAC: ASHMORE AND CARTIER ISLANDS",
+          "AUS: AUSTRALIA",
+          "AUT: AUSTRIA",
+          "AZE: AZERBAIJAN",
+          "BHS: BAHAMAS, THE",
+          "BHR: BAHRAIN",
+          "BGD: BANGLADESH",
+          "BRB: BARBADOS",
+          "XBI: BASSAS DA INDIA",
+          "BLR: BELARUS",
+          "BEL: BELGIUM",
+          "BLZ: BELIZE",
+          "BEN: BENIN",
+          "BMU: BERMUDA",
+          "BTN: BHUTAN",
+          "BOL: BOLIVIA",
+          "BES: BONAIRE, SINT EUSTATIUS, AND SABA",
+          "BIH: BOSNIA AND HERZEGOVINA",
+          "BWA: BOTSWANA",
+          "BVT: BOUVET ISLAND",
+          "BRA: BRAZIL",
+          "IOT: BRITISH INDIAN OCEAN TERRITORY",
+          "BRN: BRUNEI",
+          "BGR: BULGARIA",
+          "BFA: BURKINA FASO",
+          "MMR: BURMA",
+          "BDI: BURUNDI",
+          "CPV: CABO VERDE",
+          "KHM: CAMBODIA",
+          "CMR: CAMEROON",
+          "CAN: CANADA",
+          "CYM: CAYMAN ISLANDS",
+          "CAF: CENTRAL AFRICAN REPUBLIC",
+          "TCD: CHAD",
+          "CHL: CHILE",
+          "CHN: CHINA",
+          "CXR: CHRISTMAS ISLAND",
+          "CPT: CLIPPERTON ISLAND",
+          "CCK: COCOS (KEELING) ISLANDS",
+          "COL: COLOMBIA",
+          "COM: COMOROS",
+          "COG: CONGO (BRAZZAVILLE)",
+          "COD: CONGO (KINSHASA)",
+          "COK: COOK ISLANDS",
+          "XCS: CORAL SEA ISLANDS",
+          "CRI: COSTA RICA",
+          "CIV: CÔTE D’IVOIRE",
+          "HRV: CROATIA",
+          "CUB: CUBA",
+          "CUW: CURAÇAO",
+          "CYP: CYPRUS",
+          "CZE: CZECHIA",
+          "DNK: DENMARK",
+          "XXD: DHEKELIA",
+          "DGA: DIEGO GARCIA",
+          "DJI: DJIBOUTI",
+          "DMA: DOMINICA",
+          "DOM: DOMINICAN REPUBLIC",
+          "ECU: ECUADOR",
+          "EGY: EGYPT",
+          "SLV: EL SALVADOR",
+          "XAZ: ENTITY 1",
+          "XCR: ENTITY 2",
+          "XCY: ENTITY 3",
+          "XKM: ENTITY 4",
+          "XKN: ENTITY 5",
+          "AX3: ENTITY 6",
+          "GNQ: EQUATORIAL GUINEA",
+          "ERI: ERITREA",
+          "EST: ESTONIA",
+          "SWZ: ESWATINI",
+          "ETH: ETHIOPIA",
+          "XEU: EUROPA ISLAND",
+          "FLK: FALKLAND ISLANDS (ISLAS MALVINAS)",
+          "FRO: FAROE ISLANDS",
+          "FJI: FIJI",
+          "FIN: FINLAND",
+          "FRA: FRANCE",
+          "GUF: FRENCH GUIANA",
+          "PYF: FRENCH POLYNESIA",
+          "ATF: FRENCH SOUTHERN AND ANTARCTIC LANDS",
+          "GAB: GABON",
+          "GMB: GAMBIA, THE",
+          "XGZ: GAZA STRIP",
+          "GEO: GEORGIA",
+          "DEU: GERMANY",
+          "GHA: GHANA",
+          "GIB: GIBRALTAR",
+          "XGL: GLORIOSO ISLANDS",
+          "GRC: GREECE",
+          "GRL: GREENLAND",
+          "GRD: GRENADA",
+          "GLP: GUADELOUPE",
+          "GTM: GUATEMALA",
+          "GGY: GUERNSEY",
+          "GIN: GUINEA",
+          "GNB: GUINEA-BISSAU",
+          "GUY: GUYANA",
+          "HTI: HAITI",
+          "HMD: HEARD ISLAND AND MCDONALD ISLANDS",
+          "HND: HONDURAS",
+          "HKG: HONG KONG",
+          "HUN: HUNGARY",
+          "ISL: ICELAND",
+          "IND: INDIA",
+          "IDN: INDONESIA",
+          "IRN: IRAN",
+          "IRQ: IRAQ",
+          "IRL: IRELAND",
+          "IMN: ISLE OF MAN",
+          "ISR: ISRAEL",
+          "ITA: ITALY",
+          "JAM: JAMAICA",
+          "XJM: JAN MAYEN",
+          "JPN: JAPAN",
+          "JEY: JERSEY",
+          "JOR: JORDAN",
+          "XJN: JUAN DE NOVA ISLAND",
+          "KAZ: KAZAKHSTAN",
+          "KEN: KENYA",
+          "KIR: KIRIBATI",
+          "PRK: KOREA, NORTH",
+          "KOR: KOREA, SOUTH",
+          "XKS: KOSOVO",
+          "KWT: KUWAIT",
+          "KGZ: KYRGYZSTAN",
+          "LAO: LAOS",
+          "LVA: LATVIA",
+          "LBN: LEBANON",
+          "LSO: LESOTHO",
+          "LBR: LIBERIA",
+          "LBY: LIBYA",
+          "LIE: LIECHTENSTEIN",
+          "LTU: LITHUANIA",
+          "LUX: LUXEMBOURG",
+          "MAC: MACAU",
+          "MDG: MADAGASCAR",
+          "MWI: MALAWI",
+          "MYS: MALAYSIA",
+          "MDV: MALDIVES",
+          "MLI: MALI",
+          "MLT: MALTA",
+          "MTQ: MARTINIQUE",
+          "MRT: MAURITANIA",
+          "MUS: MAURITIUS",
+          "MYT: MAYOTTE",
+          "MEX: MEXICO",
+          "MDA: MOLDOVA",
+          "MCO: MONACO",
+          "MNG: MONGOLIA",
+          "MNE: MONTENEGRO",
+          "MSR: MONTSERRAT",
+          "MAR: MOROCCO",
+          "MOZ: MOZAMBIQUE",
+          "NAM: NAMIBIA",
+          "NRU: NAURU",
+          "NPL: NEPAL",
+          "NLD: NETHERLANDS",
+          "NCL: NEW CALEDONIA",
+          "NZL: NEW ZEALAND",
+          "NIC: NICARAGUA",
+          "NER: NIGER",
+          "NGA: NIGERIA",
+          "NIU: NIUE",
+          "NFK: NORFOLK ISLAND",
+          "MKD: NORTH MACEDONIA",
+          "NOR: NORWAY",
+          "OMN: OMAN",
+          "PAK: PAKISTAN",
+          "PAN: PANAMA",
+          "PNG: PAPUA NEW GUINEA",
+          "XPR: PARACEL ISLANDS",
+          "PRY: PARAGUAY",
+          "PER: PERU",
+          "PHL: PHILIPPINES",
+          "PCN: PITCAIRN ISLANDS",
+          "POL: POLAND",
+          "PRT: PORTUGAL",
+          "QAT: QATAR",
+          "REU: REUNION",
+          "ROU: ROMANIA",
+          "RUS: RUSSIA",
+          "RWA: RWANDA",
+          "BLM: SAINT BARTHELEMY",
+          "SHN: SAINT HELENA, ASCENSION, AND TRISTAN DA CUNHA",
+          "KNA: SAINT KITTS AND NEVIS",
+          "LCA: SAINT LUCIA",
+          "MAF: SAINT MARTIN",
+          "SPM: SAINT PIERRE AND MIQUELON",
+          "VCT: SAINT VINCENT AND THE GRENADINES",
+          "WSM: SAMOA",
+          "SMR: SAN MARINO",
+          "STP: SAO TOME AND PRINCIPE",
+          "SAU: SAUDI ARABIA",
+          "SEN: SENEGAL",
+          "SRB: SERBIA",
+          "SYC: SEYCHELLES",
+          "SLE: SIERRA LEONE",
+          "SGP: SINGAPORE",
+          "SXM: SINT MAARTEN",
+          "SVK: SLOVAKIA",
+          "SVN: SLOVENIA",
+          "SLB: SOLOMON ISLANDS",
+          "SOM: SOMALIA",
+          "ZAF: SOUTH AFRICA",
+          "SGS: SOUTH GEORGIA AND SOUTH SANDWICH ISLANDS",
+          "SSD: SOUTH SUDAN",
+          "ESP: SPAIN",
+          "XSP: SPRATLY ISLANDS",
+          "LKA: SRI LANKA",
+          "SDN: SUDAN",
+          "SUR: SURINAME",
+          "XSV: SVALBARD",
+          "SWE: SWEDEN",
+          "CHE: SWITZERLAND",
+          "SYR: SYRIA",
+          "TWN: TAIWAN",
+          "TJK: TAJIKISTAN",
+          "TZA: TANZANIA",
+          "THA: THAILAND",
+          "TLS: TIMOR-LESTE",
+          "TGO: TOGO",
+          "TKL: TOKELAU",
+          "TON: TONGA",
+          "TTO: TRINIDAD AND TOBAGO",
+          "XTR: TROMELIN ISLAND",
+          "TUN: TUNISIA",
+          "TUR: TURKEY",
+          "TKM: TURKMENISTAN",
+          "TCA: TURKS AND CAICOS ISLANDS",
+          "TUV: TUVALU",
+          "UGA: UGANDA",
+          "UKR: UKRAINE",
+          "ARE: UNITED ARAB EMIRATES",
+          "GBR: UNITED KINGDOM",
+          "USA: UNITED STATES",
+          "URY: URUGUAY",
+          "UZB: UZBEKISTAN",
+          "VUT: VANUATU",
+          "VAT: VATICAN CITY",
+          "VEN: VENEZUELA",
+          "VNM: VIETNAM",
+          "VGB: VIRGIN ISLANDS, BRITISH",
+          "WLF: WALLIS AND FUTUNA",
+          "XWB: WEST BANK",
+          "ESH: WESTERN SAHARA",
+          "YEM: YEMEN",
+          "ZMB: ZAMBIA",
+          "ZWE: ZIMBABWE"
+        ],
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-organization:country",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: Country; semantic role from exact path: applicant-organization",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
+        "sha256:78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd"
+      ],
+      "enumeration": [
+        "AFG: AFGHANISTAN",
+        "XQZ: AKROTIRI",
+        "ALB: ALBANIA",
+        "DZA: ALGERIA",
+        "AND: ANDORRA",
+        "AGO: ANGOLA",
+        "AIA: ANGUILLA",
+        "ATA: ANTARCTICA",
+        "ATG: ANTIGUA AND BARBUDA",
+        "ARG: ARGENTINA",
+        "ARM: ARMENIA",
+        "ABW: ARUBA",
+        "XAC: ASHMORE AND CARTIER ISLANDS",
+        "AUS: AUSTRALIA",
+        "AUT: AUSTRIA",
+        "AZE: AZERBAIJAN",
+        "BHS: BAHAMAS, THE",
+        "BHR: BAHRAIN",
+        "BGD: BANGLADESH",
+        "BRB: BARBADOS",
+        "XBI: BASSAS DA INDIA",
+        "BLR: BELARUS",
+        "BEL: BELGIUM",
+        "BLZ: BELIZE",
+        "BEN: BENIN",
+        "BMU: BERMUDA",
+        "BTN: BHUTAN",
+        "BOL: BOLIVIA",
+        "BES: BONAIRE, SINT EUSTATIUS, AND SABA",
+        "BIH: BOSNIA AND HERZEGOVINA",
+        "BWA: BOTSWANA",
+        "BVT: BOUVET ISLAND",
+        "BRA: BRAZIL",
+        "IOT: BRITISH INDIAN OCEAN TERRITORY",
+        "BRN: BRUNEI",
+        "BGR: BULGARIA",
+        "BFA: BURKINA FASO",
+        "MMR: BURMA",
+        "BDI: BURUNDI",
+        "CPV: CABO VERDE",
+        "KHM: CAMBODIA",
+        "CMR: CAMEROON",
+        "CAN: CANADA",
+        "CYM: CAYMAN ISLANDS",
+        "CAF: CENTRAL AFRICAN REPUBLIC",
+        "TCD: CHAD",
+        "CHL: CHILE",
+        "CHN: CHINA",
+        "CXR: CHRISTMAS ISLAND",
+        "CPT: CLIPPERTON ISLAND",
+        "CCK: COCOS (KEELING) ISLANDS",
+        "COL: COLOMBIA",
+        "COM: COMOROS",
+        "COG: CONGO (BRAZZAVILLE)",
+        "COD: CONGO (KINSHASA)",
+        "COK: COOK ISLANDS",
+        "XCS: CORAL SEA ISLANDS",
+        "CRI: COSTA RICA",
+        "CIV: CÔTE D’IVOIRE",
+        "HRV: CROATIA",
+        "CUB: CUBA",
+        "CUW: CURAÇAO",
+        "CYP: CYPRUS",
+        "CZE: CZECHIA",
+        "DNK: DENMARK",
+        "XXD: DHEKELIA",
+        "DGA: DIEGO GARCIA",
+        "DJI: DJIBOUTI",
+        "DMA: DOMINICA",
+        "DOM: DOMINICAN REPUBLIC",
+        "ECU: ECUADOR",
+        "EGY: EGYPT",
+        "SLV: EL SALVADOR",
+        "XAZ: ENTITY 1",
+        "XCR: ENTITY 2",
+        "XCY: ENTITY 3",
+        "XKM: ENTITY 4",
+        "XKN: ENTITY 5",
+        "AX3: ENTITY 6",
+        "GNQ: EQUATORIAL GUINEA",
+        "ERI: ERITREA",
+        "EST: ESTONIA",
+        "SWZ: ESWATINI",
+        "ETH: ETHIOPIA",
+        "XEU: EUROPA ISLAND",
+        "FLK: FALKLAND ISLANDS (ISLAS MALVINAS)",
+        "FRO: FAROE ISLANDS",
+        "FJI: FIJI",
+        "FIN: FINLAND",
+        "FRA: FRANCE",
+        "GUF: FRENCH GUIANA",
+        "PYF: FRENCH POLYNESIA",
+        "ATF: FRENCH SOUTHERN AND ANTARCTIC LANDS",
+        "GAB: GABON",
+        "GMB: GAMBIA, THE",
+        "XGZ: GAZA STRIP",
+        "GEO: GEORGIA",
+        "DEU: GERMANY",
+        "GHA: GHANA",
+        "GIB: GIBRALTAR",
+        "XGL: GLORIOSO ISLANDS",
+        "GRC: GREECE",
+        "GRL: GREENLAND",
+        "GRD: GRENADA",
+        "GLP: GUADELOUPE",
+        "GTM: GUATEMALA",
+        "GGY: GUERNSEY",
+        "GIN: GUINEA",
+        "GNB: GUINEA-BISSAU",
+        "GUY: GUYANA",
+        "HTI: HAITI",
+        "HMD: HEARD ISLAND AND MCDONALD ISLANDS",
+        "HND: HONDURAS",
+        "HKG: HONG KONG",
+        "HUN: HUNGARY",
+        "ISL: ICELAND",
+        "IND: INDIA",
+        "IDN: INDONESIA",
+        "IRN: IRAN",
+        "IRQ: IRAQ",
+        "IRL: IRELAND",
+        "IMN: ISLE OF MAN",
+        "ISR: ISRAEL",
+        "ITA: ITALY",
+        "JAM: JAMAICA",
+        "XJM: JAN MAYEN",
+        "JPN: JAPAN",
+        "JEY: JERSEY",
+        "JOR: JORDAN",
+        "XJN: JUAN DE NOVA ISLAND",
+        "KAZ: KAZAKHSTAN",
+        "KEN: KENYA",
+        "KIR: KIRIBATI",
+        "PRK: KOREA, NORTH",
+        "KOR: KOREA, SOUTH",
+        "XKS: KOSOVO",
+        "KWT: KUWAIT",
+        "KGZ: KYRGYZSTAN",
+        "LAO: LAOS",
+        "LVA: LATVIA",
+        "LBN: LEBANON",
+        "LSO: LESOTHO",
+        "LBR: LIBERIA",
+        "LBY: LIBYA",
+        "LIE: LIECHTENSTEIN",
+        "LTU: LITHUANIA",
+        "LUX: LUXEMBOURG",
+        "MAC: MACAU",
+        "MDG: MADAGASCAR",
+        "MWI: MALAWI",
+        "MYS: MALAYSIA",
+        "MDV: MALDIVES",
+        "MLI: MALI",
+        "MLT: MALTA",
+        "MTQ: MARTINIQUE",
+        "MRT: MAURITANIA",
+        "MUS: MAURITIUS",
+        "MYT: MAYOTTE",
+        "MEX: MEXICO",
+        "MDA: MOLDOVA",
+        "MCO: MONACO",
+        "MNG: MONGOLIA",
+        "MNE: MONTENEGRO",
+        "MSR: MONTSERRAT",
+        "MAR: MOROCCO",
+        "MOZ: MOZAMBIQUE",
+        "NAM: NAMIBIA",
+        "NRU: NAURU",
+        "NPL: NEPAL",
+        "NLD: NETHERLANDS",
+        "NCL: NEW CALEDONIA",
+        "NZL: NEW ZEALAND",
+        "NIC: NICARAGUA",
+        "NER: NIGER",
+        "NGA: NIGERIA",
+        "NIU: NIUE",
+        "NFK: NORFOLK ISLAND",
+        "MKD: NORTH MACEDONIA",
+        "NOR: NORWAY",
+        "OMN: OMAN",
+        "PAK: PAKISTAN",
+        "PAN: PANAMA",
+        "PNG: PAPUA NEW GUINEA",
+        "XPR: PARACEL ISLANDS",
+        "PRY: PARAGUAY",
+        "PER: PERU",
+        "PHL: PHILIPPINES",
+        "PCN: PITCAIRN ISLANDS",
+        "POL: POLAND",
+        "PRT: PORTUGAL",
+        "QAT: QATAR",
+        "REU: REUNION",
+        "ROU: ROMANIA",
+        "RUS: RUSSIA",
+        "RWA: RWANDA",
+        "BLM: SAINT BARTHELEMY",
+        "SHN: SAINT HELENA, ASCENSION, AND TRISTAN DA CUNHA",
+        "KNA: SAINT KITTS AND NEVIS",
+        "LCA: SAINT LUCIA",
+        "MAF: SAINT MARTIN",
+        "SPM: SAINT PIERRE AND MIQUELON",
+        "VCT: SAINT VINCENT AND THE GRENADINES",
+        "WSM: SAMOA",
+        "SMR: SAN MARINO",
+        "STP: SAO TOME AND PRINCIPE",
+        "SAU: SAUDI ARABIA",
+        "SEN: SENEGAL",
+        "SRB: SERBIA",
+        "SYC: SEYCHELLES",
+        "SLE: SIERRA LEONE",
+        "SGP: SINGAPORE",
+        "SXM: SINT MAARTEN",
+        "SVK: SLOVAKIA",
+        "SVN: SLOVENIA",
+        "SLB: SOLOMON ISLANDS",
+        "SOM: SOMALIA",
+        "ZAF: SOUTH AFRICA",
+        "SGS: SOUTH GEORGIA AND SOUTH SANDWICH ISLANDS",
+        "SSD: SOUTH SUDAN",
+        "ESP: SPAIN",
+        "XSP: SPRATLY ISLANDS",
+        "LKA: SRI LANKA",
+        "SDN: SUDAN",
+        "SUR: SURINAME",
+        "XSV: SVALBARD",
+        "SWE: SWEDEN",
+        "CHE: SWITZERLAND",
+        "SYR: SYRIA",
+        "TWN: TAIWAN",
+        "TJK: TAJIKISTAN",
+        "TZA: TANZANIA",
+        "THA: THAILAND",
+        "TLS: TIMOR-LESTE",
+        "TGO: TOGO",
+        "TKL: TOKELAU",
+        "TON: TONGA",
+        "TTO: TRINIDAD AND TOBAGO",
+        "XTR: TROMELIN ISLAND",
+        "TUN: TUNISIA",
+        "TUR: TURKEY",
+        "TKM: TURKMENISTAN",
+        "TCA: TURKS AND CAICOS ISLANDS",
+        "TUV: TUVALU",
+        "UGA: UGANDA",
+        "UKR: UKRAINE",
+        "ARE: UNITED ARAB EMIRATES",
+        "GBR: UNITED KINGDOM",
+        "USA: UNITED STATES",
+        "URY: URUGUAY",
+        "UZB: UZBEKISTAN",
+        "VUT: VANUATU",
+        "VAT: VATICAN CITY",
+        "VEN: VENEZUELA",
+        "VNM: VIETNAM",
+        "VGB: VIRGIN ISLANDS, BRITISH",
+        "WLF: WALLIS AND FUTUNA",
+        "XWB: WEST BANK",
+        "ESH: WESTERN SAHARA",
+        "YEM: YEMEN",
+        "ZMB: ZAMBIA",
+        "ZWE: ZIMBABWE",
+        "GENC Standard Ed3.0 Update 11"
+      ],
+      "enumeration_evidence_status": "xsd"
+    },
+    {
+      "path": "SF424_4_0.DepartmentName",
+      "question_key": "question:sha256:3054d5c63122980924e41d75c5e0a77db3508ed28d8ed3c8c82e1409e78ac303",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:DepartmentNameDataType",
+        "maxLength": 30,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-organization:department",
+        "confidence": 0.98,
+        "evidence": "exact leaf alias: DepartmentName; semantic role from exact path: applicant-organization",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": false,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.DivisionName",
+      "question_key": "question:sha256:88e9baeebdf18edc43be0435096c4f623af4240bcd8d567550dd311473e55471",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:DivisionNameDataType",
+        "maxLength": 30,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-organization:division",
+        "confidence": 0.98,
+        "evidence": "exact leaf alias: DivisionName; semantic role from exact path: applicant-organization",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": false,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.ContactPerson.PrefixName",
+      "question_key": "question:sha256:056b5dc74f2a266dca5e1d6a9caf1eca2f60f006417bf4bd3808f5802d0b8c6b",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:PrefixNameDataType",
+        "maxLength": 10,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-contact:name:prefix",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: PrefixName; semantic role from exact path: applicant-contact",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": false,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [
+        "Mr.; Mrs.; Miss; Ms.; Dr.; Rev.; Prof."
+      ],
+      "enumeration_evidence_status": "dat_display_agent_proposed"
+    },
+    {
+      "path": "SF424_4_0.ContactPerson.FirstName",
+      "question_key": "question:sha256:3c7bb38850f428700bbe3220a3c9eda8edf5cee81eced89440950771adea86e2",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:FirstNameDataType",
+        "maxLength": 35,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-contact:name:first",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: FirstName; semantic role from exact path: applicant-contact",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.ContactPerson.MiddleName",
+      "question_key": "question:sha256:c309d2a767b942223fde87d41329db00af004961e239b1e2fbffa16c43941fc3",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:MiddleNameDataType",
+        "maxLength": 25,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-contact:name:middle",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: MiddleName; semantic role from exact path: applicant-contact",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": false,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.ContactPerson.LastName",
+      "question_key": "question:sha256:deac9a676f905c59e1b70a5e244baf965e5a98d11f01eb7e4cb9006b40df1bcc",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:LastNameDataType",
+        "maxLength": 60,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-contact:name:last",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: LastName; semantic role from exact path: applicant-contact",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.ContactPerson.SuffixName",
+      "question_key": "question:sha256:cfb5ab87392b885303666ebf57ec5f998a759e256ee19fe2f2c88c898d158b88",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:SuffixNameDataType",
+        "maxLength": 10,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-contact:name:suffix",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: SuffixName; semantic role from exact path: applicant-contact",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": false,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [
+        "Jr.; Sr.; M.D.; Ph.D"
+      ],
+      "enumeration_evidence_status": "dat_display_agent_proposed"
+    },
+    {
+      "path": "SF424_4_0.Title",
+      "question_key": "question:sha256:8567f7966f4664a5252d1a479debcad1ae0922f42d101aaa4cb194be1a6c7cd2",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:HumanTitleDataType",
+        "maxLength": 45,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-contact:title",
+        "confidence": 0.97,
+        "evidence": "exact leaf alias: Title; semantic role from exact path: applicant-contact",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": false,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.OrganizationAffiliation",
+      "question_key": "question:sha256:3f02f7b056c8dc7ef1dc8d906fe93076a7258ad139dc428d86a9f26da46028b0",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:OrganizationNameDataType",
+        "maxLength": 60,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-contact:organization-affiliation",
+        "confidence": 0.98,
+        "evidence": "agent field review: SF424_4_0.OrganizationAffiliation is a bounded SF-424 field represented by this new concept. The field remains role-qualified to the SF-424 applicant contact and is not merged with key-contact affiliations.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": false,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.PhoneNumber",
+      "question_key": "question:sha256:c4c4e32ff114dce48dc0260e41c47d9da241bb9f00c98467b5c13b8988031279",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:TelephoneNumberDataType",
+        "maxLength": 25,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-contact:phone",
+        "confidence": 0.98,
+        "evidence": "exact leaf alias: PhoneNumber; semantic role from exact path: applicant-contact",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.Fax",
+      "question_key": "question:sha256:39a6df6becab29557ac55d8350d79c9531685b26eb7a27f7c73267e1d71ec81a",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:TelephoneNumberDataType",
+        "maxLength": 25,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-contact:fax",
+        "confidence": 0.98,
+        "evidence": "exact leaf alias: Fax; semantic role from exact path: applicant-contact",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.Email",
+      "question_key": "question:sha256:4c0dc6c29fcc26a1624d9b4b140ef7d3e889d0a3a16298a6b045e09d0f75f856",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:EmailDataType",
+        "maxLength": 60,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:applicant-contact:email",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: Email; semantic role from exact path: applicant-contact",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.ApplicantTypeCode1",
+      "question_key": "question:sha256:3cb4ee39f0552df081997a51ee0c135f9c3f10dd006ceb42cdf962c534320148",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:ApplicantTypeCodeDataType",
+        "enumeration": [
+          "A: State Government",
+          "B: County Government",
+          "C: City or Township Government",
+          "D: Special District Government",
+          "E: Regional Organization",
+          "F: U.S. Territory or Possession",
+          "G: Independent School District",
+          "H: Public/State Controlled Institution of Higher Education",
+          "I: Indian/Native American Tribal Government (Federally Recognized)",
+          "J: Indian/Native American Tribal Government (Other than Federally Recognized)",
+          "K: Indian/Native American Tribally Designated Organization",
+          "L: Public/Indian Housing Authority",
+          "M: Nonprofit with 501C3 IRS Status (Other than Institution of Higher Education)",
+          "N: Nonprofit without 501C3 IRS Status (Other than Institution of Higher Education)",
+          "O: Private Institution of Higher Education",
+          "P: Individual",
+          "Q: For-Profit Organization (Other than Small Business)",
+          "R: Small Business",
+          "S: Hispanic-serving Institution",
+          "T: Historically Black Colleges and Universities (HBCUs)",
+          "U: Tribally Controlled Colleges and Universities (TCCUs)",
+          "V: Alaska Native and Native Hawaiian Serving Institutions",
+          "W: Non-domestic (non-US) Entity",
+          "X: Other (specify)"
+        ],
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:organization:applicant-type",
+        "confidence": 0.99,
+        "evidence": "agent field review: SF424_4_0.ApplicantTypeCode1 has the same bounded application meaning as the existing concept; shared wording alone was not used as the basis.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [
+        "A: State Government",
+        "B: County Government",
+        "C: City or Township Government",
+        "D: Special District Government",
+        "E: Regional Organization",
+        "F: U.S. Territory or Possession",
+        "G: Independent School District",
+        "H: Public/State Controlled Institution of Higher Education",
+        "I: Indian/Native American Tribal Government (Federally Recognized)",
+        "J: Indian/Native American Tribal Government (Other than Federally Recognized)",
+        "K: Indian/Native American Tribally Designated Organization",
+        "L: Public/Indian Housing Authority",
+        "M: Nonprofit with 501C3 IRS Status (Other than Institution of Higher Education)",
+        "N: Nonprofit without 501C3 IRS Status (Other than Institution of Higher Education)",
+        "O: Private Institution of Higher Education",
+        "P: Individual",
+        "Q: For-Profit Organization (Other than Small Business)",
+        "R: Small Business",
+        "S: Hispanic-serving Institution",
+        "T: Historically Black Colleges and Universities (HBCUs)",
+        "U: Tribally Controlled Colleges and Universities (TCCUs)",
+        "V: Alaska Native and Native Hawaiian Serving Institutions",
+        "W: Non-domestic (non-US) Entity",
+        "X: Other (specify)",
+        "A: State Government;",
+        "B: County Government;",
+        "C: City or Township Government;",
+        "D: Special District Government;",
+        "E: Regional Organization;",
+        "F: U.S. Territory or Possession;",
+        "G: Independent School District;",
+        "H: Public/State Controlled Institution of Higher Education;",
+        "I: Indian/Native American Tribal Government (Federally Recognized);",
+        "J: Indian/Native American Tribal Government (Other than Federally Recognized);",
+        "K: Indian/Native American Tribally Designated Organization;",
+        "L: Public/Indian Housing Authority;",
+        "M: Nonprofit with 501C3 IRS Status (Other than Institution of Higher Education);",
+        "N: Nonprofit without 501C3 IRS Status (Other than Institution of Higher Education);",
+        "O: Private Institution of Higher Education;",
+        "P: Individual;",
+        "Q: For-Profit Organization (Other than Small Business);",
+        "R: Small Business;",
+        "S: Hispanic-serving Institution;",
+        "T: Historically Black Colleges and Universities (HBCUs);",
+        "U: Tribally Controlled Colleges and Universities (TCCUs);",
+        "V: Alaska Native and Native Hawaiian Serving Institutions;",
+        "W: Non-domestic (non-US) Entity;"
+      ],
+      "enumeration_evidence_status": "xsd"
+    },
+    {
+      "path": "SF424_4_0.ApplicantTypeCode2",
+      "question_key": "question:sha256:6dfafff5edbeeae1ca1037d3d0ee6a0e4d2babe38c9588944e4192e14aba2066",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:ApplicantTypeCodeDataType",
+        "enumeration": [
+          "A: State Government",
+          "B: County Government",
+          "C: City or Township Government",
+          "D: Special District Government",
+          "E: Regional Organization",
+          "F: U.S. Territory or Possession",
+          "G: Independent School District",
+          "H: Public/State Controlled Institution of Higher Education",
+          "I: Indian/Native American Tribal Government (Federally Recognized)",
+          "J: Indian/Native American Tribal Government (Other than Federally Recognized)",
+          "K: Indian/Native American Tribally Designated Organization",
+          "L: Public/Indian Housing Authority",
+          "M: Nonprofit with 501C3 IRS Status (Other than Institution of Higher Education)",
+          "N: Nonprofit without 501C3 IRS Status (Other than Institution of Higher Education)",
+          "O: Private Institution of Higher Education",
+          "P: Individual",
+          "Q: For-Profit Organization (Other than Small Business)",
+          "R: Small Business",
+          "S: Hispanic-serving Institution",
+          "T: Historically Black Colleges and Universities (HBCUs)",
+          "U: Tribally Controlled Colleges and Universities (TCCUs)",
+          "V: Alaska Native and Native Hawaiian Serving Institutions",
+          "W: Non-domestic (non-US) Entity",
+          "X: Other (specify)"
+        ],
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:organization:applicant-type",
+        "confidence": 0.99,
+        "evidence": "agent field review: SF424_4_0.ApplicantTypeCode2 has the same bounded application meaning as the existing concept; shared wording alone was not used as the basis.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [
+        "A: State Government",
+        "B: County Government",
+        "C: City or Township Government",
+        "D: Special District Government",
+        "E: Regional Organization",
+        "F: U.S. Territory or Possession",
+        "G: Independent School District",
+        "H: Public/State Controlled Institution of Higher Education",
+        "I: Indian/Native American Tribal Government (Federally Recognized)",
+        "J: Indian/Native American Tribal Government (Other than Federally Recognized)",
+        "K: Indian/Native American Tribally Designated Organization",
+        "L: Public/Indian Housing Authority",
+        "M: Nonprofit with 501C3 IRS Status (Other than Institution of Higher Education)",
+        "N: Nonprofit without 501C3 IRS Status (Other than Institution of Higher Education)",
+        "O: Private Institution of Higher Education",
+        "P: Individual",
+        "Q: For-Profit Organization (Other than Small Business)",
+        "R: Small Business",
+        "S: Hispanic-serving Institution",
+        "T: Historically Black Colleges and Universities (HBCUs)",
+        "U: Tribally Controlled Colleges and Universities (TCCUs)",
+        "V: Alaska Native and Native Hawaiian Serving Institutions",
+        "W: Non-domestic (non-US) Entity",
+        "X: Other (specify)",
+        "A: State Government;",
+        "B: County Government;",
+        "C: City or Township Government;",
+        "D: Special District Government;",
+        "E: Regional Organization;",
+        "F: U.S. Territory or Possession;",
+        "G: Independent School District;",
+        "H: Public/State Controlled Institution of Higher Education;",
+        "I: Indian/Native American Tribal Government (Federally Recognized);",
+        "J: Indian/Native American Tribal Government (Other than Federally Recognized);",
+        "K: Indian/Native American Tribally Designated Organization;",
+        "L: Public/Indian Housing Authority;",
+        "M: Nonprofit with 501C3 IRS Status (Other than Institution of Higher Education);",
+        "N: Nonprofit without 501C3 IRS Status (Other than Institution of Higher Education);",
+        "O: Private Institution of Higher Education;",
+        "P: Individual;",
+        "Q: For-Profit Organization (Other than Small Business);",
+        "R: Small Business;",
+        "S: Hispanic-serving Institution;",
+        "T: Historically Black Colleges and Universities (HBCUs);",
+        "U: Tribally Controlled Colleges and Universities (TCCUs);",
+        "V: Alaska Native and Native Hawaiian Serving Institutions;",
+        "W: Non-domestic (non-US) Entity;"
+      ],
+      "enumeration_evidence_status": "xsd"
+    },
+    {
+      "path": "SF424_4_0.ApplicantTypeCode3",
+      "question_key": "question:sha256:f916c9bc8af308bd4ccd748379535af9df1364600c208007d00556841f885479",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:ApplicantTypeCodeDataType",
+        "enumeration": [
+          "A: State Government",
+          "B: County Government",
+          "C: City or Township Government",
+          "D: Special District Government",
+          "E: Regional Organization",
+          "F: U.S. Territory or Possession",
+          "G: Independent School District",
+          "H: Public/State Controlled Institution of Higher Education",
+          "I: Indian/Native American Tribal Government (Federally Recognized)",
+          "J: Indian/Native American Tribal Government (Other than Federally Recognized)",
+          "K: Indian/Native American Tribally Designated Organization",
+          "L: Public/Indian Housing Authority",
+          "M: Nonprofit with 501C3 IRS Status (Other than Institution of Higher Education)",
+          "N: Nonprofit without 501C3 IRS Status (Other than Institution of Higher Education)",
+          "O: Private Institution of Higher Education",
+          "P: Individual",
+          "Q: For-Profit Organization (Other than Small Business)",
+          "R: Small Business",
+          "S: Hispanic-serving Institution",
+          "T: Historically Black Colleges and Universities (HBCUs)",
+          "U: Tribally Controlled Colleges and Universities (TCCUs)",
+          "V: Alaska Native and Native Hawaiian Serving Institutions",
+          "W: Non-domestic (non-US) Entity",
+          "X: Other (specify)"
+        ],
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:organization:applicant-type",
+        "confidence": 0.99,
+        "evidence": "agent field review: SF424_4_0.ApplicantTypeCode3 has the same bounded application meaning as the existing concept; shared wording alone was not used as the basis.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [
+        "A: State Government",
+        "B: County Government",
+        "C: City or Township Government",
+        "D: Special District Government",
+        "E: Regional Organization",
+        "F: U.S. Territory or Possession",
+        "G: Independent School District",
+        "H: Public/State Controlled Institution of Higher Education",
+        "I: Indian/Native American Tribal Government (Federally Recognized)",
+        "J: Indian/Native American Tribal Government (Other than Federally Recognized)",
+        "K: Indian/Native American Tribally Designated Organization",
+        "L: Public/Indian Housing Authority",
+        "M: Nonprofit with 501C3 IRS Status (Other than Institution of Higher Education)",
+        "N: Nonprofit without 501C3 IRS Status (Other than Institution of Higher Education)",
+        "O: Private Institution of Higher Education",
+        "P: Individual",
+        "Q: For-Profit Organization (Other than Small Business)",
+        "R: Small Business",
+        "S: Hispanic-serving Institution",
+        "T: Historically Black Colleges and Universities (HBCUs)",
+        "U: Tribally Controlled Colleges and Universities (TCCUs)",
+        "V: Alaska Native and Native Hawaiian Serving Institutions",
+        "W: Non-domestic (non-US) Entity",
+        "X: Other (specify)",
+        "A: State Government;",
+        "B: County Government;",
+        "C: City or Township Government;",
+        "D: Special District Government;",
+        "E: Regional Organization;",
+        "F: U.S. Territory or Possession;",
+        "G: Independent School District;",
+        "H: Public/State Controlled Institution of Higher Education;",
+        "I: Indian/Native American Tribal Government (Federally Recognized);",
+        "J: Indian/Native American Tribal Government (Other than Federally Recognized);",
+        "K: Indian/Native American Tribally Designated Organization;",
+        "L: Public/Indian Housing Authority;",
+        "M: Nonprofit with 501C3 IRS Status (Other than Institution of Higher Education);",
+        "N: Nonprofit without 501C3 IRS Status (Other than Institution of Higher Education);",
+        "O: Private Institution of Higher Education;",
+        "P: Individual;",
+        "Q: For-Profit Organization (Other than Small Business);",
+        "R: Small Business;",
+        "S: Hispanic-serving Institution;",
+        "T: Historically Black Colleges and Universities (HBCUs);",
+        "U: Tribally Controlled Colleges and Universities (TCCUs);",
+        "V: Alaska Native and Native Hawaiian Serving Institutions;",
+        "W: Non-domestic (non-US) Entity;"
+      ],
+      "enumeration_evidence_status": "xsd"
+    },
+    {
+      "path": "SF424_4_0.ApplicantTypeOtherSpecify",
+      "question_key": "question:sha256:9376f61db408a8c74425052710731014e0994c7226e900ffc13cd8b630e46947",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "maxLength": 30,
+        "minLength": 0,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [
+        "This element is required if the response to ApplicantTypeCode1, 2 or 3 is Other (specify)"
+      ],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:organization:applicant-type-other",
+        "confidence": 0.99,
+        "evidence": "agent field review: SF424_4_0.ApplicantTypeOtherSpecify has the same bounded application meaning as the existing concept; shared wording alone was not used as the basis.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.AgencyName",
+      "question_key": "question:sha256:c84ee099c58498b9231d99b54231e8feab23cb9f9d7a53f3535fe2e7cfd52ca0",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:AgencyNameDataType",
+        "maxLength": 60,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:agency-name",
+        "confidence": 0.98,
+        "evidence": "exact leaf alias: AgencyName",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.CFDANumber",
+      "question_key": "question:sha256:93ce9d0747d8dce9b96442fb92804c253593208298535848c3185c7ad924971b",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:CFDANumberDataType",
+        "maxLength": 15,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:assistance-listing-number",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: CFDANumber",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.CFDAProgramTitle",
+      "question_key": "question:sha256:2ff461fa66b0e54f882dfcab4c089cecef162b542fb7a19ddb22963ac203a8d7",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:CFDATitleDataType",
+        "maxLength": 120,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:assistance-listing-title",
+        "confidence": 0.99,
+        "evidence": "agent field review: SF424_4_0.CFDAProgramTitle has the same bounded application meaning as the existing concept; shared wording alone was not used as the basis.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.FundingOpportunityNumber",
+      "question_key": "question:sha256:f0f8ff563effc82377dc2e24fde89dbea65d764d8df02f6a010d9caae10ce023",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:OpportunityIDDataType",
+        "maxLength": 40,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:funding-opportunity-number",
+        "confidence": 0.99,
+        "evidence": "agent field review: SF424_4_0.FundingOpportunityNumber has the same bounded application meaning as the existing concept; shared wording alone was not used as the basis.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.FundingOpportunityTitle",
+      "question_key": "question:sha256:1649b5df02a802f7a3ffb3c1933343d625fb2ddc9c7127dd8d2bbc085dad86d5",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:OpportunityTitleDataType",
+        "maxLength": 255,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:funding-opportunity-title",
+        "confidence": 0.99,
+        "evidence": "agent field review: SF424_4_0.FundingOpportunityTitle has the same bounded application meaning as the existing concept; shared wording alone was not used as the basis.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.CompetitionIdentificationNumber",
+      "question_key": "question:sha256:55db6070c7ed31d08a99a23790a43078d2063278d0803ef4fdc390d0ed4d0bf6",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:CompetitionIDDataType",
+        "maxLength": 40,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:competition-identification-number",
+        "confidence": 0.98,
+        "evidence": "agent field review: SF424_4_0.CompetitionIdentificationNumber is a bounded SF-424 field represented by this new concept.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.CompetitionIdentificationTitle",
+      "question_key": "question:sha256:6d064e687b74754aa7f94208b7d9819608047f578208c6747779e2bca866caad",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:CompetitionTitleDataType",
+        "maxLength": 255,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:competition-identification-title",
+        "confidence": 0.98,
+        "evidence": "agent field review: SF424_4_0.CompetitionIdentificationTitle is a bounded SF-424 field represented by this new concept.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.AreasAffected",
+      "question_key": "question:sha256:94413bbb84ca31fa8658c83a886f0f432a676c2c44b2f7cb6613e4232c781c20",
+      "data_type": "AttachedFileDataType",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "att:AttachedFileDataType"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:attachment:areas-affected",
+        "confidence": 0.98,
+        "evidence": "agent field review: SF424_4_0.AreasAffected is a bounded SF-424 field represented by this new concept.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ae2ebb3618f7d8fb337be2309b3096e9121b4af659e913af423aab85d13dcb1d https://apply07.grants.gov/apply/system/schemas/Attachments-V1.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.ProjectTitle",
+      "question_key": "question:sha256:276e73497662a79c01110b9c5b5f298b2ca31808cd61552b4f591b9e61da8e42",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:ProjectTitleDataType",
+        "maxLength": 200,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:project:title",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: ProjectTitle",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.AdditionalProjectTitle",
+      "question_key": "question:sha256:28d582f6d5ce10ca7cfffddb8bf0d38610d2cf5484a63baa3ab3a16e8d1a82d9",
+      "data_type": "AttachmentGroupMin0Max100DataType",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "att:AttachmentGroupMin0Max100DataType"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:attachment:additional-project-titles",
+        "confidence": 0.98,
+        "evidence": "agent field review: SF424_4_0.AdditionalProjectTitle is a bounded SF-424 field represented by this new concept.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ae2ebb3618f7d8fb337be2309b3096e9121b4af659e913af423aab85d13dcb1d https://apply07.grants.gov/apply/system/schemas/Attachments-V1.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.CongressionalDistrictApplicant",
+      "question_key": "question:sha256:317ac193bb9f3fd8d030125f3a90d8357f8deef67ea5a3b4e93185058e6e1fc1",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:CongressionalDistrictDataType",
+        "maxLength": 6,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:project:congressional-district-applicant",
+        "confidence": 0.96,
+        "evidence": "exact leaf alias: CongressionalDistrictApplicant",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.CongressionalDistrictProgramProject",
+      "question_key": "question:sha256:243ca355bd888b8d4423650224068ba6b654a9a7d770c7f74e630bc7ba34747b",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:CongressionalDistrictDataType",
+        "maxLength": 6,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:project:congressional-district",
+        "confidence": 0.98,
+        "evidence": "exact leaf alias: CongressionalDistrictProgramProject",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.AdditionalCongressionalDistricts",
+      "question_key": "question:sha256:eafa2135e50ed650d9e2a6a5f821192788ce22989eeb41119246fb1f8cd63161",
+      "data_type": "AttachedFileDataType",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "att:AttachedFileDataType"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:attachment:additional-congressional-districts",
+        "confidence": 0.98,
+        "evidence": "agent field review: SF424_4_0.AdditionalCongressionalDistricts is a bounded SF-424 field represented by this new concept.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ae2ebb3618f7d8fb337be2309b3096e9121b4af659e913af423aab85d13dcb1d https://apply07.grants.gov/apply/system/schemas/Attachments-V1.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.ProjectStartDate",
+      "question_key": "question:sha256:6cc78854ad910a6c5b92102a958de85f780dd20f2ebb9097cdb60206d371d821",
+      "data_type": "date",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "xs:date"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:project:start-date",
+        "confidence": 0.98,
+        "evidence": "exact leaf alias: ProjectStartDate",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.ProjectEndDate",
+      "question_key": "question:sha256:e254ab6fb5669cb1324c4744c2ed12e560766c561a9e4fa2bfa599e3bdf4b7a4",
+      "data_type": "date",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "xs:date"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:project:end-date",
+        "confidence": 0.98,
+        "evidence": "exact leaf alias: ProjectEndDate",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.FederalEstimatedFunding",
+      "question_key": "question:sha256:f335031cf0a7eed7a68a63f3da33e4fb125db8c9c887cbe1042ed9d68ceb0a8d",
+      "data_type": "decimal",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:BudgetAmountDataType",
+        "fractionDigits": 2,
+        "maxInclusive": "999999999999.99",
+        "minInclusive": "0.00",
+        "restriction_base": "xs:decimal",
+        "totalDigits": 14
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application-funding:federal-estimated",
+        "confidence": 0.98,
+        "evidence": "agent field review: SF424_4_0.FederalEstimatedFunding is a bounded SF-424 field represented by this new concept.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.ApplicantEstimatedFunding",
+      "question_key": "question:sha256:1d8675897d1bb05a8d7739257d3fc3bbf84c3e26fd7291d733ace76c23bfb8b3",
+      "data_type": "decimal",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:BudgetAmountDataType",
+        "fractionDigits": 2,
+        "maxInclusive": "999999999999.99",
+        "minInclusive": "0.00",
+        "restriction_base": "xs:decimal",
+        "totalDigits": 14
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application-funding:applicant-estimated",
+        "confidence": 0.98,
+        "evidence": "agent field review: SF424_4_0.ApplicantEstimatedFunding is a bounded SF-424 field represented by this new concept.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.StateEstimatedFunding",
+      "question_key": "question:sha256:e9d3f3434f12df56f419830db93d18c49138213bfd04bc7a63fe5d4d4cf1c38a",
+      "data_type": "decimal",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:BudgetAmountDataType",
+        "fractionDigits": 2,
+        "maxInclusive": "999999999999.99",
+        "minInclusive": "0.00",
+        "restriction_base": "xs:decimal",
+        "totalDigits": 14
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application-funding:state-estimated",
+        "confidence": 0.98,
+        "evidence": "agent field review: SF424_4_0.StateEstimatedFunding is a bounded SF-424 field represented by this new concept.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.LocalEstimatedFunding",
+      "question_key": "question:sha256:1867d2c5e14fd73451846864b72451eedba6b69993b40dd8f7f9db87aff2b50f",
+      "data_type": "decimal",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:BudgetAmountDataType",
+        "fractionDigits": 2,
+        "maxInclusive": "999999999999.99",
+        "minInclusive": "0.00",
+        "restriction_base": "xs:decimal",
+        "totalDigits": 14
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application-funding:local-estimated",
+        "confidence": 0.98,
+        "evidence": "agent field review: SF424_4_0.LocalEstimatedFunding is a bounded SF-424 field represented by this new concept.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.OtherEstimatedFunding",
+      "question_key": "question:sha256:45a77052d27584e6afd0a87dc203e8a83c0cccf45ff8ff0a77aabc4bf04e6ea2",
+      "data_type": "decimal",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:BudgetAmountDataType",
+        "fractionDigits": 2,
+        "maxInclusive": "999999999999.99",
+        "minInclusive": "0.00",
+        "restriction_base": "xs:decimal",
+        "totalDigits": 14
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application-funding:other-estimated",
+        "confidence": 0.98,
+        "evidence": "agent field review: SF424_4_0.OtherEstimatedFunding is a bounded SF-424 field represented by this new concept.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.ProgramIncomeEstimatedFunding",
+      "question_key": "question:sha256:54f9a330ddbcb761cdc5865685a05a1285968e825d569d3ae0cd0ec337722e1b",
+      "data_type": "decimal",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:BudgetAmountDataType",
+        "fractionDigits": 2,
+        "maxInclusive": "999999999999.99",
+        "minInclusive": "0.00",
+        "restriction_base": "xs:decimal",
+        "totalDigits": 14
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application-funding:program-income-estimated",
+        "confidence": 0.98,
+        "evidence": "agent field review: SF424_4_0.ProgramIncomeEstimatedFunding is a bounded SF-424 field represented by this new concept.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.TotalEstimatedFunding",
+      "question_key": "question:sha256:59e7c225bcbe0253ea620d03b5d0ebfd86ac27a0d83eceddd50841f36b5373d0",
+      "data_type": "decimal",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:BudgetTotalAmountDataType",
+        "fractionDigits": 2,
+        "maxInclusive": "9999999999999.99",
+        "minInclusive": "0.00",
+        "restriction_base": "xs:decimal",
+        "totalDigits": 15
+      },
+      "conditions": [],
+      "calculations": [
+        {
+          "dependency_resolution": "runtime_path_resolution_required",
+          "operand_hints": [],
+          "operator": "sum_references"
+        }
+      ],
+      "semantic_mapping": {
+        "concept_id": "concept:budget:total-project-funding",
+        "confidence": 0.99,
+        "evidence": "agent field review: SF424_4_0.TotalEstimatedFunding has the same bounded application meaning as the existing concept; shared wording alone was not used as the basis.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.StateReview",
+      "question_key": "question:sha256:777bc47d46bcc0f3a3c5b499d8d0f5fee22a8b4a343e0b0a83efeee5197ee219",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "enumeration": [
+          "a. This application was made available to the State under the Executive Order 12372 Process for review on",
+          "b. Program is subject to E.O. 12372 but has not been selected by the State for review.",
+          "c. Program is not covered by E.O. 12372."
+        ],
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:state-review-status",
+        "confidence": 0.94,
+        "evidence": "exact leaf alias: StateReview",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+      ],
+      "enumeration": [
+        "a. This application was made available to the State under the Executive Order 12372 Process for review on",
+        "b. Program is subject to E.O. 12372 but has not been selected by the State for review.",
+        "c. Program is not covered by E.O. 12372."
+      ],
+      "enumeration_evidence_status": "xsd"
+    },
+    {
+      "path": "SF424_4_0.StateReviewAvailableDate",
+      "question_key": "question:sha256:75c2e93329e3271f7df5b583f8f6f68955f9e01f65ca98f36e735508c39ef287",
+      "data_type": "date",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "xs:date"
+      },
+      "conditions": [
+        "Required if State Review Available is selected"
+      ],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:state-review-date",
+        "confidence": 0.94,
+        "evidence": "exact leaf alias: StateReviewAvailableDate",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.DelinquentFederalDebt",
+      "question_key": "question:sha256:cc845d09c69510380e82ac7eed93d70bac0ba363aaa481f2f6cb35b4737db3cb",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:YesNoDataType",
+        "enumeration": [
+          "Y: Yes",
+          "N: No"
+        ],
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:delinquent-federal-debt",
+        "confidence": 0.98,
+        "evidence": "agent field review: SF424_4_0.DelinquentFederalDebt is a bounded SF-424 field represented by this new concept.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [
+        "Y: Yes",
+        "N: No",
+        "Yes",
+        "No"
+      ],
+      "enumeration_evidence_status": "xsd"
+    },
+    {
+      "path": "SF424_4_0.DebtExplanation",
+      "question_key": "question:sha256:8eaecb64bdff129a063419ec4e2f22c23b2e4ab5885ea8ca46e1dca6aef01126",
+      "data_type": "AttachedFileDataType",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "att:AttachedFileDataType"
+      },
+      "conditions": [
+        "Required if Applicant Delinquent on Federal Debt is Yes"
+      ],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:attachment:delinquent-federal-debt-explanation",
+        "confidence": 0.98,
+        "evidence": "agent field review: SF424_4_0.DebtExplanation is a bounded SF-424 field represented by this new concept.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ae2ebb3618f7d8fb337be2309b3096e9121b4af659e913af423aab85d13dcb1d https://apply07.grants.gov/apply/system/schemas/Attachments-V1.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.CertificationAgree",
+      "question_key": "question:sha256:9952664af9b3bb5eb822e3d73cd95c0e7627433ae74295a3c53de3faccf2622f",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:YesNoDataType",
+        "enumeration": [
+          "Y: Yes",
+          "N: No"
+        ],
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:certification-agreement",
+        "confidence": 0.99,
+        "evidence": "agent field review: SF424_4_0.CertificationAgree has the same bounded application meaning as the existing concept; shared wording alone was not used as the basis.",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [
+        "Y: Yes",
+        "N: No"
+      ],
+      "enumeration_evidence_status": "xsd"
+    },
+    {
+      "path": "SF424_4_0.AuthorizedRepresentative.PrefixName",
+      "question_key": "question:sha256:8f59e6292ff34bb94167c3fe9e816702f047d3674809f43a731a9fa853823c48",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:PrefixNameDataType",
+        "maxLength": 10,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:authorized-organization-representative:name:prefix",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: PrefixName; semantic role from exact path: authorized-organization-representative",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": false,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [
+        "Mr.; Mrs.; Miss; Ms.; Dr.; Rev.; Prof."
+      ],
+      "enumeration_evidence_status": "dat_display_agent_proposed"
+    },
+    {
+      "path": "SF424_4_0.AuthorizedRepresentative.FirstName",
+      "question_key": "question:sha256:4d96c22b76a76cd1022cdefb5ea1f515625fe024b032de458ad1cf97acbb545a",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:FirstNameDataType",
+        "maxLength": 35,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:authorized-organization-representative:name:first",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: FirstName; semantic role from exact path: authorized-organization-representative",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.AuthorizedRepresentative.MiddleName",
+      "question_key": "question:sha256:60a95abe817d166827ad2be400ab4a211048e7e5313e6439c2124f1386f78ce9",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:MiddleNameDataType",
+        "maxLength": 25,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:authorized-organization-representative:name:middle",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: MiddleName; semantic role from exact path: authorized-organization-representative",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": false,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.AuthorizedRepresentative.LastName",
+      "question_key": "question:sha256:0215c97a2b1f1beb21966c4a674ef9d36d2008b6674f6e5e26705643a8e848ce",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:LastNameDataType",
+        "maxLength": 60,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:authorized-organization-representative:name:last",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: LastName; semantic role from exact path: authorized-organization-representative",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.AuthorizedRepresentative.SuffixName",
+      "question_key": "question:sha256:3cd32f50aac51411f4074efc622aebf0623e9a770274c6e89866b1172571a119",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:SuffixNameDataType",
+        "maxLength": 10,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:authorized-organization-representative:name:suffix",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: SuffixName; semantic role from exact path: authorized-organization-representative",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": false,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [
+        "Jr.; Sr.; M.D.; Ph.D"
+      ],
+      "enumeration_evidence_status": "dat_display_agent_proposed"
+    },
+    {
+      "path": "SF424_4_0.AuthorizedRepresentativeTitle",
+      "question_key": "question:sha256:8ef6e1a4416dda841a502f4d8c7a2f29924cffe05667af94f9d07d42d0d41b5b",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:HumanTitleDataType",
+        "maxLength": 45,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:authorized-organization-representative:title",
+        "confidence": 0.97,
+        "evidence": "exact leaf alias: AuthorizedRepresentativeTitle; semantic role from exact path: authorized-organization-representative",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.AuthorizedRepresentativePhoneNumber",
+      "question_key": "question:sha256:e9fcbe4c81df121a7664d6517e162c0c8b66912bc8d1d5003d3df29678e0eac4",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:TelephoneNumberDataType",
+        "maxLength": 25,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:authorized-organization-representative:phone",
+        "confidence": 0.98,
+        "evidence": "exact leaf alias: AuthorizedRepresentativePhoneNumber; semantic role from exact path: authorized-organization-representative",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.AuthorizedRepresentativeEmail",
+      "question_key": "question:sha256:977f4b0b57f0fe4bc261266896d415174cef2403cc7cc9b38243668f8f91a655",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:EmailDataType",
+        "maxLength": 60,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:authorized-organization-representative:email",
+        "confidence": 0.99,
+        "evidence": "exact leaf alias: AuthorizedRepresentativeEmail; semantic role from exact path: authorized-organization-representative",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.AuthorizedRepresentativeFax",
+      "question_key": "question:sha256:72e005ad05680e34f0c2698e5589e1f2601419645ae4db98ecfcb8a5c6e1f683",
+      "data_type": "string",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:TelephoneNumberDataType",
+        "maxLength": 25,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:role:authorized-organization-representative:fax",
+        "confidence": 0.98,
+        "evidence": "exact leaf alias: AuthorizedRepresentativeFax; semantic role from exact path: authorized-organization-representative",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": false,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.AORSignature",
+      "question_key": "question:sha256:0ffdae992350799813f3a1bfb5bfcede8a1d31398c3235121611c5b8ba6a274e",
+      "data_type": "string",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "globLib:SignatureDataType",
+        "maxLength": 144,
+        "minLength": 1,
+        "restriction_base": "xs:string"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:aor-signature",
+        "confidence": 0.98,
+        "evidence": "exact leaf alias: AORSignature",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
+        "sha256:ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8 https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    },
+    {
+      "path": "SF424_4_0.DateSigned",
+      "question_key": "question:sha256:303b8982dbcfd41cdcc83c18bb059a318e8f43269dc867a3305db4824701f6a7",
+      "data_type": "date",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "constraints": {
+        "declared_type": "xs:date"
+      },
+      "conditions": [],
+      "calculations": [],
+      "semantic_mapping": {
+        "concept_id": "concept:application:aor-signed-date",
+        "confidence": 0.98,
+        "evidence": "exact leaf alias: DateSigned",
+        "status": "agent_proposed"
+      },
+      "native_xml_emitted": true,
+      "mapping_status": "agent_proposed",
+      "provenance": [
+        "sha256:21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364 https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd"
+      ],
+      "enumeration": [],
+      "enumeration_evidence_status": "none"
+    }
+  ],
+  "source_evidence": [
+    {
+      "kind": "authoritative_source",
+      "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
+      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
+      "path": "work/grantsgov-xsds/SF424_4_0-V4.0.xsd",
+      "sha256": "21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364",
+      "source_version": "SF424 4.0"
+    },
+    {
+      "kind": "authoritative_source",
+      "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
+      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
+      "path": "work/form-metadata/SF424_4_0-V4.0_F713.xls",
+      "sha256": "d6c16b73f5ade8c30bff93163503d1b80a1ee609ea8daa543a90214523b92bde",
+      "source_version": "SF424 4.0 F713 DAT"
+    },
+    {
+      "kind": "implementation_oracle",
+      "repository": "https://github.com/mikec-ai/simpler-grants-form-runtime.git",
+      "revision": "c2380ead0902e94286c874b62e804baac30b2c7d",
+      "path": "api/src/form_schema/forms/sf424/1/0/form_json.py",
+      "sha256": "442c62f8dad67ad09a8135b3c8d880c6cad8cd6b9f0dd71411ef537b31ebc8e1",
+      "source_version": "SF424 4.0"
+    }
+  ],
+  "review_boundary": {
+    "semantic_mappings": "agent_proposed",
+    "published_coverage_eligible": false,
+    "production_ready": false,
+    "native_parity_and_source_completeness_are_separate": true
+  }
+}

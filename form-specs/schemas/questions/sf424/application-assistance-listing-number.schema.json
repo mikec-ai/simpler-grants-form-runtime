@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:grants-form-kernel:questions:application-assistance-listing-number:v1",
+  "type": "string",
+  "title": "Assistance Listing Number",
+  "description": "Pre-populated from the Application cover sheet.",
+  "minLength": 1,
+  "maxLength": 15,
+  "x-question-id": "question:application:assistance-listing-number",
+  "x-review-status": "agent_proposed"
+}

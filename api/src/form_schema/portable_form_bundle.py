@@ -47,44 +47,102 @@ def _ui_name(label: str) -> str:
     return name or "section"
 
 
-def _adapt_ui_node(node: object, label: str) -> list[dict[str, Any]]:
+def _adapt_ui_node(
+    node: object,
+    label: str,
+    *,
+    item_prefix: str | None = None,
+) -> list[dict[str, Any]]:
     value = _object(node, label)
     node_type = _string(value.get("type"), f"{label}.type")
     if node_type == "Control":
-        allowed = {"type", "scope", "label", "description", "options"}
+        allowed = {"type", "scope", "label", "description", "options", "conditional"}
         unknown = set(value) - allowed
         if unknown:
             raise PortableFormBundleError(f"{label} has unknown Control keys: {sorted(unknown)}")
         scope = _string(value.get("scope"), f"{label}.scope")
         if not scope.startswith("#/"):
             raise PortableFormBundleError(f"{label}.scope must begin with #/")
-        result: dict[str, Any] = {"type": "field", "definition": scope[1:]}
+        definition = scope[1:]
+        if item_prefix is not None:
+            definition = f"{item_prefix}{definition}"
+        options = _object(value["options"], f"{label}.options") if "options" in value else {}
+        detail = options.get("detail")
+        if detail is not None:
+            detail_value = _object(detail, f"{label}.options.detail")
+            detail_type = _string(detail_value.get("type"), f"{label}.options.detail.type")
+            if detail_type not in {"VerticalLayout", "Group"}:
+                raise PortableFormBundleError(
+                    f"{label}.options.detail.type is unsupported: {detail_type}"
+                )
+            detail_elements = _array(
+                detail_value.get("elements"), f"{label}.options.detail.elements"
+            )
+            item_label = _string(
+                options.get("itemLabel", value.get("label", "Item")),
+                f"{label}.options.itemLabel",
+            )
+            field_list: dict[str, Any] = {
+                "type": "fieldList",
+                "name": definition.rsplit("/", 1)[-1],
+                "label": item_label,
+                "children": list(
+                    itertools.chain.from_iterable(
+                        _adapt_ui_node(
+                            child,
+                            f"{label}.options.detail.elements[{index}]",
+                            item_prefix=f"{definition}/items",
+                        )
+                        for index, child in enumerate(detail_elements)
+                    )
+                ),
+            }
+            if "description" in value:
+                field_list["description"] = _string(value["description"], f"{label}.description")
+            return [field_list]
+
+        simpler = _object(options.get("simpler", {}), f"{label}.options.simpler")
+        native_type = simpler.get("type", "field")
+        if native_type not in {"field", "null"}:
+            raise PortableFormBundleError(f"{label}.options.simpler.type is unsupported")
+        result: dict[str, Any] = {"type": native_type, "definition": definition}
         for key in ("label", "description"):
             if key in value:
                 result[key] = _string(value[key], f"{label}.{key}")
-        if "options" in value:
-            result["options"] = _object(value["options"], f"{label}.options")
+        native_widget = simpler.get("widget")
+        if native_widget is not None:
+            result["widget"] = _string(native_widget, f"{label}.options.simpler.widget")
+        remaining_options = {key: item for key, item in options.items() if key != "simpler"}
+        if remaining_options:
+            result["options"] = remaining_options
+        if "conditional" in value:
+            result["conditional"] = _object(value["conditional"], f"{label}.conditional")
         return [result]
 
     if node_type not in {"VerticalLayout", "Group"}:
         raise PortableFormBundleError(f"{label}.type is unsupported: {node_type}")
-    allowed = {"type", "label", "elements"}
+    allowed = {"type", "label", "elements", "options"}
     unknown = set(value) - allowed
     if unknown:
         raise PortableFormBundleError(f"{label} has unknown layout keys: {sorted(unknown)}")
     elements = _array(value.get("elements"), f"{label}.elements")
     children = list(
         itertools.chain.from_iterable(
-            _adapt_ui_node(child, f"{label}.elements[{index}]")
+            _adapt_ui_node(child, f"{label}.elements[{index}]", item_prefix=item_prefix)
             for index, child in enumerate(elements)
         )
     )
     section_label = _string(value.get("label", "Form"), f"{label}.label")
+    layout_options = _object(value["options"], f"{label}.options") if "options" in value else {}
+    simpler = _object(layout_options.get("simpler", {}), f"{label}.options.simpler")
+    native_name = simpler.get("name")
+    if native_name is not None:
+        native_name = _string(native_name, f"{label}.options.simpler.name")
     return [
         {
             "type": "section",
             "label": section_label,
-            "name": _ui_name(section_label),
+            "name": native_name or _ui_name(section_label),
             "children": children,
         }
     ]
@@ -140,7 +198,8 @@ class PortableFormBundle:
             raise PortableFormBundleError(f"unknown portable form_key: {form_key}")
         portable = self.kernel.forms_by_key[form_key]
         definition = portable.definition
-        metadata = {**definition["metadata"], "form_instruction_id": None}
+        metadata = {**definition["metadata"]}
+        metadata.setdefault("form_instruction_id", None)
         targets = portable.mappings["targets"]
         common_grants = targets.get("common_grants", {"from": {}, "to": {}})
         resolved_schema = self.kernel.resolved_schema(form_key)
@@ -172,11 +231,24 @@ class PortableFormBundle:
         return create_resolved_form_package(
             manifest=manifest,
             json_schema=resolved_schema,
-            ui_schema=_adapt_ui_node(portable.ui, f"forms.{form_key}.ui"),
+            ui_schema=(
+                list(
+                    itertools.chain.from_iterable(
+                        _adapt_ui_node(node, f"forms.{form_key}.ui.elements[{index}]")
+                        for index, node in enumerate(
+                            _array(portable.ui.get("elements"), f"forms.{form_key}.ui.elements")
+                        )
+                    )
+                )
+                if portable.ui.get("type") == "VerticalLayout"
+                else _adapt_ui_node(portable.ui, f"forms.{form_key}.ui")
+            ),
             mappings={
                 "x-mapping-from-cg": common_grants["from"],
                 "x-mapping-to-cg": common_grants["to"],
             },
+            xml_transform=targets.get("grants_gov_xml", {}).get("runtime_transform"),
+            rule_schema=portable.rules,
             dependency_paths=self.kernel.dependency_paths,
         )
 
