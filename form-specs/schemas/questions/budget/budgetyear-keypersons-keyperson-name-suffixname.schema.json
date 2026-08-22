@@ -8,5 +8,5 @@
   "minLength": 1,
   "title": "Suffix",
   "type": "string",
-  "x-question-id": "question:budget:budgetyear-keypersons-keyperson-name-suffixname"
+  "x-question-id": "question:person:name:suffix"
 }

@@ -60,5 +60,22 @@ coverage. R&R Budget 10 behavior evidence is inherited from the five-year form a
 target-form DAT parity. Grants.gov XML projection is not available in the pinned implementation
 oracle and is not claimed.
 
+The composition wave adds two less-trivial forms without adding form-specific runtime Python:
+
+- R&R Subaward Budget 30 embeds the exact 101-question R&R Budget payload inside a bounded
+  30-instance subaward collection. Its 30 file slots are classified as content-capture mechanisms,
+  not semantic questions, so they remain visible in the association export without inflating
+  question overlap.
+- R&R Multi-Project Budget maps all 101 applicant inputs to the same proposed semantic identities.
+  Eighty-seven reuse the exact budget schema; fourteen have source validation-profile differences.
+  Two of those differences reuse an existing catalog schema and twelve emit explicit variants.
+  Ten calculations are projected, while 46 calculations and 55 conditions remain preserved in
+  evidence rather than inferred.
+
+Question identity and validation schema identity are intentionally separate. A proposed question
+may have more than one schema variant when form-specific constraints differ. Organization legal
+name and five person-name parts now use the same proposed identities across SF-424, Key Contacts,
+and the budget forms; roles and occurrence context remain attached to each form binding.
+
 TypeSpec and CommonGrants are optional compatibility inputs. Neither is required to author,
 validate, analyze, or load this bundle.

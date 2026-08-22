@@ -15,6 +15,7 @@ from src.form_schema.portable_form_bundle import load_portable_form_bundle
 REPOSITORY_ROOT = Path(__file__).resolve().parents[4]
 BUNDLE_ROOT = REPOSITORY_ROOT / "form-specs"
 BUILDER = REPOSITORY_ROOT / "scripts/build_portable_budget_pilot.py"
+COMPOSITION_BUILDER = REPOSITORY_ROOT / "scripts/build_portable_budget_composition.py"
 
 
 def _walk(node: object):
@@ -71,6 +72,10 @@ def _copied_builder(tmp_path: Path) -> tuple[Path, Path]:
     shutil.copytree(BUNDLE_ROOT, root / "form-specs")
     (root / "scripts").mkdir()
     shutil.copy(BUILDER, root / "scripts/build_portable_budget_pilot.py")
+    shutil.copy(
+        COMPOSITION_BUILDER,
+        root / "scripts/build_portable_budget_composition.py",
+    )
     return root, root / "form-specs"
 
 
@@ -78,7 +83,8 @@ def _remove_first_executable_rule(value: dict[str, Any]) -> None:
     index = next(
         index
         for index, rule in enumerate(value["rules"])
-        if rule.get("mechanism") == "calculation" and rule.get("execution_class") == "executable"
+        if rule.get("mechanism") == "calculation"
+        and rule.get("execution_class") == "executable"
     )
     value["rules"].pop(index)
 
@@ -92,9 +98,9 @@ def test_profiles_are_one_declarative_runtime_shape_with_one_parameter() -> None
     assert len(bundle.forms_by_key["RRBudget10"].definition["question_bindings"]) == 101
     assert five.form_json_schema["properties"]["budget_year"]["maxItems"] == 5
     assert ten.form_json_schema["properties"]["budget_year"]["maxItems"] == 10
-    assert _normalized_profile_schema(five.form_json_schema) == _normalized_profile_schema(
-        ten.form_json_schema
-    )
+    assert _normalized_profile_schema(
+        five.form_json_schema
+    ) == _normalized_profile_schema(ten.form_json_schema)
     assert five.form_ui_schema == ten.form_ui_schema
     assert five.form_rule_schema == ten.form_rule_schema
     assert (
@@ -137,7 +143,9 @@ def test_budget_pair_analysis_is_explicitly_proposed_not_published() -> None:
 
 def test_budget_profile_evidence_reconciles_the_question_count_discrepancy() -> None:
     evidence = json.loads(
-        (BUNDLE_ROOT / "evidence/rr-budget-family-profile.json").read_text(encoding="utf-8")
+        (BUNDLE_ROOT / "evidence/rr-budget-family-profile.json").read_text(
+            encoding="utf-8"
+        )
     )
 
     assert evidence["template"] == {
@@ -165,7 +173,9 @@ def test_budget_profile_evidence_reconciles_the_question_count_discrepancy() -> 
         "attachment upload/runtime parity is not established"
         in evidence["runtime_boundaries"]["attachment_fields"]
     )
-    assert evidence["xml_projection"] == ("not_available_in_pinned_implementation_oracle")
+    assert evidence["xml_projection"] == (
+        "not_available_in_pinned_implementation_oracle"
+    )
     assert evidence["accepted_mappings"] == 0
     assert evidence["published_coverage_eligible"] is False
 
@@ -191,6 +201,11 @@ def test_budget_builder_is_reproducible_in_an_isolated_copy(tmp_path: Path) -> N
         cwd=root,
         check=True,
     )
+    subprocess.run(
+        [sys.executable, "scripts/build_portable_budget_composition.py"],
+        cwd=root,
+        check=True,
+    )
 
     assert _tree_digest(specs) == before
 
@@ -200,9 +215,9 @@ def test_budget_builder_is_reproducible_in_an_isolated_copy(tmp_path: Path) -> N
     [
         (
             "oracles/budget/rr-budget10-v3.candidate.json",
-            lambda value: value["artifacts"]["json_schema"]["properties"]["budget_year"].update(
-                {"maxItems": 11}
-            ),
+            lambda value: value["artifacts"]["json_schema"]["properties"][
+                "budget_year"
+            ].update({"maxItems": 11}),
             "budget period drift",
         ),
         (

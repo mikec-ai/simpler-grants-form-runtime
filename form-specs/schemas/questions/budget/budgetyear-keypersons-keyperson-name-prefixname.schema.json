@@ -8,5 +8,5 @@
   "minLength": 1,
   "title": "Prefix",
   "type": "string",
-  "x-question-id": "question:budget:budgetyear-keypersons-keyperson-name-prefixname"
+  "x-question-id": "question:person:name:prefix"
 }
