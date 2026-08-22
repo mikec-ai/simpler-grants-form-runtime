@@ -1644,14 +1644,6 @@
       "sha256": "aeb59edbd32b7b686a28d0ed9e9d4d23b91b7780a1a9f0f070c611e6f4b82853"
     },
     {
-      "path": "oracles/sf424-v4.native.schema.json",
-      "sha256": "a3731ccf9b99e64d376997e3fbe76830efa9f7a381e7e7a97b85a8b1c005d583"
-    },
-    {
-      "path": "oracles/sf424-v4.native.ui.json",
-      "sha256": "5c8af720a2b239a9fb6a2f18fff0f70ce9284920faabc121b7646ca948bfbd32"
-    },
-    {
       "path": "rules/sf424-v4.rules.json",
       "sha256": "36f833d3a0b29151db862b8c2c64f69d1f58282716b39e8a99c945adb58c4ce2"
     },

@@ -3307,15 +3307,7 @@
         },
         {
           "path": "evidence/key-contacts.parity-exceptions.json",
-          "sha256": "82423d2b8bcea07e59c916930adf61555b97584ddd0d36ae48a41565891d874c"
-        },
-        {
-          "path": "oracles/key-contacts-v2.native.schema.json",
-          "sha256": "8baf01802cff98771d7795b6339430c937b13e55660a72301382aeb6602df645"
-        },
-        {
-          "path": "oracles/key-contacts-v2.native.ui.json",
-          "sha256": "30b6c3f00e2a8fea1658c747acae5139771c7caeade442c6476b41ea0c9c7daa"
+          "sha256": "f406749e603825867f095576d11141c501deb2953f0dd31ba34139232264d837"
         }
       ],
       "review_boundary": {
@@ -4988,14 +4980,6 @@
         {
           "path": "source-accounting/sf424-v4.source.json",
           "sha256": "aeb59edbd32b7b686a28d0ed9e9d4d23b91b7780a1a9f0f070c611e6f4b82853"
-        },
-        {
-          "path": "oracles/sf424-v4.native.schema.json",
-          "sha256": "a3731ccf9b99e64d376997e3fbe76830efa9f7a381e7e7a97b85a8b1c005d583"
-        },
-        {
-          "path": "oracles/sf424-v4.native.ui.json",
-          "sha256": "5c8af720a2b239a9fb6a2f18fff0f70ce9284920faabc121b7646ca948bfbd32"
         },
         {
           "path": "rules/sf424-v4.rules.json",
@@ -7220,14 +7204,6 @@
       ],
       "supplemental_evidence": [
         {
-          "path": "oracles/budget/rr-budget-v3.candidate.json",
-          "sha256": "84219caf65d2f3495a7b570a6b2fcce6f82ea6bf40fb9e6a95f3388a8af7b0cd"
-        },
-        {
-          "path": "oracles/budget/rr-budget-v3.runtime-rules.json",
-          "sha256": "e61b568b6397a24a1f527b573303efa7bc78a5d5a649b19568a006a82b21d321"
-        },
-        {
           "path": "evidence/rr-budget-family-profile.json",
           "sha256": "22e831736d1ddd197b78a6f27c517fa59bd0bb19aa34f9801c2d4a4c36e24de2"
         }
@@ -9431,14 +9407,6 @@
         }
       ],
       "supplemental_evidence": [
-        {
-          "path": "oracles/budget/rr-budget10-v3.candidate.json",
-          "sha256": "c01baadde9247ec8f1ecadd6c4933e6440f746e0cb460e48d4a7a2715c7ccd73"
-        },
-        {
-          "path": "oracles/budget/rr-budget10-v3.runtime-rules.json",
-          "sha256": "e67922c326d9c9cec17a635333c668df84b86b9566502825c216b57278437487"
-        },
         {
           "path": "evidence/rr-budget-family-profile.json",
           "sha256": "22e831736d1ddd197b78a6f27c517fa59bd0bb19aa34f9801c2d4a4c36e24de2"
@@ -12487,14 +12455,6 @@
       ],
       "supplemental_evidence": [
         {
-          "path": "oracles/budget/rr-subaward-budget30-v3.candidate.json",
-          "sha256": "7090f3a9e76b09df87a862df49134ed63d2e8dce3947a312d35992d18205fe90"
-        },
-        {
-          "path": "oracles/budget/rr-subaward-budget30-v3.runtime-rules.json",
-          "sha256": "2554e6d8400c045568c5626f7dcdb3ede5a9e07e256cb882c0da613e4b65040f"
-        },
-        {
           "path": "evidence/rr-budget-composition-wave.json",
           "sha256": "d525eb010336111073a1e160841e61f9c91911d41f16b341d42b034e39904bb3"
         }
@@ -14799,14 +14759,6 @@
         }
       ],
       "supplemental_evidence": [
-        {
-          "path": "oracles/budget/rr-mp-budget-v3.candidate.json",
-          "sha256": "6cd2aae9da2b1bf8f8f028ed8843aad0bebc3f13bf3fe781ebb75dbc8112dc51"
-        },
-        {
-          "path": "oracles/budget/rr-mp-budget-v3.runtime-rules.json",
-          "sha256": "94b2295559806855ebeb96e8b1694e0a8982c49140b98953c4ed9663d18fd771"
-        },
         {
           "path": "evidence/rr-budget-composition-wave.json",
           "sha256": "d525eb010336111073a1e160841e61f9c91911d41f16b341d42b034e39904bb3"

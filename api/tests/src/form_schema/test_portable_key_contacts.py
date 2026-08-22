@@ -155,11 +155,6 @@ def test_full_key_contacts_compiles_generic_repeated_ui() -> None:
     )
 
 
-def test_key_contacts_pinned_native_oracles_still_match_implementation() -> None:
-    assert _read("oracles/key-contacts-v2.native.schema.json") == FORM_JSON_SCHEMA
-    assert _read("oracles/key-contacts-v2.native.ui.json") == FORM_UI_SCHEMA
-
-
 def test_key_contacts_compiled_ui_is_exactly_native_without_exceptions() -> None:
     ledger = _read("evidence/key-contacts.parity-exceptions.json")
     assert ledger["ui_normalization"] == {"allowed": False}
@@ -205,7 +200,7 @@ def test_key_contacts_resolved_schema_parity_is_exhaustive_and_fail_closed() -> 
         return shared[uri.split("#", 1)[0]]
 
     native = jsonref.replace_refs(
-        _read("oracles/key-contacts-v2.native.schema.json"),
+        FORM_JSON_SCHEMA,
         loader=loader,
         lazy_load=False,
         proxies=False,

@@ -5,8 +5,8 @@
   "published_coverage_eligible": false,
   "native_revision": "e1739ee54",
   "native_oracles": {
-    "schema": "oracles/key-contacts-v2.native.schema.json",
-    "ui": "oracles/key-contacts-v2.native.ui.json"
+    "schema": "build-artifact:native/KeyContacts/json_schema.json",
+    "ui": "build-artifact:native/KeyContacts/ui_schema.json"
   },
   "schema_normalization": {
     "ignored_keys_any_depth": [
