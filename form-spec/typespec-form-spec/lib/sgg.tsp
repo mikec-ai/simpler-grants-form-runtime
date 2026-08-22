@@ -8,7 +8,17 @@ using TypeSpec.Reflection;
 
 namespace SimplerForms.Sgg;
 
-extern dec prePopulate(target: ModelProperty, rule: valueof SggPrePop);
+/**
+ * Which fields the runtime fills in before the applicant sees them, keyed by the path an
+ * answer takes: `samUei`, or `assistanceListing.number` for a member of a composed
+ * question.
+ *
+ * A table on the form rather than a decorator per property, for two reasons. A package's
+ * members live in the bank, where `@Sgg.*` may not go -- a shared question must not carry
+ * one consumer's rules. And everything the runtime pre-fills is then in one place, which is
+ * the list a reviewer actually wants to read.
+ */
+extern dec prePopulate(target: Model, rules: valueof Record<SggPrePop>);
 
 /**
  * Hand an entire section to one of SGG's bespoke widgets.
@@ -21,3 +31,4 @@ extern dec prePopulate(target: ModelProperty, rule: valueof SggPrePop);
  * not have these six components uses that.
  */
 extern dec multiField(target: Model, section: valueof EnumMember, widget: valueof WidgetName);
+

@@ -76,7 +76,7 @@ def shape(schema: dict) -> str:
 def shape_label(schema: dict) -> str:
     """The same thing, short enough to read in a table.
 
-    A code list is summarised by its size and first member: printing 261 country names in a
+    A code list is summarized by its size and first member: printing 261 country names in a
     cell hides the one fact that matters, which is that two fields share the list.
     """
     parts: list[str] = [str(schema.get("type", "?"))]

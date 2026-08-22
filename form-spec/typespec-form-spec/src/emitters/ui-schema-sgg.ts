@@ -36,9 +36,8 @@ const snake = (s: string) => s.replace(/([a-z0-9])([A-Z])/g, "$1_$2").toLowerCas
 /**
  * A section's name is a wire identifier rather than a field name, and SGG's forms do not
  * agree on a convention for it: most are snake-cased, SF-424A's are `SectionA`. So a
- * lowerCamel member name is a canonical name and gets projected, while a member written in
- * any other convention is being written in the wire's convention on purpose and is left
- * alone.
+ * lowerCamel member name is projected, while a member written in any other convention is
+ * being written in the wire's convention on purpose and is left alone.
  */
 const sectionName = (s: string) => (/^[a-z]/.test(s) ? snake(s) : s);
 
@@ -87,13 +86,9 @@ function walk(
     if (propOmit(program, prop) || at(overrides, here).omit === true) continue;
 
     const path = `${prefix}/properties/${snake(prop.name)}`;
-    const child = childBlock(program, prop);
-    if (child && !child.scalar && child.model.kind === "Model") {
-      walk(program, child.model, path, here, into, overrides);
-      continue;
-    }
-    if (!child && prop.type.kind === "Model" && !prop.type.indexer) {
-      walk(program, prop.type, path, here, into, overrides);
+    const object = objectBehind(program, prop);
+    if (object) {
+      walk(program, object, path, here, into, overrides);
       continue;
     }
     into.push(field(program, prop, path, at(overrides, here)));
@@ -113,6 +108,21 @@ function field(
   const widget = (override.widget as string | undefined) ?? propWidget(program, prop);
   if (widget) f.widget = widget;
   return f;
+}
+
+/**
+ * The object a property holds, or nothing when the property is a leaf.
+ *
+ * A single-valued question is a leaf even though it is a block, and a form-local extension
+ * is an object even though it is not -- so the test is the shape, not whether the type
+ * happens to be published.
+ */
+function objectBehind(program: Program, prop: ModelProperty): Model | undefined {
+  const type = prop.type;
+  if (type.kind !== "Model" || type.indexer) return undefined;
+  const block = childBlock(program, prop);
+  if (block?.scalar) return undefined;
+  return type;
 }
 
 /** A model's own `@UI.label`, whether or not it is a published block. */
@@ -210,9 +220,7 @@ export function emitSggUi(program: Program, block: Block): SggSection[] {
         type: "multiField",
         name: widget,
         widget,
-        definition: gridProperties(program, block, members).map(
-          (p) => `/properties/${snake(p)}`,
-        ),
+        definition: gridProperties(program, block, members).map((p) => `/properties/${snake(p)}`),
       });
       continue;
     }
@@ -224,10 +232,10 @@ export function emitSggUi(program: Program, block: Block): SggSection[] {
         continue;
       }
       const path = `/properties/${snake(prop.name)}`;
-      const child = childBlock(program, prop);
-      if (child && !child.scalar && child.model.kind === "Model") {
+      const object = objectBehind(program, prop);
+      if (object) {
         const flat: SggField[] = [];
-        walk(program, child.model, path, prop.name, flat, overrides);
+        walk(program, object, path, prop.name, flat, overrides);
         bucket.push(...flat);
         continue;
       }

@@ -32,7 +32,7 @@
       "title": "County/Parish"
     },
     "state": {
-      "$ref": "#/$defs/state_code",
+      "$ref": "#/$defs/StateCode",
       "description": "Enter the state.",
       "title": "State"
     },
@@ -44,7 +44,7 @@
       "title": "Province"
     },
     "country": {
-      "$ref": "#/$defs/country_code",
+      "$ref": "#/$defs/CountryCode",
       "description": "Enter the country.",
       "title": "Country"
     },
@@ -64,7 +64,7 @@
   "description": "Enter an address.",
   "title": "Address",
   "$defs": {
-    "state_code": {
+    "StateCode": {
       "type": "string",
       "enum": [
         "AL: Alabama",
@@ -142,7 +142,7 @@
       "description": "US State or Territory Code",
       "title": "State"
     },
-    "country_code": {
+    "CountryCode": {
       "type": "string",
       "enum": [
         "AFG: AFGHANISTAN",

@@ -4,17 +4,17 @@
   "type": "object",
   "properties": {
     "submissionType": {
-      "$ref": "#/$defs/submission_type",
+      "$ref": "#/$defs/SubmissionType",
       "description": "Select one type of submission in accordance with agency instructions.",
       "title": "Submission Type"
     },
     "applicationType": {
-      "$ref": "#/$defs/application_type",
+      "$ref": "#/$defs/ApplicationType",
       "description": "Select one type of application in accordance with agency instructions.",
       "title": "Application Type"
     },
     "revisionType": {
-      "$ref": "#/$defs/revision_type",
+      "$ref": "#/$defs/RevisionType",
       "description": "Select a revision type from the list provided. A selection is required if Type of Application is Revision.",
       "title": "Revision Type"
     },
@@ -131,7 +131,7 @@
     "applicantTypeCode": {
       "type": "array",
       "items": {
-        "$ref": "#/$defs/applicant_type"
+        "$ref": "#/$defs/ApplicantType"
       },
       "minItems": 1,
       "maxItems": 3,
@@ -262,7 +262,7 @@
       "title": "Total Estimated Funding"
     },
     "stateReview": {
-      "$ref": "#/$defs/state_review",
+      "$ref": "#/$defs/StateReview",
       "description": "One selection is required.",
       "title": "Is Application Subject to Review By State Under Executive Order 12372 Process?"
     },
@@ -355,7 +355,7 @@
   ],
   "description": "APPLICATION FOR FEDERAL ASSISTANCE (SF-424)",
   "$defs": {
-    "submission_type": {
+    "SubmissionType": {
       "type": "string",
       "enum": [
         "Preapplication",
@@ -364,7 +364,7 @@
       ],
       "description": "Select one type of submission in accordance with agency instructions."
     },
-    "application_type": {
+    "ApplicationType": {
       "type": "string",
       "enum": [
         "New",
@@ -373,7 +373,7 @@
       ],
       "description": "Select one type of application in accordance with agency instructions."
     },
-    "revision_type": {
+    "RevisionType": {
       "type": "string",
       "enum": [
         "A: Increase Award",
@@ -388,7 +388,7 @@
       ],
       "description": "The kind of change a revision makes to an existing award."
     },
-    "applicant_type": {
+    "ApplicantType": {
       "type": "string",
       "enum": [
         "A: State Government",
@@ -418,7 +418,7 @@
       ],
       "description": "The applicant's category, from the Executive Order 12372 list."
     },
-    "state_review": {
+    "StateReview": {
       "type": "string",
       "enum": [
         "a. This application was made available to the state under the Executive Order 12372 Process for review on",

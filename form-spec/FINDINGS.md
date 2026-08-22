@@ -16,13 +16,13 @@ hand-written original two ways.
 | SGG UI schema | identical | identical | identical |
 | SGG rule schema | identical (absent) | identical, 16 entries | identical, 35 calculations |
 | Resolved JSON Schema | 18 differences, all accounted for | 97, all accounted for | 112, all accounted for |
-| Validation behaviour | 237 payloads, 0 disagreements | 752, 0 | 767, 0 |
+| Validation behavior | 237 payloads, 0 disagreements | 752, 0 | 767, 0 |
 
 ## How parity is proven
 
 Two independent assertions per form, in `api/tests/src/form_schema/form_spec/`.
 
-**Behavioural** is the load-bearing one. It resolves both schemas, derives a corpus from
+**Behavioral** is the load-bearing one. It resolves both schemas, derives a corpus from
 the golden — every field deleted, overrun, emptied, mistyped, and given a value outside its
 enum — and requires SGG's own validator to report identical issues for every payload. It is
 indifferent to how the schemas compose and sensitive to everything an applicant could see.
@@ -34,7 +34,7 @@ for a suffix, `/*`-suffixed for a subtree, so an entry says how much it means to
 
 ## How much is derived rather than declared
 
-This is the part worth showing. SGG's `forms/README.md` says the auto-summation behaviour
+This is the part worth showing. SGG's `forms/README.md` says the auto-summation behavior
 is *"only found by figuring out the behavior from the PDF."*
 
 | Artifact | Declared | Derived from |

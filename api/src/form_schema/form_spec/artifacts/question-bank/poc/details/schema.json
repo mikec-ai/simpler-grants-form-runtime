@@ -3,36 +3,22 @@
   "$id": "poc/details/schema.json",
   "type": "object",
   "properties": {
-    "name": {
-      "$ref": "../../../question-bank/generics/person-name/schema.json",
-      "title": "Name"
-    },
     "title": {
       "$ref": "../../../question-bank/generics/contact-title/schema.json",
       "title": "Title"
     },
     "address": {
       "$ref": "../../../question-bank/generics/address/schema.json"
-    },
-    "phone": {
-      "$ref": "../../../question-bank/generics/phone/schema.json",
-      "title": "Telephone Number"
-    },
-    "fax": {
-      "$ref": "../../../question-bank/generics/phone/schema.json",
-      "title": "Fax Number"
-    },
-    "email": {
-      "$ref": "../../../question-bank/generics/email/schema.json",
-      "title": "Email"
     }
   },
   "required": [
-    "name",
-    "address",
-    "phone",
-    "email"
+    "address"
   ],
-  "description": "A point of contact: name, title, address, and contact methods.",
+  "allOf": [
+    {
+      "$ref": "../../../question-bank/generics/contact-details/schema.json"
+    }
+  ],
+  "description": "The person to contact about the application.\n\nStructurally a contact plus an address, and distinct from the representative who signs:\na point of contact answers questions, and forms routinely ask for both.",
   "title": "Point of Contact"
 }

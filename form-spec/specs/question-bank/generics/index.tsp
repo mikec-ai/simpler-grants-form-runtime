@@ -96,6 +96,35 @@ model QuestionAddress {
   zipCode?: string;
 }
 
+/**
+ * A person and the ways to reach them.
+ *
+ * The shape only. Who the person *is* to the application -- a point of contact, the
+ * representative authorized to sign -- is a different question, because the roles are not
+ * interchangeable and a form asks for both. Those extend this.
+ *
+ * The person's title is deliberately not here. A point of contact may not have one; a
+ * representative authorized to bind the organization does, because their title is how you
+ * know they are authorized. So each of those declares it, with the optionality it has.
+ */
+@Question.meta(#{ id: "generics/contact-details" })
+@Catalog.entity(EntityName.generic)
+@Catalog.tag(TagName.person, TagName.details)
+@UI.label("Contact")
+model QuestionContactDetails {
+  @UI.label("Name")
+  name: QuestionPersonName;
+
+  @UI.label("Telephone Number")
+  phone: PhoneNumber;
+
+  @UI.label("Fax Number")
+  fax?: PhoneNumber;
+
+  @UI.label("Email")
+  email: EmailAddress;
+}
+
 /** A telephone or fax number. */
 @Question.meta(#{ id: "generics/phone" })
 @Catalog.entity(EntityName.generic)

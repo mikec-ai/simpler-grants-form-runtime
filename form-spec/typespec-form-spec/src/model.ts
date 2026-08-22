@@ -90,8 +90,9 @@ export const propComputed = (p: Program, prop: ModelProperty) =>
   g(p, stateKeys.computed, prop) as { operator: string; refs: string[] } | undefined;
 export const propTotals = (p: Program, prop: ModelProperty) =>
   g(p, stateKeys.totals, prop) as ModelProperty[] | undefined;
-export const propPrePopulate = (p: Program, prop: ModelProperty) =>
-  g(p, stateKeys.prePopulate, prop) as string | undefined;
+/** `@Sgg.prePopulate`: canonical data path -> SGG rule name, declared on the form. */
+export const modelPrePopulate = (p: Program, model: Model) =>
+  (g(p, stateKeys.prePopulate, model) as Record<string, string> | undefined) ?? {};
 /** `@UI.label` for any model, block or not. */
 export const modelLabel = (p: Program, model: Model) =>
   g(p, stateKeys.label, model) as string | undefined;

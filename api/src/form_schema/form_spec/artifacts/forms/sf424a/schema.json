@@ -6,7 +6,7 @@
     "activityLineItems": {
       "type": "array",
       "items": {
-        "$ref": "#/$defs/activity_line_item"
+        "$ref": "#/$defs/ActivityLineItem"
       },
       "minItems": 1,
       "maxItems": 4
@@ -21,7 +21,7 @@
       "$ref": "../../question-bank/budget/non-federal-resources/schema.json"
     },
     "forecastedCashNeeds": {
-      "$ref": "#/$defs/forecasted_cash_needs"
+      "$ref": "#/$defs/ForecastedCashNeeds"
     },
     "totalFederalFundEstimates": {
       "$ref": "../../question-bank/budget/federal-fund-estimates/schema.json"
@@ -60,7 +60,7 @@
   ],
   "description": "Budget Information for Non-Construction Programs (SF-424A)",
   "$defs": {
-    "activity_line_item": {
+    "ActivityLineItem": {
       "type": "object",
       "properties": {
         "activityTitle": {
@@ -90,7 +90,7 @@
         "activityTitle"
       ]
     },
-    "forecasted_cash_needs": {
+    "ForecastedCashNeeds": {
       "type": "object",
       "properties": {
         "federalForecastedCashNeeds": {

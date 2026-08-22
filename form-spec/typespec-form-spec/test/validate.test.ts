@@ -340,8 +340,8 @@ describe("$onValidate", () => {
           /** Leaky. */
           @Question.meta(#{ id: "primary-org/uei" })
           @Catalog.tag(TagName.identifier)
+          @Sgg.prePopulate(#{ \`uei\`: SggPrePop.uei })
           model Leaky {
-            @Sgg.prePopulate(SggPrePop.uei)
             uei?: string;
           }
         `),
@@ -360,9 +360,9 @@ describe("$onValidate", () => {
             /** A form. */
             ${formMeta("prepopulated")}
             @UI.sections(Section)
+            @Sgg.prePopulate(#{ \`samUei\`: SggPrePop.uei })
             model Prepopulated {
               @UI.section(Section.only)
-              @Sgg.prePopulate(SggPrePop.uei)
               samUei?: string;
             }
           `),

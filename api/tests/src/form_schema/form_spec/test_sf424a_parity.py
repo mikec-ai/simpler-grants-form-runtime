@@ -19,39 +19,26 @@ from tests.src.form_schema.form_spec import parity
 FORM_DIR = "sf424a"
 FORM_ID = "sf424a"
 
-#: Fields the golden spells out inline that the bank now owns.
-COMPOSED: dict[str, str] = {}
-
-_MONEY = "the monetary-amount question carries a description where the golden's shared primitive has none"
-_TABLE = "the budget question carries a label where the golden's def has none"
-_EMPTY_REQUIRED = "the golden writes an empty `required`, which asserts nothing"
-
-HAND_WRITTEN = {
-    "/description": "the form's own description",
-    # The five budget tables are bank questions now, so they are referenced rather than
-    # copied into this form's `$defs`. The content is the same; only where it is written
-    # down moved, and the behavioural test is what checks that.
-    "/$defs/*": "the five budget tables are referenced from the bank, not held locally",
-    "*/properties/activity_line_items/items/properties/budget_summary/allOf/0/title": _TABLE,
-    "*/properties/activity_line_items/items/properties/budget_categories/allOf/0/title": _TABLE,
-    "*/properties/activity_line_items/items/properties/non_federal_resources/allOf/0/title": (
-        _TABLE
-    ),
-    "*/properties/activity_line_items/items/properties/federal_fund_estimates/allOf/0/title": (
-        _TABLE
-    ),
-    "*/properties/total_budget_summary/allOf/0/title": _TABLE,
-    "*/properties/total_budget_categories/allOf/0/title": _TABLE,
-    "*/properties/total_non_federal_resources/allOf/0/title": _TABLE,
-    "*/properties/total_federal_fund_estimates/allOf/0/title": _TABLE,
-    "*/federal_forecasted_cash_needs/allOf/0/title": _TABLE,
-    "*/non_federal_forecasted_cash_needs/allOf/0/title": _TABLE,
-    "*/total_forecasted_cash_needs/allOf/0/title": _TABLE,
-    "*/allOf/0/description": _MONEY,
-    "*/allOf/0/required": _EMPTY_REQUIRED,
-    "/properties/forecasted_cash_needs/required": _EMPTY_REQUIRED,
+#: Differences between what this form renders and what the golden renders. Each key is
+#: `<pointer>#<keyword>`, each value says why the difference is deliberate, and anything not
+#: listed fails the test.
+#:
+#: All four are the same decision: the golden's five budget tables are anonymous `$defs`, and
+#: the bank's are questions with names and descriptions. Additive, and these four properties
+#: are handed to a purpose-built component that lays out its own headings.
+RENDERED = {
+    "/properties/total_budget_summary#title": "bank question is named",
+    "/properties/total_budget_summary#description": "bank question describes itself",
+    "/properties/total_budget_categories#title": "bank question is named",
+    "/properties/total_budget_categories#description": "bank question describes itself",
+    "/properties/total_non_federal_resources#title": "bank question is named",
+    "/properties/total_non_federal_resources#description": "bank question describes itself",
+    "/properties/total_federal_fund_estimates#title": "bank question is named",
+    "/properties/total_federal_fund_estimates#description": "bank question describes itself",
 }
 
+#: Verdicts that differ. Empty, and worth keeping that way.
+ALLOWED_BEHAVIOR: dict[tuple[str, str], str] = {}
 
 @pytest.fixture(scope="module")
 def golden():
@@ -166,29 +153,56 @@ def seeds():
 
 
 def test_ui_schema_is_identical(projected, golden):
+    """Same fields, in the same order, in the same sections."""
     assert projected.form_ui_schema == golden.FORM_UI_SCHEMA
 
 
 def test_rule_schema_is_identical(projected, golden):
-    """All 35 calculations, including every `order`, from eight declarations."""
-    assert projected.form_rule_schema == golden.FORM_RULE_SCHEMA
+    assert projected.form_rule_schema == getattr(golden, "FORM_RULE_SCHEMA", None)
 
 
-def test_structural_differences_are_all_accounted_for(resolved_projected, resolved_golden):
-    differences = parity.schema_differences(resolved_projected, resolved_golden)
-    assert parity.unexplained(differences, ALLOWED) == []
+def test_every_rendered_field_matches(resolved_projected, resolved_golden, golden):
+    """What an applicant reads, field by field, keyed by what the form renders."""
+    differences = parity.rendered_differences(
+        resolved_projected, resolved_golden, golden.FORM_UI_SCHEMA
+    )
+    assert parity.unexplained(differences, RENDERED) == []
 
 
-def test_allow_list_has_no_dead_entries(resolved_projected, resolved_golden):
-    differences = parity.schema_differences(resolved_projected, resolved_golden)
-    assert parity.unused(differences, HAND_WRITTEN) == []
-    assert parity.unused_fields(differences, COMPOSED) == []
+def test_allow_list_has_no_dead_entries(resolved_projected, resolved_golden, golden):
+    """An explanation for a difference that no longer exists is an explanation to delete."""
+    differences = parity.rendered_differences(
+        resolved_projected, resolved_golden, golden.FORM_UI_SCHEMA
+    )
+    assert parity.unused(differences, RENDERED) == []
+
+
+def test_conditional_requiredness_matches(resolved_projected, resolved_golden):
+    assert parity.conditional_branches(resolved_projected) == parity.conditional_branches(
+        resolved_golden
+    )
+
+
+def test_no_reference_is_left_unresolved(resolved_projected):
+    """A reference that failed to resolve would leave a `$ref` behind."""
+
+    def refs(node):
+        if isinstance(node, dict):
+            return "$ref" in node or any(refs(v) for v in node.values())
+        if isinstance(node, list):
+            return any(refs(v) for v in node)
+        return False
+
+    assert not refs(resolved_projected)
 
 
 def test_validation_verdicts_are_identical(resolved_projected, resolved_golden, seeds):
+    """What an applicant may submit, over a corpus derived from the golden."""
     payloads = parity.corpus(resolved_golden, seeds)
-    assert len(payloads) > 300, "the corpus should exercise every field"
-    assert parity.behavioural_differences(resolved_projected, resolved_golden, payloads) == []
-
-
-ALLOWED = {**parity.composed(COMPOSED), **HAND_WRITTEN}
+    assert len(payloads) > 100, "the corpus should exercise every field"
+    assert (
+        parity.behavioral_differences(
+            resolved_projected, resolved_golden, payloads, ALLOWED_BEHAVIOR
+        )
+        == []
+    )

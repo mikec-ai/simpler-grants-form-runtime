@@ -39,8 +39,20 @@ anything upstream.
 
 ## Parity
 
-`tests/src/form_schema/form_spec/` asserts that a projected form matches its hand-written
-original two ways: structurally, against an allow-list where every remaining difference is
-named with a reason, and behaviourally, by validating a generated corpus of payloads
-against both schemas and requiring identical verdicts. The second is the one that matters;
-the first is what stops an accidental divergence from hiding inside it.
+`tests/src/form_schema/form_spec/` asserts two things about a projected form, and between
+them they cover everything an applicant can perceive.
+
+**What they read.** The UI schema's `definition` pointers enumerate what a form renders, so
+each pointer is resolved in both schemas and the effective fields compared. Both steps the
+renderer takes are taken first: the `jsonref` dereference that `form_template_registry` runs
+at registration, then the `allOf` merge that `processFormSchema` runs before rendering.
+Structural placement then stops mattering by construction -- where a `$defs` sits, whether a
+reference is wrapped, which side of a reference a constraint lives on.
+
+**What they may submit.** A corpus derived from the golden -- every field deleted, overrun,
+emptied, mistyped, and given a value outside its enum -- validated against both schemas,
+requiring identical issues.
+
+There is deliberately no assertion about the *shape* of the JSON Schema. Asserting it
+produced two hundred differences that all had to be explained, and a real regression once
+hid among them: six fields lost their form-level description and the allow-list absorbed it.

@@ -19,7 +19,6 @@ export interface FormSpecOptions {
 }
 
 const STAGING = ".json-schema";
-const camelToSnake = (s: string) => s.replace(/([a-z0-9])([A-Z])/g, "$1_$2").toLowerCase();
 
 type Json = Record<string, any>;
 
@@ -134,7 +133,7 @@ function resolveRefs(node: any, ctx: RefCtx, seen = new Set<string>()): any {
       }
       const target = ctx.byFile.get(v);
       if (!target) { out[k] = v; continue; }
-      const name = camelToSnake(v.replace(/\.json$/, "").split("/").pop()!);
+      const name = v.replace(/\.json$/, "").split("/").pop()!;
       if (!seen.has(name)) {
         seen.add(name);
         const { $schema, $id, ...body } = target;
@@ -159,11 +158,33 @@ function relativeRef(fromDir: string, ref: string, ctx: RefCtx): string {
   return `${up}/${toDir}/schema.json`;
 }
 
+/**
+ * Fold the overlay over the stock schema.
+ *
+ * `allOf` appends, because both sides contribute branches. `properties` merges one level
+ * down, because the overlay patches individual properties and replacing the map wholesale
+ * would delete every property it did not mention. Anything else the overlay states, it
+ * states outright.
+ */
 function mergeSchema(a: Json, b: Json): Json {
   const out = { ...a };
-  for (const [k, v] of Object.entries(b)) {
-    if (k === "allOf" && Array.isArray(out.allOf)) out.allOf = [...out.allOf, ...v];
-    else out[k] = v;
+  for (const [key, value] of Object.entries(b)) {
+    if (key === "allOf" && Array.isArray(out.allOf)) {
+      out.allOf = [...out.allOf, ...value];
+    } else if (key === "properties" && isObject(out.properties) && isObject(value)) {
+      out.properties = { ...out.properties };
+      for (const [name, patch] of Object.entries(value as Json)) {
+        const existing = out.properties[name];
+        out.properties[name] = isObject(existing)
+          ? mergeSchema(existing as Json, patch as Json)
+          : patch;
+      }
+    } else {
+      out[key] = value;
+    }
   }
   return out;
 }
+
+const isObject = (value: unknown): value is Json =>
+  typeof value === "object" && value !== null && !Array.isArray(value);

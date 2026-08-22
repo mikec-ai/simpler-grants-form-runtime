@@ -1075,7 +1075,7 @@ ordering together. This matches the budget family going last in Phase 2.
 Passthrough alone is insufficient because of the third objective — configuring *new* forms from
 the bank. **A new form has no golden to pass through.** Any new form with an attachment needs
 the attachment validation rule, and any new SF-424-like form needs the opportunity fields
-prefilled. These behaviours must be authorable.
+prefilled. These behaviors must be authorable.
 
 A census of every rule in every form:
 
@@ -1092,7 +1092,7 @@ schema has a single producer and the adapter passes it through without merging.
 
 **Tier 1 — inferred from the property's type.** `gg_validation: {rule: "attachment"}` is emitted
 for every attachment-typed property (~34 entries, 1 rule name). What `forms/README.md` teaches
-as a convention authors must remember becomes an emitter behaviour they cannot omit.
+as a convention authors must remember becomes an emitter behavior they cannot omit.
 
 **Tier 2 — inferred from question identity.** `current_date` and `signature` (~26 entries, 2
 rule names). Both already exist as shared schema fields (`common_shared.py` defines `signature`
@@ -1449,7 +1449,7 @@ maps form properties onto it, so refreshing the XSD turns every affected mapping
 enumerated compile error rather than a silent mis-target of the string `target: "City"`.
 
 Caveats: the XSD importer is the main cost, since grants.gov leans heavily on GlobalLibrary
-cross-schema type reuse; `@Xml.*` has no vocabulary for SGG's value-level behaviour
+cross-schema type reuse; `@Xml.*` has no vocabulary for SGG's value-level behavior
 (`null_handling: "default_value"`, `default_value: "John"` in `person_name.py`); and element
 order needs its own test, as commit `43c5bb25 Preserve source-pinned XML sequence order`
 shows.

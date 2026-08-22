@@ -4,7 +4,7 @@ import type {
 import { reportDiagnostic } from "./lib.js";
 import {
   Block, Condition, allBlocks, childBlock, modelMultiFields, orderedProps, propComputed,
-  propOmit, propPrePopulate, propReadOnlyWhen, propRequiredWhen, propSection,
+  modelPrePopulate, propOmit, propReadOnlyWhen, propRequiredWhen, propSection,
   propVisibleWhen,
 } from "./model.js";
 
@@ -28,10 +28,10 @@ export function $onValidate(program: Program): void {
     checkSections(program, block);
     checkOverridePaths(program, block);
     checkMultiFieldSections(program, block);
+    checkNoSggInBank(program, block);
     for (const prop of block.model.properties.values()) {
       checkConditions(program, prop);
       checkRequiredButHidden(program, prop);
-      if (block.kind === "question") checkNoSggInBank(program, block, prop);
     }
   }
 
@@ -171,7 +171,13 @@ function checkSections(program: Program, block: Block): void {
  * override table, caught at compile time instead of at website build time.
  */
 function checkOverridePaths(program: Program, block: Block): void {
-  for (const path of Object.keys(block.overrides)) {
+  // Both tables address a field by the path an applicant's answer takes, so both are
+  // checked the same way. An unresolved path in either is silently ignored at runtime.
+  const paths = [
+    ...Object.keys(block.overrides),
+    ...Object.keys(modelPrePopulate(program, block.model as Model)),
+  ];
+  for (const path of paths) {
     const reason = resolvePath(program, block.model as Model, path.split("."));
     if (!reason) continue;
     reportDiagnostic(program, {
@@ -310,18 +316,14 @@ function walkModels(
  * `@Sgg.*` names one consumer's rule vocabulary. A question is shared, so a question
  * carrying it would export that consumer's choices to every form that composes it.
  */
-function checkNoSggInBank(program: Program, block: Block, prop: ModelProperty): void {
-  const found: string[] = [];
-  if (propPrePopulate(program, prop)) found.push("prePopulate");
-  if (!found.length) return;
+function checkNoSggInBank(program: Program, block: Block): void {
+  if (!Object.keys(modelPrePopulate(program, block.model as Model)).length) return;
   if (!inQuestionBank(block.model.namespace)) return;
-  for (const decorator of found) {
-    reportDiagnostic(program, {
-      code: "sgg-outside-forms",
-      target: prop,
-      format: { decorator, name: `${name(block.model)}.${prop.name}` },
-    });
-  }
+  reportDiagnostic(program, {
+    code: "sgg-outside-forms",
+    target: block.model,
+    format: { decorator: "prePopulate", name: name(block.model) },
+  });
 }
 
 function inQuestionBank(namespace: Namespace | undefined): boolean {

@@ -121,6 +121,18 @@ enum StateReview {
 // using this question does ask for. A form-scoped override, so the question stays one
 // question.
 @UI.overrides(#{ `applicant.county`: #{ omit: true } })
+// Everything the runtime fills in before the applicant sees the form, in one place, keyed by
+// the path an answer takes. Every path is checked against the form.
+@Sgg.prePopulate(#{
+  `samUei`: SggPrePop.uei,
+  `agencyName`: SggPrePop.agencyName,
+  `assistanceListingNumber`: SggPrePop.assistanceListingNumber,
+  `assistanceListingProgramTitle`: SggPrePop.assistanceListingProgramTitle,
+  `fundingOpportunityNumber`: SggPrePop.opportunityNumber,
+  `fundingOpportunityTitle`: SggPrePop.opportunityTitle,
+  `competitionIdentificationNumber`: SggPrePop.publicCompetitionId,
+  `competitionIdentificationTitle`: SggPrePop.competitionTitle,
+})
 model SF424 {
   /** Select one type of submission in accordance with agency instructions. */
   @UI.label("Submission Type")
@@ -200,7 +212,6 @@ model SF424 {
   /** UEI of the applicant organization. This field is pre-populated from the Application cover sheet. */
   @UI.label("SAM UEI")
   @UI.section(Sf424Section.applicantInformation)
-  @Sgg.prePopulate(SggPrePop.uei)
   samUei: SamUei;
 
   /** Enter information about the applicant. */
@@ -272,43 +283,36 @@ model SF424 {
   /** Pre-populated from the Application cover sheet. */
   @UI.label("Agency Name")
   @UI.section(Sf424Section.federalAgency)
-  @Sgg.prePopulate(SggPrePop.agencyName)
   agencyName: AgencyName;
 
   /** Pre-populated from the Application cover sheet. */
   @UI.label("Assistance Listing Number")
   @UI.section(Sf424Section.assistanceListing)
-  @Sgg.prePopulate(SggPrePop.assistanceListingNumber)
   assistanceListingNumber?: AssistanceListingNumber;
 
   /** Pre-populated from the Application cover sheet. */
   @UI.label("Assistance Listing Title")
   @UI.section(Sf424Section.assistanceListing)
-  @Sgg.prePopulate(SggPrePop.assistanceListingProgramTitle)
   assistanceListingProgramTitle?: AssistanceListingTitle;
 
   /** Pre-populated from the Application cover sheet. */
   @UI.label("Opportunity Number")
   @UI.section(Sf424Section.fundingOpportunity)
-  @Sgg.prePopulate(SggPrePop.opportunityNumber)
   fundingOpportunityNumber: OpportunityNumber;
 
   /** Pre-populated from the Application cover sheet. */
   @UI.label("Opportunity title")
   @UI.section(Sf424Section.fundingOpportunity)
-  @Sgg.prePopulate(SggPrePop.opportunityTitle)
   fundingOpportunityTitle: OpportunityTitle;
 
   /** Pre-populated from the Application cover sheet. */
   @UI.label("Competition Number")
   @UI.section(Sf424Section.competitionIdentification)
-  @Sgg.prePopulate(SggPrePop.publicCompetitionId)
   competitionIdentificationNumber?: CompetitionNumber;
 
   /** Pre-populated from the Application cover sheet. */
   @UI.label("Competition Title")
   @UI.section(Sf424Section.competitionIdentification)
-  @Sgg.prePopulate(SggPrePop.competitionTitle)
   competitionIdentificationTitle?: CompetitionTitle;
 
   /** List the areas or entities using the categories (e.g., cities, counties, states, etc.) specified in agency instructions. */

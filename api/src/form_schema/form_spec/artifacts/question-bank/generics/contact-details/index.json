@@ -1,0 +1,11 @@
+{
+  "id": "generics/contact-details",
+  "kind": "question",
+  "name": "Contact",
+  "description": "A person and the ways to reach them.\n\nThe shape only. Who the person *is* to the application -- a point of contact, the\nrepresentative authorized to sign -- is a different question, because the roles are not\ninterchangeable and a form asks for both. Those extend this.\n\nThe person's title is deliberately not here. A point of contact may not have one; a\nrepresentative authorized to bind the organization does, because their title is how you\nknow they are authorized. So each of those declares it, with the optionality it has.",
+  "tags": [
+    "person",
+    "details"
+  ],
+  "entity": "generic"
+}

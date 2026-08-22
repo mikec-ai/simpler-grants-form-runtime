@@ -7,26 +7,27 @@ using QuestionBank.Generics;
 
 namespace QuestionBank.Poc;
 
-/** A point of contact: name, title, address, and contact methods. */
+/**
+ * The person to contact about the application.
+ *
+ * Structurally a contact plus an address, and distinct from the representative who signs:
+ * a point of contact answers questions, and forms routinely ask for both.
+ */
 @Question.meta(#{ id: "poc/details" })
 @Catalog.entity(EntityName.poc)
 @Catalog.tag(TagName.person, TagName.details)
 @UI.label("Point of Contact")
-model QuestionPocDetails {
-  @UI.label("Name")
-  name: QuestionPersonName;
-
+@UI.order(
+  QuestionPocDetails.name,
+  QuestionPocDetails.title,
+  QuestionPocDetails.address,
+  QuestionPocDetails.phone,
+  QuestionPocDetails.fax,
+  QuestionPocDetails.email
+)
+model QuestionPocDetails extends QuestionContactDetails {
   @UI.label("Title")
   title?: ContactTitle;
 
   address: QuestionAddress;
-
-  @UI.label("Telephone Number")
-  phone: PhoneNumber;
-
-  @UI.label("Fax Number")
-  fax?: PhoneNumber;
-
-  @UI.label("Email")
-  email: EmailAddress;
 }

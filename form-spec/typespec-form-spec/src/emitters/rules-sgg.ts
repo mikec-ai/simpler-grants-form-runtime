@@ -1,6 +1,6 @@
 import type { Model, ModelProperty, Program, Scalar } from "@typespec/compiler";
 import {
-  Block, childBlock, propComputed, propOmit, propPrePopulate, propTotals, readBlock,
+  Block, childBlock, modelPrePopulate, propComputed, propOmit, propTotals, readBlock,
 } from "../model.js";
 
 const snake = (s: string) => s.replace(/([a-z0-9])([A-Z])/g, "$1_$2").toLowerCase();
@@ -30,7 +30,7 @@ const MONEY_QUESTION = "generics/monetary-amount";
 /**
  * One calculation. `emit` is what SGG reads; `resolve` is the same reference with the
  * array marker and the `@THIS.` shorthand removed, so that one calculation can be
- * recognised as depending on another.
+ * recognized as depending on another.
  */
 interface Reference {
   emit: string;
@@ -63,8 +63,13 @@ export function emitSggRules(program: Program, block: Block): Json {
   const out: Json = {};
   const calculations: Calculation[] = [];
   const modelPath = new Map<Model, string[]>([[block.model, []]]);
+  const context: Context = {
+    prePopulate: modelPrePopulate(program, block.model),
+    calculations,
+    modelPath,
+  };
 
-  walk(program, block.model, [], out, calculations, modelPath, true);
+  walk(program, block.model, [], "", out, context, true);
 
   // Evaluation order is a property of the dependency graph, not of the author's memory.
   const depths = new Map<string, number>();
@@ -121,18 +126,28 @@ function place(root: Json, at: string[], value: Json): void {
   Object.assign((node[at.at(-1)!] as Json) ?? (node[at.at(-1)!] = {}), value);
 }
 
+/** What the walk needs from the form as a whole. */
+interface Context {
+  /** Canonical data path -> SGG rule name, from `@Sgg.prePopulate` on the form. */
+  prePopulate: Record<string, string>;
+  calculations: Calculation[];
+  modelPath: Map<Model, string[]>;
+}
+
 function walk(
   program: Program,
   model: Model,
   at: string[],
+  dataPath: string,
   into: Json,
-  calculations: Calculation[],
-  modelPath: Map<Model, string[]>,
+  context: Context,
   atRoot: boolean,
 ): void {
+  const { calculations, modelPath } = context;
   for (const prop of [...model.properties.values()].filter((p) => !propOmit(program, p))) {
     const key = snake(prop.name);
     const here = [...at, key];
+    const path = dataPath ? `${dataPath}.${prop.name}` : prop.name;
     const child = childBlock(program, prop);
 
     const totals = propTotals(program, prop);
@@ -166,12 +181,12 @@ function walk(
         continue;
       }
       if (child.scalar) {
-        const rule = propPrePopulate(program, prop);
+        const rule = context.prePopulate[path];
         if (rule) place(into, here, { gg_pre_population: { rule } });
         continue;
       }
       modelPath.set(child.model as Model, here);
-      walk(program, child.model as Model, here, into, calculations, modelPath, false);
+      walk(program, child.model as Model, here, path, into, context, false);
       continue;
     }
 
@@ -190,7 +205,7 @@ function walk(
         const nested: Json = {};
         const nestedCalculations: Calculation[] = [];
         modelPath.set(item, here);
-        walk(program, item, here, nested, nestedCalculations, modelPath, false);
+        walk(program, item, here, path, nested, { ...context, calculations: nestedCalculations }, false);
         const entryRules = (dig(nested, here) ?? {}) as Json;
         if (Object.keys(entryRules).length || nestedCalculations.length) {
           place(into, here, { gg_type: "array", ...entryRules });
@@ -202,11 +217,11 @@ function walk(
 
     if (prop.type.kind === "Model") {
       modelPath.set(prop.type, here);
-      walk(program, prop.type, here, into, calculations, modelPath, false);
+      walk(program, prop.type, here, path, into, context, false);
       continue;
     }
 
-    const rule = propPrePopulate(program, prop);
+    const rule = context.prePopulate[path];
     if (rule) place(into, here, { gg_pre_population: { rule } });
   }
 }

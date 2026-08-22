@@ -15,40 +15,20 @@ from tests.src.form_schema.form_spec import parity
 
 FORM_DIR = "key_contacts"
 
-#: Differences that are deliberate. Each key is a pointer suffix; each value says why the
-#: projected artifact is allowed to differ. Anything not listed here fails the test.
-ALLOWED = {
-    # The bank names and documents its questions; several of SGG's shared primitives
-    # carry no description at all, and the form-level title and description still win at
-    # render time because they sit on the property rather than the definition.
-    "*/properties/phone/allOf/0/description": "bank question carries a description",
-    "*/properties/fax/allOf/0/description": "bank question carries a description",
-    "*/properties/email/allOf/0/description": "bank question carries a description",
-    "*/properties/organizational_affiliation/allOf/0/description": (
-        "bank question carries a description"
-    ),
-    "*/properties/applicant_organization_name/allOf/0/description": (
-        "bank question carries a description"
-    ),
-    "*/properties/name/allOf/0/description": (
-        "the golden's shared person_name has an empty description; the bank states one"
-    ),
-    "*/properties/name/allOf/0/title": (
-        "the golden titles the shared definition 'Name and Contact Information', which "
-        "describes neither; the bank calls a name a name"
-    ),
-    # Block-level metadata the bank adds. Additive, and not rendered: the section and
-    # fieldList labels come from the UI schema, which matches the golden exactly.
-    "*/$defs/key_contact_person/title": "block label",
-    "*/$defs/key_contact_person/description": "block description",
-    "*/properties/key_contacts/items/title": "block label",
-    "*/properties/key_contacts/items/description": "block description",
-    "/description": (
-        "the form's own description; the golden carries the form name only in its "
-        "registry row"
-    ),
+#: Differences between what this form renders and what the golden renders. Each key is
+#: `<pointer>#<keyword>`, each value says why the difference is deliberate, and anything not
+#: listed fails the test.
+RENDERED = {
+    # SGG's shared `phone_number` and `contact_email` carry no description at all, so these
+    # three fields render with no help text today. The bank's questions describe themselves,
+    # which is additive: an applicant gains a line of guidance.
+    "/properties/key_contacts/items/properties/phone#description": "bank question describes itself",
+    "/properties/key_contacts/items/properties/fax#description": "bank question describes itself",
+    "/properties/key_contacts/items/properties/email#description": "bank question describes itself",
 }
 
+#: Verdicts that differ. Empty, and worth keeping that way.
+ALLOWED_BEHAVIOR: dict[tuple[str, str], str] = {}
 
 @pytest.fixture(scope="module")
 def golden():
@@ -117,6 +97,7 @@ def seeds():
 
 
 def test_ui_schema_is_identical(projected, golden):
+    """Same fields, in the same order, in the same sections."""
     assert projected.form_ui_schema == golden.FORM_UI_SCHEMA
 
 
@@ -124,31 +105,48 @@ def test_rule_schema_is_identical(projected, golden):
     assert projected.form_rule_schema == getattr(golden, "FORM_RULE_SCHEMA", None)
 
 
-def test_structural_differences_are_all_accounted_for(resolved_projected, resolved_golden):
-    differences = parity.schema_differences(resolved_projected, resolved_golden)
-    assert parity.unexplained(differences, ALLOWED) == []
+def test_every_rendered_field_matches(resolved_projected, resolved_golden, golden):
+    """What an applicant reads, field by field, keyed by what the form renders."""
+    differences = parity.rendered_differences(
+        resolved_projected, resolved_golden, golden.FORM_UI_SCHEMA
+    )
+    assert parity.unexplained(differences, RENDERED) == []
 
 
-def test_allow_list_has_no_dead_entries(resolved_projected, resolved_golden):
+def test_allow_list_has_no_dead_entries(resolved_projected, resolved_golden, golden):
     """An explanation for a difference that no longer exists is an explanation to delete."""
-    differences = parity.schema_differences(resolved_projected, resolved_golden)
-    assert parity.unused(differences, ALLOWED) == []
+    differences = parity.rendered_differences(
+        resolved_projected, resolved_golden, golden.FORM_UI_SCHEMA
+    )
+    assert parity.unused(differences, RENDERED) == []
 
 
-def test_validation_verdicts_are_identical(resolved_projected, resolved_golden, seeds):
-    payloads = parity.corpus(resolved_golden, seeds)
-    assert len(payloads) > 100, "the corpus should exercise every field"
-    assert parity.behavioural_differences(resolved_projected, resolved_golden, payloads) == []
+def test_conditional_requiredness_matches(resolved_projected, resolved_golden):
+    assert parity.conditional_branches(resolved_projected) == parity.conditional_branches(
+        resolved_golden
+    )
 
 
-def test_every_bank_question_resolves(resolved_projected):
+def test_no_reference_is_left_unresolved(resolved_projected):
     """A reference that failed to resolve would leave a `$ref` behind."""
 
     def refs(node):
         if isinstance(node, dict):
-            return ("$ref" in node) or any(refs(v) for v in node.values())
+            return "$ref" in node or any(refs(v) for v in node.values())
         if isinstance(node, list):
             return any(refs(v) for v in node)
         return False
 
     assert not refs(resolved_projected)
+
+
+def test_validation_verdicts_are_identical(resolved_projected, resolved_golden, seeds):
+    """What an applicant may submit, over a corpus derived from the golden."""
+    payloads = parity.corpus(resolved_golden, seeds)
+    assert len(payloads) > 100, "the corpus should exercise every field"
+    assert (
+        parity.behavioral_differences(
+            resolved_projected, resolved_golden, payloads, ALLOWED_BEHAVIOR
+        )
+        == []
+    )

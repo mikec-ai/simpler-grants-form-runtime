@@ -1133,7 +1133,7 @@ Three tiers, ordered by authoring surface. Full specification:
 
 **Tier 1 — inferred from the property's type.** `gg_validation: {rule: "attachment"}` is emitted
 for every attachment-typed property (~34 entries, 1 rule name). `forms/README.md` currently
-teaches this as a convention authors must remember; it becomes an emitter behaviour instead.
+teaches this as a convention authors must remember; it becomes an emitter behavior instead.
 
 **Tier 2 — inferred from question identity.** `current_date` and `signature` post-population
 (~26 entries, 2 rule names). Both already exist as shared schema fields, so they become bank

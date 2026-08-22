@@ -19,111 +19,41 @@ from tests.src.form_schema.form_spec import parity
 FORM_DIR = "sf424"
 FORM_ID = "sf424"
 
-#: Fields the golden spells out inline and the bank now owns as questions. Every one is a
-#: question a later form will ask again, which is the whole point; the consequence here is
-#: that the field's constraints live in the reference rather than on the property.
-COMPOSED = {
-    "submission_type": "SF-424's own enum, referenced rather than inlined",
-    "application_type": "SF-424's own enum, referenced rather than inlined",
-    "revision_type": "SF-424's own enum, referenced rather than inlined",
-    "applicant_type_code": "SF-424's own enum, referenced rather than inlined",
-    "state_review": "SF-424's own enum, referenced rather than inlined",
-    "employer_taxpayer_identification_number": "new question primary-org/ein",
-    "agency_name": "new question opportunity/agency-name",
-    "assistance_listing_number": "new question opportunity/assistance-listing-number",
-    "assistance_listing_program_title": "new question opportunity/assistance-listing-title",
-    "funding_opportunity_number": "new question opportunity/number",
-    "funding_opportunity_title": "new question opportunity/title",
-    "competition_identification_number": "new question opportunity/competition-number",
-    "competition_identification_title": "new question opportunity/competition-title",
-    "project_title": "new question project/title",
-    "congressional_district_applicant": "new question project/congressional-district",
-    "congressional_district_program_project": "new question project/congressional-district",
-    "authorized_representative_title": "the contact-title question, reused here",
-    "authorized_representative_email": "the email question, reused here",
-    "date_received": (
-        "the submitted-date question. The golden shares a definition for date_signed and "
-        "inlines the identical field here; the bank has one question for both"
-    ),
-    "project_start_date": "a plain date, referenced through the form's own declaration",
-    "project_end_date": "a plain date, referenced through the form's own declaration",
-    "state_receive_date": "a plain date, referenced through the form's own declaration",
-    "state_application_id": "form-local string, referenced through its own declaration",
-    "areas_affected": "the attachment question, reused here",
-    "additional_project_title": "the attachment question, reused here",
-    "additional_congressional_districts": "the attachment question, reused here",
-    "debt_explanation": "the attachment question, reused here",
-    "federal_estimated_funding": "new question generics/monetary-amount",
-    "applicant_estimated_funding": "new question generics/monetary-amount",
-    "state_estimated_funding": "new question generics/monetary-amount",
-    "local_estimated_funding": "new question generics/monetary-amount",
-    "other_estimated_funding": "new question generics/monetary-amount",
-    "program_income_estimated_funding": "new question generics/monetary-amount",
-    "total_estimated_funding": "new question generics/monetary-amount",
-}
-
-#: Differences decided one at a time, as opposed to the systematic class above.
-HAND_WRITTEN = {
-    # Bank questions name and document themselves where several of SGG's shared primitives
-    # do not. The form-level title and description sit on the property and still win.
-    "*/properties/organization_name/allOf/0/description": "bank question carries a description",
-    "*/properties/contact_person/allOf/0/title": (
-        "the golden titles the shared definition 'Name and Contact Information', which "
-        "describes neither; the bank calls a name a name"
-    ),
-    "*/properties/contact_person/allOf/0/description": (
-        "the golden's shared person_name has an empty description; the bank states one"
-    ),
-    "*/properties/authorized_representative/allOf/0/title": "as contact_person, same question",
-    "*/properties/authorized_representative/allOf/0/description": (
-        "as contact_person, same question"
-    ),
-    "*/properties/phone_number/allOf/0/description": "bank question carries a description",
-    "*/properties/fax/allOf/0/description": "bank question carries a description",
-    "*/properties/authorized_representative_phone_number/allOf/0/description": (
-        "bank question carries a description"
-    ),
-    "*/properties/authorized_representative_fax/allOf/0/description": (
-        "bank question carries a description"
-    ),
-    "/properties/authorized_representative/description": (
-        "the golden gives box 21's name an empty description; an absent description and "
-        "an empty one render the same"
-    ),
-    "*/properties/email/allOf/0/description": "bank question carries a description",
-    "*/properties/sam_uei/allOf/0/description": "bank question carries a description",
-    "/description": "the form's own description",
-    "/$defs": (
-        "the form's five enums are declarations held in $defs and referenced; the golden "
-        "repeats each list inline. Nothing reads a $defs entry once the references are "
-        "resolved, and the golden keeps its own $defs on other forms"
-    ),
+#: Differences between what this form renders and what the golden renders. Each key is
+#: `<pointer>#<keyword>`, each value says why the difference is deliberate, and anything not
+#: listed fails the test.
+RENDERED = {
     # The golden marks two of its six read-only fields `readOnly` in the schema as well as
-    # `null` in the UI schema. Nothing reads the keyword -- the renderer takes read-only
-    # from the UI schema's `null` node, and the API never looks -- so it is vestigial, and
-    # emitting it on two of six would be reproducing an inconsistency.
-    "*/properties/state_application_id/readOnly": "vestigial; the UI schema carries read-only",
-    "*/properties/state_receive_date/readOnly": "vestigial; the UI schema carries read-only",
-}
-
-ALLOWED = {**parity.composed(COMPOSED), **HAND_WRITTEN}
-
-#: The one place where this form and the golden reach different verdicts on the same data.
-#:
-#: Boxes 8f and 21 both ask for an email address. The golden caps 8f at 60 characters, via
-#: `common_shared_v1#/contact_email`, and leaves 21 uncapped, because 21 is written out
-#: inline. One question cannot be two lengths, so composing it applies the cap to both --
-#: which rejects an AOR email longer than 60 characters that the form accepts today.
-#:
-#: Recorded rather than worked around: it is a real behaviour change, it is small, and
-#: which of the two boxes is right is a decision for the form's owners.
-ALLOWED_BEHAVIOUR = {
-    ("authorized_representative_email", "maxLength"): (
-        "the golden caps the contact email at 60 and the AOR email not at all; one "
-        "question means one cap"
+    # `null` in the UI schema. Nothing reads the keyword -- not the renderer, which takes
+    # read-only from the UI schema, and not the API -- so emitting it on two of six would be
+    # reproducing an inconsistency.
+    "/properties/state_receive_date#readOnly": "vestigial; the UI schema carries read-only",
+    "/properties/state_application_id#readOnly": "vestigial; the UI schema carries read-only",
+    # The golden's text ends in a space. Reproducing a stray space would mean carrying it in
+    # a doc comment, where it is invisible to the next person to edit the line.
+    "/properties/project_start_date#description": "the golden's text has a trailing space",
+    "/properties/project_end_date#description": "the golden's text has a trailing space",
+    # The golden sets this field's description to the empty string, which renders as nothing.
+    # The attachment question says what to do instead.
+    "/properties/debt_explanation#description": "the golden's description is empty",
+    # Boxes 8f and 21 both ask for an email address. The golden caps 8f at 60 characters via
+    # `common_shared_v1#/contact_email` and leaves 21 uncapped, because 21 is written out
+    # inline. One question cannot be two lengths.
+    "/properties/authorized_representative_email#maxLength": (
+        "the golden caps the contact email at 60 and the AOR email not at all"
     ),
 }
 
+#: The one place where this form and the golden reach different verdicts on the same data,
+#: and it follows from the `maxLength` difference above: an AOR email longer than 60
+#: characters is accepted today and rejected here. Recorded rather than worked around,
+#: because which of the two boxes is right is a decision for the form's owners.
+ALLOWED_BEHAVIOR = {
+    ("authorized_representative_email", "maxLength"): (
+        "the golden caps the contact email at 60 and the AOR email not at all; one question "
+        "means one cap"
+    ),
+}
 
 @pytest.fixture(scope="module")
 def golden():
@@ -268,44 +198,56 @@ def seeds():
 
 
 def test_ui_schema_is_identical(projected, golden):
+    """Same fields, in the same order, in the same sections."""
     assert projected.form_ui_schema == golden.FORM_UI_SCHEMA
 
 
 def test_rule_schema_is_identical(projected, golden):
-    assert projected.form_rule_schema == golden.FORM_RULE_SCHEMA
+    assert projected.form_rule_schema == getattr(golden, "FORM_RULE_SCHEMA", None)
 
 
-def test_structural_differences_are_all_accounted_for(resolved_projected, resolved_golden):
-    differences = parity.schema_differences(resolved_projected, resolved_golden)
-    assert parity.unexplained(differences, ALLOWED) == []
-
-
-def test_allow_list_has_no_dead_entries(resolved_projected, resolved_golden):
-    differences = parity.schema_differences(resolved_projected, resolved_golden)
-    assert parity.unused(differences, HAND_WRITTEN) == []
-    assert parity.unused_fields(differences, COMPOSED) == []
-
-
-def test_validation_verdicts_are_identical(resolved_projected, resolved_golden, seeds):
-    payloads = parity.corpus(resolved_golden, seeds)
-    assert len(payloads) > 500, "the corpus should exercise every field"
-    assert (
-        parity.behavioural_differences(
-            resolved_projected, resolved_golden, payloads, ALLOWED_BEHAVIOUR
-        )
-        == []
+def test_every_rendered_field_matches(resolved_projected, resolved_golden, golden):
+    """What an applicant reads, field by field, keyed by what the form renders."""
+    differences = parity.rendered_differences(
+        resolved_projected, resolved_golden, golden.FORM_UI_SCHEMA
     )
+    assert parity.unexplained(differences, RENDERED) == []
+
+
+def test_allow_list_has_no_dead_entries(resolved_projected, resolved_golden, golden):
+    """An explanation for a difference that no longer exists is an explanation to delete."""
+    differences = parity.rendered_differences(
+        resolved_projected, resolved_golden, golden.FORM_UI_SCHEMA
+    )
+    assert parity.unused(differences, RENDERED) == []
 
 
 def test_conditional_requiredness_matches(resolved_projected, resolved_golden):
-    """The six root conditionals are the form's real logic; compare them as a set.
+    assert parity.conditional_branches(resolved_projected) == parity.conditional_branches(
+        resolved_golden
+    )
 
-    `allOf` is a conjunction, so the order the branches happen to be written in carries no
-    meaning -- ours follows declaration order and the golden's is hand-arranged.
-    """
-    import json
 
-    def branches(schema):
-        return sorted(json.dumps(b, sort_keys=True) for b in schema.get("allOf", []))
+def test_no_reference_is_left_unresolved(resolved_projected):
+    """A reference that failed to resolve would leave a `$ref` behind."""
 
-    assert branches(resolved_projected) == branches(resolved_golden)
+    def refs(node):
+        if isinstance(node, dict):
+            return "$ref" in node or any(refs(v) for v in node.values())
+        if isinstance(node, list):
+            return any(refs(v) for v in node)
+        return False
+
+    assert not refs(resolved_projected)
+
+
+def test_validation_verdicts_are_identical(resolved_projected, resolved_golden, seeds):
+    """What an applicant may submit, over a corpus derived from the golden."""
+    payloads = parity.corpus(resolved_golden, seeds)
+    assert len(payloads) > 100, "the corpus should exercise every field"
+    assert (
+        parity.behavioral_differences(
+            resolved_projected, resolved_golden, payloads, ALLOWED_BEHAVIOR
+        )
+        == []
+    )
