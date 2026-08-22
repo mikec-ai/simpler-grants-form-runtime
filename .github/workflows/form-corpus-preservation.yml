@@ -1,0 +1,65 @@
+name: Form Corpus Preservation Inventory
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "scripts/inventory_form_corpus.py"
+      - "scripts/form_corpus_disposition_rules.json"
+      - "scripts/tests/test_inventory_form_corpus.py"
+      - ".github/workflows/form-corpus-preservation.yml"
+  push:
+    branches:
+      - mirror-base
+    paths:
+      - "scripts/inventory_form_corpus.py"
+      - "scripts/form_corpus_disposition_rules.json"
+      - ".github/workflows/form-corpus-preservation.yml"
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  inventory:
+    name: Inventory PRs 8-36 and the 28-form corpus
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Build content-addressed preservation inventory
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          python3 scripts/inventory_form_corpus.py
+          --repository "${{ github.repository }}"
+          --pr-start 8
+          --pr-end 36
+          --remote origin
+          --verify-preservation-refs
+          --verified-at "$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          --verification-run-id "${{ github.run_id }}.${{ github.run_attempt }}"
+          --output-dir build/form-corpus-inventory
+
+      - name: Verify inventory output and CLI contract
+        run: |
+          python3 -m py_compile scripts/inventory_form_corpus.py
+          python3 -m json.tool build/form-corpus-inventory/inventory.json >/dev/null
+          set +e
+          python3 scripts/inventory_form_corpus.py --not-a-real-option >/tmp/stdout 2>/tmp/stderr
+          status=$?
+          set -e
+          test "$status" -eq 2
+          grep -q "usage:" /tmp/stderr
+          grep -q "unrecognized arguments: --not-a-real-option" /tmp/stderr
+
+      - name: Publish preservation inventory
+        uses: actions/upload-artifact@v7
+        with:
+          name: form-corpus-preservation-${{ github.sha }}
+          path: build/form-corpus-inventory
+          if-no-files-found: error
+          retention-days: 90

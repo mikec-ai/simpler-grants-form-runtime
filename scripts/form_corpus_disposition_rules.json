@@ -1,0 +1,117 @@
+{
+  "schema_version": "1.0",
+  "rules": [
+    {
+      "id": "embedded-source",
+      "pattern": "(^|/)(sources?|work)/.*\\.(xsd|pdf|dat|xls|xlsx|tsp)$",
+      "category": "source",
+      "disposition": "publish_build_artifact",
+      "destination": "form-corpus/source-evidence/{path}"
+    },
+    {
+      "id": "source-ledger",
+      "pattern": "(^|/)(source-ledger|xml-source-manifest|source-accounting|behavior-evidence|presentation-evidence|source-review)(\\.|/)",
+      "category": "source_evidence",
+      "disposition": "migrate",
+      "destination": "form-specs/evidence/{path}"
+    },
+    {
+      "id": "mapping-or-transform",
+      "pattern": "(^|/)(mappings?|xml-transform|xml-plan|projection-report)(\\.|/)",
+      "category": "mapping",
+      "disposition": "migrate",
+      "destination": "form-specs/mappings-or-adapters/{path}"
+    },
+    {
+      "id": "generated-package",
+      "pattern": "(^|/)(draft_package|resolved_package)/.*\\.(json|md)$",
+      "category": "oracle",
+      "disposition": "publish_build_artifact",
+      "destination": "form-corpus/oracles/{path}"
+    },
+    {
+      "id": "oracle-ledger",
+      "pattern": "(^|/)(oracle|golden|parity|checksum)",
+      "category": "oracle",
+      "disposition": "publish_build_artifact",
+      "destination": "form-corpus/oracles/{path}"
+    },
+    {
+      "id": "tests-and-fixtures",
+      "pattern": "(^|/)(tests?|fixtures?)/|(^|/)test_[^/]+\\.py$|\\.(snap|snapshot)$",
+      "category": "test",
+      "disposition": "preserve",
+      "destination": "runtime-conformance/{path}"
+    },
+    {
+      "id": "analysis-output",
+      "pattern": "(^|/)(analysis|artifacts?)/.*\\.(csv|json|xlsx|html|pdf)$",
+      "category": "analysis",
+      "disposition": "publish_build_artifact",
+      "destination": "form-corpus/analysis/{path}"
+    },
+    {
+      "id": "form-specific-python",
+      "pattern": "^api/src/form_schema/forms/.+/(form_json|config|presentation|behaviors)\\.py$",
+      "category": "form_implementation",
+      "disposition": "migrate_then_archive",
+      "destination": "form-specs/forms-and-adapters/{path}"
+    },
+    {
+      "id": "python-component-builders",
+      "pattern": "^api/src/form_schema/components/.*\\.py$",
+      "category": "component_implementation",
+      "disposition": "migrate_then_archive",
+      "destination": "form-specs/questions-and-blocks/{path}"
+    },
+    {
+      "id": "portable-declaration",
+      "pattern": "^form-specs/.*\\.(json|md|tsp)$",
+      "category": "portable_declaration",
+      "disposition": "preserve",
+      "destination": "{path}"
+    },
+    {
+      "id": "form-runtime-data",
+      "pattern": "^api/src/form_schema/forms/",
+      "category": "form_runtime",
+      "disposition": "preserve_until_parity",
+      "destination": "runtime-or-adapter/{path}"
+    },
+    {
+      "id": "generic-runtime",
+      "pattern": "^(api/src/form_schema|frontend/src)/",
+      "category": "runtime_capability",
+      "disposition": "preserve",
+      "destination": "{path}"
+    },
+    {
+      "id": "runtime-target-integration",
+      "pattern": "^api/src/(constants/|db/models/|services/xml_generation/|task/forms/)",
+      "category": "runtime_integration",
+      "disposition": "preserve_until_parity",
+      "destination": "{path}"
+    },
+    {
+      "id": "api-build-configuration",
+      "pattern": "^api/(pyproject\\.toml|uv\\.lock)$",
+      "category": "build_configuration",
+      "disposition": "preserve",
+      "destination": "{path}"
+    },
+    {
+      "id": "documentation",
+      "pattern": "(^|/)(documentation|docs)/|\\.md$",
+      "category": "documentation",
+      "disposition": "preserve_or_consolidate",
+      "destination": "architecture-evidence/{path}"
+    },
+    {
+      "id": "fallback",
+      "pattern": ".*",
+      "category": "unclassified",
+      "disposition": "review_before_cleanup",
+      "destination": "preservation-inventory/{path}"
+    }
+  ]
+}
