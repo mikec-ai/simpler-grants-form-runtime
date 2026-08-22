@@ -30,6 +30,7 @@ RENDERED = {
 #: Verdicts that differ. Empty, and worth keeping that way.
 ALLOWED_BEHAVIOR: dict[tuple[str, str], str] = {}
 
+
 @pytest.fixture(scope="module")
 def golden():
     from pathlib import Path

@@ -43,12 +43,10 @@ def emit_enum(name: str, doc: str, title: str, values: list[str]) -> str:
 
 def main() -> int:
     constants = load_constants()
-    body = "\n\n".join(
-        [
-            emit_enum("StateCode", "US State or Territory Code", "State", constants["STATES"]),
-            emit_enum("CountryCode", "Country Code", "Country", constants["COUNTRIES"]),
-        ]
-    )
+    body = "\n\n".join([
+        emit_enum("StateCode", "US State or Territory Code", "State", constants["STATES"]),
+        emit_enum("CountryCode", "Country Code", "Country", constants["COUNTRIES"]),
+    ])
     header = (
         "// GENERATED FILE — do not edit.\n"
         "// Source: api/src/form_schema/shared/shared_form_constants.py\n"

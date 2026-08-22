@@ -49,6 +49,14 @@ jobs:
         run: python3 scripts/gen_code_enums.py
         working-directory: .
 
+      # The scripts read and write the API's data, so they follow the API's style.
+      - name: Lint the scripts
+        run: |
+          pip install ruff
+          ruff format --check --config api/pyproject.toml form-spec/scripts
+          ruff check --config api/pyproject.toml --ignore T20 form-spec/scripts
+        working-directory: .
+
       # An editor opens one file, not an entry point, so every file has to stand alone.
       # A library file that only type-checks when reached through `main.tsp` shows the
       # author red squiggles on correct code.

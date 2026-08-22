@@ -113,20 +113,16 @@ def main() -> int:
     for a, b in itertools.combinations(sorted(forms), 2):
         qa, qb = asked[a], asked[b]
         both, either = qa & qb, qa | qb
-        rows.append(
-            (
-                len(both) / len(either) if either else 0.0,
-                a,
-                b,
-                len(both),
-                len(both) / len(qa) if qa else 0.0,
-                len(both) / len(qb) if qb else 0.0,
-            )
-        )
+        rows.append((
+            len(both) / len(either) if either else 0.0,
+            a,
+            b,
+            len(both),
+            len(both) / len(qa) if qa else 0.0,
+            len(both) / len(qb) if qb else 0.0,
+        ))
     for score, a, b, both, share_a, share_b in sorted(rows, reverse=True):
-        print(
-            f"| {a} | {b} | {score:.0%} | {both} | {share_a:.0%} | {share_b:.0%} |"
-        )
+        print(f"| {a} | {b} | {score:.0%} | {both} | {share_a:.0%} | {share_b:.0%} |")
 
     print("\n## Reuse\n")
     print("| Form | Questions asked | New to the bank | Already in the bank |")
@@ -138,8 +134,7 @@ def main() -> int:
             continue
         new = asked[form_id] - known
         print(
-            f"| {form_id} | {len(asked[form_id])} | {len(new)} | "
-            f"{len(asked[form_id]) - len(new)} |"
+            f"| {form_id} | {len(asked[form_id])} | {len(new)} | {len(asked[form_id]) - len(new)} |"
         )
         known |= asked[form_id]
     return 0

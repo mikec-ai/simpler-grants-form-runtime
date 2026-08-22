@@ -1143,7 +1143,7 @@ questions and the emitter infers the stamp from which question a property uses.
 opportunity or the organization profile:
 
 ```typespec
-@Sgg.prePopulate(SggPrePop.agencyName)
+@@Sgg.prePopulate(SF424, #{ `agencyName`: SggPrePop.agencyName })
 agencyName?: string;
 ```
 

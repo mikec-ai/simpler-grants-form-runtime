@@ -14,9 +14,7 @@ from src.form_schema.form_spec.bank import ARTIFACTS
 
 def test_every_artifact_matches_its_digest():
     digests = json.loads((ARTIFACTS / "checksums.json").read_text())
-    actual = {
-        path: hashlib.sha256((ARTIFACTS / path).read_bytes()).hexdigest() for path in digests
-    }
+    actual = {path: hashlib.sha256((ARTIFACTS / path).read_bytes()).hexdigest() for path in digests}
     assert actual == digests
 
 

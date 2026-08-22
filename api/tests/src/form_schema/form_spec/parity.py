@@ -299,8 +299,7 @@ def corpus(schema: dict[str, Any], seeds: list[dict[str, Any]]) -> list[dict[str
 
 def verdicts(schema: dict[str, Any], payload: dict[str, Any]) -> set[tuple[str, str, str]]:
     return {
-        (issue.field, issue.type, issue.message)
-        for issue in validate_json_schema(payload, schema)
+        (issue.field, issue.type, issue.message) for issue in validate_json_schema(payload, schema)
     }
 
 

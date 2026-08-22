@@ -728,12 +728,27 @@ extern dec readOnlyWhen(target: ModelProperty, source: ModelProperty, equals: va
 // lib/validation.tsp
 namespace SimplerForms.Validation;
 extern dec requiredWhen(target: ModelProperty, source: ModelProperty, equals: valueof unknown);
-extern dec computed(target: ModelProperty, op: valueof Op, refs: valueof ModelProperty[]);
+extern dec computed(target: ModelProperty, operator: valueof Op, ...refs: ModelProperty[]);
+extern dec totals(target: ModelProperty, ...sources: ModelProperty[]);
 
 // lib/sgg.tsp — the SGG target's own vocabulary. Expected to be retired (§4.5).
 namespace SimplerForms.Sgg;
-extern dec prePopulate(target: ModelProperty, rule: valueof SggPrePop);
+extern dec prePopulate(target: Model, rules: valueof Record<SggPrePop>);
+extern dec multiField(target: Model, section: valueof EnumMember, widget: valueof WidgetName);
 ```
+
+`@Validation.totals` says that a block totals the same block found in each of `sources` --
+either a repeatable list, whose entries each contribute, or peer properties holding the same
+block. One declaration stands for a sum per member, which is what makes a twelve-row budget
+column one statement. SF-424A's thirty-five calculations come from eight declarations, and
+their evaluation order is derived from how deep each calculation's dependencies go rather
+than numbered by hand (§4.4).
+
+`@Sgg.prePopulate` is a table on the form keyed by the path an answer takes, not a decorator
+per property. Two reasons: a composed question's members live in the bank, where `@Sgg.*` may
+not go, so there is nowhere to hang a per-property decorator; and everything the runtime
+pre-fills then reads as one list, which is what a reviewer wants. Every path is checked
+against the form (§3.4).
 
 Registration is keyed by namespace string — the compiler's own doc example is
 `$decorators = { "Azure.Core": {...} }`:
@@ -744,8 +759,8 @@ export const $decorators = {
   "SimplerForms.Form":       { meta: $formMeta },
   "SimplerForms.Catalog":    { tag: $tag, entity: $entity },
   "SimplerForms.UI":         { sections: $sections, section: $section, label: $label, ... },
-  "SimplerForms.Validation": { requiredWhen: $requiredWhen, computed: $computed },
-  "SimplerForms.Sgg":        { prePopulate: $prePopulate },
+  "SimplerForms.Validation": { requiredWhen: $requiredWhen, computed: $computed, totals: $totals },
+  "SimplerForms.Sgg":        { prePopulate: $prePopulate, multiField: $multiField },
 }
 ```
 
@@ -1107,12 +1122,15 @@ organization profile (`uei`):
 ```typespec
 // lib/sgg.tsp
 namespace SimplerForms.Sgg;
-extern dec prePopulate(target: ModelProperty, rule: valueof SggPrePop);
+extern dec prePopulate(target: Model, rules: valueof Record<SggPrePop>);
 ```
 
 ```typespec
-@Sgg.prePopulate(SggPrePop.agencyName)   // successor: @Map.from(Sources.Opportunity.agencyName)
-agencyName?: string;
+@Sgg.prePopulate(#{
+  `agencyName`: SggPrePop.agencyName,   // successor: @Map.from(Sources.Opportunity.agencyName)
+  `samUei`: SggPrePop.uei,              // successor: @Map.from(Sources.OrgProfile.samUei)
+})
+model SF424 { ... }
 ```
 
 Seven properties make this retirable rather than merely separate:

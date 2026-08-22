@@ -103,9 +103,10 @@ def scan(dump: dict[str, Any]) -> dict[str, list[tuple[str, str]]]:
                 continue
             if json_nests == of_xml[path]:
                 continue
-            findings.setdefault(form, []).append(
-                (path, "JSON nests, wire is flat" if json_nests else "wire nests, JSON is flat")
-            )
+            findings.setdefault(form, []).append((
+                path,
+                "JSON nests, wire is flat" if json_nests else "wire nests, JSON is flat",
+            ))
     return findings
 
 
@@ -122,9 +123,7 @@ def main() -> int:
         print(json.dumps(findings, indent=2))
         return 0
 
-    covered = sum(
-        1 for a in dump.values() if xml_shape(a.get("xml") or {})
-    )
+    covered = sum(1 for a in dump.values() if xml_shape(a.get("xml") or {}))
     print(f"Compared {covered} of {len(dump)} forms against their own XML transform.\n")
 
     if not findings:
@@ -151,7 +150,7 @@ def main() -> int:
         # form says nothing, and four different address types across forms says everything.
         seen: dict[tuple[frozenset[str], str], list[str]] = collections.defaultdict(list)
         for form, members, target in rows:
-            seen[(frozenset(members), target or "--")].append(form)
+            seen[frozenset(members), target or "--"].append(form)
         for (members, target), forms in sorted(
             seen.items(), key=lambda item: (-len(item[0][0]), item[0][1])
         ):
@@ -165,26 +164,32 @@ def members_by_property(
 ) -> dict[str, list[tuple[str, list[str], str | None]]]:
     """Property name ->, per form, the members it holds and the wire element it maps to."""
     out: dict[str, list[tuple[str, list[str], str | None]]] = collections.defaultdict(list)
+
+    def walk(
+        node: dict[str, Any],
+        path: str,
+        form: str,
+        targets: dict[str, str],
+    ) -> None:
+        for name, sub in (node.get("properties") or {}).items():
+            if not isinstance(sub, dict):
+                continue
+            inner = merged(sub)
+            items = inner.get("items")
+            if isinstance(items, dict):
+                inner = merged(items)
+            here = f"{path}.{name}".lstrip(".")
+            if inner.get("properties"):
+                out[name].append((form, sorted(inner["properties"]), targets.get(here)))
+                walk(inner, here, form, targets)
+
     for form, artifacts in sorted(dump.items()):
-        schema = merged(artifacts.get("resolved") or {})
-        targets = xml_targets(artifacts.get("xml") or {})
-
-        def walk(node: dict[str, Any], path: str) -> None:
-            for name, sub in (node.get("properties") or {}).items():
-                if not isinstance(sub, dict):
-                    continue
-                inner = merged(sub)
-                items = inner.get("items")
-                if isinstance(items, dict):
-                    inner = merged(items)
-                here = f"{path}.{name}".lstrip(".")
-                if inner.get("properties"):
-                    out[name].append(
-                        (form, sorted(inner["properties"]), targets.get(here))
-                    )
-                    walk(inner, here)
-
-        walk(schema, "")
+        walk(
+            merged(artifacts.get("resolved") or {}),
+            "",
+            form,
+            xml_targets(artifacts.get("xml") or {}),
+        )
     return out
 
 

@@ -35,8 +35,16 @@ from typing import Any
 
 #: Keywords that describe the value. Two fields agreeing on all of them have the same shape.
 SHAPE_KEYWORDS = (
-    "type", "format", "pattern", "enum", "minLength", "maxLength",
-    "minimum", "maximum", "minItems", "maxItems",
+    "type",
+    "format",
+    "pattern",
+    "enum",
+    "minLength",
+    "maxLength",
+    "minimum",
+    "maximum",
+    "minItems",
+    "maxItems",
 )
 
 #: Words that carry no meaning in a field name, so they are dropped when looking for the
@@ -148,7 +156,7 @@ def resolve_local_defs(raw: dict) -> dict:
 
 
 class Field:
-    __slots__ = ("form", "path", "schema", "ref")
+    __slots__ = ("form", "path", "ref", "schema")
 
     def __init__(self, form: str, path: tuple[str, ...], schema: dict, ref: str | None):
         self.form, self.path, self.schema, self.ref = form, path, schema, ref
@@ -267,27 +275,24 @@ def packages(fields: list[Field], dump: dict) -> list[dict]:
         if len(names) < 2:
             continue
         adjacent_in = [
-            form for form, members in per_form.items()
+            form
+            for form, members in per_form.items()
             if len(members) > 1 and adjacent(orders.get(form, []), members)
         ]
         if not adjacent_in:
             continue
-        out.append(
-            {
-                "prefix": "-".join(prefix),
-                "members": sorted(names),
-                "forms": sorted(per_form),
-                "adjacentIn": sorted(adjacent_in),
-                "kind": classify(prefix, sorted(names), by_name),
-            }
-        )
+        out.append({
+            "prefix": "-".join(prefix),
+            "members": sorted(names),
+            "forms": sorted(per_form),
+            "adjacentIn": sorted(adjacent_in),
+            "kind": classify(prefix, sorted(names), by_name),
+        })
 
     # Prefer the longest prefix describing a given set of members.
     # Longest prefix first on a tie: `point-of-contact` names the group, `point-of` does not.
     out.sort(
-        key=lambda p: (
-            -len(p["members"]), -len(p["forms"]), -p["prefix"].count("-"), p["prefix"]
-        )
+        key=lambda p: (-len(p["members"]), -len(p["forms"]), -p["prefix"].count("-"), p["prefix"])
     )
     seen: set[frozenset[str]] = set()
     deduped: list[dict] = []
@@ -326,7 +331,7 @@ def classify(prefix: tuple[str, ...], members: list[str], by_name: dict[str, lis
     Copies that disagree on their constraints are called out: the same question cannot have
     two different limits, so one of them is a defect.
     """
-    suffixes = {name: tuple(TOKEN.findall(name))[len(prefix):] for name in members}
+    suffixes = {name: tuple(TOKEN.findall(name))[len(prefix) :] for name in members}
     words = {word for suffix in suffixes.values() for word in suffix}
     schemas = [by_name[name][0].schema for name in members if name in by_name]
     shapes = {shape(schema) for schema in schemas}

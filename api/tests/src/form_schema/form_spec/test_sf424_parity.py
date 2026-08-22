@@ -55,6 +55,7 @@ ALLOWED_BEHAVIOR = {
     ),
 }
 
+
 @pytest.fixture(scope="module")
 def golden():
     return load_versioned_form(Path(forms_package.__file__).parent / FORM_DIR, "1.0")

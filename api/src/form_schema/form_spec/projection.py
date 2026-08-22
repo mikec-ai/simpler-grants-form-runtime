@@ -160,9 +160,7 @@ def _project_node(
     in_condition: bool = False,
 ) -> Any:
     if isinstance(node, list):
-        return [
-            _project_node(item, projection, path, local_prefix, in_condition) for item in node
-        ]
+        return [_project_node(item, projection, path, local_prefix, in_condition) for item in node]
     if not isinstance(node, dict):
         return node
 
@@ -191,8 +189,7 @@ def _project_node(
             )
         elif key in _SUBSCHEMA_LIST:
             out[key] = [
-                _project_node(item, projection, path, local_prefix, in_condition)
-                for item in value
+                _project_node(item, projection, path, local_prefix, in_condition) for item in value
             ]
         elif key == "dependentRequired":
             out[key] = {

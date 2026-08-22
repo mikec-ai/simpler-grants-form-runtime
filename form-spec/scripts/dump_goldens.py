@@ -32,7 +32,8 @@ for d in sorted(FORMS.iterdir()):
             try:
                 spec.loader.exec_module(m)
             except Exception as e:
-                print(f"SKIP {d.name} {e}", file=sys.stderr); continue
+                print(f"SKIP {d.name} {e}", file=sys.stderr)
+                continue
             key = f"{d.name}"
             out[key] = {
                 "raw": getattr(m, "FORM_JSON_SCHEMA", None),
