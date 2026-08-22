@@ -14,7 +14,8 @@
           "$ref": "urn:grants-form-kernel:questions:organization:legal-name:v1"
         }
       ],
-      "title": "Applicant Organization Name"
+      "title": "Applicant Organization Name",
+      "description": "Enter the legal name of the applicant that will undertake the assistance activity. This field is required."
     },
     "key_contacts": {
       "type": "array",
@@ -38,11 +39,13 @@
                 "$ref": "urn:grants-form-kernel:questions:contact-project-role:v1"
               }
             ],
-            "title": "Project Role"
+            "title": "Project Role",
+            "description": "Enter the individual's role on the project (e.g., project manager, fiscal contact)."
           },
           "name": {
             "type": "object",
             "title": "Name",
+            "description": "",
             "required": [
               "first_name",
               "last_name"
@@ -54,7 +57,8 @@
                     "$ref": "urn:grants-form-kernel:questions:person-name-prefix:v1"
                   }
                 ],
-                "title": "Prefix"
+                "title": "Prefix",
+                "description": "Enter the Prefix."
               },
               "first_name": {
                 "allOf": [
@@ -62,7 +66,8 @@
                     "$ref": "urn:grants-form-kernel:questions:person-name-first:v1"
                   }
                 ],
-                "title": "First Name"
+                "title": "First Name",
+                "description": "Enter the First Name."
               },
               "middle_name": {
                 "allOf": [
@@ -70,7 +75,8 @@
                     "$ref": "urn:grants-form-kernel:questions:person-name-middle:v1"
                   }
                 ],
-                "title": "Middle Name"
+                "title": "Middle Name",
+                "description": "Enter the Middle Name."
               },
               "last_name": {
                 "allOf": [
@@ -78,7 +84,8 @@
                     "$ref": "urn:grants-form-kernel:questions:person-name-last:v1"
                   }
                 ],
-                "title": "Last Name"
+                "title": "Last Name",
+                "description": "Enter the Last Name."
               },
               "suffix": {
                 "allOf": [
@@ -86,7 +93,8 @@
                     "$ref": "urn:grants-form-kernel:questions:person-name-suffix:v1"
                   }
                 ],
-                "title": "Suffix"
+                "title": "Suffix",
+                "description": "Enter the Suffix."
               }
             }
           },
@@ -96,7 +104,8 @@
                 "$ref": "urn:grants-form-kernel:questions:person-title:v1"
               }
             ],
-            "title": "Title"
+            "title": "Title",
+            "description": "Enter the position title."
           },
           "organizational_affiliation": {
             "allOf": [
@@ -104,7 +113,8 @@
                 "$ref": "urn:grants-form-kernel:questions:person-organizational-affiliation:v1"
               }
             ],
-            "title": "Organizational Affiliation"
+            "title": "Organizational Affiliation",
+            "description": "Enter the contact's organizational affiliation."
           },
           "address": {
             "type": "object",
@@ -142,7 +152,8 @@
                     "$ref": "urn:grants-form-kernel:questions:address-street-1:v1"
                   }
                 ],
-                "title": "Street 1"
+                "title": "Street 1",
+                "description": "Enter the first line of the Street Address."
               },
               "street2": {
                 "allOf": [
@@ -150,7 +161,8 @@
                     "$ref": "urn:grants-form-kernel:questions:address-street-2:v1"
                   }
                 ],
-                "title": "Street 2"
+                "title": "Street 2",
+                "description": "Enter the second line of the Street Address."
               },
               "city": {
                 "allOf": [
@@ -158,7 +170,8 @@
                     "$ref": "urn:grants-form-kernel:questions:address-city:v1"
                   }
                 ],
-                "title": "City"
+                "title": "City",
+                "description": "Enter the city."
               },
               "county": {
                 "allOf": [
@@ -166,7 +179,8 @@
                     "$ref": "urn:grants-form-kernel:questions:address-county:v1"
                   }
                 ],
-                "title": "County/Parish"
+                "title": "County/Parish",
+                "description": "Enter the County or Parish."
               },
               "state": {
                 "allOf": [
@@ -174,7 +188,8 @@
                     "$ref": "urn:grants-form-kernel:questions:address-state:v1"
                   }
                 ],
-                "title": "State"
+                "title": "State",
+                "description": "Enter the state."
               },
               "province": {
                 "allOf": [
@@ -182,7 +197,8 @@
                     "$ref": "urn:grants-form-kernel:questions:address-province:v1"
                   }
                 ],
-                "title": "Province"
+                "title": "Province",
+                "description": "Enter the province."
               },
               "country": {
                 "allOf": [
@@ -190,7 +206,8 @@
                     "$ref": "urn:grants-form-kernel:questions:address-country:v1"
                   }
                 ],
-                "title": "Country"
+                "title": "Country",
+                "description": "Enter the country."
               },
               "zip_code": {
                 "allOf": [
@@ -198,7 +215,8 @@
                     "$ref": "urn:grants-form-kernel:questions:address-postal-code:v1"
                   }
                 ],
-                "title": "Zip / Postal Code"
+                "title": "Zip / Postal Code",
+                "description": "Enter the nine-digit Postal Code (e.g., ZIP Code). This field is required if the Country is the United States."
               }
             }
           },

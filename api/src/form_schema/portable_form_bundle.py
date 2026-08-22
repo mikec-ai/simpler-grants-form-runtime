@@ -121,7 +121,7 @@ def _adapt_ui_node(
 
     if node_type not in {"VerticalLayout", "Group"}:
         raise PortableFormBundleError(f"{label}.type is unsupported: {node_type}")
-    allowed = {"type", "label", "elements", "options"}
+    allowed = {"type", "label", "description", "elements", "options"}
     unknown = set(value) - allowed
     if unknown:
         raise PortableFormBundleError(f"{label} has unknown layout keys: {sorted(unknown)}")
@@ -138,14 +138,15 @@ def _adapt_ui_node(
     native_name = simpler.get("name")
     if native_name is not None:
         native_name = _string(native_name, f"{label}.options.simpler.name")
-    return [
-        {
-            "type": "section",
-            "label": section_label,
-            "name": native_name or _ui_name(section_label),
-            "children": children,
-        }
-    ]
+    section: dict[str, Any] = {
+        "type": "section",
+        "label": section_label,
+        "name": native_name or _ui_name(section_label),
+        "children": children,
+    }
+    if "description" in value:
+        section["description"] = _string(value["description"], f"{label}.description")
+    return [section]
 
 
 def _compiler_sha256() -> str:

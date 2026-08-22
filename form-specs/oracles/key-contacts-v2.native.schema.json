@@ -1,0 +1,105 @@
+{
+  "type": "object",
+  "required": [
+    "applicant_organization_name",
+    "key_contacts"
+  ],
+  "properties": {
+    "applicant_organization_name": {
+      "allOf": [
+        {
+          "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/organization_name"
+        }
+      ],
+      "title": "Applicant Organization Name",
+      "description": "Enter the legal name of the applicant that will undertake the assistance activity. This field is required."
+    },
+    "key_contacts": {
+      "type": "array",
+      "title": "Key Contacts",
+      "description": "Enter between 1 and 4 key contacts and their role on the project.",
+      "minItems": 1,
+      "maxItems": 4,
+      "items": {
+        "$ref": "#/$defs/key_contact_person"
+      }
+    }
+  },
+  "$defs": {
+    "key_contact_person": {
+      "type": "object",
+      "required": [
+        "project_role",
+        "name",
+        "address",
+        "phone",
+        "email"
+      ],
+      "properties": {
+        "project_role": {
+          "type": "string",
+          "title": "Project Role",
+          "description": "Enter the individual's role on the project (e.g., project manager, fiscal contact).",
+          "minLength": 1,
+          "maxLength": 45
+        },
+        "name": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/person_name"
+            }
+          ],
+          "title": "Name"
+        },
+        "title": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/contact_person_title"
+            }
+          ],
+          "title": "Title"
+        },
+        "organizational_affiliation": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/organization_name"
+            }
+          ],
+          "title": "Organizational Affiliation",
+          "description": "Enter the contact's organizational affiliation."
+        },
+        "address": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/address_shared_v1.json#/address"
+            }
+          ]
+        },
+        "phone": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/phone_number"
+            }
+          ],
+          "title": "Telephone Number"
+        },
+        "fax": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/phone_number"
+            }
+          ],
+          "title": "Fax Number"
+        },
+        "email": {
+          "allOf": [
+            {
+              "$ref": "https://files.simpler.grants.gov/schemas/common_shared_v1.json#/contact_email"
+            }
+          ],
+          "title": "Email"
+        }
+      }
+    }
+  }
+}

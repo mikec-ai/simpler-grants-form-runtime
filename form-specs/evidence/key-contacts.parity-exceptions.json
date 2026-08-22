@@ -1,0 +1,56 @@
+{
+  "contract": "portable-native-parity-exceptions/v1",
+  "form_key": "KeyContacts",
+  "review_status": "agent_proposed",
+  "published_coverage_eligible": false,
+  "native_revision": "e1739ee54",
+  "native_oracles": {
+    "schema": "oracles/key-contacts-v2.native.schema.json",
+    "ui": "oracles/key-contacts-v2.native.ui.json"
+  },
+  "schema_normalization": {
+    "ignored_keys_any_depth": [
+      "$schema",
+      "$id"
+    ],
+    "ignored_key_prefixes_any_depth": [
+      "x-"
+    ],
+    "ignored_root_paths": [
+      {
+        "path": "/title",
+        "classification": "portable_form_identity",
+        "reason": "The portable declaration carries a root display title; the current native root schema omits one.",
+        "semantic_effect": "none"
+      },
+      {
+        "path": "/$defs",
+        "classification": "resolver_only_duplicate_definition",
+        "reason": "The native resolver retains the key_contact_person definition after expanding its only reference. The portable composition has no dangling definition after reference resolution.",
+        "semantic_effect": "none"
+      }
+    ],
+    "transforms": [
+      {
+        "name": "flatten_single_schema_allOf",
+        "classification": "reference_wrapper_normalization",
+        "reason": "A single allOf wrapper is the portable mechanism for adding form-occurrence annotations to a referenced question.",
+        "semantic_effect": "none"
+      }
+    ]
+  },
+  "ui_normalization": {
+    "allowed": false
+  },
+  "source_vs_native_behavior_gaps": {
+    "artifact": "evidence/key-contacts.behavior-evidence.json",
+    "expected_gap_paths": [
+      "key_contacts[].address.state",
+      "key_contacts[].address.province",
+      "key_contacts[].address.zip_code",
+      "applicant_organization_name",
+      "key_contacts"
+    ]
+  },
+  "unclassified_differences_allowed": false
+}
