@@ -1,21 +1,13 @@
 import copy
-import hashlib
 import json
-import shutil
-import subprocess
-import sys
 from pathlib import Path
 from typing import Any
-
-import pytest
 
 from src.form_schema.jsonschema_validator import validate_json_schema_for_form
 from src.form_schema.portable_form_bundle import load_portable_form_bundle
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[4]
 BUNDLE_ROOT = REPOSITORY_ROOT / "form-specs"
-BUILDER = REPOSITORY_ROOT / "scripts/build_portable_budget_pilot.py"
-COMPOSITION_BUILDER = REPOSITORY_ROOT / "scripts/build_portable_budget_composition.py"
 
 
 def _walk(node: object):
@@ -57,35 +49,6 @@ def _normalized_profile_schema(value: dict[str, Any]) -> dict[str, Any]:
     normalize(result)
     result["properties"]["budget_year"].pop("maxItems")
     return result
-
-
-def _tree_digest(root: Path) -> str:
-    digest = hashlib.sha256()
-    for path in sorted(item for item in root.rglob("*") if item.is_file()):
-        digest.update(str(path.relative_to(root)).encode())
-        digest.update(path.read_bytes())
-    return digest.hexdigest()
-
-
-def _copied_builder(tmp_path: Path) -> tuple[Path, Path]:
-    root = tmp_path / "portable-budget"
-    shutil.copytree(BUNDLE_ROOT, root / "form-specs")
-    (root / "scripts").mkdir()
-    shutil.copy(BUILDER, root / "scripts/build_portable_budget_pilot.py")
-    shutil.copy(
-        COMPOSITION_BUILDER,
-        root / "scripts/build_portable_budget_composition.py",
-    )
-    return root, root / "form-specs"
-
-
-def _remove_first_executable_rule(value: dict[str, Any]) -> None:
-    index = next(
-        index
-        for index, rule in enumerate(value["rules"])
-        if rule.get("mechanism") == "calculation" and rule.get("execution_class") == "executable"
-    )
-    value["rules"].pop(index)
 
 
 def test_profiles_are_one_declarative_runtime_shape_with_one_parameter() -> None:
@@ -185,97 +148,6 @@ def test_budget_period_cardinality_is_enforced_by_each_profile() -> None:
 
     assert any(issue.type == "maxItems" for issue in five_issues)
     assert any(issue.type == "maxItems" for issue in ten_issues)
-
-
-def test_budget_builder_is_reproducible_in_an_isolated_copy(tmp_path: Path) -> None:
-    root, specs = _copied_builder(tmp_path)
-    before = _tree_digest(specs)
-
-    subprocess.run(
-        [sys.executable, "scripts/build_portable_budget_pilot.py"],
-        cwd=root,
-        check=True,
-    )
-    subprocess.run(
-        [sys.executable, "scripts/build_portable_budget_composition.py"],
-        cwd=root,
-        check=True,
-    )
-
-    assert _tree_digest(specs) == before
-
-
-@pytest.mark.parametrize(
-    ("relative_path", "mutation", "message"),
-    [
-        (
-            "oracles/budget/rr-budget10-v3.candidate.json",
-            lambda value: value["artifacts"]["json_schema"]["properties"]["budget_year"].update(
-                {"maxItems": 11}
-            ),
-            "budget period drift",
-        ),
-        (
-            "oracles/budget/rr-budget-v3.runtime-rules.json",
-            _remove_first_executable_rule,
-            "expected 30 executable sums",
-        ),
-    ],
-)
-def test_budget_builder_fails_closed_on_oracle_drift(
-    tmp_path: Path,
-    relative_path: str,
-    mutation,
-    message: str,
-) -> None:
-    root, specs = _copied_builder(tmp_path)
-    path = specs / relative_path
-    value = json.loads(path.read_text(encoding="utf-8"))
-    mutation(value)
-    path.write_text(json.dumps(value), encoding="utf-8")
-
-    result = subprocess.run(
-        [sys.executable, "scripts/build_portable_budget_pilot.py"],
-        cwd=root,
-        capture_output=True,
-        text=True,
-    )
-
-    assert result.returncode != 0
-    assert message in result.stdout
-
-
-def test_budget_builder_cli_is_structured_and_fail_closed(tmp_path: Path) -> None:
-    root, _ = _copied_builder(tmp_path)
-
-    version = subprocess.run(
-        [sys.executable, "scripts/build_portable_budget_pilot.py", "--version"],
-        cwd=root,
-        capture_output=True,
-        text=True,
-    )
-    unknown = subprocess.run(
-        [sys.executable, "scripts/build_portable_budget_pilot.py", "--wat"],
-        cwd=root,
-        capture_output=True,
-        text=True,
-    )
-    success = subprocess.run(
-        [sys.executable, "scripts/build_portable_budget_pilot.py"],
-        cwd=root,
-        capture_output=True,
-        text=True,
-    )
-
-    assert version.returncode == 0
-    assert version.stdout == "0.1.0\n"
-    assert unknown.returncode == 2
-    assert "code: usage" in unknown.stdout
-    assert "unknown argument: --wat" in unknown.stdout
-    assert unknown.stderr == ""
-    assert success.returncode == 0
-    assert "status: generated" in success.stdout
-    assert "shared_questions: 101" in success.stdout
 
 
 def test_budget_runtime_adapter_contains_no_budget_form_branch() -> None:

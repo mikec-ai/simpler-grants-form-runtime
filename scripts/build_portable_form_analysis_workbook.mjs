@@ -57,14 +57,25 @@ function typed(value) {
   return value;
 }
 
-async function csvRows(filename, labels) {
+async function csvRows(filename, columns) {
   const parsed = parseCsv(await fs.readFile(path.join(ANALYSIS_DIR, filename), "utf8"));
   const headers = parsed[0];
+  const headerIndexes = new Map(headers.map((header, index) => [header, index]));
+  const missing = columns.filter(({ source }) => !headerIndexes.has(source));
+  if (missing.length > 0) {
+    throw new Error(
+      `${filename} is missing required columns: ${missing.map(({ source }) => source).join(", ")}`,
+    );
+  }
   return [
-    labels,
-    ...parsed.slice(1).map((row) => row.map((value, index) => typed(value ?? headers[index]))),
+    columns.map(({ label }) => label),
+    ...parsed
+      .slice(1)
+      .map((row) => columns.map(({ source }) => typed(row[headerIndexes.get(source)] ?? ""))),
   ];
 }
+
+const column = (source, label) => ({ source, label });
 
 const COLORS = {
   navy: "#17324D",
@@ -140,48 +151,60 @@ function addDataSheet(workbook, name, rows, tableName, widths, percentColumns = 
 
 async function main() {
   const forms = await csvRows("forms.csv", [
-    "Form Key",
-    "Form Name",
-    "Version",
-    "Semantic Question Occurrences",
-    "Content Capture Mechanisms",
-    "Semantic Mapping Status",
-    "Published Coverage Eligible",
-    "Production Ready",
+    column("form_key", "Form Key"),
+    column("form_name", "Form Name"),
+    column("form_version", "Version"),
+    column("semantic_question_occurrences", "Semantic Question Occurrences"),
+    column("content_capture_mechanisms", "Content Capture Mechanisms"),
+    column("semantic_mapping_status", "Semantic Mapping Status"),
+    column("published_coverage_eligible", "Published Coverage Eligible"),
+    column("production_ready", "Production Ready"),
   ]);
   const pairs = await csvRows("form-pairs.csv", [
-    "Form A",
-    "Form B",
-    "Proposed Similarity",
-    "Questions in Common",
-    "Unique Questions Across Pair",
-    "% of Form A Shared by Form B",
-    "% of Form B Shared by Form A",
-    "Accepted Similarity",
-    "Accepted Questions in Common",
+    column("form_a", "Form A"),
+    column("form_b", "Form B"),
+    column("comparison_basis", "Comparison Basis"),
+    column("proposed_similarity", "Role-qualified Proposed Similarity"),
+    column("proposed_questions_in_common", "Role-qualified Questions in Common"),
+    column("proposed_unique_questions", "Role-qualified Questions Across Pair"),
+    column("form_a_proposed_coverage", "% of Form A Shared by Form B"),
+    column("form_b_proposed_coverage", "% of Form B Shared by Form A"),
+    column("template_proposed_similarity", "Question-template Similarity"),
+    column("template_proposed_questions_in_common", "Question Templates in Common"),
+    column("accepted_similarity", "Accepted Similarity"),
+    column("accepted_questions_in_common", "Accepted Questions in Common"),
   ]);
   const questions = await csvRows("questions.csv", [
-    "Question ID",
-    "Question",
-    "Validation Variants",
-    "Forms with Proposed Use",
-    "Forms with Accepted Use",
-    "Forms with Published Use",
+    column("question_id", "Question Template ID"),
+    column("question_title", "Question"),
+    column("schema_variant_count", "Validation Variants"),
+    column("proposed_form_count", "Forms with Proposed Use"),
+    column("accepted_form_count", "Forms with Accepted Use"),
+    column("published_form_count", "Forms with Published Use"),
+  ]);
+  const roleQualifiedQuestions = await csvRows("role-qualified-questions.csv", [
+    column("semantic_identity", "Role-qualified Semantic Identity"),
+    column("question_id", "Question Template ID"),
+    column("role", "Occurrence Role"),
+    column("proposed_form_count", "Forms with Proposed Use"),
+    column("accepted_form_count", "Forms with Accepted Use"),
+    column("published_form_count", "Forms with Published Use"),
   ]);
   const associations = await csvRows("form-question-map.csv", [
-    "Form Key",
-    "Question ID",
-    "Schema ID",
-    "Analysis Classification",
-    "Role",
-    "Path in Form Schema",
-    "Mapping Status",
-    "Included in Proposed Overlap",
-    "Included in Accepted Overlap",
-    "Path in Grants.gov XML",
-    "XML Type Source",
-    "XML Type",
-    "XSD Source Link",
+    column("form_key", "Form Key"),
+    column("question_id", "Question Template ID"),
+    column("semantic_identity", "Role-qualified Semantic Identity"),
+    column("schema_id", "Schema ID"),
+    column("analysis_classification", "Analysis Classification"),
+    column("role", "Role"),
+    column("form_pointer", "Path in Form Schema"),
+    column("mapping_status", "Mapping Status"),
+    column("included_in_proposed_overlap", "Included in Proposed Overlap"),
+    column("included_in_accepted_overlap", "Included in Accepted Overlap"),
+    column("xml_path", "Path in Grants.gov XML"),
+    column("type_source", "XML Type Source"),
+    column("type", "XML Type"),
+    column("xsd_source", "XSD Source Link"),
   ]);
   forms.slice(1).forEach((row) => {
     row[1] = DISPLAY_NAMES[row[0]] ?? row[1];
@@ -201,16 +224,23 @@ async function main() {
     "Form Pairs",
     pairs,
     "FormPairsTable",
-    [38, 38, 17, 18, 23, 23, 23, 17, 22],
-    [2, 5, 6, 7],
+    [38, 38, 24, 20, 22, 22, 23, 23, 18, 20, 17, 22],
+    [3, 6, 7, 8, 10],
   );
   addDataSheet(workbook, "Questions", questions, "QuestionsTable", [64, 52, 19, 23, 22, 22]);
+  addDataSheet(
+    workbook,
+    "Role-qualified Questions",
+    roleQualifiedQuestions,
+    "RoleQualifiedQuestionsTable",
+    [72, 58, 32, 23, 22, 22],
+  );
   addDataSheet(
     workbook,
     "Form Question Map",
     associations,
     "FormQuestionMapTable",
-    [24, 48, 52, 25, 25, 58, 20, 23, 23, 58, 48, 24, 62],
+    [24, 48, 72, 52, 25, 25, 58, 20, 23, 23, 58, 48, 24, 62],
   );
 
   overview.mergeCells("A1:H2");
@@ -232,9 +262,9 @@ async function main() {
 
   const cards = [
     ["Forms in this implementation wave", "=COUNTA(Forms!A2:A200)"],
-    ["Unique semantic questions proposed", "=COUNTA(Questions!A2:A500)"],
-    ["Form to question associations", '=COUNTIF(\'Form Question Map\'!D2:D1000,"semantic_question")'],
-    ["Attachment capture mechanisms", '=COUNTIF(\'Form Question Map\'!D2:D1000,"content_capture_mechanism")'],
+    ["Reusable question templates", "=COUNTA(Questions!A2:A500)"],
+    ["Role-qualified semantic identities", "=COUNTA('Role-qualified Questions'!A2:A1000)"],
+    ["Question occurrences", '=COUNTIF(\'Form Question Map\'!E2:E1000,"semantic_question")'],
   ];
   const cardRanges = ["A5:B7", "C5:D7", "E5:F7", "G5:H7"];
   cards.forEach(([label, formula], index) => {
@@ -272,10 +302,10 @@ async function main() {
   };
   overview.getRange("A10:H15").values = [
     ["Forms", "One row per implemented portable form.", null, null, null, null, null, null],
-    ["Form Pairs", "Proposed question overlap for every pair of forms. Similarity is common questions divided by unique questions across both forms.", null, null, null, null, null, null],
-    ["Questions", "The portable semantic question catalog and the number of forms in which each question is proposed to appear.", null, null, null, null, null, null],
-    ["Form Question Map", "The association table connecting each form occurrence to a semantic question or an attachment capture mechanism, including XML metadata when available.", null, null, null, null, null, null],
-    ["Proposed", "Agent-supported reuse evidence that still requires semantic review. Proposed values do not contribute to accepted or published coverage.", null, null, null, null, null, null],
+    ["Form Pairs", "Role-qualified proposed overlap for every pair. Question-template overlap remains visible in separate columns.", null, null, null, null, null, null],
+    ["Questions", "Reusable question/schema templates. A template may appear in several different roles.", null, null, null, null, null, null],
+    ["Role-qualified Questions", "Conservative semantic identities combining each question template with its occurrence role.", null, null, null, null, null, null],
+    ["Form Question Map", "Every form occurrence, its template, role-qualified identity, role, paths, and XML metadata.", null, null, null, null, null, null],
     ["Attachment mechanism", "A file-upload mechanism can capture many questions inside an attached document. It is retained in the map but excluded from question-overlap scores.", null, null, null, null, null, null],
   ];
   for (let row = 10; row <= 15; row += 1) {
@@ -295,10 +325,10 @@ async function main() {
     bottom: { style: "thin", color: COLORS.line },
   };
 
-  const sortedPairs = pairs.slice(1).sort((left, right) => right[2] - left[2]).slice(0, 8);
+  const sortedPairs = pairs.slice(1).sort((left, right) => right[3] - left[3]).slice(0, 8);
   overview.getRange("A18:C26").values = [
     ["Form Pair", "Proposed Similarity", "Questions in Common"],
-    ...sortedPairs.map((row) => [`${row[0]} + ${row[1]}`, row[2], row[3]]),
+    ...sortedPairs.map((row) => [`${row[0]} + ${row[1]}`, row[3], row[4]]),
   ];
   overview.getRange("A18:C18").format = {
     fill: COLORS.navy,
@@ -307,7 +337,7 @@ async function main() {
   overview.getRange("B19:B26").format.numberFormat = "0.0%";
   overview.getRange("J18:K26").values = [
     ["Form Pair", "Questions in Common"],
-    ...sortedPairs.map((row) => [`${row[0]} + ${row[1]}`, row[3]]),
+    ...sortedPairs.map((row) => [`${row[0]} + ${row[1]}`, row[4]]),
   ];
   const chart = overview.charts.add("bar", overview.getRange("J18:K26"));
   chart.title = "Questions shared by the highest-overlap pairs";
@@ -339,7 +369,14 @@ async function main() {
   await xlsx.save(OUTPUT);
   await xlsx.save(REPO_OUTPUT);
 
-  for (const sheetName of ["Overview", "Forms", "Form Pairs", "Questions", "Form Question Map"]) {
+  for (const sheetName of [
+    "Overview",
+    "Forms",
+    "Form Pairs",
+    "Questions",
+    "Role-qualified Questions",
+    "Form Question Map",
+  ]) {
     const preview = await workbook.render({ sheetName, autoCrop: "all", scale: 1, format: "png" });
     const safeName = sheetName.toLowerCase().replaceAll(" ", "-");
     await fs.writeFile(
@@ -356,6 +393,17 @@ async function main() {
     options: { maxResults: 100 },
   });
   await fs.writeFile(path.join(OUTPUT_DIR, "inspection.ndjson"), inspection.ndjson, "utf8");
+  const formulaErrors = await workbook.inspect({
+    kind: "match",
+    searchTerm: "#REF!|#DIV/0!|#VALUE!|#NAME\\?|#N/A",
+    options: { useRegex: true, maxResults: 300 },
+    summary: "final formula error scan",
+  });
+  await fs.writeFile(
+    path.join(OUTPUT_DIR, "formula-errors.ndjson"),
+    formulaErrors.ndjson,
+    "utf8",
+  );
 }
 
 await main();

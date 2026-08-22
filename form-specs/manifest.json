@@ -5015,9 +5015,15 @@
         "published_coverage_eligible": false,
         "production_ready": false
       },
-      "rules": {
-        "path": "rules/sf424-v4.rules.json",
-        "sha256": "36f833d3a0b29151db862b8c2c64f69d1f58282716b39e8a99c945adb58c4ce2"
+      "adapters": {
+        "simpler": {
+          "artifacts": {
+            "rules": {
+              "path": "rules/sf424-v4.rules.json",
+              "sha256": "36f833d3a0b29151db862b8c2c64f69d1f58282716b39e8a99c945adb58c4ce2"
+            }
+          }
+        }
       }
     },
     {
@@ -5044,9 +5050,15 @@
         "path": "mappings/rr-budget-v3.mappings.json",
         "sha256": "e9a89d99a9c3aa378db8e73ee2b8529b747189cb07d046befbb97120c894a1c4"
       },
-      "rules": {
-        "path": "rules/rr-budget-family.rules.json",
-        "sha256": "54475748d23b26f7ae2b9891d7ee4e0d885472679de036ed8c2abe514ba7e4e3"
+      "adapters": {
+        "simpler": {
+          "artifacts": {
+            "rules": {
+              "path": "rules/rr-budget-family.rules.json",
+              "sha256": "54475748d23b26f7ae2b9891d7ee4e0d885472679de036ed8c2abe514ba7e4e3"
+            }
+          }
+        }
       },
       "question_bindings": [
         {
@@ -7250,9 +7262,15 @@
         "path": "mappings/rr-budget10-v3.mappings.json",
         "sha256": "e9a89d99a9c3aa378db8e73ee2b8529b747189cb07d046befbb97120c894a1c4"
       },
-      "rules": {
-        "path": "rules/rr-budget-family.rules.json",
-        "sha256": "54475748d23b26f7ae2b9891d7ee4e0d885472679de036ed8c2abe514ba7e4e3"
+      "adapters": {
+        "simpler": {
+          "artifacts": {
+            "rules": {
+              "path": "rules/rr-budget-family.rules.json",
+              "sha256": "54475748d23b26f7ae2b9891d7ee4e0d885472679de036ed8c2abe514ba7e4e3"
+            }
+          }
+        }
       },
       "question_bindings": [
         {
@@ -9456,9 +9474,15 @@
         "path": "mappings/rr-subaward-budget30.mappings.json",
         "sha256": "e9a89d99a9c3aa378db8e73ee2b8529b747189cb07d046befbb97120c894a1c4"
       },
-      "rules": {
-        "path": "rules/rr-subaward-budget30.rules.json",
-        "sha256": "e9ad3881d6cfac625258c4623949fd8293f3da4620c9366ffa55934cb12e3815"
+      "adapters": {
+        "simpler": {
+          "artifacts": {
+            "rules": {
+              "path": "rules/rr-subaward-budget30.rules.json",
+              "sha256": "e9ad3881d6cfac625258c4623949fd8293f3da4620c9366ffa55934cb12e3815"
+            }
+          }
+        }
       },
       "question_bindings": [
         {
@@ -12505,9 +12529,15 @@
         "path": "mappings/rr-mp-budget.mappings.json",
         "sha256": "e9a89d99a9c3aa378db8e73ee2b8529b747189cb07d046befbb97120c894a1c4"
       },
-      "rules": {
-        "path": "rules/rr-mp-budget.rules.json",
-        "sha256": "c2078fb7c6704c50de4c985a046d719e790b5c371126755dd7d0af598c05f80f"
+      "adapters": {
+        "simpler": {
+          "artifacts": {
+            "rules": {
+              "path": "rules/rr-mp-budget.rules.json",
+              "sha256": "c2078fb7c6704c50de4c985a046d719e790b5c371126755dd7d0af598c05f80f"
+            }
+          }
+        }
       },
       "question_bindings": [
         {

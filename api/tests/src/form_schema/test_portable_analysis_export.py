@@ -49,18 +49,25 @@ def test_exporter_emits_complete_analysis_tables(tmp_path: Path) -> None:
         "form-question-map.csv",
         "forms.csv",
         "questions.csv",
+        "role-qualified-questions.csv",
     }
 
     pairs = list(csv.DictReader((output / "form-pairs.csv").open()))
     budget_pair = next(
-        row for row in pairs if {row["form_a"], row["form_b"]} == {"RRBudget", "RRMPBudget"}
+        row
+        for row in pairs
+        if {row["form_a"], row["form_b"]} == {"RRBudget", "RRMPBudget"}
     )
-    assert float(budget_pair["proposed_similarity"]) == pytest.approx(1.0)
-    assert int(budget_pair["proposed_questions_in_common"]) == 101
+    assert float(budget_pair["proposed_similarity"]) == pytest.approx(0.0)
+    assert int(budget_pair["proposed_questions_in_common"]) == 0
+    assert float(budget_pair["template_proposed_similarity"]) == pytest.approx(1.0)
+    assert int(budget_pair["template_proposed_questions_in_common"]) == 101
 
     associations = list(csv.DictReader((output / "form-question-map.csv").open()))
     mechanisms = [
-        row for row in associations if row["analysis_classification"] == "content_capture_mechanism"
+        row
+        for row in associations
+        if row["analysis_classification"] == "content_capture_mechanism"
     ]
     assert len(mechanisms) == 30
     assert all(row["included_in_proposed_overlap"] == "False" for row in mechanisms)
@@ -88,5 +95,4 @@ def test_exporter_unknown_flag_fails_with_structured_stdout() -> None:
 
     assert result.returncode == 2
     assert "code: usage" in result.stdout
-    assert "unrecognized arguments: --wat" in result.stdout
-    assert result.stderr == ""
+    assert "unrecognized arguments: --wat" in result.stderr

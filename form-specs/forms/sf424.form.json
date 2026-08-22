@@ -1,0 +1,1682 @@
+{
+  "contract": "portable-grants-form-declaration/v1",
+  "form_key": "SF424",
+  "schema_id": "urn:grants-form-kernel:forms:sf424:v4",
+  "metadata": {
+    "form_id": "1623b310-85be-496a-b84b-34bdee22a68a",
+    "legacy_form_id": 713,
+    "form_name": "Application for Federal Assistance (SF-424)",
+    "short_form_name": "SF424_4_0",
+    "form_version": "4.0",
+    "agency_code": "SGG",
+    "omb_number": "4040-0004",
+    "form_type": "SF424",
+    "sgg_version": "1.0",
+    "is_deprecated": false,
+    "form_instruction_id": "bf48a93f-d445-426f-a8fb-289bf93a2434"
+  },
+  "ui": {
+    "path": "ui/sf424-v4.ui.json",
+    "sha256": "98287725a00c7debfb488114ac222baa85633b6f7f33f129e135da9c1ddb7d21"
+  },
+  "mappings": {
+    "path": "mappings/sf424-v4.mappings.json",
+    "sha256": "a4afb9fec6ed29be3cc4c9f85d5d54d945b4c24da6540d1fd58e5b8d9b7e47d4"
+  },
+  "question_bindings": [
+    {
+      "binding_id": "binding:sf424:submission_type",
+      "question_id": "question:application:submission-type",
+      "schema_id": "urn:grants-form-kernel:questions:application-submission-type:v1",
+      "form_pointer": "/properties/submission_type",
+      "role": "application",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.SubmissionType"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:submission_type"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:application_type",
+      "question_id": "question:application:type",
+      "schema_id": "urn:grants-form-kernel:questions:application-type:v1",
+      "form_pointer": "/properties/application_type",
+      "role": "application",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.ApplicationType"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:application_type"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:revision_type",
+      "question_id": "question:application:revision-type",
+      "schema_id": "urn:grants-form-kernel:questions:application-revision-type:v1",
+      "form_pointer": "/properties/revision_type",
+      "role": "application",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.RevisionType"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:revision_type"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:revision_other_specify",
+      "question_id": "question:application:revision-other",
+      "schema_id": "urn:grants-form-kernel:questions:application-revision-other:v1",
+      "form_pointer": "/properties/revision_other_specify",
+      "role": "application",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.RevisionOtherSpecify"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:revision_other_specify"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:date_received",
+      "question_id": "question:application:received-date",
+      "schema_id": "urn:grants-form-kernel:questions:application-received-date:v1",
+      "form_pointer": "/properties/date_received",
+      "role": "application",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.DateReceived"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:date_received"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:applicant_id",
+      "question_id": "question:application:applicant-id",
+      "schema_id": "urn:grants-form-kernel:questions:application-applicant-id:v1",
+      "form_pointer": "/properties/applicant_id",
+      "role": "application",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.ApplicantID"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:applicant_id"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:federal_entity_identifier",
+      "question_id": "question:application:federal-entity-identifier",
+      "schema_id": "urn:grants-form-kernel:questions:application-federal-entity-id:v1",
+      "form_pointer": "/properties/federal_entity_identifier",
+      "role": "application",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.FederalEntityIdentifier"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:federal_entity_identifier"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:federal_award_identifier",
+      "question_id": "question:application:prior-federal-award-id",
+      "schema_id": "urn:grants-form-kernel:questions:application-prior-award-id:v1",
+      "form_pointer": "/properties/federal_award_identifier",
+      "role": "application",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.FederalAwardIdentifier"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:federal_award_identifier"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:state_receive_date",
+      "question_id": "question:application:state-received-date",
+      "schema_id": "urn:grants-form-kernel:questions:application-state-received-date:v1",
+      "form_pointer": "/properties/state_receive_date",
+      "role": "application",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.StateReceiveDate"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:state_receive_date"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:state_application_id",
+      "question_id": "question:application:state-application-id",
+      "schema_id": "urn:grants-form-kernel:questions:application-state-id:v1",
+      "form_pointer": "/properties/state_application_id",
+      "role": "application",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.StateApplicationID"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:state_application_id"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:employer_taxpayer_identification_number",
+      "question_id": "question:organization:ein",
+      "schema_id": "urn:grants-form-kernel:questions:organization-ein:v1",
+      "form_pointer": "/properties/employer_taxpayer_identification_number",
+      "role": "applicant_organization",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.EmployerTaxpayerIdentificationNumber"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:employer_taxpayer_identification_number"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:sam_uei",
+      "question_id": "question:organization:sam-uei",
+      "schema_id": "urn:grants-form-kernel:questions:organization-sam-uei:v1",
+      "form_pointer": "/properties/sam_uei",
+      "role": "applicant_organization",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.SAMUEI"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:sam_uei"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:department_name",
+      "question_id": "question:organization:department",
+      "schema_id": "urn:grants-form-kernel:questions:organization-department:v1",
+      "form_pointer": "/properties/department_name",
+      "role": "applicant_organization",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.DepartmentName"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:department_name"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:division_name",
+      "question_id": "question:organization:division",
+      "schema_id": "urn:grants-form-kernel:questions:organization-division:v1",
+      "form_pointer": "/properties/division_name",
+      "role": "applicant_organization",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.DivisionName"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:division_name"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:applicant_type_code",
+      "question_id": "question:organization:applicant-type",
+      "schema_id": "urn:grants-form-kernel:questions:organization-applicant-type:v1",
+      "form_pointer": "/properties/applicant_type_code",
+      "role": "applicant_organization",
+      "cardinality": {
+        "min": 1,
+        "max": 3
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "repeating",
+        "source_paths": [
+          "SF424_4_0.ApplicantTypeCode1",
+          "SF424_4_0.ApplicantTypeCode2",
+          "SF424_4_0.ApplicantTypeCode3"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:applicant_type_code"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:applicant_type_other_specify",
+      "question_id": "question:organization:applicant-type-other",
+      "schema_id": "urn:grants-form-kernel:questions:organization-applicant-type-other:v1",
+      "form_pointer": "/properties/applicant_type_other_specify",
+      "role": "applicant_organization",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.ApplicantTypeOtherSpecify"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:applicant_type_other_specify"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:agency_name",
+      "question_id": "question:application:agency-name",
+      "schema_id": "urn:grants-form-kernel:questions:application-agency-name:v1",
+      "form_pointer": "/properties/agency_name",
+      "role": "application",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.AgencyName"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:agency_name"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:assistance_listing_number",
+      "question_id": "question:application:assistance-listing-number",
+      "schema_id": "urn:grants-form-kernel:questions:application-assistance-listing-number:v1",
+      "form_pointer": "/properties/assistance_listing_number",
+      "role": "application",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.CFDANumber"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:assistance_listing_number"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:assistance_listing_program_title",
+      "question_id": "question:application:assistance-listing-title",
+      "schema_id": "urn:grants-form-kernel:questions:application-assistance-listing-title:v1",
+      "form_pointer": "/properties/assistance_listing_program_title",
+      "role": "application",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.CFDAProgramTitle"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:assistance_listing_program_title"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:funding_opportunity_number",
+      "question_id": "question:application:funding-opportunity-number",
+      "schema_id": "urn:grants-form-kernel:questions:application-opportunity-number:v1",
+      "form_pointer": "/properties/funding_opportunity_number",
+      "role": "application",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.FundingOpportunityNumber"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:funding_opportunity_number"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:funding_opportunity_title",
+      "question_id": "question:application:funding-opportunity-title",
+      "schema_id": "urn:grants-form-kernel:questions:application-opportunity-title:v1",
+      "form_pointer": "/properties/funding_opportunity_title",
+      "role": "application",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.FundingOpportunityTitle"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:funding_opportunity_title"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:competition_identification_number",
+      "question_id": "question:application:competition-identification-number",
+      "schema_id": "urn:grants-form-kernel:questions:application-competition-number:v1",
+      "form_pointer": "/properties/competition_identification_number",
+      "role": "application",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.CompetitionIdentificationNumber"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:competition_identification_number"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:competition_identification_title",
+      "question_id": "question:application:competition-identification-title",
+      "schema_id": "urn:grants-form-kernel:questions:application-competition-title:v1",
+      "form_pointer": "/properties/competition_identification_title",
+      "role": "application",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.CompetitionIdentificationTitle"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:competition_identification_title"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:areas_affected",
+      "question_id": "question:attachment:areas-affected",
+      "schema_id": "urn:grants-form-kernel:questions:application-areas-affected-attachment:v1",
+      "form_pointer": "/properties/areas_affected",
+      "role": "application",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.AreasAffected"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:areas_affected"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:project_title",
+      "question_id": "question:project:title",
+      "schema_id": "urn:grants-form-kernel:questions:project-title:v1",
+      "form_pointer": "/properties/project_title",
+      "role": "project",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.ProjectTitle"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:project_title"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:additional_project_title",
+      "question_id": "question:attachment:additional-project-titles",
+      "schema_id": "urn:grants-form-kernel:questions:project-additional-titles-attachment:v1",
+      "form_pointer": "/properties/additional_project_title",
+      "role": "project",
+      "cardinality": {
+        "min": 0,
+        "max": 100
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "repeating",
+        "source_paths": [
+          "SF424_4_0.AdditionalProjectTitle"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:additional_project_title"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:congressional_district_applicant",
+      "question_id": "question:project:congressional-district-applicant",
+      "schema_id": "urn:grants-form-kernel:questions:project-applicant-district:v1",
+      "form_pointer": "/properties/congressional_district_applicant",
+      "role": "project",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.CongressionalDistrictApplicant"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:congressional_district_applicant"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:congressional_district_program_project",
+      "question_id": "question:project:congressional-district",
+      "schema_id": "urn:grants-form-kernel:questions:project-district:v1",
+      "form_pointer": "/properties/congressional_district_program_project",
+      "role": "project",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.CongressionalDistrictProgramProject"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:congressional_district_program_project"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:additional_congressional_districts",
+      "question_id": "question:attachment:additional-congressional-districts",
+      "schema_id": "urn:grants-form-kernel:questions:project-additional-districts-attachment:v1",
+      "form_pointer": "/properties/additional_congressional_districts",
+      "role": "project",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.AdditionalCongressionalDistricts"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:additional_congressional_districts"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:project_start_date",
+      "question_id": "question:project:start-date",
+      "schema_id": "urn:grants-form-kernel:questions:project-start-date:v1",
+      "form_pointer": "/properties/project_start_date",
+      "role": "project",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.ProjectStartDate"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:project_start_date"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:project_end_date",
+      "question_id": "question:project:end-date",
+      "schema_id": "urn:grants-form-kernel:questions:project-end-date:v1",
+      "form_pointer": "/properties/project_end_date",
+      "role": "project",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.ProjectEndDate"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:project_end_date"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:federal_estimated_funding",
+      "question_id": "question:application-funding:federal-estimated",
+      "schema_id": "urn:grants-form-kernel:questions:funding-federal-estimated:v1",
+      "form_pointer": "/properties/federal_estimated_funding",
+      "role": "application_funding",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.FederalEstimatedFunding"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:federal_estimated_funding"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:applicant_estimated_funding",
+      "question_id": "question:application-funding:applicant-estimated",
+      "schema_id": "urn:grants-form-kernel:questions:funding-applicant-estimated:v1",
+      "form_pointer": "/properties/applicant_estimated_funding",
+      "role": "application_funding",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.ApplicantEstimatedFunding"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:applicant_estimated_funding"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:state_estimated_funding",
+      "question_id": "question:application-funding:state-estimated",
+      "schema_id": "urn:grants-form-kernel:questions:funding-state-estimated:v1",
+      "form_pointer": "/properties/state_estimated_funding",
+      "role": "application_funding",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.StateEstimatedFunding"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:state_estimated_funding"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:local_estimated_funding",
+      "question_id": "question:application-funding:local-estimated",
+      "schema_id": "urn:grants-form-kernel:questions:funding-local-estimated:v1",
+      "form_pointer": "/properties/local_estimated_funding",
+      "role": "application_funding",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.LocalEstimatedFunding"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:local_estimated_funding"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:other_estimated_funding",
+      "question_id": "question:application-funding:other-estimated",
+      "schema_id": "urn:grants-form-kernel:questions:funding-other-estimated:v1",
+      "form_pointer": "/properties/other_estimated_funding",
+      "role": "application_funding",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.OtherEstimatedFunding"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:other_estimated_funding"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:program_income_estimated_funding",
+      "question_id": "question:application-funding:program-income-estimated",
+      "schema_id": "urn:grants-form-kernel:questions:funding-program-income-estimated:v1",
+      "form_pointer": "/properties/program_income_estimated_funding",
+      "role": "application_funding",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.ProgramIncomeEstimatedFunding"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:program_income_estimated_funding"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:total_estimated_funding",
+      "question_id": "question:budget:total-project-funding",
+      "schema_id": "urn:grants-form-kernel:questions:funding-total:v1",
+      "form_pointer": "/properties/total_estimated_funding",
+      "role": "application_funding",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.TotalEstimatedFunding"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:total_estimated_funding"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:state_review",
+      "question_id": "question:application:state-review-status",
+      "schema_id": "urn:grants-form-kernel:questions:application-state-review-status:v1",
+      "form_pointer": "/properties/state_review",
+      "role": "application",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.StateReview"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:state_review"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:state_review_available_date",
+      "question_id": "question:application:state-review-date",
+      "schema_id": "urn:grants-form-kernel:questions:application-state-review-date:v1",
+      "form_pointer": "/properties/state_review_available_date",
+      "role": "application",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.StateReviewAvailableDate"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:state_review_available_date"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:delinquent_federal_debt",
+      "question_id": "question:application:delinquent-federal-debt",
+      "schema_id": "urn:grants-form-kernel:questions:application-delinquent-debt:v1",
+      "form_pointer": "/properties/delinquent_federal_debt",
+      "role": "application",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.DelinquentFederalDebt"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:delinquent_federal_debt"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:debt_explanation",
+      "question_id": "question:attachment:delinquent-federal-debt-explanation",
+      "schema_id": "urn:grants-form-kernel:questions:application-debt-explanation-attachment:v1",
+      "form_pointer": "/properties/debt_explanation",
+      "role": "application",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.DebtExplanation"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:debt_explanation"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:certification_agree",
+      "question_id": "question:application:certification-agreement",
+      "schema_id": "urn:grants-form-kernel:questions:application-certification-agreement:v1",
+      "form_pointer": "/properties/certification_agree",
+      "role": "application",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.CertificationAgree"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:certification_agree"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:aor_signature",
+      "question_id": "question:application:aor-signature",
+      "schema_id": "urn:grants-form-kernel:questions:application-aor-signature:v1",
+      "form_pointer": "/properties/aor_signature",
+      "role": "authorized_organization_representative",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.AORSignature"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:aor_signature"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:date_signed",
+      "question_id": "question:application:aor-signed-date",
+      "schema_id": "urn:grants-form-kernel:questions:application-aor-signed-date:v1",
+      "form_pointer": "/properties/date_signed",
+      "role": "authorized_organization_representative",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.DateSigned"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:date_signed"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:organization_name",
+      "question_id": "question:organization:legal-name",
+      "schema_id": "urn:grants-form-kernel:questions:organization:legal-name:v1",
+      "form_pointer": "/properties/organization_name",
+      "role": "applicant_organization",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.OrganizationName"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:organization_name"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:contact_person_title",
+      "question_id": "question:person:title",
+      "schema_id": "urn:grants-form-kernel:questions:person-title:v1",
+      "form_pointer": "/properties/contact_person_title",
+      "role": "applicant_contact",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.Title"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:contact_person_title"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:organization_affiliation",
+      "question_id": "question:person:organizational-affiliation",
+      "schema_id": "urn:grants-form-kernel:questions:person-organizational-affiliation:v1",
+      "form_pointer": "/properties/organization_affiliation",
+      "role": "applicant_contact",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.OrganizationAffiliation"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:organization_affiliation"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:phone_number",
+      "question_id": "question:contact:phone",
+      "schema_id": "urn:grants-form-kernel:questions:contact-phone:v1",
+      "form_pointer": "/properties/phone_number",
+      "role": "applicant_contact",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.PhoneNumber"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:phone_number"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:fax",
+      "question_id": "question:contact:fax",
+      "schema_id": "urn:grants-form-kernel:questions:contact-fax:v1",
+      "form_pointer": "/properties/fax",
+      "role": "applicant_contact",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.Fax"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:fax"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:email",
+      "question_id": "question:contact:email",
+      "schema_id": "urn:grants-form-kernel:questions:contact-email:v1",
+      "form_pointer": "/properties/email",
+      "role": "applicant_contact",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.Email"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:email"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:authorized_representative_title",
+      "question_id": "question:person:title",
+      "schema_id": "urn:grants-form-kernel:questions:person-title:v1",
+      "form_pointer": "/properties/authorized_representative_title",
+      "role": "authorized_organization_representative",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.AuthorizedRepresentativeTitle"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:authorized_representative_title"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:authorized_representative_phone_number",
+      "question_id": "question:contact:phone",
+      "schema_id": "urn:grants-form-kernel:questions:contact-phone:v1",
+      "form_pointer": "/properties/authorized_representative_phone_number",
+      "role": "authorized_organization_representative",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.AuthorizedRepresentativePhoneNumber"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:authorized_representative_phone_number"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:authorized_representative_fax",
+      "question_id": "question:contact:fax",
+      "schema_id": "urn:grants-form-kernel:questions:contact-fax:v1",
+      "form_pointer": "/properties/authorized_representative_fax",
+      "role": "authorized_organization_representative",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.AuthorizedRepresentativeFax"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:authorized_representative_fax"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:authorized_representative_email",
+      "question_id": "question:role:authorized-organization-representative:email",
+      "schema_id": "urn:grants-form-kernel:questions:authorized-representative-email:v1",
+      "form_pointer": "/properties/authorized_representative_email",
+      "role": "authorized_organization_representative",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.AuthorizedRepresentativeEmail"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:authorized_representative_email"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:applicant:street1",
+      "question_id": "question:address:street-1",
+      "schema_id": "urn:grants-form-kernel:questions:address-street-1:v1",
+      "form_pointer": "/properties/applicant/properties/street1",
+      "role": "applicant_organization",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.Applicant.Street1"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:applicant:street1"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:applicant:street2",
+      "question_id": "question:address:street-2",
+      "schema_id": "urn:grants-form-kernel:questions:address-street-2:v1",
+      "form_pointer": "/properties/applicant/properties/street2",
+      "role": "applicant_organization",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.Applicant.Street2"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:applicant:street2"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:applicant:city",
+      "question_id": "question:address:city",
+      "schema_id": "urn:grants-form-kernel:questions:address-city:v1",
+      "form_pointer": "/properties/applicant/properties/city",
+      "role": "applicant_organization",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.Applicant.City"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:applicant:city"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:applicant:county",
+      "question_id": "question:address:county",
+      "schema_id": "urn:grants-form-kernel:questions:address-county:v1",
+      "form_pointer": "/properties/applicant/properties/county",
+      "role": "applicant_organization",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.Applicant.County"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:applicant:county"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:applicant:state",
+      "question_id": "question:address:state",
+      "schema_id": "urn:grants-form-kernel:questions:address-state:v1",
+      "form_pointer": "/properties/applicant/properties/state",
+      "role": "applicant_organization",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.Applicant.State"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:applicant:state"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:applicant:province",
+      "question_id": "question:address:province",
+      "schema_id": "urn:grants-form-kernel:questions:address-province:v1",
+      "form_pointer": "/properties/applicant/properties/province",
+      "role": "applicant_organization",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.Applicant.Province"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:applicant:province"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:applicant:zip_code",
+      "question_id": "question:address:postal-code",
+      "schema_id": "urn:grants-form-kernel:questions:address-postal-code:v1",
+      "form_pointer": "/properties/applicant/properties/zip_code",
+      "role": "applicant_organization",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.Applicant.ZipPostalCode"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:applicant:zip_code"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:applicant:country",
+      "question_id": "question:address:country",
+      "schema_id": "urn:grants-form-kernel:questions:address-country:v1",
+      "form_pointer": "/properties/applicant/properties/country",
+      "role": "applicant_organization",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.Applicant.Country"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:applicant:country"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:contact_person:prefix",
+      "question_id": "question:person:name:prefix",
+      "schema_id": "urn:grants-form-kernel:questions:person-name-prefix:v1",
+      "form_pointer": "/properties/contact_person/properties/prefix",
+      "role": "applicant_contact",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.ContactPerson.PrefixName"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:contact_person:prefix"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:contact_person:first_name",
+      "question_id": "question:person:name:first",
+      "schema_id": "urn:grants-form-kernel:questions:person-name-first:v1",
+      "form_pointer": "/properties/contact_person/properties/first_name",
+      "role": "applicant_contact",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.ContactPerson.FirstName"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:contact_person:first_name"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:contact_person:middle_name",
+      "question_id": "question:person:name:middle",
+      "schema_id": "urn:grants-form-kernel:questions:person-name-middle:v1",
+      "form_pointer": "/properties/contact_person/properties/middle_name",
+      "role": "applicant_contact",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.ContactPerson.MiddleName"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:contact_person:middle_name"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:contact_person:last_name",
+      "question_id": "question:person:name:last",
+      "schema_id": "urn:grants-form-kernel:questions:person-name-last:v1",
+      "form_pointer": "/properties/contact_person/properties/last_name",
+      "role": "applicant_contact",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.ContactPerson.LastName"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:contact_person:last_name"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:contact_person:suffix",
+      "question_id": "question:person:name:suffix",
+      "schema_id": "urn:grants-form-kernel:questions:person-name-suffix:v1",
+      "form_pointer": "/properties/contact_person/properties/suffix",
+      "role": "applicant_contact",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.ContactPerson.SuffixName"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:contact_person:suffix"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:authorized_representative:prefix",
+      "question_id": "question:person:name:prefix",
+      "schema_id": "urn:grants-form-kernel:questions:person-name-prefix:v1",
+      "form_pointer": "/properties/authorized_representative/properties/prefix",
+      "role": "authorized_organization_representative",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.AuthorizedRepresentative.PrefixName"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:authorized_representative:prefix"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:authorized_representative:first_name",
+      "question_id": "question:person:name:first",
+      "schema_id": "urn:grants-form-kernel:questions:person-name-first:v1",
+      "form_pointer": "/properties/authorized_representative/properties/first_name",
+      "role": "authorized_organization_representative",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.AuthorizedRepresentative.FirstName"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:authorized_representative:first_name"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:authorized_representative:middle_name",
+      "question_id": "question:person:name:middle",
+      "schema_id": "urn:grants-form-kernel:questions:person-name-middle:v1",
+      "form_pointer": "/properties/authorized_representative/properties/middle_name",
+      "role": "authorized_organization_representative",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.AuthorizedRepresentative.MiddleName"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:authorized_representative:middle_name"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:authorized_representative:last_name",
+      "question_id": "question:person:name:last",
+      "schema_id": "urn:grants-form-kernel:questions:person-name-last:v1",
+      "form_pointer": "/properties/authorized_representative/properties/last_name",
+      "role": "authorized_organization_representative",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.AuthorizedRepresentative.LastName"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:authorized_representative:last_name"
+      },
+      "mapping_status": "agent_proposed"
+    },
+    {
+      "binding_id": "binding:sf424:authorized_representative:suffix",
+      "question_id": "question:person:name:suffix",
+      "schema_id": "urn:grants-form-kernel:questions:person-name-suffix:v1",
+      "form_pointer": "/properties/authorized_representative/properties/suffix",
+      "role": "authorized_organization_representative",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "form",
+        "repetition": "single",
+        "source_paths": [
+          "SF424_4_0.AuthorizedRepresentative.SuffixName"
+        ]
+      },
+      "mapping_refs": {
+        "grants_gov_xml": "binding:sf424:authorized_representative:suffix"
+      },
+      "mapping_status": "agent_proposed"
+    }
+  ],
+  "source_refs": [
+    "sf424-source-1",
+    "sf424-source-2",
+    "sf424-source-3"
+  ],
+  "supplemental_evidence": [
+    {
+      "path": "source-accounting/sf424-v4.source.json",
+      "sha256": "aeb59edbd32b7b686a28d0ed9e9d4d23b91b7780a1a9f0f070c611e6f4b82853"
+    },
+    {
+      "path": "oracles/sf424-v4.native.schema.json",
+      "sha256": "a3731ccf9b99e64d376997e3fbe76830efa9f7a381e7e7a97b85a8b1c005d583"
+    },
+    {
+      "path": "oracles/sf424-v4.native.ui.json",
+      "sha256": "5c8af720a2b239a9fb6a2f18fff0f70ce9284920faabc121b7646ca948bfbd32"
+    },
+    {
+      "path": "rules/sf424-v4.rules.json",
+      "sha256": "36f833d3a0b29151db862b8c2c64f69d1f58282716b39e8a99c945adb58c4ce2"
+    },
+    {
+      "path": "xml/sf424-v4.xml-transform.json",
+      "sha256": "fb82ec3ea67b518bed647b0637a1abeee23845645ee727494ca12f5e101b87f1"
+    },
+    {
+      "path": "static/sf424-v4.static.json",
+      "sha256": "5a7c37d671461d20932abf248500741e27e24df402c4a130693525a14f7f7376"
+    }
+  ],
+  "review_boundary": {
+    "semantic_mappings": "agent_proposed",
+    "published_coverage_eligible": false,
+    "production_ready": false
+  },
+  "adapters": {
+    "simpler": {
+      "artifacts": {
+        "rules": {
+          "path": "rules/sf424-v4.rules.json",
+          "sha256": "36f833d3a0b29151db862b8c2c64f69d1f58282716b39e8a99c945adb58c4ce2"
+        }
+      }
+    }
+  }
+}

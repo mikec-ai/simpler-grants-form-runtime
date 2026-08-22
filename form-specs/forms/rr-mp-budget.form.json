@@ -1,0 +1,2300 @@
+{
+  "contract": "portable-grants-form-declaration/v1",
+  "form_key": "RRMPBudget",
+  "schema_id": "urn:grants-form-kernel:forms:rr-mp-budget:v1",
+  "metadata": {
+    "form_id": "955001b0-bade-4ed2-80f1-88630dd8d170",
+    "legacy_form_id": null,
+    "form_name": "[Draft] Research & Related Multi-Project Budget Form",
+    "short_form_name": "RR_MP_Budget_3_0",
+    "form_version": "3.0",
+    "agency_code": "GRANTS_GOV",
+    "omb_number": "4040-0001",
+    "form_type": "RRMPBudget",
+    "sgg_version": "1.0",
+    "is_deprecated": false,
+    "form_instruction_id": "f1bfa235-b36e-4b00-bc8b-ea9bb0a970e4"
+  },
+  "ui": {
+    "path": "ui/rr-mp-budget.ui.json",
+    "sha256": "63fb15aac1439e20a41415fe45fdd04f2596f13d2dabe3e7ad4425d3d2b46b95"
+  },
+  "mappings": {
+    "path": "mappings/rr-mp-budget.mappings.json",
+    "sha256": "e9a89d99a9c3aa378db8e73ee2b8529b747189cb07d046befbb97120c894a1c4"
+  },
+  "adapters": {
+    "simpler": {
+      "artifacts": {
+        "rules": {
+          "path": "rules/rr-mp-budget.rules.json",
+          "sha256": "c2078fb7c6704c50de4c985a046d719e790b5c371126755dd7d0af598c05f80f"
+        }
+      }
+    }
+  },
+  "question_bindings": [
+    {
+      "binding_id": "binding:rr-mp-budget:budgetjustificationattachment",
+      "question_id": "question:budget:budgetjustificationattachment",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetjustificationattachment:rr-mp:v1",
+      "form_pointer": "/properties/budget_justification_attachment",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "single",
+        "repeat_pointer": null,
+        "repeat_ancestors": []
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgettype",
+      "question_id": "question:budget:budgettype",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgettype:v1",
+      "form_pointer": "/properties/budget_type",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "single",
+        "repeat_pointer": null,
+        "repeat_ancestors": []
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-budgetperiodenddate",
+      "question_id": "question:budget:budgetyear-budgetperiodenddate",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-budgetperiodenddate:v1",
+      "form_pointer": "/properties/budget_year/items/properties/budget_period_end_date",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-budgetperiodstartdate",
+      "question_id": "question:budget:budgetyear-budgetperiodstartdate",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-budgetperiodstartdate:v1",
+      "form_pointer": "/properties/budget_year/items/properties/budget_period_start_date",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-cognizantfederalagency",
+      "question_id": "question:budget:budgetyear-cognizantfederalagency",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-cognizantfederalagency:v1",
+      "form_pointer": "/properties/budget_year/items/properties/cognizant_federal_agency",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-equipment-additionalequipmentsattachment",
+      "question_id": "question:budget:budgetyear-equipment-additionalequipmentsattachment",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-equipment-additionalequipmentsattachment:rr-mp:v1",
+      "form_pointer": "/properties/budget_year/items/properties/equipment/properties/additional_equipments_attachment",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-equipment-equipmentlist-equipmentitem",
+      "question_id": "question:budget:budgetyear-equipment-equipmentlist-equipmentitem",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-equipment-equipmentlist-equipmentitem:v1",
+      "form_pointer": "/properties/budget_year/items/properties/equipment/properties/equipment_list/items/properties/equipment_item",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/equipment/properties/equipment_list",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/equipment/properties/equipment_list"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-equipment-equipmentlist-fundsrequested",
+      "question_id": "question:budget:budgetyear-equipment-equipmentlist-fundsrequested",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-equipment-equipmentlist-fundsrequested:v1",
+      "form_pointer": "/properties/budget_year/items/properties/equipment/properties/equipment_list/items/properties/funds_requested",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/equipment/properties/equipment_list",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/equipment/properties/equipment_list"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-equipment-totalfundforattachedequipment",
+      "question_id": "question:budget:budgetyear-equipment-totalfundforattachedequipment",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-equipment-totalfundforattachedequipment:v1",
+      "form_pointer": "/properties/budget_year/items/properties/equipment/properties/total_fund_for_attached_equipment",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-fee",
+      "question_id": "question:budget:budgetyear-fee",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-fee:rr-mp:v1",
+      "form_pointer": "/properties/budget_year/items/properties/fee",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-indirectcosts-indirectcost-base",
+      "question_id": "question:budget:budgetyear-indirectcosts-indirectcost-base",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-indirectcosts-indirectcost-base:v1",
+      "form_pointer": "/properties/budget_year/items/properties/indirect_costs/properties/indirect_cost/items/properties/base",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/indirect_costs/properties/indirect_cost",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/indirect_costs/properties/indirect_cost"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-indirectcosts-indirectcost-costtype",
+      "question_id": "question:budget:budgetyear-indirectcosts-indirectcost-costtype",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-indirectcosts-indirectcost-costtype:v1",
+      "form_pointer": "/properties/budget_year/items/properties/indirect_costs/properties/indirect_cost/items/properties/cost_type",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/indirect_costs/properties/indirect_cost",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/indirect_costs/properties/indirect_cost"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-indirectcosts-indirectcost-fundrequested",
+      "question_id": "question:budget:budgetyear-indirectcosts-indirectcost-fundrequested",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-indirectcosts-indirectcost-fundrequested:v1",
+      "form_pointer": "/properties/budget_year/items/properties/indirect_costs/properties/indirect_cost/items/properties/fund_requested",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/indirect_costs/properties/indirect_cost",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/indirect_costs/properties/indirect_cost"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-indirectcosts-indirectcost-rate",
+      "question_id": "question:budget:budgetyear-indirectcosts-indirectcost-rate",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-indirectcosts-indirectcost-rate:rr-mp:v1",
+      "form_pointer": "/properties/budget_year/items/properties/indirect_costs/properties/indirect_cost/items/properties/rate",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/indirect_costs/properties/indirect_cost",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/indirect_costs/properties/indirect_cost"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-keypersons-attachedkeypersons",
+      "question_id": "question:budget:budgetyear-keypersons-attachedkeypersons",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-attachedkeypersons:rr-mp:v1",
+      "form_pointer": "/properties/budget_year/items/properties/key_persons/properties/attached_key_persons",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-keypersons-keyperson-academicmonths",
+      "question_id": "question:budget:budgetyear-keypersons-keyperson-academicmonths",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-academicmonths:v1",
+      "form_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person/items/properties/academic_months",
+      "role": "multi_project_key_person",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/key_persons/properties/key_person"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-keypersons-keyperson-basesalary",
+      "question_id": "question:budget:budgetyear-keypersons-keyperson-basesalary",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-basesalary:v1",
+      "form_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person/items/properties/base_salary",
+      "role": "multi_project_key_person",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/key_persons/properties/key_person"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-keypersons-keyperson-calendarmonths",
+      "question_id": "question:budget:budgetyear-keypersons-keyperson-calendarmonths",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-calendarmonths:v1",
+      "form_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person/items/properties/calendar_months",
+      "role": "multi_project_key_person",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/key_persons/properties/key_person"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-keypersons-keyperson-fringebenefits",
+      "question_id": "question:budget:budgetyear-keypersons-keyperson-fringebenefits",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-fringebenefits:v1",
+      "form_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person/items/properties/fringe_benefits",
+      "role": "multi_project_key_person",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/key_persons/properties/key_person"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-keypersons-keyperson-name-firstname",
+      "question_id": "question:person:name:first",
+      "schema_id": "urn:grants-form-kernel:questions:person-name-first:v1",
+      "form_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person/items/properties/name/properties/first_name",
+      "role": "multi_project_key_person",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/key_persons/properties/key_person"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-keypersons-keyperson-name-lastname",
+      "question_id": "question:person:name:last",
+      "schema_id": "urn:grants-form-kernel:questions:person-name-last:v1",
+      "form_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person/items/properties/name/properties/last_name",
+      "role": "multi_project_key_person",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/key_persons/properties/key_person"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-keypersons-keyperson-name-middlename",
+      "question_id": "question:person:name:middle",
+      "schema_id": "urn:grants-form-kernel:questions:person-name-middle:v1",
+      "form_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person/items/properties/name/properties/middle_name",
+      "role": "multi_project_key_person",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/key_persons/properties/key_person"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-keypersons-keyperson-name-prefixname",
+      "question_id": "question:person:name:prefix",
+      "schema_id": "urn:grants-form-kernel:questions:person-name-prefix:v1",
+      "form_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person/items/properties/name/properties/prefix_name",
+      "role": "multi_project_key_person",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/key_persons/properties/key_person"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-keypersons-keyperson-name-suffixname",
+      "question_id": "question:person:name:suffix",
+      "schema_id": "urn:grants-form-kernel:questions:person-name-suffix:v1",
+      "form_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person/items/properties/name/properties/suffix_name",
+      "role": "multi_project_key_person",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/key_persons/properties/key_person"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-keypersons-keyperson-projectrole",
+      "question_id": "question:budget:budgetyear-keypersons-keyperson-projectrole",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-projectrole:v1",
+      "form_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person/items/properties/project_role",
+      "role": "multi_project_key_person",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/key_persons/properties/key_person"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-keypersons-keyperson-requestedsalary",
+      "question_id": "question:budget:budgetyear-keypersons-keyperson-requestedsalary",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-requestedsalary:v1",
+      "form_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person/items/properties/requested_salary",
+      "role": "multi_project_key_person",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/key_persons/properties/key_person"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-keypersons-keyperson-summermonths",
+      "question_id": "question:budget:budgetyear-keypersons-keyperson-summermonths",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-summermonths:v1",
+      "form_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person/items/properties/summer_months",
+      "role": "multi_project_key_person",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/key_persons/properties/key_person",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/key_persons/properties/key_person"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-keypersons-totalfundforattachedkeypersons",
+      "question_id": "question:budget:budgetyear-keypersons-totalfundforattachedkeypersons",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-totalfundforattachedkeypersons:v1",
+      "form_pointer": "/properties/budget_year/items/properties/key_persons/properties/total_fund_for_attached_key_persons",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-adpcomputerservices",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-adpcomputerservices",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-adpcomputerservices:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/adp_computer_services",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-alterationsrenovations",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-alterationsrenovations",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-alterationsrenovations:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/alterations_renovations",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-consultantservices",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-consultantservices",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-consultantservices:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/consultant_services",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-equipmentrentalfee",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-equipmentrentalfee",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-equipmentrentalfee:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/equipment_rental_fee",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-materialssupplies",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-materialssupplies",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-materialssupplies:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/materials_supplies",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-otherdirectcost1-cost",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost1-cost",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost1-cost:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/other_direct_cost_1/properties/cost",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-otherdirectcost1-description",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost1-description",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost1-description:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/other_direct_cost_1/properties/description",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-otherdirectcost10-cost",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost10-cost",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost10-cost:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/other_direct_cost_10/properties/cost",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-otherdirectcost10-description",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost10-description",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost10-description:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/other_direct_cost_10/properties/description",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-otherdirectcost2-cost",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost2-cost",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost2-cost:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/other_direct_cost_2/properties/cost",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-otherdirectcost2-description",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost2-description",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost2-description:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/other_direct_cost_2/properties/description",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-otherdirectcost3-cost",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost3-cost",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost3-cost:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/other_direct_cost_3/properties/cost",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-otherdirectcost3-description",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost3-description",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost3-description:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/other_direct_cost_3/properties/description",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-otherdirectcost4-cost",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost4-cost",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost4-cost:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/other_direct_cost_4/properties/cost",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-otherdirectcost4-description",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost4-description",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost4-description:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/other_direct_cost_4/properties/description",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-otherdirectcost5-cost",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost5-cost",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost5-cost:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/other_direct_cost_5/properties/cost",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-otherdirectcost5-description",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost5-description",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost5-description:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/other_direct_cost_5/properties/description",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-otherdirectcost6-cost",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost6-cost",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost6-cost:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/other_direct_cost_6/properties/cost",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-otherdirectcost6-description",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost6-description",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost6-description:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/other_direct_cost_6/properties/description",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-otherdirectcost7-cost",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost7-cost",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost7-cost:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/other_direct_cost_7/properties/cost",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-otherdirectcost7-description",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost7-description",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost7-description:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/other_direct_cost_7/properties/description",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-otherdirectcost8-cost",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost8-cost",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost8-cost:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/other_direct_cost_8/properties/cost",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-otherdirectcost8-description",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost8-description",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost8-description:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/other_direct_cost_8/properties/description",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-otherdirectcost9-cost",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost9-cost",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost9-cost:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/other_direct_cost_9/properties/cost",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-otherdirectcost9-description",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-otherdirectcost9-description",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-otherdirectcost9-description:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/other_direct_cost_9/properties/description",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-publicationcosts",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-publicationcosts",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-publicationcosts:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/publication_costs",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherdirectcosts-subawardconsortiumcontractualcosts",
+      "question_id": "question:budget:budgetyear-otherdirectcosts-subawardconsortiumcontractualcosts",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherdirectcosts-subawardconsortiumcontractualcosts:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_direct_costs/properties/subaward_consortium_contractual_costs",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-graduatestudents-academicmonths",
+      "question_id": "question:budget:budgetyear-otherpersonnel-graduatestudents-academicmonths",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-graduatestudents-academicmonths:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/graduate_students/properties/academic_months",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-graduatestudents-calendarmonths",
+      "question_id": "question:budget:budgetyear-otherpersonnel-graduatestudents-calendarmonths",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-graduatestudents-calendarmonths:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/graduate_students/properties/calendar_months",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-graduatestudents-fringebenefits",
+      "question_id": "question:budget:budgetyear-otherpersonnel-graduatestudents-fringebenefits",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-graduatestudents-fringebenefits:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/graduate_students/properties/fringe_benefits",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-graduatestudents-numberofpersonnel",
+      "question_id": "question:budget:budgetyear-otherpersonnel-graduatestudents-numberofpersonnel",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-graduatestudents-numberofpersonnel:rr-mp:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/graduate_students/properties/number_of_personnel",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-graduatestudents-projectrole",
+      "question_id": "question:budget:budgetyear-otherpersonnel-graduatestudents-projectrole",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-graduatestudents-projectrole:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/graduate_students/properties/project_role",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-graduatestudents-requestedsalary",
+      "question_id": "question:budget:budgetyear-otherpersonnel-graduatestudents-requestedsalary",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-graduatestudents-requestedsalary:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/graduate_students/properties/requested_salary",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-graduatestudents-summermonths",
+      "question_id": "question:budget:budgetyear-otherpersonnel-graduatestudents-summermonths",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-graduatestudents-summermonths:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/graduate_students/properties/summer_months",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-other-academicmonths",
+      "question_id": "question:budget:budgetyear-otherpersonnel-other-academicmonths",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-other-academicmonths:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/other/items/properties/academic_months",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/other_personnel/properties/other",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/other_personnel/properties/other"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-other-calendarmonths",
+      "question_id": "question:budget:budgetyear-otherpersonnel-other-calendarmonths",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-other-calendarmonths:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/other/items/properties/calendar_months",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/other_personnel/properties/other",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/other_personnel/properties/other"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-other-fringebenefits",
+      "question_id": "question:budget:budgetyear-otherpersonnel-other-fringebenefits",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-other-fringebenefits:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/other/items/properties/fringe_benefits",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/other_personnel/properties/other",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/other_personnel/properties/other"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-other-numberofpersonnel",
+      "question_id": "question:budget:budgetyear-otherpersonnel-other-numberofpersonnel",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-other-numberofpersonnel:rr-mp:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/other/items/properties/number_of_personnel",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/other_personnel/properties/other",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/other_personnel/properties/other"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-other-projectrole",
+      "question_id": "question:budget:budgetyear-otherpersonnel-other-projectrole",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-other-projectrole:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/other/items/properties/project_role",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/other_personnel/properties/other",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/other_personnel/properties/other"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-other-requestedsalary",
+      "question_id": "question:budget:budgetyear-otherpersonnel-other-requestedsalary",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-other-requestedsalary:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/other/items/properties/requested_salary",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/other_personnel/properties/other",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/other_personnel/properties/other"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-other-summermonths",
+      "question_id": "question:budget:budgetyear-otherpersonnel-other-summermonths",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-other-summermonths:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/other/items/properties/summer_months",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year/items/properties/other_personnel/properties/other",
+        "repeat_ancestors": [
+          "/properties/budget_year",
+          "/properties/budget_year/items/properties/other_personnel/properties/other"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-postdocassociates-academicmonths",
+      "question_id": "question:budget:budgetyear-otherpersonnel-postdocassociates-academicmonths",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-postdocassociates-academicmonths:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/post_doc_associates/properties/academic_months",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-postdocassociates-calendarmonths",
+      "question_id": "question:budget:budgetyear-otherpersonnel-postdocassociates-calendarmonths",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-postdocassociates-calendarmonths:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/post_doc_associates/properties/calendar_months",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-postdocassociates-fringebenefits",
+      "question_id": "question:budget:budgetyear-otherpersonnel-postdocassociates-fringebenefits",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-postdocassociates-fringebenefits:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/post_doc_associates/properties/fringe_benefits",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-postdocassociates-numberofpersonnel",
+      "question_id": "question:budget:budgetyear-otherpersonnel-postdocassociates-numberofpersonnel",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-postdocassociates-numberofpersonnel:rr-mp:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/post_doc_associates/properties/number_of_personnel",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-postdocassociates-projectrole",
+      "question_id": "question:budget:budgetyear-otherpersonnel-postdocassociates-projectrole",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-postdocassociates-projectrole:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/post_doc_associates/properties/project_role",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-postdocassociates-requestedsalary",
+      "question_id": "question:budget:budgetyear-otherpersonnel-postdocassociates-requestedsalary",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-postdocassociates-requestedsalary:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/post_doc_associates/properties/requested_salary",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-postdocassociates-summermonths",
+      "question_id": "question:budget:budgetyear-otherpersonnel-postdocassociates-summermonths",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-postdocassociates-summermonths:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/post_doc_associates/properties/summer_months",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-secretarialclerical-academicmonths",
+      "question_id": "question:budget:budgetyear-otherpersonnel-secretarialclerical-academicmonths",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-secretarialclerical-academicmonths:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/secretarial_clerical/properties/academic_months",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-secretarialclerical-calendarmonths",
+      "question_id": "question:budget:budgetyear-otherpersonnel-secretarialclerical-calendarmonths",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-secretarialclerical-calendarmonths:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/secretarial_clerical/properties/calendar_months",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-secretarialclerical-fringebenefits",
+      "question_id": "question:budget:budgetyear-otherpersonnel-secretarialclerical-fringebenefits",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-secretarialclerical-fringebenefits:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/secretarial_clerical/properties/fringe_benefits",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-secretarialclerical-numberofpersonnel",
+      "question_id": "question:budget:budgetyear-otherpersonnel-secretarialclerical-numberofpersonnel",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-secretarialclerical-numberofpersonnel:rr-mp:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/secretarial_clerical/properties/number_of_personnel",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-secretarialclerical-projectrole",
+      "question_id": "question:budget:budgetyear-otherpersonnel-secretarialclerical-projectrole",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-secretarialclerical-projectrole:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/secretarial_clerical/properties/project_role",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-secretarialclerical-requestedsalary",
+      "question_id": "question:budget:budgetyear-otherpersonnel-secretarialclerical-requestedsalary",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-secretarialclerical-requestedsalary:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/secretarial_clerical/properties/requested_salary",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-secretarialclerical-summermonths",
+      "question_id": "question:budget:budgetyear-otherpersonnel-secretarialclerical-summermonths",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-secretarialclerical-summermonths:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/secretarial_clerical/properties/summer_months",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-undergraduatestudents-academicmonths",
+      "question_id": "question:budget:budgetyear-otherpersonnel-undergraduatestudents-academicmonths",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-undergraduatestudents-academicmonths:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/undergraduate_students/properties/academic_months",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-undergraduatestudents-calendarmonths",
+      "question_id": "question:budget:budgetyear-otherpersonnel-undergraduatestudents-calendarmonths",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-undergraduatestudents-calendarmonths:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/undergraduate_students/properties/calendar_months",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-undergraduatestudents-fringebenefits",
+      "question_id": "question:budget:budgetyear-otherpersonnel-undergraduatestudents-fringebenefits",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-undergraduatestudents-fringebenefits:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/undergraduate_students/properties/fringe_benefits",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-undergraduatestudents-numberofpersonnel",
+      "question_id": "question:budget:budgetyear-otherpersonnel-undergraduatestudents-numberofpersonnel",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-undergraduatestudents-numberofpersonnel:rr-mp:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/undergraduate_students/properties/number_of_personnel",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-undergraduatestudents-projectrole",
+      "question_id": "question:budget:budgetyear-otherpersonnel-undergraduatestudents-projectrole",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-undergraduatestudents-projectrole:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/undergraduate_students/properties/project_role",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-undergraduatestudents-requestedsalary",
+      "question_id": "question:budget:budgetyear-otherpersonnel-undergraduatestudents-requestedsalary",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-undergraduatestudents-requestedsalary:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/undergraduate_students/properties/requested_salary",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-otherpersonnel-undergraduatestudents-summermonths",
+      "question_id": "question:budget:budgetyear-otherpersonnel-undergraduatestudents-summermonths",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-undergraduatestudents-summermonths:v1",
+      "form_pointer": "/properties/budget_year/items/properties/other_personnel/properties/undergraduate_students/properties/summer_months",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-participanttraineesupportcosts-other-cost",
+      "question_id": "question:budget:budgetyear-participanttraineesupportcosts-other-cost",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-participanttraineesupportcosts-other-cost:v1",
+      "form_pointer": "/properties/budget_year/items/properties/participant_trainee_support_costs/properties/other/properties/cost",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-participanttraineesupportcosts-other-description",
+      "question_id": "question:budget:budgetyear-participanttraineesupportcosts-other-description",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-participanttraineesupportcosts-other-description:v1",
+      "form_pointer": "/properties/budget_year/items/properties/participant_trainee_support_costs/properties/other/properties/description",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-participanttraineesupportcosts-participanttraineenumber",
+      "question_id": "question:budget:budgetyear-participanttraineesupportcosts-participanttraineenumber",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-participanttraineesupportcosts-participanttraineenumber:rr-mp:v1",
+      "form_pointer": "/properties/budget_year/items/properties/participant_trainee_support_costs/properties/participant_trainee_number",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-participanttraineesupportcosts-stipends",
+      "question_id": "question:budget:budgetyear-participanttraineesupportcosts-stipends",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-participanttraineesupportcosts-stipends:v1",
+      "form_pointer": "/properties/budget_year/items/properties/participant_trainee_support_costs/properties/stipends",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-participanttraineesupportcosts-subsistence",
+      "question_id": "question:budget:budgetyear-participanttraineesupportcosts-subsistence",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-participanttraineesupportcosts-subsistence:v1",
+      "form_pointer": "/properties/budget_year/items/properties/participant_trainee_support_costs/properties/subsistence",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-participanttraineesupportcosts-travel",
+      "question_id": "question:budget:budgetyear-participanttraineesupportcosts-travel",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-participanttraineesupportcosts-travel:v1",
+      "form_pointer": "/properties/budget_year/items/properties/participant_trainee_support_costs/properties/travel",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-participanttraineesupportcosts-tuitionfeehealthinsurance",
+      "question_id": "question:budget:budgetyear-participanttraineesupportcosts-tuitionfeehealthinsurance",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-participanttraineesupportcosts-tuitionfeehealthinsurance:v1",
+      "form_pointer": "/properties/budget_year/items/properties/participant_trainee_support_costs/properties/tuition_fee_health_insurance",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-travel-domestictravelcost",
+      "question_id": "question:budget:budgetyear-travel-domestictravelcost",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-travel-domestictravelcost:v1",
+      "form_pointer": "/properties/budget_year/items/properties/travel/properties/domestic_travel_cost",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:budgetyear-travel-foreigntravelcost",
+      "question_id": "question:budget:budgetyear-travel-foreigntravelcost",
+      "schema_id": "urn:grants-form-kernel:questions:budget:budgetyear-travel-foreigntravelcost:v1",
+      "form_pointer": "/properties/budget_year/items/properties/travel/properties/foreign_travel_cost",
+      "role": "multi_project_applicant_budget",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "nested",
+        "repeat_pointer": "/properties/budget_year",
+        "repeat_ancestors": [
+          "/properties/budget_year"
+        ]
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:organizationname",
+      "question_id": "question:organization:legal-name",
+      "schema_id": "urn:grants-form-kernel:questions:organization:legal-name:v1",
+      "form_pointer": "/properties/organization_name",
+      "role": "multi_project_applicant_organization",
+      "cardinality": {
+        "min": 0,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "single",
+        "repeat_pointer": null,
+        "repeat_ancestors": []
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    },
+    {
+      "binding_id": "binding:rr-mp-budget:samuei",
+      "question_id": "question:budget:samuei",
+      "schema_id": "urn:grants-form-kernel:questions:budget:samuei:rr-mp:v1",
+      "form_pointer": "/properties/samuei",
+      "role": "multi_project_applicant_organization",
+      "cardinality": {
+        "min": 1,
+        "max": 1
+      },
+      "context": {
+        "scope": "multi_project_budget",
+        "repetition": "single",
+        "repeat_pointer": null,
+        "repeat_ancestors": []
+      },
+      "mapping_refs": {},
+      "mapping_status": "agent_proposed",
+      "analysis_classification": "semantic_question"
+    }
+  ],
+  "source_refs": [
+    "mp-budget-source-xsd",
+    "mp-budget-source-dat"
+  ],
+  "supplemental_evidence": [
+    {
+      "path": "oracles/budget/rr-mp-budget-v3.candidate.json",
+      "sha256": "6cd2aae9da2b1bf8f8f028ed8843aad0bebc3f13bf3fe781ebb75dbc8112dc51"
+    },
+    {
+      "path": "oracles/budget/rr-mp-budget-v3.runtime-rules.json",
+      "sha256": "94b2295559806855ebeb96e8b1694e0a8982c49140b98953c4ed9663d18fd771"
+    },
+    {
+      "path": "evidence/rr-budget-composition-wave.json",
+      "sha256": "d525eb010336111073a1e160841e61f9c91911d41f16b341d42b034e39904bb3"
+    }
+  ],
+  "review_boundary": {
+    "semantic_mappings": "agent_proposed",
+    "published_coverage_eligible": false,
+    "production_ready": false
+  }
+}

@@ -49,6 +49,7 @@ def export(bundle_root: Path, output_dir: Path) -> dict[str, int]:
         [
             "form_key",
             "question_id",
+            "semantic_identity",
             "schema_id",
             "analysis_classification",
             "role",
@@ -105,19 +106,43 @@ def export(bundle_root: Path, output_dir: Path) -> dict[str, int]:
         question_rows,
     )
 
+    write_csv(
+        output_dir / "role-qualified-questions.csv",
+        [
+            "semantic_identity",
+            "question_id",
+            "role",
+            "proposed_form_count",
+            "accepted_form_count",
+            "published_form_count",
+        ],
+        projection["role_qualified_semantics"],
+    )
+
     pair_rows: list[dict[str, Any]] = []
-    for pair in projection["pairwise_form_overlap"]:
+    template_pairs = {
+        (pair["form_a"], pair["form_b"]): pair
+        for pair in projection["pairwise_form_overlap"]
+    }
+    for pair in projection["pairwise_role_qualified_overlap"]:
+        template = template_pairs[pair["form_a"], pair["form_b"]]
         proposed = pair["proposed_overlap"]
         accepted = pair["accepted_overlap"]
+        proposed_template = template["proposed_overlap"]
         pair_rows.append(
             {
                 "form_a": pair["form_a"],
                 "form_b": pair["form_b"],
+                "comparison_basis": pair["comparison_basis"],
                 "proposed_similarity": proposed["similarity"],
                 "proposed_questions_in_common": proposed["questions_in_common"],
                 "proposed_unique_questions": proposed["unique_questions"],
                 "form_a_proposed_coverage": proposed["form_a_coverage"],
                 "form_b_proposed_coverage": proposed["form_b_coverage"],
+                "template_proposed_similarity": proposed_template["similarity"],
+                "template_proposed_questions_in_common": proposed_template[
+                    "questions_in_common"
+                ],
                 "accepted_similarity": accepted["similarity"],
                 "accepted_questions_in_common": accepted["questions_in_common"],
             }
@@ -127,11 +152,14 @@ def export(bundle_root: Path, output_dir: Path) -> dict[str, int]:
         [
             "form_a",
             "form_b",
+            "comparison_basis",
             "proposed_similarity",
             "proposed_questions_in_common",
             "proposed_unique_questions",
             "form_a_proposed_coverage",
             "form_b_proposed_coverage",
+            "template_proposed_similarity",
+            "template_proposed_questions_in_common",
             "accepted_similarity",
             "accepted_questions_in_common",
         ],
@@ -187,10 +215,10 @@ class StructuredParser(argparse.ArgumentParser):
         sys.stdout.write(
             "error:\n"
             "  code: usage\n"
-            f"  message: {message}\n"
             "help:\n"
             "  command: python scripts/export_portable_form_analysis.py --help\n"
         )
+        sys.stderr.write(f"{message}\n")
         raise SystemExit(2)
 
 
@@ -210,7 +238,8 @@ def cli(argv: list[str]) -> int:
         args = parser().parse_args(argv)
         counts = export(args.bundle, args.output_dir)
     except (OSError, ValueError, PortableFormKernelError) as exc:
-        sys.stdout.write(f"error:\n  code: export_failed\n  message: {exc}\n")
+        sys.stdout.write("error:\n  code: export_failed\n")
+        sys.stderr.write(f"{exc}\n")
         return 1
     sys.stdout.write(
         "export:\n"
