@@ -5,5 +5,6 @@
   "description": "An email address.",
   "tags": [
     "email"
-  ]
+  ],
+  "entity": "generic"
 }

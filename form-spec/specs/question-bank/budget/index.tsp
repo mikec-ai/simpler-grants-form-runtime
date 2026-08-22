@@ -18,6 +18,7 @@ namespace QuestionBank.Budget;
 
 /** Estimated unobligated and new or revised funds, federal and non-federal. */
 @Question.meta(#{ id: "budget/summary" })
+@Catalog.entity(EntityName.project)
 @Catalog.tag(TagName.money)
 @UI.label("Budget Summary")
 model QuestionBudgetSummary {
@@ -30,6 +31,7 @@ model QuestionBudgetSummary {
 
 /** Funds required for each object class category. */
 @Question.meta(#{ id: "budget/categories" })
+@Catalog.entity(EntityName.project)
 @Catalog.tag(TagName.money)
 @UI.label("Budget Categories")
 model QuestionBudgetCategories {
@@ -69,6 +71,7 @@ model QuestionBudgetCategories {
 
 /** Resources provided by the applicant, the state, or other sources. */
 @Question.meta(#{ id: "budget/non-federal-resources" })
+@Catalog.entity(EntityName.project)
 @Catalog.tag(TagName.money)
 @UI.label("Non-federal Resources")
 model QuestionNonFederalResources {
@@ -91,6 +94,7 @@ model QuestionNonFederalResources {
 
 /** Federal funds needed for the balance of the project, by year. */
 @Question.meta(#{ id: "budget/federal-fund-estimates" })
+@Catalog.entity(EntityName.project)
 @Catalog.tag(TagName.money)
 @UI.label("Federal Fund Estimates")
 model QuestionFederalFundEstimates {
@@ -106,6 +110,7 @@ model QuestionFederalFundEstimates {
 
 /** Cash needed by quarter for the first year. */
 @Question.meta(#{ id: "budget/forecasted-cash-needs" })
+@Catalog.entity(EntityName.project)
 @Catalog.tag(TagName.money)
 @UI.label("Forecasted Cash Needs")
 model QuestionForecastedCashNeeds {

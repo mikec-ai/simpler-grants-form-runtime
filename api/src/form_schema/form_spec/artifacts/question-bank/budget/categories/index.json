@@ -5,5 +5,6 @@
   "description": "Funds required for each object class category.",
   "tags": [
     "money"
-  ]
+  ],
+  "entity": "project"
 }

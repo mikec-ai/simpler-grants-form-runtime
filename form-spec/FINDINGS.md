@@ -1,100 +1,186 @@
 # Implementation findings
 
-Validating the specification in `documentation/form-spec/` against the real Key Contacts
-form. TypeSpec compiler 1.15.0.
+Validating the specification in `documentation/form-spec/` against three real forms, one
+from each major category. TypeSpec compiler 1.15.0.
 
 ## Verdict
 
-**The approach is valid; no pivot is needed.** Key Contacts authors as ~60 lines of TypeSpec
-composing seven bank questions, and the emitted artifacts reproduce the golden's structure —
-including the exact 19-field order of the repeatable contact list and the address conditional
-requiredness block.
+**The approach is valid; no pivot is needed.** Three forms are authored declaratively from
+a shared question bank, and each one's emitted artifacts are proven against the
+hand-written original two ways.
+
+| | Key Contacts | SF-424 | SF-424A |
+|---|---|---|---|
+| Category | repeatable section | basic info, widest | budget, calculations |
+| Authored | ~70 lines | ~440 lines | ~150 lines |
+| SGG UI schema | identical | identical | identical |
+| SGG rule schema | identical (absent) | identical, 16 entries | identical, 35 calculations |
+| Resolved JSON Schema | 18 differences, all accounted for | 97, all accounted for | 112, all accounted for |
+| Validation behaviour | 237 payloads, 0 disagreements | 752, 0 | 767, 0 |
+
+## How parity is proven
+
+Two independent assertions per form, in `api/tests/src/form_schema/form_spec/`.
+
+**Behavioural** is the load-bearing one. It resolves both schemas, derives a corpus from
+the golden — every field deleted, overrun, emptied, mistyped, and given a value outside its
+enum — and requires SGG's own validator to report identical issues for every payload. It is
+indifferent to how the schemas compose and sensitive to everything an applicant could see.
+
+**Structural** compares the resolved schemas leaf by leaf. Every remaining difference is
+named in an allow-list with a reason, and a second test fails if an entry stops matching,
+so a stale explanation cannot accumulate. Allow-list keys are exact by default, `*`-prefixed
+for a suffix, `/*`-suffixed for a subtree, so an entry says how much it means to cover.
+
+## How much is derived rather than declared
+
+This is the part worth showing. SGG's `forms/README.md` says the auto-summation behaviour
+is *"only found by figuring out the behavior from the PDF."*
+
+| Artifact | Declared | Derived from |
+|---|---|---|
+| Attachment validation (5 rules) | nothing | a property composing `generics/attachment` |
+| Submit stamps (3 rules) | nothing | `generics/signature`, `generics/submitted-date` |
+| SF-424's total | one `@Validation.computed` | — |
+| SF-424A's 35 calculations | eight declarations | four intrinsic to budget questions, four `@Validation.totals` |
+| Every calculation's `order` | nothing | the depth of its dependency chain |
+| `fieldList` | nothing | an array of objects |
+| Section grid layout | nothing | the collection the section's total totals |
+| Pre-population (8 rules) | eight `@Sgg.prePopulate` | — |
+
+Only the last row is genuinely a choice, and only it is written down.
+
+## What the golden turned out to get wrong
+
+Composing one question where a form had two copies surfaced four inconsistencies. Each is
+recorded in the parity test rather than worked around.
+
+1. **The same question is capped at two lengths on the same form.** SF-424 box 8f's email
+   uses `common_shared_v1#/contact_email` (60 characters); box 21's is written out inline
+   with no cap. One question cannot be two lengths, so this is the single place in 1,756
+   payloads where the two schemas disagree: an AOR email over 60 characters. Which box is
+   right is a decision for the form's owners.
+2. **`date_received` and `date_signed` are the same question** — a date Grants.gov stamps on
+   submission — shared in one place and inlined in the other. Composing one question for
+   both is what makes both rules come out right without declaring either.
+3. **Two of SF-424's six read-only fields carry `readOnly` in the schema**, all six being
+   `null` in the UI schema. Nothing reads the keyword: not the renderer, not the API.
+4. **`person_name` is titled "Name and Contact Information"** with an empty description,
+   which describes neither.
 
 ## What the emitter does and does not own
 
-`@typespec/json-schema` is **wrapped**, not replaced. Its `$onEmit` is exported, so ours calls
-it into a staging directory, reads the result back, and composes. One emitter, one command, no
-downstream merge script.
+`@typespec/json-schema` is **wrapped**, not replaced. Its `$onEmit` is exported, so ours
+calls it into a staging directory, reads the result back, and composes. One emitter, one
+command, no downstream merge script.
 
-Everything derivable from the type graph comes from stock: types, constraints, enums, arrays,
-`required`, `$ref` composition, and `extends` as `allOf`. Two decorators delegate rather than
-duplicate:
+Everything derivable from the type graph comes from stock: types, constraints, enums,
+arrays, `required`, `$ref` composition, and `extends` as `allOf`. Two decorators delegate
+rather than duplicate — `@Question.meta` to `@JsonSchema.id` for `$id` and every `$ref`
+target, `@UI.label` to `@summary` for `title`. Our only schema contribution is the
+`if`/`then` conditional requiredness from `@Validation.requiredWhen`.
 
-| Ours | Delegates to | Yields |
-|---|---|---|
-| `@Question.meta` / `@Form.meta` | `@JsonSchema.id` | `$id` and every `$ref` target |
-| `@UI.label` | `@summary` | `title` |
+## Integration cost
 
-That leaves our schema contribution to exactly one thing stock cannot know: the `if`/`then`
-conditional requiredness from `@Validation.requiredWhen`.
+One entry in one list: the question bank is registered in
+`jsonschema_resolver._get_shared_schemas_map` alongside `common_shared_v1` and
+`address_shared_v1`. It is the same kind of artifact — a document of named definitions
+referenced by pointer, resolved offline — at the granularity of a semantic question rather
+than a primitive. `form_template_registry` already dereferences every form at registration,
+so the API, the renderer, the validator, and XML generation keep receiving the schema they
+receive today. Nothing downstream of that function moves.
 
-## Parity against the golden
-
-| Artifact | Result |
-|---|---|
-| `generics/person-name` schema | Structural match: types, titles, descriptions, `maxLength`, `required` |
-| `generics/address` conditionals | **Exact match**, including the merge of two `requiredWhen` declarations into one `if`/`then` and the `required: ["country"]` guard idiom |
-| Key Contacts `sgg/ui-schema.json` | Section, `fieldList`, and the **exact 19-field order** including `project_role` first |
-| Key Contacts `sgg/rule-schema.json` | `null` — matches the golden's `form_rule_schema=None` |
-| `$defs` inlining | Form-local extensions land in `$defs` with a `#/$defs/key_contact_person` ref, as the golden does |
-
-Byte-level parity is not yet assertable: it requires the canonical → legacy projection, which
-is adapter-side and not built. The canonical artifacts are `camelCase` by design (D5).
+The projection is four legacy accommodations, all in the adapter and none in the
+specification: snake-cased naming, `allOf`-wrapping references so `jsonref` cannot discard
+their siblings, flattening object composition so the UI schema's flat pointers resolve, and
+retargeting references into the bank. A fifth is smaller but visible to applicants: a field
+pinned to one value is `const` in JSON Schema 2020-12 and a single-member `enum` here, and
+the validator reports the keyword that failed.
 
 ## Corrections the implementation forced
 
 ### Design-level
 
-1. **`model X is Y` copies decorators, including `@Question.meta`.** A form-local extension of
-   a bank question silently inherits the question's identity, so two blocks claim one id and
-   collide on the output path. **`extends` is the correct idiom** — it leaves identity alone and
-   stock emits `allOf: [{$ref: base}]`, which is the composition wanted. The specification and
-   `authoring-model.md` show `is` and must be corrected.
-
-2. **The bank needs scalar questions.** `phone`, `email`, `organization-name`, `contact-title`
-   are single values, not objects. `@Question.meta` was widened to `Model | Scalar`, and the
-   emitters handle scalar blocks as leaf schemas and single Controls.
-
-3. **No base URI is declared anywhere in the specs.** Hosting is a per-consumer decision, so
-   `$id` and `$ref` are emitted relative and correct within the artifact tree; a consumer
-   supplies `base-uri` at build time to make them absolute. A block's identity is its
-   `@Question.meta.id`, never its URI, so the catalogue and the three tables are
-   hosting-independent.
-
+1. **`model X is Y` copies decorators, including `@Question.meta`.** A form-local extension
+   silently inherits the question's identity, so two blocks claim one id. **`extends` is the
+   correct idiom**: it leaves identity alone and stock emits `allOf: [{$ref: base}]`.
+2. **The bank needs scalar questions.** Roughly half of it is single-valued.
+   `@Question.meta` takes `Model | Scalar`.
+3. **No base URI is declared in the specs.** Hosting is per-consumer; a block's identity is
+   its `@Question.meta.id`, never its URI.
 4. **Marshal at the decorator boundary, never in an emitter.** `valueof` arguments arrive as
-   TypeSpec value objects with parent back-references; two separate `Converting circular
-   structure to JSON` crashes came from carrying them into emission. Decorators now reduce every
-   argument to plain data before storing it.
+   TypeSpec value objects with parent back-references.
+5. **A doc comment is applicant-facing.** It becomes the question's `description`, which
+   people read. Rationale belongs in `//` comments, which no artifact carries.
+6. **`generics/attachment` is a file reference, not a file.** A form's schema validates what
+   an applicant submits, and an applicant does not author a file's name, size, or MIME type.
+   What the reference resolves to is `CommonGrants.Fields.File`; the mapping between them is
+   a lookup, so it is one-way.
+7. **A layout that restates the arithmetic is the wrong abstraction.** `@Sgg.multiField`
+   began by listing the properties each budget section receives. They are the section's own
+   properties, and the collection three sections grid over is the one their totals total —
+   both already known. It now takes only the section and the widget.
+8. **Section names are wire identifiers, not field names.** SGG's forms do not agree on a
+   convention: most are snake-cased, SF-424A's are `SectionA`. A lowerCamel member name is
+   projected; a member written in another convention is left alone.
 
 ### Language-level
 
-5. **`op` is a TypeSpec keyword.** A decorator parameter named `op` breaks the parser with a
+9. **`op` is a TypeSpec keyword.** A parameter named `op` breaks the parser with a
    misleading `')' expected`. `@Validation.computed` takes `operator`.
-6. **Reflection types need `using TypeSpec.Reflection;`.** `Model`, `ModelProperty`, `Enum`,
-   `EnumMember` are not globally visible.
-7. **Qualified references inside a nested namespace resolve relatively.** Inside
-   `namespace SimplerForms.UI`, `SimplerForms.WidgetName` resolves to
-   `SimplerForms.SimplerForms.WidgetName`. Reference parent-namespace types unqualified.
-8. **`valueof {}` rejects a populated object literal.** The override table takes
-   `valueof Record<unknown>`.
-9. **Bare property names do not resolve in decorator arguments.** `@UI.order(prefix, firstName)`
-   fails; it must be `@UI.order(Model.prefix, Model.firstName)`. Confirmed verbose, and the
-   Key Contacts case genuinely needs it — the golden interleaves a form-local field between
-   inherited ones, which is only expressible with an explicit order.
-10. **`@UI.order` does accept inherited properties**, so a form-local extension can interleave
-    its own fields with the question's. This was the untested spike; it passes.
+10. **Reflection types need `using TypeSpec.Reflection;`.**
+11. **Qualified references inside a nested namespace resolve relatively.** Inside
+    `namespace SimplerForms.UI`, `SimplerForms.WidgetName` resolves to
+    `SimplerForms.SimplerForms.WidgetName`.
+12. **`valueof {}` rejects a populated object literal.** The override table takes
+    `valueof Record<unknown>`.
+13. **Bare property names do not resolve in decorator arguments.** `@UI.order(prefix)` fails;
+    it must be `@UI.order(Model.prefix)`.
+14. **`@UI.order` does accept inherited properties**, so a form-local extension can
+    interleave its own fields with the question's.
+15. **There is no `uuid` scalar.** An attachment is `@format("uuid") scalar ... extends string`,
+    and the attachment rule is therefore inferred from the question's identity rather than
+    from its type.
+16. **Every `lib/*.tsp` must import the JS implementing its `extern dec` declarations.**
+    Only `main.tsp` did, so the library type-checked when reached through that entry point
+    and reported unimplemented declarations when a file was opened on its own. CI compiles
+    every file standalone.
 
-## Confirmed from the original spikes
+## Bugs in this implementation that only a real form exposed
 
-`ModelProperty` as a non-target decorator parameter via member expression; `valueof EnumMember`
-arguments; enum-member references inside object literals; recursive `$ref` survival through
-emission.
+* `@UI.helpText` wrote to the label's state key, silently overwriting labels.
+* `@Sgg.prePopulate` stored `"[object Object]"`: an enum member's value needs the recursive
+  literal reduction, not `String()`.
+* `@Validation.computed` was ignored on any property typed as a scalar question, which is
+  every monetary field.
+* `@UI.overrides` was declared but unconsumed until SF-424 box 8d needed an address without
+  a county.
+* State and country enums were four- and two-member stubs. No structural review catches
+  that; the first payload containing `"WY: Wyoming"` does. They are generated from
+  `shared_form_constants.py` now, so the code lists have one authority.
+
+## The three tables
+
+`npm run analyze` produces them from the emitted artifacts, never from the specs — so the
+same script would work against artifacts from a form builder, and it is the read model a
+question browser would use. Current state, with three forms in:
+
+* 27 questions in the bank.
+* **86% of Key Contacts' questions are also asked by SF-424.** That number is the reuse
+  claim, computed rather than asserted.
+* Key Contacts composes 2 questions directly and reaches 5 more through them, which is what
+  `poc/details` is for.
+* SF-424 introduced 15 new questions and reused 6; SF-424A introduced 5 and reused 1.
+
+Three forms is too few to show a curve. What it does show is that the count is measurable
+and that the second and third forms both drew on the first.
 
 ## Known gaps
 
-- `@UI.helpText` is declared but not consumed, so a `fieldList` reuses the property's doc where
-  the golden has a distinct description.
-- Linter rules and diagnostics are declared but not implemented.
-- No test suite yet; `createTester` scaffolding is not in place.
-- The canonical → legacy projection and the SGG adapter are not built, so byte parity is
-  unproven.
+* Linter rules and diagnostics are declared but not implemented.
+* No TypeSpec-side test suite; `createTester` scaffolding is not in place. The parity tests
+  are Python and test the artifacts.
+* The XML transform and the CommonGrants mappings are out of scope, so
+  `json_to_xml_schema` has no producer yet.
+* `@UI.visibleWhen` and `@UI.readOnlyWhen` are declared and stored but no emitter consumes
+  them; none of these three forms needs conditional visibility.

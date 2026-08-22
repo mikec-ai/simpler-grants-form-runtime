@@ -8,6 +8,7 @@ namespace QuestionBank.Generics;
 
 /** A person's name, in five parts. */
 @Question.meta(#{ id: "generics/person-name" })
+@Catalog.entity(EntityName.generic)
 @Catalog.tag(TagName.person, TagName.name)
 @UI.label("Name")
 model QuestionPersonName {
@@ -44,6 +45,7 @@ model QuestionPersonName {
 
 /** Enter an address. */
 @Question.meta(#{ id: "generics/address" })
+@Catalog.entity(EntityName.generic)
 @Catalog.tag(TagName.address)
 @UI.label("Address")
 model QuestionAddress {
@@ -96,6 +98,7 @@ model QuestionAddress {
 
 /** A telephone or fax number. */
 @Question.meta(#{ id: "generics/phone" })
+@Catalog.entity(EntityName.generic)
 @Catalog.tag(TagName.phone)
 @minLength(1)
 @maxLength(25)
@@ -103,6 +106,7 @@ scalar PhoneNumber extends string;
 
 /** An email address. */
 @Question.meta(#{ id: "generics/email" })
+@Catalog.entity(EntityName.generic)
 @Catalog.tag(TagName.email)
 @UI.label("Email")
 @format("email")
@@ -111,6 +115,7 @@ scalar EmailAddress extends string;
 
 /** Enter the legal name of the organization. */
 @Question.meta(#{ id: "generics/organization-name" })
+@Catalog.entity(EntityName.generic)
 @Catalog.tag(TagName.organization, TagName.name)
 @UI.label("Organization Name")
 @minLength(1)
@@ -119,6 +124,7 @@ scalar OrganizationName extends string;
 
 /** Enter the position title. */
 @Question.meta(#{ id: "generics/contact-title" })
+@Catalog.entity(EntityName.generic)
 @Catalog.tag(TagName.title)
 @UI.label("Title")
 @minLength(1)
@@ -141,6 +147,7 @@ scalar ContactTitle extends string;
 // the reader of this file goes in `//` comments, which no artifact carries.
 /** Attach a file. */
 @Question.meta(#{ id: "generics/attachment" })
+@Catalog.entity(EntityName.generic)
 @Catalog.tag(TagName.attachment)
 @format("uuid")
 scalar AttachmentRef extends string;
@@ -150,6 +157,7 @@ scalar AttachmentRef extends string;
  * binary floating point.
  */
 @Question.meta(#{ id: "generics/monetary-amount" })
+@Catalog.entity(EntityName.generic)
 @Catalog.tag(TagName.money)
 @pattern("^(-)?\\d*([.]\\d{2})?$")
 @minLength(1)
@@ -165,6 +173,7 @@ scalar Signature extends string;
 
 /** Completed by Grants.gov upon submission. */
 @Question.meta(#{ id: "generics/submitted-date" })
+@Catalog.entity(EntityName.generic)
 @Catalog.tag(TagName.date)
 @UI.label("Submitted Date")
 scalar SubmittedDate extends plainDate;
