@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "string",
+  "maxLength": 60,
+  "description": "This is valid JSON Schema but is not an identified question artifact.",
+  "title": "Unidentified Question"
+}
