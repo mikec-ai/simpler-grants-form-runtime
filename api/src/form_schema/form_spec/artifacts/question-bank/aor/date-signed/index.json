@@ -1,0 +1,10 @@
+{
+  "id": "aor/date-signed",
+  "kind": "question",
+  "name": "Date Signed",
+  "description": "Completed by Grants.gov upon submission.",
+  "tags": [
+    "date"
+  ],
+  "entity": "authorizedRepresentative"
+}

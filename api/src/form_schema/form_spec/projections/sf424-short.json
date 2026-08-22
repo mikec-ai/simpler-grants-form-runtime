@@ -1,0 +1,8 @@
+{
+  "renames": {
+    "phone": "phone_number"
+  },
+  "why": {
+    "phone": "boxes 7 and 8 spell the contact's telephone number `phone_number`, where the question calls it `phone`; the same spelling applies wherever it appears on this form"
+  }
+}

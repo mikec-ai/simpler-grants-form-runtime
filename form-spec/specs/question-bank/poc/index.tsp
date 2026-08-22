@@ -26,8 +26,10 @@ namespace QuestionBank.Poc;
   QuestionPocDetails.email
 )
 model QuestionPocDetails extends QuestionContactDetails {
+  /** Enter the position title. */
   @UI.label("Title")
   title?: ContactTitle;
 
+  /** Enter the address. */
   address: QuestionAddress;
 }

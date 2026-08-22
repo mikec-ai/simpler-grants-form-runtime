@@ -119,6 +119,28 @@ export function orderedProps(program: Program, block: Block): ModelProperty[] {
   return out;
 }
 
+/**
+ * A block's own id and those of the questions it extends, nearest first.
+ *
+ * An entity question is a shape given a meaning -- `aor/signature` extends
+ * `generics/signature` -- so anything inferred from a shape has to look past the name at the
+ * front. Without this, naming a question stops the inference that its shape implied, which is
+ * exactly backwards.
+ */
+export function blockAncestry(program: Program, model: Model | Scalar): string[] {
+  const out: string[] = [];
+  let current: Model | Scalar | undefined = model;
+  while (current) {
+    const block = readBlock(program, current);
+    if (block) out.push(block.id);
+    current =
+      current.kind === "Model"
+        ? current.baseModel
+        : (current as Scalar).baseScalar;
+  }
+  return out;
+}
+
 /** The child block a property composes, if any. */
 export function childBlock(program: Program, prop: ModelProperty): Block | undefined {
   const t = prop.type;

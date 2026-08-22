@@ -5,10 +5,12 @@
   "properties": {
     "title": {
       "$ref": "../../../question-bank/generics/contact-title/schema.json",
+      "description": "Enter the position title.",
       "title": "Title"
     },
     "address": {
-      "$ref": "../../../question-bank/generics/address/schema.json"
+      "$ref": "../../../question-bank/generics/address/schema.json",
+      "description": "Enter the address."
     }
   },
   "required": [

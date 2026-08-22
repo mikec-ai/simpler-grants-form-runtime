@@ -36,10 +36,15 @@ class LoadedForm:
         return self.manifest["form"]
 
 
-def _projection_for(form_dir: Path) -> Projection:
+#: Per-form legacy naming, kept outside `artifacts/` because that directory is rebuilt from
+#: the emitted output and these files are the adapter's own.
+PROJECTIONS = Path(__file__).parent / "projections"
+
+
+def _projection_for(form_id: str) -> Projection:
     """The bank's projection, extended with this form's declared name exceptions."""
     bank = _bank_projection()
-    overrides_path = form_dir / "projection.json"
+    overrides_path = PROJECTIONS / f"{form_id}.json"
     renames: dict[str, str] = {}
     if overrides_path.is_file():
         renames = json.loads(overrides_path.read_text()).get("renames", {})
@@ -55,7 +60,7 @@ def load_form(form_id: str, *, artifacts: Path | None = None) -> LoadedForm:
     root = (artifacts or ARTIFACTS) / "forms" / form_id
     manifest = json.loads((root / "manifest.json").read_text())
     canonical = json.loads((root / "schema.json").read_text())
-    projection = _projection_for(root)
+    projection = _projection_for(form_id)
 
     rule_schema = json.loads((root / "sgg" / "rule-schema.json").read_text())
     ui_schema = json.loads((root / "sgg" / "ui-schema.json").read_text())

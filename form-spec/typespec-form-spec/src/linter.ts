@@ -32,8 +32,11 @@ const orphanQuestion = createRule({
           if (block && viaComposition) referenced.add(block.id);
           if (seen.has(type)) return;
           seen.add(type);
+          // Extending a question composes it, for a scalar as much as for a model: naming a
+          // shape does not make the shape unasked.
+          const base = type.kind === "Model" ? type.baseModel : type.baseScalar;
+          if (base) reach(base, true);
           if (type.kind !== "Model") return;
-          if (type.baseModel) reach(type.baseModel, true);
           for (const prop of type.properties.values()) {
             for (const target of held(prop)) reach(target, true);
           }
@@ -50,14 +53,21 @@ const orphanQuestion = createRule({
   },
 });
 
-/** The declarations a property holds: its type, or the entries of a list. */
+/**
+ * The declarations a property holds: its own type, and the entries of a list.
+ *
+ * Both, because a list can itself be a question -- `primary-org/applicant-type` is one to
+ * three codes, so the *list* is what the form asks -- and the entries can be a question too.
+ * Returning only the entries reports the list as composed by nothing.
+ */
 function held(prop: ModelProperty): (Model | Scalar)[] {
   const type = prop.type;
   if (type.kind === "Scalar") return [type];
   if (type.kind !== "Model") return [];
-  if (!type.indexer) return [type];
-  const item = type.indexer.value;
-  return item.kind === "Model" || item.kind === "Scalar" ? [item] : [];
+  const out: (Model | Scalar)[] = [type];
+  const item = type.indexer?.value;
+  if (item && (item.kind === "Model" || item.kind === "Scalar")) out.push(item);
+  return out;
 }
 
 const questionDocs = createRule({
@@ -165,18 +175,24 @@ const redeclaredProperty = createRule({
   severity: "warning",
   description: "A derived block re-declaring a property it already inherits.",
   messages: {
-    default: paramMessage`${"model"} re-declares ${"names"}, which it already inherits from ${"base"}. To change only the presentation use @UI.overrides; re-declaring makes a second copy of the field that the two must be kept in step by hand.`,
+    default: paramMessage`${"model"} re-declares ${"names"} identically to ${"base"}. A redeclaration that narrows -- making an optional member required for this form -- says something; one that repeats says nothing, and leaves two copies to keep in step by hand. For presentation only, use @UI.overrides.`,
   },
   create(context) {
     return {
       model: (model) => {
         if (!model.baseModel) return;
-        const inherited = new Set<string>();
-        for (let m = model.baseModel; m; m = m.baseModel!) {
-          for (const prop of m.properties.keys()) inherited.add(prop);
-          if (!m.baseModel) break;
+        const inherited = new Map<string, ModelProperty>();
+        for (let m: Model | undefined = model.baseModel; m; m = m.baseModel) {
+          for (const [name, prop] of m.properties) if (!inherited.has(name)) inherited.set(name, prop);
         }
-        const clashes = [...model.properties.keys()].filter((n) => inherited.has(n));
+        const clashes = [...model.properties.values()]
+          .filter((prop) => {
+            const base = inherited.get(prop.name);
+            // Narrowing is the point of redeclaring: a form may require a member the
+            // question leaves optional. Only an identical repeat is worth a warning.
+            return base && base.optional === prop.optional && base.type === prop.type;
+          })
+          .map((prop) => prop.name);
         if (!clashes.length) return;
         context.reportDiagnostic({
           target: model,

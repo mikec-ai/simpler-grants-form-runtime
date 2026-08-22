@@ -24,3 +24,17 @@ scalar ProjectTitle extends string;
 @minLength(1)
 @maxLength(6)
 scalar CongressionalDistrict extends string;
+
+/** Enter the date in the format MM/DD/YYYY. */
+@Question.meta(#{ id: "project/start-date" })
+@Catalog.entity(EntityName.project)
+@Catalog.tag(TagName.date)
+@UI.label("Project Start Date")
+scalar ProjectStartDate extends plainDate;
+
+/** Enter the date in the format MM/DD/YYYY. */
+@Question.meta(#{ id: "project/end-date" })
+@Catalog.entity(EntityName.project)
+@Catalog.tag(TagName.date)
+@UI.label("Project End Date")
+scalar ProjectEndDate extends plainDate;

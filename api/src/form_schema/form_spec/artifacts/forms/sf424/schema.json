@@ -24,7 +24,7 @@
       "title": "Other Explanation"
     },
     "dateReceived": {
-      "$ref": "../../question-bank/generics/submitted-date/schema.json",
+      "$ref": "../../question-bank/application/date-received/schema.json",
       "description": "Completed by Grants.gov upon submission.",
       "title": "Date Received"
     },
@@ -63,7 +63,7 @@
       "title": "State Application Identifier"
     },
     "organizationName": {
-      "$ref": "../../question-bank/generics/organization-name/schema.json",
+      "$ref": "../../question-bank/primary-org/legal-name/schema.json",
       "description": "Enter the legal name of the applicant that will undertake the assistance activity. This is the organization that has registered with the System for Award Management (SAM). Information on registering with SAM may be obtained by visiting SAM.gov.",
       "title": "Legal Name"
     },
@@ -78,7 +78,7 @@
       "title": "SAM UEI"
     },
     "applicant": {
-      "$ref": "../../question-bank/generics/address/schema.json",
+      "$ref": "../../question-bank/primary-org/address/schema.json",
       "description": "Enter information about the applicant.",
       "title": "Applicant"
     },
@@ -129,19 +129,12 @@
       "title": "Email"
     },
     "applicantTypeCode": {
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/ApplicantType"
-      },
-      "minItems": 1,
-      "maxItems": 3,
+      "$ref": "../../question-bank/primary-org/applicant-type/schema.json",
       "description": "Select the appropriate applicant types.",
       "title": "Type of Applicant"
     },
     "applicantTypeOtherSpecify": {
-      "type": "string",
-      "minLength": 0,
-      "maxLength": 30,
+      "$ref": "../../question-bank/primary-org/applicant-type-other/schema.json",
       "description": "Enter the applicant type here if you selected \"Other (specify)\" for Type of applicant.",
       "title": "Type of Applicant Other Explanation"
     },
@@ -215,14 +208,12 @@
       "title": "Additional Congressional Districts"
     },
     "projectStartDate": {
-      "type": "string",
-      "format": "date",
+      "$ref": "../../question-bank/project/start-date/schema.json",
       "description": "Enter the date in the format MM/DD/YYYY.",
       "title": "Project Start Date"
     },
     "projectEndDate": {
-      "type": "string",
-      "format": "date",
+      "$ref": "../../question-bank/project/end-date/schema.json",
       "description": "Enter the date in the format MM/DD/YYYY.",
       "title": "Project End Date"
     },
@@ -287,35 +278,35 @@
       "title": "Certification Agree"
     },
     "authorizedRepresentative": {
-      "$ref": "../../question-bank/generics/person-name/schema.json",
+      "$ref": "../../question-bank/aor/name/schema.json",
       "title": "Authorized Representative"
     },
     "authorizedRepresentativeTitle": {
-      "$ref": "../../question-bank/generics/contact-title/schema.json",
+      "$ref": "../../question-bank/aor/title/schema.json",
       "description": "Enter the position title.",
       "title": "Title"
     },
     "authorizedRepresentativePhoneNumber": {
-      "$ref": "../../question-bank/generics/phone/schema.json",
+      "$ref": "../../question-bank/aor/phone/schema.json",
       "description": "Enter the daytime Telephone Number.",
       "title": "AOR Telephone Number"
     },
     "authorizedRepresentativeFax": {
-      "$ref": "../../question-bank/generics/phone/schema.json",
+      "$ref": "../../question-bank/aor/fax/schema.json",
       "description": "Enter the fax Number.",
       "title": "AOR fax Number"
     },
     "authorizedRepresentativeEmail": {
-      "$ref": "../../question-bank/generics/email/schema.json",
+      "$ref": "../../question-bank/aor/email/schema.json",
       "description": "Enter a valid email Address.",
       "title": "AOR email"
     },
     "aorSignature": {
-      "$ref": "../../question-bank/generics/signature/schema.json",
+      "$ref": "../../question-bank/aor/signature/schema.json",
       "title": "AOR Signature"
     },
     "dateSigned": {
-      "$ref": "../../question-bank/generics/submitted-date/schema.json",
+      "$ref": "../../question-bank/aor/date-signed/schema.json",
       "title": "Date Signed"
     }
   },
@@ -387,36 +378,6 @@
         "BD: Decrease Award, Decrease Duration"
       ],
       "description": "The kind of change a revision makes to an existing award."
-    },
-    "ApplicantType": {
-      "type": "string",
-      "enum": [
-        "A: State Government",
-        "B: County Government",
-        "C: City or Township Government",
-        "D: Special District Government",
-        "E: Regional Organization",
-        "F: U.S. Territory or Possession",
-        "G: Independent School District",
-        "H: Public/state Controlled Institution of Higher Education",
-        "I: Indian/Native American Tribal Government (Federally Recognized)",
-        "J: Indian/Native American Tribal Government (Other than Federally Recognized)",
-        "K: Indian/Native American Tribally Designated Organization",
-        "L: Public/Indian Housing Authority",
-        "M: Nonprofit with 501C3 IRS Status (Other than Institution of Higher Education)",
-        "N: Nonprofit without 501C3 IRS Status (Other than Institution of Higher Education)",
-        "O: Private Institution of Higher Education",
-        "P: Individual",
-        "Q: For-Profit Organization (Other than Small Business)",
-        "R: Small Business",
-        "S: Hispanic-serving Institution",
-        "T: Historically Black Colleges and Universities (HBCUs)",
-        "U: Tribally Controlled Colleges and Universities (TCCUs)",
-        "V: Alaska Native and Native Hawaiian Serving Institutions",
-        "W: Non-domestic (non-US) Entity",
-        "X: Other (specify)"
-      ],
-      "description": "The applicant's category, from the Executive Order 12372 list."
     },
     "StateReview": {
       "type": "string",

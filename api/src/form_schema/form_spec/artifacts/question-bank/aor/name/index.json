@@ -1,0 +1,11 @@
+{
+  "id": "aor/name",
+  "kind": "question",
+  "name": "Authorized Representative",
+  "description": "Enter the name of the authorized representative.",
+  "tags": [
+    "person",
+    "name"
+  ],
+  "entity": "authorizedRepresentative"
+}

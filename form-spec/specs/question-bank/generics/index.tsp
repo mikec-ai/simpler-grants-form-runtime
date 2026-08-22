@@ -112,15 +112,19 @@ model QuestionAddress {
 @Catalog.tag(TagName.person, TagName.details)
 @UI.label("Contact")
 model QuestionContactDetails {
+  /** Enter the name. */
   @UI.label("Name")
   name: QuestionPersonName;
 
+  /** Enter the daytime Telephone Number. */
   @UI.label("Telephone Number")
   phone: PhoneNumber;
 
+  /** Enter the Fax Number. */
   @UI.label("Fax Number")
   fax?: PhoneNumber;
 
+  /** Enter a valid email Address. */
   @UI.label("Email")
   email: EmailAddress;
 }

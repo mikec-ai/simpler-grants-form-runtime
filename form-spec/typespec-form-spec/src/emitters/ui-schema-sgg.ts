@@ -9,6 +9,8 @@ export interface SggField {
   type: "field" | "null";
   definition: string;
   widget?: string;
+  /** Show the field's description in the print view as well as the form. */
+  printDescription?: boolean;
 }
 export interface SggFieldList {
   type: "fieldList";
@@ -53,14 +55,18 @@ export interface SggSection {
 function allProperties(program: Program, model: Model): ModelProperty[] {
   const chain: Model[] = [];
   for (let m: Model | undefined = model; m; m = m.baseModel) chain.unshift(m);
-  const props: ModelProperty[] = [];
-  for (const m of chain) props.push(...m.properties.values());
+
+  // Keyed by name, so a redeclaration replaces what it narrows rather than rendering
+  // beside it. A form that makes an optional member required declares it again, and the
+  // field must appear once.
+  const byName = new Map<string, ModelProperty>();
+  for (const m of chain) for (const prop of m.properties.values()) byName.set(prop.name, prop);
+  const props = [...byName.values()];
 
   const order = modelOrder(program, model);
   if (!order) return props;
-  const byName = new Map(props.map((p) => [p.name, p]));
-  const out = order.map((n) => byName.get(n)).filter(Boolean) as ModelProperty[];
-  for (const p of props) if (!out.includes(p)) out.push(p);
+  const out = order.map((name) => byName.get(name)).filter(Boolean) as ModelProperty[];
+  for (const prop of props) if (!out.includes(prop)) out.push(prop);
   return out;
 }
 
@@ -110,6 +116,7 @@ function field(
   };
   const widget = (override.widget as string | undefined) ?? propWidget(program, prop);
   if (widget) f.widget = widget;
+  if (override.printDescription === true) f.printDescription = true;
   return f;
 }
 

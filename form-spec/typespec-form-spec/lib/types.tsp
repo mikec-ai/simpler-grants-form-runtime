@@ -30,7 +30,7 @@ enum TagName {
 
 enum EntityName {
   primaryOrg, fiscalSponsor, poc, principalInvestigator,
-  authorizedRepresentative, project, opportunity, generic,
+  authorizedRepresentative, project, opportunity, application, generic,
 }
 
 /** Mirrors the SGG frontend's WidgetTypes union. */

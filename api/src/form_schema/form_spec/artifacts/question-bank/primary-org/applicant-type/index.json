@@ -1,0 +1,11 @@
+{
+  "id": "primary-org/applicant-type",
+  "kind": "question",
+  "name": "Type of Applicant",
+  "description": "The applicant's category or categories.",
+  "tags": [
+    "organization",
+    "role"
+  ],
+  "entity": "primaryOrg"
+}

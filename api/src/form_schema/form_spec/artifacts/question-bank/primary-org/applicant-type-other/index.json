@@ -1,0 +1,11 @@
+{
+  "id": "primary-org/applicant-type-other",
+  "kind": "question",
+  "name": "Type of Applicant Other Explanation",
+  "description": "Enter the applicant type here if you selected \"Other (specify)\" for Type of applicant.",
+  "tags": [
+    "organization",
+    "role"
+  ],
+  "entity": "primaryOrg"
+}

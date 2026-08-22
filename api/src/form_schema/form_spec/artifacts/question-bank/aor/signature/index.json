@@ -1,0 +1,11 @@
+{
+  "id": "aor/signature",
+  "kind": "question",
+  "name": "Signature of Authorized Representative",
+  "description": "Completed by Grants.gov upon submission.",
+  "tags": [
+    "person",
+    "name"
+  ],
+  "entity": "authorizedRepresentative"
+}

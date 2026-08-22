@@ -1,11 +1,15 @@
 import "@simpler-grants/form-spec";
 import "./index.tsp";
+import "../question-bank/aor/index.tsp";
+import "../question-bank/application/index.tsp";
 import "../question-bank/generics/index.tsp";
 import "../question-bank/opportunity/index.tsp";
 import "../question-bank/primary-org/index.tsp";
 import "../question-bank/project/index.tsp";
 
 using SimplerForms;
+using QuestionBank.Aor;
+using QuestionBank.Application;
 using QuestionBank.Generics;
 using QuestionBank.Opportunity;
 using QuestionBank.PrimaryOrg;
@@ -66,34 +70,6 @@ enum RevisionType {
   AD: "AD: Increase Award, Decrease Duration",
   BC: "BC: Decrease Award, Increase Duration",
   BD: "BD: Decrease Award, Decrease Duration",
-}
-
-/** The applicant's category, from the Executive Order 12372 list. */
-enum ApplicantType {
-  A: "A: State Government",
-  B: "B: County Government",
-  C: "C: City or Township Government",
-  D: "D: Special District Government",
-  E: "E: Regional Organization",
-  F: "F: U.S. Territory or Possession",
-  G: "G: Independent School District",
-  H: "H: Public/state Controlled Institution of Higher Education",
-  I: "I: Indian/Native American Tribal Government (Federally Recognized)",
-  J: "J: Indian/Native American Tribal Government (Other than Federally Recognized)",
-  K: "K: Indian/Native American Tribally Designated Organization",
-  L: "L: Public/Indian Housing Authority",
-  M: "M: Nonprofit with 501C3 IRS Status (Other than Institution of Higher Education)",
-  N: "N: Nonprofit without 501C3 IRS Status (Other than Institution of Higher Education)",
-  O: "O: Private Institution of Higher Education",
-  P: "P: Individual",
-  Q: "Q: For-Profit Organization (Other than Small Business)",
-  R: "R: Small Business",
-  S: "S: Hispanic-serving Institution",
-  T: "T: Historically Black Colleges and Universities (HBCUs)",
-  U: "U: Tribally Controlled Colleges and Universities (TCCUs)",
-  V: "V: Alaska Native and Native Hawaiian Serving Institutions",
-  W: "W: Non-domestic (non-US) Entity",
-  X: "X: Other (specify)",
 }
 
 /** Whether Executive Order 12372 review applies, and if so what happened. */
@@ -160,7 +136,7 @@ model SF424 {
   @UI.label("Date Received")
   @UI.section(Sf424Section.dateReceived)
   @UI.readOnly
-  dateReceived?: SubmittedDate;
+  dateReceived?: DateReceived;
 
   /** Enter the applicant's control number, if applicable. */
   @UI.label("Applicant Identifier")
@@ -202,7 +178,7 @@ model SF424 {
   /** Enter the legal name of the applicant that will undertake the assistance activity. This is the organization that has registered with the System for Award Management (SAM). Information on registering with SAM may be obtained by visiting SAM.gov. */
   @UI.label("Legal Name")
   @UI.section(Sf424Section.applicantInformation)
-  organizationName: OrganizationName;
+  organizationName: LegalName;
 
   /** Enter either TIN or EIN as assigned by the Internal Revenue Service.  If your organization is not in the US, enter 44-4444444. */
   @UI.label("EIN/TIN")
@@ -217,7 +193,7 @@ model SF424 {
   /** Enter information about the applicant. */
   @UI.label("Applicant")
   @UI.section(Sf424Section.applicantInformation)
-  applicant: QuestionAddress;
+  applicant: QuestionPrimaryOrgAddress;
 
   /** Enter the name of primary organizational department, service, laboratory, or equivalent level within the organization which will undertake the assistance activity. */
   @UI.label("Department Name")
@@ -268,17 +244,13 @@ model SF424 {
   /** Select the appropriate applicant types. */
   @UI.label("Type of Applicant")
   @UI.section(Sf424Section.typeOfApplicant)
-  @minItems(1)
-  @maxItems(3)
-  applicantTypeCode: ApplicantType[];
+  applicantTypeCode: ApplicantTypes;
 
   /** Enter the applicant type here if you selected "Other (specify)" for Type of applicant. */
   @UI.label("Type of Applicant Other Explanation")
   @UI.section(Sf424Section.typeOfApplicant)
-  @minLength(0)
-  @maxLength(30)
-  @Validation.requiredWhen(SF424.applicantTypeCode, ApplicantType.X)
-  applicantTypeOtherSpecify?: string;
+  @Validation.requiredWhen(SF424.applicantTypeCode, ApplicantTypeCode.X)
+  applicantTypeOtherSpecify?: ApplicantTypeOther;
 
   /** Pre-populated from the Application cover sheet. */
   @UI.label("Agency Name")
@@ -352,12 +324,12 @@ model SF424 {
   /** Enter the date in the format MM/DD/YYYY.  */
   @UI.label("Project Start Date")
   @UI.section(Sf424Section.projectDates)
-  projectStartDate: plainDate;
+  projectStartDate: ProjectStartDate;
 
   /** Enter the date in the format MM/DD/YYYY.  */
   @UI.label("Project End Date")
   @UI.section(Sf424Section.projectDates)
-  projectEndDate: plainDate;
+  projectEndDate: ProjectEndDate;
 
   /** Enter the dollar amount. */
   @UI.label("Federal Estimated Funding")
@@ -434,35 +406,35 @@ model SF424 {
 
   @UI.label("Authorized Representative")
   @UI.section(Sf424Section.authorizedRepresentative)
-  authorizedRepresentative: QuestionPersonName;
+  authorizedRepresentative: QuestionAorName;
 
   /** Enter the position title. */
   @UI.label("Title")
   @UI.section(Sf424Section.authorizedRepresentative)
-  authorizedRepresentativeTitle: ContactTitle;
+  authorizedRepresentativeTitle: AorTitle;
 
   /** Enter the daytime Telephone Number. */
   @UI.label("AOR Telephone Number")
   @UI.section(Sf424Section.authorizedRepresentative)
-  authorizedRepresentativePhoneNumber: PhoneNumber;
+  authorizedRepresentativePhoneNumber: AorPhone;
 
   /** Enter the fax Number. */
   @UI.label("AOR fax Number")
   @UI.section(Sf424Section.authorizedRepresentative)
-  authorizedRepresentativeFax?: PhoneNumber;
+  authorizedRepresentativeFax?: AorFax;
 
   /** Enter a valid email Address. */
   @UI.label("AOR email")
   @UI.section(Sf424Section.authorizedRepresentative)
-  authorizedRepresentativeEmail: EmailAddress;
+  authorizedRepresentativeEmail: AorEmail;
 
   @UI.label("AOR Signature")
   @UI.section(Sf424Section.authorizedRepresentative)
   @UI.readOnly
-  aorSignature?: Signature;
+  aorSignature?: AorSignature;
 
   @UI.label("Date Signed")
   @UI.section(Sf424Section.authorizedRepresentative)
   @UI.readOnly
-  dateSigned?: SubmittedDate;
+  dateSigned?: AorDateSigned;
 }

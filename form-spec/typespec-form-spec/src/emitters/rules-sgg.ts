@@ -1,6 +1,7 @@
 import type { Model, ModelProperty, Program, Scalar } from "@typespec/compiler";
 import {
-  Block, childBlock, modelPrePopulate, propComputed, propOmit, propTotals, readBlock,
+  Block, blockAncestry, childBlock, modelPrePopulate, propComputed, propOmit, propTotals,
+  readBlock,
 } from "../model.js";
 
 const OP_RULE: Record<string, string> = {
@@ -169,12 +170,13 @@ function walk(
     }
 
     if (child) {
-      const stamp = STAMP_BY_QUESTION[child.id];
+      const ancestry = blockAncestry(program, child.model);
+      const stamp = ancestry.map((id) => STAMP_BY_QUESTION[id]).find(Boolean);
       if (stamp) {
         place(into, here, { gg_post_population: { rule: stamp } });
         continue;
       }
-      if (child.id === ATTACHMENT_QUESTION) {
+      if (ancestry.includes(ATTACHMENT_QUESTION)) {
         place(into, here, { gg_validation: { rule: "attachment" } });
         continue;
       }
@@ -193,7 +195,7 @@ function walk(
       const item = prop.type.indexer.value;
       const itemBlock =
         item.kind === "Model" || item.kind === "Scalar" ? readBlock(program, item) : undefined;
-      if (itemBlock?.id === ATTACHMENT_QUESTION) {
+      if (itemBlock && blockAncestry(program, itemBlock.model).includes(ATTACHMENT_QUESTION)) {
         place(into, here, { gg_validation: { rule: "attachment" } });
         continue;
       }
@@ -276,7 +278,9 @@ function moneyFields(program: Program, model: Model): string[] {
   const out: string[] = [];
   for (const prop of model.properties.values()) {
     const child = childBlock(program, prop);
-    if (child?.id === MONEY_QUESTION) out.push(prop.name);
+    if (child && blockAncestry(program, child.model).includes(MONEY_QUESTION)) {
+      out.push(prop.name);
+    }
   }
   return out;
 }

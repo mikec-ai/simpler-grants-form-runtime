@@ -5,18 +5,22 @@
   "properties": {
     "name": {
       "$ref": "../../../question-bank/generics/person-name/schema.json",
+      "description": "Enter the name.",
       "title": "Name"
     },
     "phone": {
       "$ref": "../../../question-bank/generics/phone/schema.json",
+      "description": "Enter the daytime Telephone Number.",
       "title": "Telephone Number"
     },
     "fax": {
       "$ref": "../../../question-bank/generics/phone/schema.json",
+      "description": "Enter the Fax Number.",
       "title": "Fax Number"
     },
     "email": {
       "$ref": "../../../question-bank/generics/email/schema.json",
+      "description": "Enter a valid email Address.",
       "title": "Email"
     }
   },

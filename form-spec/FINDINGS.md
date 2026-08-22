@@ -159,6 +159,46 @@ the validator reports the keyword that failed.
   that; the first payload containing `"WY: Wyoming"` does. They are generated from
   `shared_form_constants.py` now, so the code lists have one authority.
 
+## The reuse curve
+
+Four forms in, migrated in this order:
+
+| Form | Questions asked | New to the bank | Already there |
+|---|---|---|---|
+| Key Contacts | 8 | 8 | 0 |
+| SF-424 | 25 | 19 | 6 |
+| SF-424A | 6 | 5 | 1 |
+| **SF-424-Short** | **23** | **0** | **23** |
+
+SF-424-Short introduced nothing. It asks twenty-three questions and the bank already held
+every one, including `poc/details` composed twice -- boxes 7 and 8, the project director and
+the primary contact -- where the golden does it with a `$defs` plus two Python helpers that
+parameterise the UI children and the XML target by base path. It shares 91% of its questions
+with SF-424.
+
+That is the number the architecture is for, and it took four forms to get one honest reading
+of it.
+
+### Two things that made it honest
+
+**A field composing a generic is not a named question.** `authorizedRepresentativeTitle:
+ContactTitle` looks like reuse and is not: `generics/contact-title` is a *shape*, and both
+forms were declaring the same question against it independently. §2.3 says identity is
+`entity x attribute`, and nine fields were ignoring it. They are `aor/title`, `aor/email`,
+`aor/phone`, `aor/fax`, `aor/name`, `aor/signature`, `aor/date-signed`,
+`primary-org/legal-name`, `primary-org/address` and `application/date-received` now, each
+extending its shape so the constraints still live in one place.
+
+`scripts/analyze.py` reports both numbers, because only the second one means anything: how
+many field names a form declares itself, and how many of those another form also declares.
+The second is at zero and should stay there.
+
+**Naming a question must not stop the inference its shape implied.** The submit stamps and
+the attachment rule were keyed on an exact question id, so `aor/signature` -- which extends
+`generics/signature` -- silently lost its `gg_post_population` rule. Inference walks a
+question's ancestry now. The same gap made the orphan check miss composition through a
+scalar's base.
+
 ## The three tables
 
 `npm run analyze` produces them from the emitted artifacts, never from the specs — so the

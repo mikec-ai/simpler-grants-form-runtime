@@ -48,6 +48,46 @@ def refs(node: object) -> set[str]:
     return found
 
 
+def form_local_leaves(schema: dict, defs: dict) -> set[str]:
+    """Field names a form declares itself rather than composing from the bank.
+
+    A field two forms both declare themselves is a question waiting to be named: the same
+    thing asked twice, with the labels and limits kept in step by hand. That number should
+    stay at zero, which is what makes the bank worth having rather than merely present.
+    """
+    out: set[str] = set()
+
+    def walk(node: object, path: tuple[str, ...]) -> bool:
+        """True when this subtree reaches the bank; collects the leaves that do not."""
+        if not isinstance(node, dict):
+            return False
+        ref = node.get("$ref")
+        if isinstance(ref, str):
+            if "question-bank/" in ref:
+                return True
+            if ref.startswith("#/$defs/"):
+                return walk(defs.get(ref.removeprefix("#/$defs/"), {}), path)
+        banked = any(
+            walk(branch, path)
+            for branch in node.get("allOf", [])
+            if isinstance(branch, dict) and "if" not in branch
+        )
+        properties = node.get("properties")
+        if properties:
+            for name, sub in properties.items():
+                walk(sub, (*path, name))
+            return True
+        items = node.get("items")
+        if isinstance(items, dict):
+            return walk(items, path) or banked
+        if path and not banked:
+            out.add(path[-1])
+        return banked
+
+    walk(schema, ())
+    return out
+
+
 def closure(direct: set[str], bank_refs: dict[str, set[str]]) -> set[str]:
     seen: set[str] = set()
     queue = list(direct)
@@ -124,12 +164,28 @@ def main() -> int:
     for score, a, b, both, share_a, share_b in sorted(rows, reverse=True):
         print(f"| {a} | {b} | {score:.0%} | {both} | {share_a:.0%} | {share_b:.0%} |")
 
+    print("\n## Fields not yet in the bank\n")
+    local: dict[str, set[str]] = {}
+    for form_id, schema in sorted(forms.items()):
+        for name in form_local_leaves(schema, schema.get("$defs", {})):
+            local.setdefault(name, set()).add(form_id)
+    shared = {name: where for name, where in local.items() if len(where) > 1}
+    print(
+        f"{len(local)} field names are declared by a form rather than composed from the bank; "
+        f"**{len(shared)}** of them by more than one form."
+    )
+    if shared:
+        print("\n| Field | Declared by | ")
+        print("| --- | --- |")
+        for name, where in sorted(shared.items(), key=lambda kv: (-len(kv[1]), kv[0])):
+            print(f"| `{name}` | {', '.join(sorted(where))} |")
+
     print("\n## Reuse\n")
     print("| Form | Questions asked | New to the bank | Already in the bank |")
     print("| --- | --- | --- | --- |")
     # In the order the forms were migrated, which is the order the curve is claimed in.
     known: set[str] = set()
-    for form_id in ("key-contacts", "sf424", "sf424a"):
+    for form_id in ("key-contacts", "sf424", "sf424a", "sf424-short"):
         if form_id not in asked:
             continue
         new = asked[form_id] - known

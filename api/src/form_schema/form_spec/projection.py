@@ -60,8 +60,12 @@ class Projection:
     """How one form's canonical artifacts map onto the legacy contract.
 
     `renames` is keyed by canonical data path with array indices collapsed, so
-    `keyContacts.projectRole` addresses the field inside every entry of the list. Only
-    irregular names need an entry; everything else is camel-to-snake.
+    `keyContacts.projectRole` addresses the field inside every entry of the list. A bare
+    member name is also accepted, and applies wherever that member appears -- which is what a
+    legacy naming table usually means: on SF-424-Short, the member the bank calls `phone` is
+    spelled `phone_number` in all three places it turns up, and one entry says so. An exact
+    path wins over a bare name. Only irregular names need an entry; everything else is
+    camel-to-snake.
     """
 
     renames: dict[str, str] = dataclasses.field(default_factory=dict)
@@ -77,7 +81,9 @@ class Projection:
     hoisted_defs: dict[str, Any] | None = None
 
     def rename(self, path: str, name: str) -> str:
-        return self.renames.get(path, snake_case(name))
+        if path in self.renames:
+            return self.renames[path]
+        return self.renames.get(name, snake_case(name))
 
     def block_for(self, ref: str) -> str | None:
         """The block id a canonical `$ref` names, or None if it is a local pointer."""
