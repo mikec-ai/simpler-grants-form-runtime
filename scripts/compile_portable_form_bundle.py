@@ -21,7 +21,7 @@ from typing import Any, Never
 
 import jsonschema
 
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 DEFAULT_BUNDLE = Path(__file__).resolve().parents[1] / "form-specs"
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
 
@@ -83,6 +83,7 @@ def compile_bundle(bundle_root: Path) -> tuple[dict[str, Any], list[str]]:
         "bundle",
         "sources",
         "schemas",
+        "validation_fragments",
         "compatibility",
         "form_declarations",
     }
@@ -92,13 +93,13 @@ def compile_bundle(bundle_root: Path) -> tuple[dict[str, Any], list[str]]:
         raise CompileError(
             f"catalog keys mismatch; missing={missing}, unknown={unknown}"
         )
-    if catalog["contract"] != "portable-grants-form-catalog/v1":
+    if catalog["contract"] != "portable-grants-form-catalog/v2":
         raise CompileError(
-            "catalog.contract must equal portable-grants-form-catalog/v1"
+            "catalog.contract must equal portable-grants-form-catalog/v2"
         )
-    if catalog["runtime_contract"] != "portable-grants-form-bundle/v1":
+    if catalog["runtime_contract"] != "portable-grants-form-bundle/v2":
         raise CompileError(
-            "catalog.runtime_contract must equal portable-grants-form-bundle/v1"
+            "catalog.runtime_contract must equal portable-grants-form-bundle/v2"
         )
     descriptor = catalog["contract_schema"]
     if not isinstance(descriptor, dict) or set(descriptor) != {"path", "sha256"}:
@@ -153,9 +154,9 @@ def compile_bundle(bundle_root: Path) -> tuple[dict[str, Any], list[str]]:
             raise CompileError(
                 f"form declaration violates the portable contract: {relative}: {exc.message}"
             ) from exc
-        if form.get("contract") != "portable-grants-form-declaration/v1":
+        if form.get("contract") != "portable-grants-form-declaration/v2":
             raise CompileError(
-                f"form declaration contract must equal portable-grants-form-declaration/v1: "
+                f"form declaration contract must equal portable-grants-form-declaration/v2: "
                 f"{relative}"
             )
         if "source_evidence" in form or "source_refs" not in form:
@@ -203,6 +204,7 @@ def compile_bundle(bundle_root: Path) -> tuple[dict[str, Any], list[str]]:
         "bundle": catalog["bundle"],
         "sources": catalog["sources"],
         "schemas": catalog["schemas"],
+        "validation_fragments": catalog["validation_fragments"],
         "compatibility": catalog["compatibility"],
         "forms": forms,
     }

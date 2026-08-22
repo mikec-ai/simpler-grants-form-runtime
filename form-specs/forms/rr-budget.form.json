@@ -1,5 +1,5 @@
 {
-  "contract": "portable-grants-form-declaration/v1",
+  "contract": "portable-grants-form-declaration/v2",
   "form_key": "RRBudget",
   "schema_id": "urn:grants-form-kernel:forms:rrbudget:v3",
   "metadata": {
@@ -53,7 +53,20 @@
         "repeat_ancestors": []
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:00404e686415370f1711c4d7acfa2905444d3cf23cef2e10c47d445ebe690f96",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetJustificationAttachment"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgettype",
@@ -72,7 +85,20 @@
         "repeat_ancestors": []
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:c91593401412933bd2fec74c901eed08bac91839d54f6a6105cf8b7227b5f311",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetType"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-budgetperiodenddate",
@@ -93,7 +119,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:c844c1623b21ae0d7eeda775787f690990bab3ba0dd0d4decff209935dee0468",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.BudgetPeriodEndDate"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-budgetperiodstartdate",
@@ -114,7 +153,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:c844c1623b21ae0d7eeda775787f690990bab3ba0dd0d4decff209935dee0468",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.BudgetPeriodStartDate"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-cognizantfederalagency",
@@ -135,7 +187,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:b7b1b21714b58bd0524ecba38742de3b34301c7dc652ebfb802392e35176d787",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.CognizantFederalAgency"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-equipment-additionalequipmentsattachment",
@@ -156,7 +221,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:00404e686415370f1711c4d7acfa2905444d3cf23cef2e10c47d445ebe690f96",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.Equipment.AdditionalEquipmentsAttachment"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-equipment-equipmentlist-equipmentitem",
@@ -178,7 +256,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:520c691f88f728d6668deec0a0defaef2a596faac395f0a4690e9e6dba2d21f6",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.Equipment.EquipmentList.EquipmentItem"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-equipment-equipmentlist-fundsrequested",
@@ -200,7 +291,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.Equipment.EquipmentList.FundsRequested"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-equipment-totalfundforattachedequipment",
@@ -221,7 +325,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.Equipment.TotalFundForAttachedEquipment"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-fee",
@@ -242,7 +359,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.Fee"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-indirectcosts-indirectcost-base",
@@ -264,7 +394,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.IndirectCosts.IndirectCost.Base"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-indirectcosts-indirectcost-costtype",
@@ -286,7 +429,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:520c691f88f728d6668deec0a0defaef2a596faac395f0a4690e9e6dba2d21f6",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.IndirectCosts.IndirectCost.CostType"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-indirectcosts-indirectcost-fundrequested",
@@ -308,7 +464,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.IndirectCosts.IndirectCost.FundRequested"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-indirectcosts-indirectcost-rate",
@@ -330,7 +499,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.IndirectCosts.IndirectCost.Rate"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-keypersons-attachedkeypersons",
@@ -351,7 +533,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:00404e686415370f1711c4d7acfa2905444d3cf23cef2e10c47d445ebe690f96",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.KeyPersons.AttachedKeyPersons"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-keypersons-keyperson-academicmonths",
@@ -373,7 +568,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.AcademicMonths"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-keypersons-keyperson-basesalary",
@@ -395,7 +603,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.BaseSalary"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-keypersons-keyperson-calendarmonths",
@@ -417,7 +638,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.CalendarMonths"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-keypersons-keyperson-fringebenefits",
@@ -439,7 +673,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.FringeBenefits"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-keypersons-keyperson-name-firstname",
@@ -461,7 +708,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:b4e618d1cc905aa438b47383129965e8196c2cf53ade8163a412e4d855084680",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.Name.FirstName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-keypersons-keyperson-name-lastname",
@@ -483,7 +743,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:3ea040de4c9e48ed17a93eef109882f73b3fb481c71ddf9f52ac8075463fcdb8",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.Name.LastName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-keypersons-keyperson-name-middlename",
@@ -505,7 +778,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:8bd226f94133c523b569e677676ee65006ca9adf826a8493854065a991436620",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.Name.MiddleName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-keypersons-keyperson-name-prefixname",
@@ -527,7 +813,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:04695a9d75d2d404e71cc5ef01839b95c1fd6e2e8c6235b8ddb1b19cb46ecaf5",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.Name.PrefixName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-keypersons-keyperson-name-suffixname",
@@ -549,7 +848,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:1ceb55436a25800628f94551c62045219895e945d1226b34d8a7bc3a7ec54bf3",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.Name.SuffixName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-keypersons-keyperson-projectrole",
@@ -571,7 +883,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:0eb2e3b6e08c031d561e617da88331cbd7d5e2e9c5db1648dfaa11b45b3e81f0",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.ProjectRole"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-keypersons-keyperson-requestedsalary",
@@ -593,7 +918,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.RequestedSalary"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-keypersons-keyperson-summermonths",
@@ -615,7 +953,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.KeyPersons.KeyPerson.SummerMonths"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-keypersons-totalfundforattachedkeypersons",
@@ -636,7 +987,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.KeyPersons.TotalFundForAttachedKeyPersons"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-adpcomputerservices",
@@ -657,7 +1021,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.ADPComputerServices"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-alterationsrenovations",
@@ -678,7 +1055,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.AlterationsRenovations"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-consultantservices",
@@ -699,7 +1089,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.ConsultantServices"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-equipmentrentalfee",
@@ -720,7 +1123,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.EquipmentRentalFee"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-materialssupplies",
@@ -741,7 +1157,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.MaterialsSupplies"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-otherdirectcost1-cost",
@@ -762,7 +1191,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost1.Cost"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-otherdirectcost1-description",
@@ -783,7 +1225,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:1a859664cdda99f274aa20f6338a23d6518c6ef34891dc93daee0215fd55dbb1",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost1.Description"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-otherdirectcost10-cost",
@@ -804,7 +1259,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost10.Cost"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-otherdirectcost10-description",
@@ -825,7 +1293,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:1a859664cdda99f274aa20f6338a23d6518c6ef34891dc93daee0215fd55dbb1",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost10.Description"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-otherdirectcost2-cost",
@@ -846,7 +1327,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost2.Cost"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-otherdirectcost2-description",
@@ -867,7 +1361,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:1a859664cdda99f274aa20f6338a23d6518c6ef34891dc93daee0215fd55dbb1",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost2.Description"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-otherdirectcost3-cost",
@@ -888,7 +1395,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost3.Cost"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-otherdirectcost3-description",
@@ -909,7 +1429,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:1a859664cdda99f274aa20f6338a23d6518c6ef34891dc93daee0215fd55dbb1",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost3.Description"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-otherdirectcost4-cost",
@@ -930,7 +1463,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost4.Cost"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-otherdirectcost4-description",
@@ -951,7 +1497,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:1a859664cdda99f274aa20f6338a23d6518c6ef34891dc93daee0215fd55dbb1",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost4.Description"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-otherdirectcost5-cost",
@@ -972,7 +1531,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost5.Cost"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-otherdirectcost5-description",
@@ -993,7 +1565,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:1a859664cdda99f274aa20f6338a23d6518c6ef34891dc93daee0215fd55dbb1",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost5.Description"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-otherdirectcost6-cost",
@@ -1014,7 +1599,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost6.Cost"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-otherdirectcost6-description",
@@ -1035,7 +1633,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:1a859664cdda99f274aa20f6338a23d6518c6ef34891dc93daee0215fd55dbb1",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost6.Description"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-otherdirectcost7-cost",
@@ -1056,7 +1667,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost7.Cost"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-otherdirectcost7-description",
@@ -1077,7 +1701,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:1a859664cdda99f274aa20f6338a23d6518c6ef34891dc93daee0215fd55dbb1",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost7.Description"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-otherdirectcost8-cost",
@@ -1098,7 +1735,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost8.Cost"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-otherdirectcost8-description",
@@ -1119,7 +1769,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:1a859664cdda99f274aa20f6338a23d6518c6ef34891dc93daee0215fd55dbb1",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost8.Description"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-otherdirectcost9-cost",
@@ -1140,7 +1803,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost9.Cost"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-otherdirectcost9-description",
@@ -1161,7 +1837,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:1a859664cdda99f274aa20f6338a23d6518c6ef34891dc93daee0215fd55dbb1",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.OtherDirectCost9.Description"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-publicationcosts",
@@ -1182,7 +1871,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.PublicationCosts"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherdirectcosts-subawardconsortiumcontractualcosts",
@@ -1203,7 +1905,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherDirectCosts.SubawardConsortiumContractualCosts"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-graduatestudents-academicmonths",
@@ -1224,7 +1939,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.GraduateStudents.AcademicMonths"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-graduatestudents-calendarmonths",
@@ -1245,7 +1973,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.GraduateStudents.CalendarMonths"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-graduatestudents-fringebenefits",
@@ -1266,7 +2007,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.GraduateStudents.FringeBenefits"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-graduatestudents-numberofpersonnel",
@@ -1287,7 +2041,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:f0765dbf409c74f001806c446f2cf171d8c46b5b15779d54423dde921a4b0670",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.GraduateStudents.NumberOfPersonnel"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-graduatestudents-projectrole",
@@ -1308,7 +2075,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:0eb2e3b6e08c031d561e617da88331cbd7d5e2e9c5db1648dfaa11b45b3e81f0",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.GraduateStudents.ProjectRole"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-graduatestudents-requestedsalary",
@@ -1329,7 +2109,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.GraduateStudents.RequestedSalary"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-graduatestudents-summermonths",
@@ -1350,7 +2143,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.GraduateStudents.SummerMonths"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-other-academicmonths",
@@ -1372,7 +2178,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.Other.AcademicMonths"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-other-calendarmonths",
@@ -1394,7 +2213,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.Other.CalendarMonths"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-other-fringebenefits",
@@ -1416,7 +2248,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.Other.FringeBenefits"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-other-numberofpersonnel",
@@ -1438,7 +2283,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:f0765dbf409c74f001806c446f2cf171d8c46b5b15779d54423dde921a4b0670",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.Other.NumberOfPersonnel"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-other-projectrole",
@@ -1460,7 +2318,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:0eb2e3b6e08c031d561e617da88331cbd7d5e2e9c5db1648dfaa11b45b3e81f0",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.Other.ProjectRole"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-other-requestedsalary",
@@ -1482,7 +2353,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.Other.RequestedSalary"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-other-summermonths",
@@ -1504,7 +2388,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.Other.SummerMonths"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-postdocassociates-academicmonths",
@@ -1525,7 +2422,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.PostDocAssociates.AcademicMonths"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-postdocassociates-calendarmonths",
@@ -1546,7 +2456,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.PostDocAssociates.CalendarMonths"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-postdocassociates-fringebenefits",
@@ -1567,7 +2490,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.PostDocAssociates.FringeBenefits"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-postdocassociates-numberofpersonnel",
@@ -1588,7 +2524,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:f0765dbf409c74f001806c446f2cf171d8c46b5b15779d54423dde921a4b0670",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.PostDocAssociates.NumberOfPersonnel"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-postdocassociates-projectrole",
@@ -1609,7 +2558,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:0eb2e3b6e08c031d561e617da88331cbd7d5e2e9c5db1648dfaa11b45b3e81f0",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.PostDocAssociates.ProjectRole"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-postdocassociates-requestedsalary",
@@ -1630,7 +2592,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.PostDocAssociates.RequestedSalary"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-postdocassociates-summermonths",
@@ -1651,7 +2626,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.PostDocAssociates.SummerMonths"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-secretarialclerical-academicmonths",
@@ -1672,7 +2660,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.SecretarialClerical.AcademicMonths"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-secretarialclerical-calendarmonths",
@@ -1693,7 +2694,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.SecretarialClerical.CalendarMonths"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-secretarialclerical-fringebenefits",
@@ -1714,7 +2728,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.SecretarialClerical.FringeBenefits"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-secretarialclerical-numberofpersonnel",
@@ -1735,7 +2762,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:f0765dbf409c74f001806c446f2cf171d8c46b5b15779d54423dde921a4b0670",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.SecretarialClerical.NumberOfPersonnel"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-secretarialclerical-projectrole",
@@ -1756,7 +2796,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:0eb2e3b6e08c031d561e617da88331cbd7d5e2e9c5db1648dfaa11b45b3e81f0",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.SecretarialClerical.ProjectRole"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-secretarialclerical-requestedsalary",
@@ -1777,7 +2830,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.SecretarialClerical.RequestedSalary"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-secretarialclerical-summermonths",
@@ -1798,7 +2864,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.SecretarialClerical.SummerMonths"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-undergraduatestudents-academicmonths",
@@ -1819,7 +2898,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.UndergraduateStudents.AcademicMonths"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-undergraduatestudents-calendarmonths",
@@ -1840,7 +2932,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.UndergraduateStudents.CalendarMonths"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-undergraduatestudents-fringebenefits",
@@ -1861,7 +2966,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.UndergraduateStudents.FringeBenefits"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-undergraduatestudents-numberofpersonnel",
@@ -1882,7 +3000,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:f0765dbf409c74f001806c446f2cf171d8c46b5b15779d54423dde921a4b0670",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.UndergraduateStudents.NumberOfPersonnel"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-undergraduatestudents-projectrole",
@@ -1903,7 +3034,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:0eb2e3b6e08c031d561e617da88331cbd7d5e2e9c5db1648dfaa11b45b3e81f0",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.UndergraduateStudents.ProjectRole"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-undergraduatestudents-requestedsalary",
@@ -1924,7 +3068,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.UndergraduateStudents.RequestedSalary"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-otherpersonnel-undergraduatestudents-summermonths",
@@ -1945,7 +3102,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.OtherPersonnel.UndergraduateStudents.SummerMonths"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-participanttraineesupportcosts-other-cost",
@@ -1966,7 +3136,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.ParticipantTraineeSupportCosts.Other.Cost"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-participanttraineesupportcosts-other-description",
@@ -1987,7 +3170,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:0eb2e3b6e08c031d561e617da88331cbd7d5e2e9c5db1648dfaa11b45b3e81f0",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.ParticipantTraineeSupportCosts.Other.Description"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-participanttraineesupportcosts-participanttraineenumber",
@@ -2008,7 +3204,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:f0765dbf409c74f001806c446f2cf171d8c46b5b15779d54423dde921a4b0670",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.ParticipantTraineeSupportCosts.ParticipantTraineeNumber"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-participanttraineesupportcosts-stipends",
@@ -2029,7 +3238,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.ParticipantTraineeSupportCosts.Stipends"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-participanttraineesupportcosts-subsistence",
@@ -2050,7 +3272,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.ParticipantTraineeSupportCosts.Subsistence"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-participanttraineesupportcosts-travel",
@@ -2071,7 +3306,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.ParticipantTraineeSupportCosts.Travel"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-participanttraineesupportcosts-tuitionfeehealthinsurance",
@@ -2092,7 +3340,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.ParticipantTraineeSupportCosts.TuitionFeeHealthInsurance"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-travel-domestictravelcost",
@@ -2113,7 +3374,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.Travel.DomesticTravelCost"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:budgetyear-travel-foreigntravelcost",
@@ -2134,7 +3408,20 @@
         ]
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.BudgetYear.Travel.ForeignTravelCost"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:organizationname",
@@ -2153,7 +3440,20 @@
         "repeat_ancestors": []
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:3ea040de4c9e48ed17a93eef109882f73b3fb481c71ddf9f52ac8075463fcdb8",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.OrganizationName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:rrbudget:samuei",
@@ -2172,7 +3472,20 @@
         "repeat_ancestors": []
       },
       "mapping_refs": {},
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:eb9b1de08b93d8f142186ab2575bf0dc97b481d0866c1561e1245984a106cf07",
+      "occurrence_evidence": [
+        {
+          "source_ref": "budget-source-rr-xsd",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "RR_Budget_3_0.SAMUEI"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     }
   ],
   "source_refs": [
@@ -2186,7 +3499,10 @@
     }
   ],
   "review_boundary": {
-    "semantic_mappings": "agent_proposed",
+    "semantic_mappings": {
+      "status": "agent_proposed",
+      "events": []
+    },
     "published_coverage_eligible": false,
     "production_ready": false
   }

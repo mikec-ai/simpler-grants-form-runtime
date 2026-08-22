@@ -6,8 +6,9 @@ This directory is a dependency-neutral canary for reusable grants-form declarati
 
 The versioned JSON declarations are the source of truth:
 
-- `contract/v1/schema.json` is the single, self-describing Draft 2020-12 contract for catalogs,
-  authored form declarations, and compiled runtime bundles.
+- `contract/v2/schema.json` is the active, self-describing Draft 2020-12 contract for catalogs,
+  authored form declarations, and compiled runtime bundles. `contract/v1/schema.json` remains
+  available for compatibility.
 - `catalog.json` inventories exact source evidence and hashed question and form declarations.
 - `forms/*.form.json` declares which questions a form uses, occurrence roles and context,
   UI/mapping/rule/evidence sidecars, and review boundaries.

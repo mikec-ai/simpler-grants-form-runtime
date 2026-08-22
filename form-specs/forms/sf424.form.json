@@ -1,5 +1,5 @@
 {
-  "contract": "portable-grants-form-declaration/v1",
+  "contract": "portable-grants-form-declaration/v2",
   "form_key": "SF424",
   "schema_id": "urn:grants-form-kernel:forms:sf424:v4",
   "metadata": {
@@ -40,7 +40,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:submission_type"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:67aec2f61c7253a6d1db293e761e5fc3ae4e8eedcff9d5bc77a50bcdc4dcbc4a",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.SubmissionType"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:application_type",
@@ -62,7 +75,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:application_type"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:49b69c45978a7bfa9f820c2b81090813b6f5c5010fa5f532c8487e628c5309e4",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.ApplicationType"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:revision_type",
@@ -84,7 +110,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:revision_type"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:a05c7e5b3fde6fda720aa07af9852be646642880bed5b1b0956e105d80c2755f",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.RevisionType"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:revision_other_specify",
@@ -106,7 +145,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:revision_other_specify"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:00404e686415370f1711c4d7acfa2905444d3cf23cef2e10c47d445ebe690f96",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.RevisionOtherSpecify"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:date_received",
@@ -128,7 +180,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:date_received"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:c844c1623b21ae0d7eeda775787f690990bab3ba0dd0d4decff209935dee0468",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.DateReceived"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:applicant_id",
@@ -150,7 +215,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:applicant_id"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:dd3f4b55651a221b181c647b1453a7a54a1bbdb34dc5292aa31cffcdb8b47706",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.ApplicantID"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:federal_entity_identifier",
@@ -172,7 +250,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:federal_entity_identifier"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:dd3f4b55651a221b181c647b1453a7a54a1bbdb34dc5292aa31cffcdb8b47706",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.FederalEntityIdentifier"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:federal_award_identifier",
@@ -194,7 +285,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:federal_award_identifier"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:8bd226f94133c523b569e677676ee65006ca9adf826a8493854065a991436620",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.FederalAwardIdentifier"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:state_receive_date",
@@ -216,7 +320,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:state_receive_date"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:c844c1623b21ae0d7eeda775787f690990bab3ba0dd0d4decff209935dee0468",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.StateReceiveDate"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:state_application_id",
@@ -238,7 +355,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:state_application_id"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:af822719b8f397ed410a57563c33bc1432d8b93c36a59968f85a52755cb98654",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.StateApplicationID"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:employer_taxpayer_identification_number",
@@ -260,7 +390,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:employer_taxpayer_identification_number"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:adfac4e7c754832fdcfc83b0bde1a8a77be20a6f68a71b08a1d6dcfce2425478",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.EmployerTaxpayerIdentificationNumber"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:sam_uei",
@@ -282,7 +425,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:sam_uei"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:eb9b1de08b93d8f142186ab2575bf0dc97b481d0866c1561e1245984a106cf07",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.SAMUEI"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:department_name",
@@ -304,7 +460,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:department_name"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:dd3f4b55651a221b181c647b1453a7a54a1bbdb34dc5292aa31cffcdb8b47706",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.DepartmentName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:division_name",
@@ -326,7 +495,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:division_name"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:0eb2e3b6e08c031d561e617da88331cbd7d5e2e9c5db1648dfaa11b45b3e81f0",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.DivisionName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:applicant_type_code",
@@ -350,7 +532,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:applicant_type_code"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:e5096a266f92df596ce50bda658d1749bc502bfcc3d19535ba68fc6c0bd0f616",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.ApplicantTypeCode1"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:applicant_type_other_specify",
@@ -372,7 +567,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:applicant_type_other_specify"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:af822719b8f397ed410a57563c33bc1432d8b93c36a59968f85a52755cb98654",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.ApplicantTypeOtherSpecify"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:agency_name",
@@ -394,7 +602,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:agency_name"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:3ea040de4c9e48ed17a93eef109882f73b3fb481c71ddf9f52ac8075463fcdb8",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.AgencyName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:assistance_listing_number",
@@ -416,7 +637,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:assistance_listing_number"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:046d1e72cd09f549520c93feb593a5d52122787d29a25b0abc69dcc5acd2528d",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.CFDANumber"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:assistance_listing_program_title",
@@ -438,7 +672,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:assistance_listing_program_title"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:1a859664cdda99f274aa20f6338a23d6518c6ef34891dc93daee0215fd55dbb1",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.CFDAProgramTitle"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:funding_opportunity_number",
@@ -460,7 +707,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:funding_opportunity_number"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:2ed73e9d5c6a06256eaf894c7b477c391be56067f8ae2e34d5871f9972888100",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.FundingOpportunityNumber"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:funding_opportunity_title",
@@ -482,7 +742,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:funding_opportunity_title"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:7df6fc90214b856a58b2280ff0e32934ccaabdd3c085028ee2da3a3c1aac0c7a",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.FundingOpportunityTitle"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:competition_identification_number",
@@ -504,7 +777,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:competition_identification_number"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:2ed73e9d5c6a06256eaf894c7b477c391be56067f8ae2e34d5871f9972888100",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.CompetitionIdentificationNumber"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:competition_identification_title",
@@ -526,7 +812,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:competition_identification_title"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:7df6fc90214b856a58b2280ff0e32934ccaabdd3c085028ee2da3a3c1aac0c7a",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.CompetitionIdentificationTitle"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:areas_affected",
@@ -548,7 +847,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:areas_affected"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:44b2ecffc8606ad9705131859fa57980c41eaf5d5e35ecd101822dc2c2eb6523",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.AreasAffected"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:project_title",
@@ -570,7 +882,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:project_title"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:52ba84a4bbf396ba7a35cd1190963c82865bfd272f0b6020865087e04c5283d5",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.ProjectTitle"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:additional_project_title",
@@ -592,7 +917,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:additional_project_title"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:6f8f4aaf65420ecf4c53271b3b7b878fb4959001c24de267a2d92b559b11313a",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.AdditionalProjectTitle"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:congressional_district_applicant",
@@ -614,7 +952,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:congressional_district_applicant"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:709ab639505d3c2f6faa5da714827ac46d56640cf14fae546a028fc4b7f736ee",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.CongressionalDistrictApplicant"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:congressional_district_program_project",
@@ -636,7 +987,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:congressional_district_program_project"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:709ab639505d3c2f6faa5da714827ac46d56640cf14fae546a028fc4b7f736ee",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.CongressionalDistrictProgramProject"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:additional_congressional_districts",
@@ -658,7 +1022,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:additional_congressional_districts"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:44b2ecffc8606ad9705131859fa57980c41eaf5d5e35ecd101822dc2c2eb6523",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.AdditionalCongressionalDistricts"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:project_start_date",
@@ -680,7 +1057,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:project_start_date"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:c844c1623b21ae0d7eeda775787f690990bab3ba0dd0d4decff209935dee0468",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.ProjectStartDate"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:project_end_date",
@@ -702,7 +1092,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:project_end_date"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:c844c1623b21ae0d7eeda775787f690990bab3ba0dd0d4decff209935dee0468",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.ProjectEndDate"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:federal_estimated_funding",
@@ -724,7 +1127,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:federal_estimated_funding"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:3e394c77163736ab8eb3fb3cbdeb8bc61bd698676b07c543c3bd5076a08f2539",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.FederalEstimatedFunding"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:applicant_estimated_funding",
@@ -746,7 +1162,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:applicant_estimated_funding"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:3e394c77163736ab8eb3fb3cbdeb8bc61bd698676b07c543c3bd5076a08f2539",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.ApplicantEstimatedFunding"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:state_estimated_funding",
@@ -768,7 +1197,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:state_estimated_funding"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:3e394c77163736ab8eb3fb3cbdeb8bc61bd698676b07c543c3bd5076a08f2539",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.StateEstimatedFunding"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:local_estimated_funding",
@@ -790,7 +1232,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:local_estimated_funding"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:3e394c77163736ab8eb3fb3cbdeb8bc61bd698676b07c543c3bd5076a08f2539",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.LocalEstimatedFunding"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:other_estimated_funding",
@@ -812,7 +1267,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:other_estimated_funding"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:3e394c77163736ab8eb3fb3cbdeb8bc61bd698676b07c543c3bd5076a08f2539",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.OtherEstimatedFunding"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:program_income_estimated_funding",
@@ -834,7 +1302,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:program_income_estimated_funding"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:3e394c77163736ab8eb3fb3cbdeb8bc61bd698676b07c543c3bd5076a08f2539",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.ProgramIncomeEstimatedFunding"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:total_estimated_funding",
@@ -856,7 +1337,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:total_estimated_funding"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:3e394c77163736ab8eb3fb3cbdeb8bc61bd698676b07c543c3bd5076a08f2539",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.TotalEstimatedFunding"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:state_review",
@@ -878,7 +1372,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:state_review"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:f2f55911c64576d670ab09b6e1dd1b0693d2d7b0515f1fcf50c6a9603f41b7b0",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.StateReview"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:state_review_available_date",
@@ -900,7 +1407,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:state_review_available_date"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:c844c1623b21ae0d7eeda775787f690990bab3ba0dd0d4decff209935dee0468",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.StateReviewAvailableDate"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:delinquent_federal_debt",
@@ -922,7 +1442,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:delinquent_federal_debt"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:7cb541e84f226754a46c21c79f131fa2898354e1242456e6fd1c162bce319553",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.DelinquentFederalDebt"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:debt_explanation",
@@ -944,7 +1477,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:debt_explanation"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:44b2ecffc8606ad9705131859fa57980c41eaf5d5e35ecd101822dc2c2eb6523",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.DebtExplanation"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:certification_agree",
@@ -966,7 +1512,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:certification_agree"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:7cb541e84f226754a46c21c79f131fa2898354e1242456e6fd1c162bce319553",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.CertificationAgree"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:aor_signature",
@@ -988,7 +1547,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:aor_signature"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:5657cd5c104d11f38600a7fb9b7f8763c6075a22baa6e2f4f8a1820cddff7ea5",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.AORSignature"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:date_signed",
@@ -1010,7 +1582,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:date_signed"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:c844c1623b21ae0d7eeda775787f690990bab3ba0dd0d4decff209935dee0468",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.DateSigned"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:organization_name",
@@ -1032,7 +1617,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:organization_name"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:3ea040de4c9e48ed17a93eef109882f73b3fb481c71ddf9f52ac8075463fcdb8",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.OrganizationName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:contact_person_title",
@@ -1054,7 +1652,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:contact_person_title"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:57784dd997a0c7bd220dd67fe4087600875739bb616bffe5fce81cdacb820307",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.Title"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:organization_affiliation",
@@ -1076,7 +1687,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:organization_affiliation"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:3ea040de4c9e48ed17a93eef109882f73b3fb481c71ddf9f52ac8075463fcdb8",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.OrganizationAffiliation"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:phone_number",
@@ -1098,7 +1722,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:phone_number"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:8bd226f94133c523b569e677676ee65006ca9adf826a8493854065a991436620",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.PhoneNumber"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:fax",
@@ -1120,7 +1757,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:fax"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:8bd226f94133c523b569e677676ee65006ca9adf826a8493854065a991436620",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.Fax"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:email",
@@ -1142,7 +1792,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:email"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:657b7401bd5004d35d1c7eb43ece1ba968248f64982f779157ff6d244bf6857c",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.Email"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:authorized_representative_title",
@@ -1164,7 +1827,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:authorized_representative_title"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:57784dd997a0c7bd220dd67fe4087600875739bb616bffe5fce81cdacb820307",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.AuthorizedRepresentativeTitle"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:authorized_representative_phone_number",
@@ -1186,7 +1862,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:authorized_representative_phone_number"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:8bd226f94133c523b569e677676ee65006ca9adf826a8493854065a991436620",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.AuthorizedRepresentativePhoneNumber"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:authorized_representative_fax",
@@ -1208,7 +1897,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:authorized_representative_fax"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:8bd226f94133c523b569e677676ee65006ca9adf826a8493854065a991436620",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.AuthorizedRepresentativeFax"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:authorized_representative_email",
@@ -1230,7 +1932,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:authorized_representative_email"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:010b1dec865519f00e024db52d4deeb3dc5d7dc08390f0e455f5338dbde231c7",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.AuthorizedRepresentativeEmail"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:applicant:street1",
@@ -1252,7 +1967,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:applicant:street1"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:64848d4584e1b4ecec50d705e53d3a2ac48aa80328b4aadbe68d8d4f2efb3c57",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.Applicant.Street1"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:applicant:street2",
@@ -1274,7 +2002,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:applicant:street2"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:64848d4584e1b4ecec50d705e53d3a2ac48aa80328b4aadbe68d8d4f2efb3c57",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.Applicant.Street2"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:applicant:city",
@@ -1296,7 +2037,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:applicant:city"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:b4e618d1cc905aa438b47383129965e8196c2cf53ade8163a412e4d855084680",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.Applicant.City"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:applicant:county",
@@ -1318,7 +2072,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:applicant:county"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:dd3f4b55651a221b181c647b1453a7a54a1bbdb34dc5292aa31cffcdb8b47706",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.Applicant.County"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:applicant:state",
@@ -1340,7 +2107,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:applicant:state"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:173fc8f5c98105deeebbca6aa726e77fb8a2c2b9c064a6370b9b73980c977193",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.Applicant.State"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:applicant:province",
@@ -1362,7 +2142,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:applicant:province"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:dd3f4b55651a221b181c647b1453a7a54a1bbdb34dc5292aa31cffcdb8b47706",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.Applicant.Province"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:applicant:zip_code",
@@ -1384,7 +2177,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:applicant:zip_code"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:dd3f4b55651a221b181c647b1453a7a54a1bbdb34dc5292aa31cffcdb8b47706",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.Applicant.ZipPostalCode"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:applicant:country",
@@ -1406,7 +2212,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:applicant:country"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:839f11873884ea90e879c4e10eac84d14a6fc1366a15f07ed90b7f6d63935fad",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.Applicant.Country"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:contact_person:prefix",
@@ -1428,7 +2247,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:contact_person:prefix"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:4295ef71c85c95136f14336d5a1fa79f50c130b15697af7b2e11bbb872eef857",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.ContactPerson.PrefixName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:contact_person:first_name",
@@ -1450,7 +2282,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:contact_person:first_name"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:b4e618d1cc905aa438b47383129965e8196c2cf53ade8163a412e4d855084680",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.ContactPerson.FirstName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:contact_person:middle_name",
@@ -1472,7 +2317,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:contact_person:middle_name"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:8bd226f94133c523b569e677676ee65006ca9adf826a8493854065a991436620",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.ContactPerson.MiddleName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:contact_person:last_name",
@@ -1494,7 +2352,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:contact_person:last_name"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:3ea040de4c9e48ed17a93eef109882f73b3fb481c71ddf9f52ac8075463fcdb8",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.ContactPerson.LastName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:contact_person:suffix",
@@ -1516,7 +2387,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:contact_person:suffix"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:4295ef71c85c95136f14336d5a1fa79f50c130b15697af7b2e11bbb872eef857",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.ContactPerson.SuffixName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:authorized_representative:prefix",
@@ -1538,7 +2422,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:authorized_representative:prefix"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:4295ef71c85c95136f14336d5a1fa79f50c130b15697af7b2e11bbb872eef857",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.AuthorizedRepresentative.PrefixName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:authorized_representative:first_name",
@@ -1560,7 +2457,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:authorized_representative:first_name"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:b4e618d1cc905aa438b47383129965e8196c2cf53ade8163a412e4d855084680",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.AuthorizedRepresentative.FirstName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:authorized_representative:middle_name",
@@ -1582,7 +2492,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:authorized_representative:middle_name"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:8bd226f94133c523b569e677676ee65006ca9adf826a8493854065a991436620",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.AuthorizedRepresentative.MiddleName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:authorized_representative:last_name",
@@ -1604,7 +2527,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:authorized_representative:last_name"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:3ea040de4c9e48ed17a93eef109882f73b3fb481c71ddf9f52ac8075463fcdb8",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.AuthorizedRepresentative.LastName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:sf424:authorized_representative:suffix",
@@ -1626,7 +2562,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:sf424:authorized_representative:suffix"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:4295ef71c85c95136f14336d5a1fa79f50c130b15697af7b2e11bbb872eef857",
+      "occurrence_evidence": [
+        {
+          "source_ref": "sf424-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "SF424_4_0.AuthorizedRepresentative.SuffixName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     }
   ],
   "source_refs": [
@@ -1653,7 +2602,10 @@
     }
   ],
   "review_boundary": {
-    "semantic_mappings": "agent_proposed",
+    "semantic_mappings": {
+      "status": "agent_proposed",
+      "events": []
+    },
     "published_coverage_eligible": false,
     "production_ready": false
   },

@@ -44,17 +44,33 @@ def export(bundle_root: Path, output_dir: Path) -> dict[str, int]:
     )
 
     associations = projection["form_question_associations"]
+    association_rows = [
+        {
+            **row,
+            "occurrence_evidence": json.dumps(
+                row["occurrence_evidence"], ensure_ascii=False, sort_keys=True
+            ),
+            "semantic_review": json.dumps(
+                row["semantic_review"], ensure_ascii=False, sort_keys=True
+            ),
+        }
+        for row in associations
+    ]
     write_csv(
         output_dir / "form-question-map.csv",
         [
             "form_key",
+            "occurrence_id",
             "question_id",
             "semantic_identity",
             "schema_id",
+            "validation_fragment_id",
             "analysis_classification",
             "role",
             "form_pointer",
+            "occurrence_evidence",
             "mapping_status",
+            "semantic_review",
             "included_in_proposed_overlap",
             "included_in_accepted_overlap",
             "xml_path",
@@ -62,7 +78,7 @@ def export(bundle_root: Path, output_dir: Path) -> dict[str, int]:
             "type",
             "xsd_source",
         ],
-        associations,
+        association_rows,
     )
 
     question_rows: list[dict[str, Any]] = []
@@ -70,12 +86,17 @@ def export(bundle_root: Path, output_dir: Path) -> dict[str, int]:
     for association in associations:
         if association["analysis_classification"] != "semantic_question":
             continue
-        associations_by_question.setdefault(association["question_id"], []).append(association)
+        associations_by_question.setdefault(association["question_id"], []).append(
+            association
+        )
     count_by_question = {row["question_id"]: row for row in projection["questions"]}
     for question_id, rows in sorted(associations_by_question.items()):
         schema_ids = sorted({row["schema_id"] for row in rows})
         titles = sorted(
-            {kernel.schemas_by_id[schema_id].get("title", question_id) for schema_id in schema_ids}
+            {
+                kernel.schemas_by_id[schema_id].get("title", question_id)
+                for schema_id in schema_ids
+            }
         )
         counts = count_by_question[question_id]
         question_rows.append(
@@ -116,7 +137,8 @@ def export(bundle_root: Path, output_dir: Path) -> dict[str, int]:
 
     pair_rows: list[dict[str, Any]] = []
     template_pairs = {
-        (pair["form_a"], pair["form_b"]): pair for pair in projection["pairwise_form_overlap"]
+        (pair["form_a"], pair["form_b"]): pair
+        for pair in projection["pairwise_form_overlap"]
     }
     for pair in projection["pairwise_role_qualified_overlap"]:
         template = template_pairs[pair["form_a"], pair["form_b"]]
@@ -134,7 +156,9 @@ def export(bundle_root: Path, output_dir: Path) -> dict[str, int]:
                 "form_a_proposed_coverage": proposed["form_a_coverage"],
                 "form_b_proposed_coverage": proposed["form_b_coverage"],
                 "template_proposed_similarity": proposed_template["similarity"],
-                "template_proposed_questions_in_common": proposed_template["questions_in_common"],
+                "template_proposed_questions_in_common": proposed_template[
+                    "questions_in_common"
+                ],
                 "accepted_similarity": accepted["similarity"],
                 "accepted_questions_in_common": accepted["questions_in_common"],
             }
@@ -175,7 +199,7 @@ def export(bundle_root: Path, output_dir: Path) -> dict[str, int]:
                     row["analysis_classification"] == "content_capture_mechanism"
                     for row in form_associations
                 ),
-                "semantic_mapping_status": review["semantic_mappings"],
+                "semantic_mapping_status": review["semantic_mappings"]["status"],
                 "published_coverage_eligible": review["published_coverage_eligible"],
                 "production_ready": review["production_ready"],
             }

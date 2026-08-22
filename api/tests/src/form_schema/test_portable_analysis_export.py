@@ -54,7 +54,9 @@ def test_exporter_emits_complete_analysis_tables(tmp_path: Path) -> None:
 
     pairs = list(csv.DictReader((output / "form-pairs.csv").open()))
     budget_pair = next(
-        row for row in pairs if {row["form_a"], row["form_b"]} == {"RRBudget", "RRMPBudget"}
+        row
+        for row in pairs
+        if {row["form_a"], row["form_b"]} == {"RRBudget", "RRMPBudget"}
     )
     assert float(budget_pair["proposed_similarity"]) == pytest.approx(0.0)
     assert int(budget_pair["proposed_questions_in_common"]) == 0
@@ -63,11 +65,27 @@ def test_exporter_emits_complete_analysis_tables(tmp_path: Path) -> None:
 
     associations = list(csv.DictReader((output / "form-question-map.csv").open()))
     mechanisms = [
-        row for row in associations if row["analysis_classification"] == "content_capture_mechanism"
+        row
+        for row in associations
+        if row["analysis_classification"] == "content_capture_mechanism"
     ]
     assert len(mechanisms) == 90
     assert all(row["included_in_proposed_overlap"] == "False" for row in mechanisms)
-    assert {"xml_path", "type_source", "type", "xsd_source"} <= set(associations[0])
+    assert {
+        "occurrence_id",
+        "validation_fragment_id",
+        "occurrence_evidence",
+        "semantic_review",
+        "xml_path",
+        "type_source",
+        "type",
+        "xsd_source",
+    } <= set(associations[0])
+    assert json.loads(associations[0]["occurrence_evidence"])[0]["locator"]["value"]
+    assert json.loads(associations[0]["semantic_review"]) == {
+        "events": [],
+        "status": "agent_proposed",
+    }
 
 
 def test_exporter_is_deterministic_and_keeps_review_boundaries(tmp_path: Path) -> None:

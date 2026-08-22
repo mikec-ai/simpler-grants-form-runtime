@@ -13,7 +13,7 @@ from typing import Any
 import jsonref
 import jsonschema
 
-CONTRACT = "portable-grants-form-bundle/v1"
+CONTRACT = "portable-grants-form-bundle/v2"
 MAPPING_STATES = {
     "agent_proposed",
     "agent_reviewed",
@@ -75,7 +75,9 @@ def _safe_path(root: Path, raw: object, label: str) -> Path:
         raise PortableFormKernelError(f"{label} must remain inside the portable bundle")
     path = (root / relative).resolve()
     if not path.is_relative_to(root) or not path.is_file():
-        raise PortableFormKernelError(f"{label} does not identify a bundle file: {relative}")
+        raise PortableFormKernelError(
+            f"{label} does not identify a bundle file: {relative}"
+        )
     return path
 
 
@@ -86,13 +88,17 @@ def _read_json(path: Path, label: str) -> object:
         raise PortableFormKernelError(f"could not read {label}: {path}") from exc
 
 
-def _read_hashed_json(root: Path, descriptor: object, label: str) -> tuple[Path, object]:
+def _read_hashed_json(
+    root: Path, descriptor: object, label: str
+) -> tuple[Path, object]:
     value = _object(descriptor, label)
     _exact_keys(value, {"path", "sha256"}, label)
     path = _safe_path(root, value["path"], f"{label}.path")
     expected = _string(value["sha256"], f"{label}.sha256")
     if not _SHA256.fullmatch(expected):
-        raise PortableFormKernelError(f"{label}.sha256 must be a lowercase SHA-256 digest")
+        raise PortableFormKernelError(
+            f"{label}.sha256 must be a lowercase SHA-256 digest"
+        )
     actual = hashlib.sha256(path.read_bytes()).hexdigest()
     if actual != expected:
         raise PortableFormKernelError(
@@ -159,6 +165,31 @@ def _references(value: object) -> list[str]:
     return references
 
 
+def _validation_shape(value: object) -> object:
+    """Remove identifiers and annotations while preserving validation assertions."""
+
+    if isinstance(value, dict):
+        annotations = {
+            "$id",
+            "$schema",
+            "title",
+            "description",
+            "default",
+            "examples",
+            "deprecated",
+            "readOnly",
+            "writeOnly",
+        }
+        return {
+            key: _validation_shape(child)
+            for key, child in value.items()
+            if key not in annotations and not key.startswith("x-")
+        }
+    if isinstance(value, list):
+        return [_validation_shape(child) for child in value]
+    return value
+
+
 def _expand_form_references(
     value: object,
     schemas_by_id: dict[str, dict[str, Any]],
@@ -190,7 +221,8 @@ def _expand_form_references(
         }
     if isinstance(value, list):
         return [
-            _expand_form_references(child, schemas_by_id, schema_kinds, stack) for child in value
+            _expand_form_references(child, schemas_by_id, schema_kinds, stack)
+            for child in value
         ]
     return value
 
@@ -218,13 +250,17 @@ def _validate_source_evidence(value: object, label: str) -> None:
     _string(source["repository"], f"{label}.repository")
     revision = _string(source["revision"], f"{label}.revision")
     if not _REVISION.fullmatch(revision):
-        raise PortableFormKernelError(f"{label}.revision must be a full lowercase git SHA")
+        raise PortableFormKernelError(
+            f"{label}.revision must be a full lowercase git SHA"
+        )
     path = Path(_string(source["path"], f"{label}.path"))
     if path.is_absolute() or ".." in path.parts:
         raise PortableFormKernelError(f"{label}.path must be repository-relative")
     digest = _string(source["sha256"], f"{label}.sha256")
     if not _SHA256.fullmatch(digest):
-        raise PortableFormKernelError(f"{label}.sha256 must be a lowercase SHA-256 digest")
+        raise PortableFormKernelError(
+            f"{label}.sha256 must be a lowercase SHA-256 digest"
+        )
     _string(source["source_version"], f"{label}.source_version")
 
 
@@ -239,6 +275,79 @@ def _validate_cardinality(value: object, label: str) -> None:
         not isinstance(maximum, int) or isinstance(maximum, bool) or maximum < minimum
     ):
         raise PortableFormKernelError(f"{label}.max must be null or an integer >= min")
+
+
+def _validate_semantic_review(
+    value: object,
+    label: str,
+    *,
+    evidence_source_refs: set[str],
+) -> str:
+    review = _object(value, label)
+    _exact_keys(review, {"status", "events"}, label)
+    status = review["status"]
+    if status not in MAPPING_STATES:
+        raise PortableFormKernelError(f"{label}.status is unknown")
+    events = _array(review["events"], f"{label}.events")
+    if status != "agent_proposed" and not events:
+        raise PortableFormKernelError(
+            f"{label}.events must record the {status} decision"
+        )
+    seen_event_ids: set[str] = set()
+    for event_index, raw_event in enumerate(events):
+        event_label = f"{label}.events[{event_index}]"
+        event = _object(raw_event, event_label)
+        _exact_keys(
+            event,
+            {
+                "event_id",
+                "state",
+                "recorded_at",
+                "reviewer",
+                "rationale",
+                "evidence_refs",
+            },
+            event_label,
+            optional={"recorded_at", "reviewer", "rationale", "evidence_refs"},
+        )
+        event_id = _string(event["event_id"], f"{event_label}.event_id")
+        if event_id in seen_event_ids:
+            raise PortableFormKernelError(
+                f"{label}.events has duplicate event_id: {event_id}"
+            )
+        seen_event_ids.add(event_id)
+        if event["state"] not in MAPPING_STATES:
+            raise PortableFormKernelError(f"{event_label}.state is unknown")
+        if "reviewer" not in event or "rationale" not in event:
+            raise PortableFormKernelError(
+                f"{event_label} must record reviewer and rationale for semantic review"
+            )
+        reviewer = _object(event["reviewer"], f"{event_label}.reviewer")
+        _exact_keys(reviewer, {"kind", "id"}, f"{event_label}.reviewer")
+        if reviewer["kind"] not in {"agent", "human", "system"}:
+            raise PortableFormKernelError(f"{event_label}.reviewer.kind is unknown")
+        _string(reviewer["id"], f"{event_label}.reviewer.id")
+        _string(event["rationale"], f"{event_label}.rationale")
+        event_evidence = _array(
+            event.get("evidence_refs", []), f"{event_label}.evidence_refs"
+        )
+        if len(event_evidence) != len(set(event_evidence)):
+            raise PortableFormKernelError(
+                f"{event_label}.evidence_refs cannot contain duplicates"
+            )
+        for evidence_index, evidence_ref in enumerate(event_evidence):
+            evidence_ref = _string(
+                evidence_ref, f"{event_label}.evidence_refs[{evidence_index}]"
+            )
+            if evidence_ref not in evidence_source_refs:
+                raise PortableFormKernelError(
+                    f"{event_label}.evidence_refs[{evidence_index}] is not available evidence"
+                )
+    if events and events[-1]["state"] != status:
+        raise PortableFormKernelError(
+            f"{label}.status must equal the latest review event state"
+        )
+    return status
 
 
 @dataclasses.dataclass(frozen=True)
@@ -268,7 +377,9 @@ class PortableFormKernel:
 
         def loader(uri: str, **_kwargs: object) -> object:
             if uri not in self.schemas_by_id:
-                raise PortableFormKernelError(f"schema reference is not in the bundle: {uri}")
+                raise PortableFormKernelError(
+                    f"schema reference is not in the bundle: {uri}"
+                )
             return self.schemas_by_id[uri]
 
         try:
@@ -280,7 +391,9 @@ class PortableFormKernel:
                 jsonschema=True,
             )
         except (jsonref.JsonRefError, ValueError) as exc:
-            raise PortableFormKernelError("could not resolve the form schema graph") from exc
+            raise PortableFormKernelError(
+                "could not resolve the form schema graph"
+            ) from exc
         return _object(resolved, "resolved_schema")
 
     def analysis_projection(self) -> dict[str, Any]:
@@ -300,7 +413,7 @@ class PortableFormKernel:
             accepted_semantic_ids: set[str] = set()
             review = portable.definition["review_boundary"]
             publishable = (
-                review["semantic_mappings"] == "accepted"
+                review["semantic_mappings"]["status"] == "accepted"
                 and review["published_coverage_eligible"] is True
             )
             form_publishable[form_key] = publishable
@@ -310,8 +423,10 @@ class PortableFormKernel:
                 role = binding["role"]
                 semantic_identity = f"{question_id}::role:{role}"
                 semantic_parts[semantic_identity] = (question_id, role)
-                mapping_status = binding["mapping_status"]
-                classification = binding.get("analysis_classification", "semantic_question")
+                mapping_status = binding["semantic_review"]["status"]
+                classification = binding.get(
+                    "analysis_classification", "semantic_question"
+                )
                 is_question = classification == "semantic_question"
                 if is_question and mapping_status not in {"rejected", "superseded"}:
                     proposed_question_ids.add(question_id)
@@ -322,20 +437,27 @@ class PortableFormKernel:
                     accepted_semantic_ids.add(semantic_identity)
                 xml_ref = binding["mapping_refs"].get("grants_gov_xml")
                 xml = (
-                    targets["grants_gov_xml"]["bindings"][xml_ref] if xml_ref is not None else None
+                    targets["grants_gov_xml"]["bindings"][xml_ref]
+                    if xml_ref is not None
+                    else None
                 )
                 associations.append(
                     {
                         "binding_id": binding["binding_id"],
+                        "occurrence_id": binding["binding_id"],
                         "form_key": form_key,
                         "question_id": question_id,
                         "semantic_identity": semantic_identity,
                         "schema_id": binding["schema_id"],
+                        "validation_schema_id": binding["schema_id"],
+                        "validation_fragment_id": binding["validation_fragment_id"],
                         "role": binding["role"],
                         "form_pointer": binding["form_pointer"],
                         "cardinality": binding["cardinality"],
                         "context": binding["context"],
+                        "occurrence_evidence": binding["occurrence_evidence"],
                         "mapping_status": mapping_status,
+                        "semantic_review": binding["semantic_review"],
                         "analysis_classification": classification,
                         "included_in_proposed_overlap": is_question
                         and mapping_status not in {"rejected", "superseded"},
@@ -349,10 +471,14 @@ class PortableFormKernel:
                 )
             proposed_form_questions[form_key] = proposed_question_ids
             accepted_form_questions[form_key] = accepted_question_ids
-            published_form_questions[form_key] = accepted_question_ids if publishable else set()
+            published_form_questions[form_key] = (
+                accepted_question_ids if publishable else set()
+            )
             proposed_form_semantics[form_key] = proposed_semantic_ids
             accepted_form_semantics[form_key] = accepted_semantic_ids
-            published_form_semantics[form_key] = accepted_semantic_ids if publishable else set()
+            published_form_semantics[form_key] = (
+                accepted_semantic_ids if publishable else set()
+            )
 
         def question_counts(form_questions: dict[str, set[str]]) -> dict[str, int]:
             counts: dict[str, int] = {}
@@ -375,13 +501,19 @@ class PortableFormKernel:
                 "questions_in_common": len(common),
                 "unique_questions": len(union),
                 "similarity": len(common) / len(union) if union else 0.0,
-                "form_a_coverage": (len(common) / len(questions_a) if questions_a else 0.0),
-                "form_b_coverage": (len(common) / len(questions_b) if questions_b else 0.0),
+                "form_a_coverage": (
+                    len(common) / len(questions_a) if questions_a else 0.0
+                ),
+                "form_b_coverage": (
+                    len(common) / len(questions_b) if questions_b else 0.0
+                ),
             }
 
         pairwise: list[dict[str, Any]] = []
         pairwise_semantics: list[dict[str, Any]] = []
-        for form_a, form_b in itertools.combinations(sorted(proposed_form_questions), 2):
+        for form_a, form_b in itertools.combinations(
+            sorted(proposed_form_questions), 2
+        ):
             pairwise.append(
                 {
                     "form_a": form_a,
@@ -393,7 +525,8 @@ class PortableFormKernel:
                         accepted_form_questions[form_a], accepted_form_questions[form_b]
                     ),
                     "published_overlap": {
-                        "eligible": form_publishable[form_a] and form_publishable[form_b],
+                        "eligible": form_publishable[form_a]
+                        and form_publishable[form_b],
                         **overlap(
                             published_form_questions[form_a],
                             published_form_questions[form_b],
@@ -413,7 +546,8 @@ class PortableFormKernel:
                         accepted_form_semantics[form_a], accepted_form_semantics[form_b]
                     ),
                     "published_overlap": {
-                        "eligible": form_publishable[form_a] and form_publishable[form_b],
+                        "eligible": form_publishable[form_a]
+                        and form_publishable[form_b],
                         **overlap(
                             published_form_semantics[form_a],
                             published_form_semantics[form_b],
@@ -450,7 +584,9 @@ class PortableFormKernel:
                     "question_id": question_id,
                     "proposed_form_count": proposed_question_counts.get(question_id, 0),
                     "accepted_form_count": accepted_question_counts.get(question_id, 0),
-                    "published_form_count": published_question_counts.get(question_id, 0),
+                    "published_form_count": published_question_counts.get(
+                        question_id, 0
+                    ),
                 }
                 for question_id in sorted(proposed_question_counts)
             ],
@@ -459,9 +595,15 @@ class PortableFormKernel:
                     "semantic_identity": semantic_identity,
                     "question_id": semantic_parts[semantic_identity][0],
                     "role": semantic_parts[semantic_identity][1],
-                    "proposed_form_count": proposed_semantic_counts.get(semantic_identity, 0),
-                    "accepted_form_count": accepted_semantic_counts.get(semantic_identity, 0),
-                    "published_form_count": published_semantic_counts.get(semantic_identity, 0),
+                    "proposed_form_count": proposed_semantic_counts.get(
+                        semantic_identity, 0
+                    ),
+                    "accepted_form_count": accepted_semantic_counts.get(
+                        semantic_identity, 0
+                    ),
+                    "published_form_count": published_semantic_counts.get(
+                        semantic_identity, 0
+                    ),
                 }
                 for semantic_identity in sorted(proposed_semantic_counts)
             ],
@@ -485,6 +627,7 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
             "bundle",
             "sources",
             "schemas",
+            "validation_fragments",
             "compatibility",
             "forms",
         },
@@ -503,7 +646,9 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
             format_checker=jsonschema.FormatChecker(),
         )
     except jsonschema.SchemaError as exc:
-        raise PortableFormKernelError("contract_schema is not valid JSON Schema") from exc
+        raise PortableFormKernelError(
+            "contract_schema is not valid JSON Schema"
+        ) from exc
     bundle = _object(manifest["bundle"], "bundle")
     _exact_keys(bundle, {"name", "version"}, "bundle")
     _string(bundle["name"], "bundle.name")
@@ -516,16 +661,58 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
         _string(source_key, "sources key")
         _validate_source_evidence(source, f"sources.{source_key}")
 
-    dependencies: set[Path] = {manifest_path, contract_path}
+    validation_path, validation_raw = _read_hashed_json(
+        root, manifest["validation_fragments"], "validation_fragments"
+    )
+    validation_registry = _object(validation_raw, "validation_fragments.document")
+    _exact_keys(
+        validation_registry,
+        {"contract", "fragments"},
+        "validation_fragments.document",
+    )
+    if validation_registry["contract"] != "portable-validation-fragments/v1":
+        raise PortableFormKernelError(
+            "validation_fragments.contract must equal portable-validation-fragments/v1"
+        )
+    raw_fragments = _object(
+        validation_registry["fragments"], "validation_fragments.fragments"
+    )
+    if not raw_fragments:
+        raise PortableFormKernelError("validation_fragments.fragments cannot be empty")
+    validation_fragments: dict[str, str] = {}
+    for fragment_id, raw_fragment in raw_fragments.items():
+        fragment_id = _string(fragment_id, "validation_fragments.fragments key")
+        fragment = _object(
+            raw_fragment, f"validation_fragments.fragments.{fragment_id}"
+        )
+        _exact_keys(
+            fragment, {"validation"}, f"validation_fragments.fragments.{fragment_id}"
+        )
+        validation_fragments[fragment_id] = canonical_json(
+            _object(
+                fragment["validation"],
+                f"validation_fragments.fragments.{fragment_id}.validation",
+            )
+        )
+
+    dependencies: set[Path] = {manifest_path, contract_path, validation_path}
     schemas_by_id: dict[str, dict[str, Any]] = {}
     schema_kinds: dict[str, str] = {}
     question_ids: dict[str, set[str]] = {}
+    validation_fragment_by_schema: dict[str, str] = {}
     for index, raw_schema in enumerate(_array(manifest["schemas"], "schemas")):
         label = f"schemas[{index}]"
         descriptor = _object(raw_schema, label)
         _exact_keys(
             descriptor,
-            {"kind", "id", "question_id", "artifact", "source_evidence"},
+            {
+                "kind",
+                "id",
+                "validation_fragment_id",
+                "question_id",
+                "artifact",
+                "source_evidence",
+            },
             label,
         )
         kind = _string(descriptor["kind"], f"{label}.kind")
@@ -534,11 +721,15 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
         schema_id = _string(descriptor["id"], f"{label}.id")
         if schema_id in schemas_by_id:
             raise PortableFormKernelError(f"duplicate schema id: {schema_id}")
-        path, raw_document = _read_hashed_json(root, descriptor["artifact"], f"{label}.artifact")
+        path, raw_document = _read_hashed_json(
+            root, descriptor["artifact"], f"{label}.artifact"
+        )
         dependencies.add(path)
         document = _object(raw_document, f"{label}.document")
         if document.get("$schema") != "https://json-schema.org/draft/2020-12/schema":
-            raise PortableFormKernelError(f"{label} must declare JSON Schema Draft 2020-12")
+            raise PortableFormKernelError(
+                f"{label} must declare JSON Schema Draft 2020-12"
+            )
         if document.get("$id") != schema_id:
             raise PortableFormKernelError(f"{label}.id does not match the schema $id")
         try:
@@ -547,28 +738,50 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
             raise PortableFormKernelError(f"{label} is not valid JSON Schema") from exc
         question_id = descriptor["question_id"]
         if kind == "question":
+            validation_fragment_id = _string(
+                descriptor["validation_fragment_id"],
+                f"{label}.validation_fragment_id",
+            )
             question_id = _string(question_id, f"{label}.question_id")
             if document.get("x-question-id") != question_id:
                 raise PortableFormKernelError(
                     f"{label}.question_id does not match schema x-question-id"
                 )
             question_ids.setdefault(question_id, set()).add(schema_id)
-            question_source_refs = _array(descriptor["source_evidence"], f"{label}.source_evidence")
+            shape = canonical_json(_validation_shape(document))
+            if validation_fragments.get(validation_fragment_id) != shape:
+                raise PortableFormKernelError(
+                    f"{label}.validation_fragment_id does not match its registered validation"
+                )
+            validation_fragment_by_schema[schema_id] = validation_fragment_id
+            question_source_refs = _array(
+                descriptor["source_evidence"], f"{label}.source_evidence"
+            )
             if not question_source_refs:
-                raise PortableFormKernelError(f"{label}.source_evidence cannot be empty")
+                raise PortableFormKernelError(
+                    f"{label}.source_evidence cannot be empty"
+                )
             if len(set(question_source_refs)) != len(question_source_refs):
                 raise PortableFormKernelError(
                     f"{label}.source_evidence cannot contain duplicate source references"
                 )
             for source_index, source_ref in enumerate(question_source_refs):
-                source_ref = _string(source_ref, f"{label}.source_evidence[{source_index}]")
+                source_ref = _string(
+                    source_ref, f"{label}.source_evidence[{source_index}]"
+                )
                 if source_ref not in sources:
                     raise PortableFormKernelError(
                         f"{label}.source_evidence[{source_index}] does not resolve: {source_ref}"
                     )
         else:
+            if descriptor["validation_fragment_id"] is not None:
+                raise PortableFormKernelError(
+                    f"{label}.validation_fragment_id must be null for form schemas"
+                )
             if question_id is not None:
-                raise PortableFormKernelError(f"{label}.question_id must be null for form schemas")
+                raise PortableFormKernelError(
+                    f"{label}.question_id must be null for form schemas"
+                )
             if descriptor["source_evidence"] != []:
                 raise PortableFormKernelError(
                     f"{label}.source_evidence must be empty for form schemas"
@@ -588,7 +801,9 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
         )
     compatibility_records: list[dict[str, Any]] = []
     seen_compatibility: set[tuple[str, str]] = set()
-    for index, raw_record in enumerate(_array(compatibility["records"], "compatibility.records")):
+    for index, raw_record in enumerate(
+        _array(compatibility["records"], "compatibility.records")
+    ):
         record_label = f"compatibility.records[{index}]"
         record = _object(raw_record, record_label)
         _exact_keys(
@@ -657,7 +872,9 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
         }
         definition_keys = set(definition)
         missing_definition_keys = required_definition_keys - definition_keys
-        unknown_definition_keys = definition_keys - required_definition_keys - {"adapters"}
+        unknown_definition_keys = (
+            definition_keys - required_definition_keys - {"adapters"}
+        )
         if missing_definition_keys or unknown_definition_keys:
             raise PortableFormKernelError(
                 f"{label} has invalid keys; missing={sorted(missing_definition_keys)}, "
@@ -668,7 +885,21 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
             raise PortableFormKernelError(f"duplicate form_key: {form_key}")
         schema_id = _string(definition["schema_id"], f"{label}.schema_id")
         if schema_kinds.get(schema_id) != "form":
-            raise PortableFormKernelError(f"{label}.schema_id is not a bundled form schema")
+            raise PortableFormKernelError(
+                f"{label}.schema_id is not a bundled form schema"
+            )
+        form_sources = _array(definition["source_evidence"], f"{label}.source_evidence")
+        if not form_sources:
+            raise PortableFormKernelError(f"{label}.source_evidence cannot be empty")
+        for source_index, source in enumerate(form_sources):
+            _validate_source_evidence(
+                source, f"{label}.source_evidence[{source_index}]"
+            )
+        form_source_refs = {
+            source_ref
+            for source_ref, source in sources.items()
+            if source in form_sources
+        }
 
         metadata = _object(definition["metadata"], f"{label}.metadata")
         required_metadata_keys = {
@@ -696,7 +927,9 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
         ):
             _string(metadata[key], f"{label}.metadata.{key}")
         if not isinstance(metadata["is_deprecated"], bool):
-            raise PortableFormKernelError(f"{label}.metadata.is_deprecated must be boolean")
+            raise PortableFormKernelError(
+                f"{label}.metadata.is_deprecated must be boolean"
+            )
         ui_path, ui_raw = _read_hashed_json(root, definition["ui"], f"{label}.ui")
         mapping_path, mappings_raw = _read_hashed_json(
             root, definition["mappings"], f"{label}.mappings"
@@ -750,7 +983,9 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
                     )
                 adapters[adapter_name] = documents
         for evidence_index, raw_evidence in enumerate(
-            _array(definition["supplemental_evidence"], f"{label}.supplemental_evidence")
+            _array(
+                definition["supplemental_evidence"], f"{label}.supplemental_evidence"
+            )
         ):
             evidence_path, _evidence_document = _read_hashed_json(
                 root,
@@ -765,7 +1000,9 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
         for target_name, raw_target in targets.items():
             target = _object(raw_target, f"{label}.mappings.targets.{target_name}")
             if target_name == "common_grants":
-                _exact_keys(target, {"from", "to"}, f"{label}.mappings.targets.{target_name}")
+                _exact_keys(
+                    target, {"from", "to"}, f"{label}.mappings.targets.{target_name}"
+                )
                 _object(target["from"], f"{label}.mappings.targets.{target_name}.from")
                 _object(target["to"], f"{label}.mappings.targets.{target_name}.to")
             elif target_name == "grants_gov_xml":
@@ -794,7 +1031,9 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
                         f"{label}.mappings.targets.{target_name}.runtime_transform",
                     )
             else:
-                raise PortableFormKernelError(f"{label} has unknown mapping target: {target_name}")
+                raise PortableFormKernelError(
+                    f"{label} has unknown mapping target: {target_name}"
+                )
 
         schema = _object(
             _expand_form_references(
@@ -817,12 +1056,14 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
                     "binding_id",
                     "question_id",
                     "schema_id",
+                    "validation_fragment_id",
                     "form_pointer",
                     "role",
                     "cardinality",
                     "context",
+                    "occurrence_evidence",
                     "mapping_refs",
-                    "mapping_status",
+                    "semantic_review",
                     "analysis_classification",
                 },
                 binding_label,
@@ -832,22 +1073,42 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
             if binding_id in seen_binding_ids:
                 raise PortableFormKernelError(f"duplicate binding_id: {binding_id}")
             seen_binding_ids.add(binding_id)
-            question_id = _string(binding["question_id"], f"{binding_label}.question_id")
-            question_schema_id = _string(binding["schema_id"], f"{binding_label}.schema_id")
+            question_id = _string(
+                binding["question_id"], f"{binding_label}.question_id"
+            )
+            question_schema_id = _string(
+                binding["schema_id"], f"{binding_label}.schema_id"
+            )
             if question_schema_id not in question_ids.get(question_id, set()):
                 raise PortableFormKernelError(
                     f"{binding_label} does not identify a bundled question schema"
+                )
+            validation_fragment_id = _string(
+                binding["validation_fragment_id"],
+                f"{binding_label}.validation_fragment_id",
+            )
+            if (
+                validation_fragment_by_schema[question_schema_id]
+                != validation_fragment_id
+            ):
+                raise PortableFormKernelError(
+                    f"{binding_label}.validation_fragment_id does not match its question schema"
                 )
             pointer = _string(binding["form_pointer"], f"{binding_label}.form_pointer")
             if pointer in seen_form_pointers:
                 raise PortableFormKernelError(f"duplicate form pointer: {pointer}")
             seen_form_pointers.add(pointer)
-            _resolve_pointer(schema, pointer, f"{binding_label}.form_pointer")
+            occurrence_schema = _resolve_pointer(
+                schema, pointer, f"{binding_label}.form_pointer"
+            )
             matching_references = {
                 ref_pointer
                 for ref_pointer, ref_schema_id in all_references.items()
                 if ref_schema_id == question_schema_id
-                and (ref_pointer == f"{pointer}/$ref" or ref_pointer.startswith(f"{pointer}/"))
+                and (
+                    ref_pointer == f"{pointer}/$ref"
+                    or ref_pointer.startswith(f"{pointer}/")
+                )
             }
             if len(matching_references) != 1:
                 raise PortableFormKernelError(
@@ -860,15 +1121,86 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
                 )
             covered_references.add(reference_pointer)
             _string(binding["role"], f"{binding_label}.role")
-            _validate_cardinality(binding["cardinality"], f"{binding_label}.cardinality")
+            _validate_cardinality(
+                binding["cardinality"], f"{binding_label}.cardinality"
+            )
             _object(binding["context"], f"{binding_label}.context")
-            mapping_refs = _object(binding["mapping_refs"], f"{binding_label}.mapping_refs")
+            occurrence_evidence = _array(
+                binding["occurrence_evidence"], f"{binding_label}.occurrence_evidence"
+            )
+            if not occurrence_evidence:
+                raise PortableFormKernelError(
+                    f"{binding_label}.occurrence_evidence cannot be empty"
+                )
+            occurrence_source_refs: set[str] = set()
+            occurrence_evidence_pairs: set[tuple[str, str, str]] = set()
+            for evidence_index, raw_evidence in enumerate(occurrence_evidence):
+                evidence_label = (
+                    f"{binding_label}.occurrence_evidence[{evidence_index}]"
+                )
+                evidence = _object(raw_evidence, evidence_label)
+                _exact_keys(evidence, {"source_ref", "locator"}, evidence_label)
+                source_ref = _string(
+                    evidence["source_ref"], f"{evidence_label}.source_ref"
+                )
+                if source_ref not in sources:
+                    raise PortableFormKernelError(
+                        f"{evidence_label}.source_ref does not resolve: {source_ref}"
+                    )
+                if source_ref not in form_source_refs:
+                    raise PortableFormKernelError(
+                        f"{evidence_label}.source_ref is not declared by this form: {source_ref}"
+                    )
+                locator = _object(evidence["locator"], f"{evidence_label}.locator")
+                _exact_keys(locator, {"kind", "value"}, f"{evidence_label}.locator")
+                if locator["kind"] not in {
+                    "xsd_path",
+                    "xml_path",
+                    "dat_path",
+                    "pdf_page",
+                    "source_record",
+                }:
+                    raise PortableFormKernelError(
+                        f"{evidence_label}.locator.kind is unknown"
+                    )
+                source_suffix = Path(sources[source_ref]["path"]).suffix.lower()
+                expected_locator_kind = {
+                    ".xsd": "xsd_path",
+                    ".xls": "dat_path",
+                    ".xlsx": "dat_path",
+                    ".pdf": "pdf_page",
+                    ".json": "source_record",
+                    ".jsonl": "source_record",
+                }.get(source_suffix)
+                if (
+                    expected_locator_kind is not None
+                    and locator["kind"] != expected_locator_kind
+                ):
+                    raise PortableFormKernelError(
+                        f"{evidence_label}.locator.kind must be {expected_locator_kind} "
+                        f"for {source_suffix} evidence"
+                    )
+                locator_value = _string(
+                    locator["value"], f"{evidence_label}.locator.value"
+                )
+                pair = (source_ref, locator["kind"], locator_value)
+                if pair in occurrence_evidence_pairs:
+                    raise PortableFormKernelError(
+                        f"{binding_label}.occurrence_evidence contains a duplicate pair"
+                    )
+                occurrence_evidence_pairs.add(pair)
+                occurrence_source_refs.add(source_ref)
+            mapping_refs = _object(
+                binding["mapping_refs"], f"{binding_label}.mapping_refs"
+            )
             for mapping_target, mapping_ref in mapping_refs.items():
                 if mapping_target not in targets:
                     raise PortableFormKernelError(
                         f"{binding_label}.mapping_refs names absent target: {mapping_target}"
                     )
-                mapping_ref = _string(mapping_ref, f"{binding_label}.mapping_refs.{mapping_target}")
+                mapping_ref = _string(
+                    mapping_ref, f"{binding_label}.mapping_refs.{mapping_target}"
+                )
                 if (
                     mapping_target == "grants_gov_xml"
                     and mapping_ref not in targets[mapping_target]["bindings"]
@@ -876,14 +1208,36 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
                     raise PortableFormKernelError(
                         f"{binding_label}.mapping_refs.{mapping_target} does not resolve"
                     )
-            if binding["mapping_status"] not in MAPPING_STATES:
-                raise PortableFormKernelError(f"{binding_label}.mapping_status is unknown")
+            known_source_paths = set(binding["context"].get("source_paths", []))
+            if isinstance(occurrence_schema, dict):
+                schema_source_path = occurrence_schema.get("x-source-path")
+                if isinstance(schema_source_path, str):
+                    known_source_paths.add(schema_source_path)
+            xml_ref = mapping_refs.get("grants_gov_xml")
+            if xml_ref is not None:
+                known_source_paths.add(
+                    targets["grants_gov_xml"]["bindings"][xml_ref]["path"]
+                )
+            if not any(
+                locator_value in known_source_paths
+                for _source_ref, _locator_kind, locator_value in occurrence_evidence_pairs
+            ):
+                raise PortableFormKernelError(
+                    f"{binding_label}.occurrence_evidence is not pinned by authored path evidence"
+                )
+            _validate_semantic_review(
+                binding["semantic_review"],
+                f"{binding_label}.semantic_review",
+                evidence_source_refs=occurrence_source_refs,
+            )
             classification = binding.get("analysis_classification", "semantic_question")
             if classification not in {
                 "semantic_question",
                 "content_capture_mechanism",
             }:
-                raise PortableFormKernelError(f"{binding_label}.analysis_classification is unknown")
+                raise PortableFormKernelError(
+                    f"{binding_label}.analysis_classification is unknown"
+                )
 
         if covered_references != set(all_references):
             missing = sorted(set(all_references) - covered_references)
@@ -897,8 +1251,11 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
             {"semantic_mappings", "published_coverage_eligible", "production_ready"},
             f"{label}.review_boundary",
         )
-        if review["semantic_mappings"] not in MAPPING_STATES:
-            raise PortableFormKernelError(f"{label} semantic mapping state is unknown")
+        form_semantic_status = _validate_semantic_review(
+            review["semantic_mappings"],
+            f"{label}.review_boundary.semantic_mappings",
+            evidence_source_refs=form_source_refs,
+        )
         if not isinstance(review["published_coverage_eligible"], bool):
             raise PortableFormKernelError(
                 f"{label}.review_boundary.published_coverage_eligible must be boolean"
@@ -908,23 +1265,18 @@ def load_portable_form_kernel(root: Path) -> PortableFormKernel:
                 f"{label}.review_boundary.production_ready must be boolean"
             )
         if review["published_coverage_eligible"] and any(
-            binding["mapping_status"] != "accepted"
+            binding["semantic_review"]["status"] != "accepted"
             for binding in definition["question_bindings"]
-            if binding.get("analysis_classification", "semantic_question") == "semantic_question"
+            if binding.get("analysis_classification", "semantic_question")
+            == "semantic_question"
         ):
             raise PortableFormKernelError(
                 f"{label} cannot publish coverage with unaccepted occurrence mappings"
             )
-        if review["published_coverage_eligible"] and review["semantic_mappings"] != "accepted":
+        if review["published_coverage_eligible"] and form_semantic_status != "accepted":
             raise PortableFormKernelError(
                 f"{label} cannot publish coverage before form semantic mappings are accepted"
             )
-
-        form_sources = _array(definition["source_evidence"], f"{label}.source_evidence")
-        if not form_sources:
-            raise PortableFormKernelError(f"{label}.source_evidence cannot be empty")
-        for source_index, source in enumerate(form_sources):
-            _validate_source_evidence(source, f"{label}.source_evidence[{source_index}]")
 
         forms_by_key[form_key] = PortableFormDeclaration(
             definition=definition,

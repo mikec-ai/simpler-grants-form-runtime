@@ -1,0 +1,708 @@
+{
+  "contract": "portable-validation-fragments/v1",
+  "fragments": {
+    "urn:grants-form-kernel:validation:00404e686415370f1711c4d7acfa2905444d3cf23cef2e10c47d445ebe690f96": {
+      "validation": {
+        "type": "string"
+      }
+    },
+    "urn:grants-form-kernel:validation:010b1dec865519f00e024db52d4deeb3dc5d7dc08390f0e455f5338dbde231c7": {
+      "validation": {
+        "type": "string",
+        "format": "email"
+      }
+    },
+    "urn:grants-form-kernel:validation:04695a9d75d2d404e71cc5ef01839b95c1fd6e2e8c6235b8ddb1b19cb46ecaf5": {
+      "validation": {
+        "enum": [
+          "Mr.; Mrs.; Miss; Ms.; Dr.; Rev."
+        ],
+        "maxLength": 10,
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "urn:grants-form-kernel:validation:046d1e72cd09f549520c93feb593a5d52122787d29a25b0abc69dcc5acd2528d": {
+      "validation": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 15
+      }
+    },
+    "urn:grants-form-kernel:validation:0eb2e3b6e08c031d561e617da88331cbd7d5e2e9c5db1648dfaa11b45b3e81f0": {
+      "validation": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 100
+      }
+    },
+    "urn:grants-form-kernel:validation:173fc8f5c98105deeebbca6aa726e77fb8a2c2b9c064a6370b9b73980c977193": {
+      "validation": {
+        "type": "string",
+        "enum": [
+          "AL: Alabama",
+          "AK: Alaska",
+          "AZ: Arizona",
+          "AR: Arkansas",
+          "CA: California",
+          "CO: Colorado",
+          "CT: Connecticut",
+          "DE: Delaware",
+          "DC: District of Columbia",
+          "FL: Florida",
+          "GA: Georgia",
+          "HI: Hawaii",
+          "ID: Idaho",
+          "IL: Illinois",
+          "IN: Indiana",
+          "IA: Iowa",
+          "KS: Kansas",
+          "KY: Kentucky",
+          "LA: Louisiana",
+          "ME: Maine",
+          "MD: Maryland",
+          "MA: Massachusetts",
+          "MI: Michigan",
+          "MN: Minnesota",
+          "MS: Mississippi",
+          "MO: Missouri",
+          "MT: Montana",
+          "NE: Nebraska",
+          "NV: Nevada",
+          "NH: New Hampshire",
+          "NJ: New Jersey",
+          "NM: New Mexico",
+          "NY: New York",
+          "NC: North Carolina",
+          "ND: North Dakota",
+          "OH: Ohio",
+          "OK: Oklahoma",
+          "OR: Oregon",
+          "PA: Pennsylvania",
+          "RI: Rhode Island",
+          "SC: South Carolina",
+          "SD: South Dakota",
+          "TN: Tennessee",
+          "TX: Texas",
+          "UT: Utah",
+          "VT: Vermont",
+          "VA: Virginia",
+          "WA: Washington",
+          "WV: West Virginia",
+          "WI: Wisconsin",
+          "WY: Wyoming",
+          "AS: American Samoa",
+          "FM: Federated States of Micronesia",
+          "GU: Guam",
+          "MH: Marshall Islands",
+          "MP: Northern Mariana Islands",
+          "PW: Palau",
+          "PR: Puerto Rico",
+          "VI: Virgin Islands",
+          "FQ: Baker Island",
+          "HQ: Howland Island",
+          "DQ: Jarvis Island",
+          "JQ: Johnston Atoll",
+          "KQ: Kingman Reef",
+          "MQ: Midway Islands",
+          "BQ: Navassa Island",
+          "LQ: Palmyra Atoll",
+          "WQ: Wake Island",
+          "AA: Armed Forces Americas (except Canada)",
+          "AE: Armed Forces Europe, the Middle East, and Canada",
+          "AP: Armed Forces Pacific"
+        ]
+      }
+    },
+    "urn:grants-form-kernel:validation:1a859664cdda99f274aa20f6338a23d6518c6ef34891dc93daee0215fd55dbb1": {
+      "validation": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 120
+      }
+    },
+    "urn:grants-form-kernel:validation:1ceb55436a25800628f94551c62045219895e945d1226b34d8a7bc3a7ec54bf3": {
+      "validation": {
+        "enum": [
+          "Jr.; Sr.; MD; PhD; JD"
+        ],
+        "maxLength": 10,
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "urn:grants-form-kernel:validation:2ed73e9d5c6a06256eaf894c7b477c391be56067f8ae2e34d5871f9972888100": {
+      "validation": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 40
+      }
+    },
+    "urn:grants-form-kernel:validation:3e394c77163736ab8eb3fb3cbdeb8bc61bd698676b07c543c3bd5076a08f2539": {
+      "validation": {
+        "type": "string",
+        "pattern": "^(-)?\\d*([.]\\d{2})?$",
+        "minLength": 1,
+        "maxLength": 14
+      }
+    },
+    "urn:grants-form-kernel:validation:3ea040de4c9e48ed17a93eef109882f73b3fb481c71ddf9f52ac8075463fcdb8": {
+      "validation": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 60
+      }
+    },
+    "urn:grants-form-kernel:validation:4295ef71c85c95136f14336d5a1fa79f50c130b15697af7b2e11bbb872eef857": {
+      "validation": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 10
+      }
+    },
+    "urn:grants-form-kernel:validation:44b2ecffc8606ad9705131859fa57980c41eaf5d5e35ecd101822dc2c2eb6523": {
+      "validation": {
+        "type": "string",
+        "format": "uuid"
+      }
+    },
+    "urn:grants-form-kernel:validation:466e7e8debed6ce0dcfe19497a504c2a18f072de292e81a0948c314c13446196": {
+      "validation": {
+        "maxLength": 16,
+        "maximum": 999.99,
+        "minLength": 1,
+        "minimum": 0,
+        "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+        "type": "string"
+      }
+    },
+    "urn:grants-form-kernel:validation:49b69c45978a7bfa9f820c2b81090813b6f5c5010fa5f532c8487e628c5309e4": {
+      "validation": {
+        "type": "string",
+        "enum": [
+          "New",
+          "Continuation",
+          "Revision"
+        ]
+      }
+    },
+    "urn:grants-form-kernel:validation:520c691f88f728d6668deec0a0defaef2a596faac395f0a4690e9e6dba2d21f6": {
+      "validation": {
+        "maxLength": 64,
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "urn:grants-form-kernel:validation:52ba84a4bbf396ba7a35cd1190963c82865bfd272f0b6020865087e04c5283d5": {
+      "validation": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      }
+    },
+    "urn:grants-form-kernel:validation:5657cd5c104d11f38600a7fb9b7f8763c6075a22baa6e2f4f8a1820cddff7ea5": {
+      "validation": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 144
+      }
+    },
+    "urn:grants-form-kernel:validation:57784dd997a0c7bd220dd67fe4087600875739bb616bffe5fce81cdacb820307": {
+      "validation": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 45
+      }
+    },
+    "urn:grants-form-kernel:validation:64848d4584e1b4ecec50d705e53d3a2ac48aa80328b4aadbe68d8d4f2efb3c57": {
+      "validation": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 55
+      }
+    },
+    "urn:grants-form-kernel:validation:657b7401bd5004d35d1c7eb43ece1ba968248f64982f779157ff6d244bf6857c": {
+      "validation": {
+        "type": "string",
+        "format": "email",
+        "maxLength": 60
+      }
+    },
+    "urn:grants-form-kernel:validation:67aec2f61c7253a6d1db293e761e5fc3ae4e8eedcff9d5bc77a50bcdc4dcbc4a": {
+      "validation": {
+        "type": "string",
+        "enum": [
+          "Preapplication",
+          "Application",
+          "Changed/Corrected Application"
+        ]
+      }
+    },
+    "urn:grants-form-kernel:validation:6955b31cbcb5f48e76526b1f826e354a9d79cbfdca40b7f617e8c586e1d42876": {
+      "validation": {
+        "format": "attachment",
+        "type": "string"
+      }
+    },
+    "urn:grants-form-kernel:validation:6d9d81bb1283b6a3fe29266bf40cecfddc12e3f97bfc7228ca837b767aa4aabd": {
+      "validation": {
+        "maximum": 999,
+        "minimum": 0,
+        "type": "integer"
+      }
+    },
+    "urn:grants-form-kernel:validation:6f8f4aaf65420ecf4c53271b3b7b878fb4959001c24de267a2d92b559b11313a": {
+      "validation": {
+        "type": "array",
+        "maxItems": 100,
+        "items": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "urn:grants-form-kernel:validation:709ab639505d3c2f6faa5da714827ac46d56640cf14fae546a028fc4b7f736ee": {
+      "validation": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 6
+      }
+    },
+    "urn:grants-form-kernel:validation:7cb541e84f226754a46c21c79f131fa2898354e1242456e6fd1c162bce319553": {
+      "validation": {
+        "type": "boolean"
+      }
+    },
+    "urn:grants-form-kernel:validation:7df6fc90214b856a58b2280ff0e32934ccaabdd3c085028ee2da3a3c1aac0c7a": {
+      "validation": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 255
+      }
+    },
+    "urn:grants-form-kernel:validation:80ef33a43b50aec32f02adddbdec912117b390f642c3f416961ee67a54ee18ac": {
+      "validation": {
+        "maxLength": 16,
+        "minLength": 1,
+        "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+        "type": "string"
+      }
+    },
+    "urn:grants-form-kernel:validation:839f11873884ea90e879c4e10eac84d14a6fc1366a15f07ed90b7f6d63935fad": {
+      "validation": {
+        "type": "string",
+        "enum": [
+          "AFG: AFGHANISTAN",
+          "XQZ: AKROTIRI",
+          "ALB: ALBANIA",
+          "DZA: ALGERIA",
+          "AND: ANDORRA",
+          "AGO: ANGOLA",
+          "AIA: ANGUILLA",
+          "ATA: ANTARCTICA",
+          "ATG: ANTIGUA AND BARBUDA",
+          "ARG: ARGENTINA",
+          "ARM: ARMENIA",
+          "ABW: ARUBA",
+          "XAC: ASHMORE AND CARTIER ISLANDS",
+          "AUS: AUSTRALIA",
+          "AUT: AUSTRIA",
+          "AZE: AZERBAIJAN",
+          "BHS: BAHAMAS, THE",
+          "BHR: BAHRAIN",
+          "BGD: BANGLADESH",
+          "BRB: BARBADOS",
+          "XBI: BASSAS DA INDIA",
+          "BLR: BELARUS",
+          "BEL: BELGIUM",
+          "BLZ: BELIZE",
+          "BEN: BENIN",
+          "BMU: BERMUDA",
+          "BTN: BHUTAN",
+          "BOL: BOLIVIA",
+          "BES: BONAIRE, SINT EUSTATIUS, AND SABA",
+          "BIH: BOSNIA AND HERZEGOVINA",
+          "BWA: BOTSWANA",
+          "BVT: BOUVET ISLAND",
+          "BRA: BRAZIL",
+          "IOT: BRITISH INDIAN OCEAN TERRITORY",
+          "BRN: BRUNEI",
+          "BGR: BULGARIA",
+          "BFA: BURKINA FASO",
+          "MMR: BURMA",
+          "BDI: BURUNDI",
+          "CPV: CABO VERDE",
+          "KHM: CAMBODIA",
+          "CMR: CAMEROON",
+          "CAN: CANADA",
+          "CYM: CAYMAN ISLANDS",
+          "CAF: CENTRAL AFRICAN REPUBLIC",
+          "TCD: CHAD",
+          "CHL: CHILE",
+          "CHN: CHINA",
+          "CXR: CHRISTMAS ISLAND",
+          "CPT: CLIPPERTON ISLAND",
+          "CCK: COCOS (KEELING) ISLANDS",
+          "COL: COLOMBIA",
+          "COM: COMOROS",
+          "COG: CONGO (BRAZZAVILLE)",
+          "COD: CONGO (KINSHASA)",
+          "COK: COOK ISLANDS",
+          "XCS: CORAL SEA ISLANDS",
+          "CRI: COSTA RICA",
+          "CIV: CÔTE D'IVOIRE",
+          "HRV: CROATIA",
+          "CUB: CUBA",
+          "CUW: CURAÇAO",
+          "CYP: CYPRUS",
+          "CZE: CZECHIA",
+          "DNK: DENMARK",
+          "XXD: DHEKELIA",
+          "DGA: DIEGO GARCIA",
+          "DJI: DJIBOUTI",
+          "DMA: DOMINICA",
+          "DOM: DOMINICAN REPUBLIC",
+          "ECU: ECUADOR",
+          "EGY: EGYPT",
+          "SLV: EL SALVADOR",
+          "XAZ: ENTITY 1",
+          "XCR: ENTITY 2",
+          "XCY: ENTITY 3",
+          "XKM: ENTITY 4",
+          "XKN: ENTITY 5",
+          "AX3: ENTITY 6",
+          "GNQ: EQUATORIAL GUINEA",
+          "ERI: ERITREA",
+          "EST: ESTONIA",
+          "SWZ: ESWATINI",
+          "ETH: ETHIOPIA",
+          "XEU: EUROPA ISLAND",
+          "FLK: FALKLAND ISLANDS (ISLAS MALVINAS)",
+          "FRO: FAROE ISLANDS",
+          "FJI: FIJI",
+          "FIN: FINLAND",
+          "FRA: FRANCE",
+          "GUF: FRENCH GUIANA",
+          "PYF: FRENCH POLYNESIA",
+          "ATF: FRENCH SOUTHERN AND ANTARCTIC LANDS",
+          "GAB: GABON",
+          "GMB: GAMBIA, THE",
+          "XGZ: GAZA STRIP",
+          "GEO: GEORGIA",
+          "DEU: GERMANY",
+          "GHA: GHANA",
+          "GIB: GIBRALTAR",
+          "XGL: GLORIOSO ISLANDS",
+          "GRC: GREECE",
+          "GRL: GREENLAND",
+          "GRD: GRENADA",
+          "GLP: GUADELOUPE",
+          "GTM: GUATEMALA",
+          "GGY: GUERNSEY",
+          "GIN: GUINEA",
+          "GNB: GUINEA-BISSAU",
+          "GUY: GUYANA",
+          "HTI: HAITI",
+          "HMD: HEARD ISLAND AND MCDONALD ISLANDS",
+          "HND: HONDURAS",
+          "HKG: HONG KONG",
+          "HUN: HUNGARY",
+          "ISL: ICELAND",
+          "IND: INDIA",
+          "IDN: INDONESIA",
+          "IRN: IRAN",
+          "IRQ: IRAQ",
+          "IRL: IRELAND",
+          "IMN: ISLE OF MAN",
+          "ISR: ISRAEL",
+          "ITA: ITALY",
+          "JAM: JAMAICA",
+          "XJM: JAN MAYEN",
+          "JPN: JAPAN",
+          "JEY: JERSEY",
+          "JOR: JORDAN",
+          "XJN: JUAN DE NOVA ISLAND",
+          "KAZ: KAZAKHSTAN",
+          "KEN: KENYA",
+          "KIR: KIRIBATI",
+          "PRK: KOREA, NORTH",
+          "KOR: KOREA, SOUTH",
+          "XKS: KOSOVO",
+          "KWT: KUWAIT",
+          "KGZ: KYRGYZSTAN",
+          "LAO: LAOS",
+          "LVA: LATVIA",
+          "LBN: LEBANON",
+          "LSO: LESOTHO",
+          "LBR: LIBERIA",
+          "LBY: LIBYA",
+          "LIE: LIECHTENSTEIN",
+          "LTU: LITHUANIA",
+          "LUX: LUXEMBOURG",
+          "MAC: MACAU",
+          "MDG: MADAGASCAR",
+          "MWI: MALAWI",
+          "MYS: MALAYSIA",
+          "MDV: MALDIVES",
+          "MLI: MALI",
+          "MLT: MALTA",
+          "MTQ: MARTINIQUE",
+          "MRT: MAURITANIA",
+          "MUS: MAURITIUS",
+          "MYT: MAYOTTE",
+          "MEX: MEXICO",
+          "MDA: MOLDOVA",
+          "MCO: MONACO",
+          "MNG: MONGOLIA",
+          "MNE: MONTENEGRO",
+          "MSR: MONTSERRAT",
+          "MAR: MOROCCO",
+          "MOZ: MOZAMBIQUE",
+          "NAM: NAMIBIA",
+          "NRU: NAURU",
+          "NPL: NEPAL",
+          "NLD: NETHERLANDS",
+          "NCL: NEW CALEDONIA",
+          "NZL: NEW ZEALAND",
+          "NIC: NICARAGUA",
+          "NER: NIGER",
+          "NGA: NIGERIA",
+          "NIU: NIUE",
+          "NFK: NORFOLK ISLAND",
+          "MKD: NORTH MACEDONIA",
+          "NOR: NORWAY",
+          "OMN: OMAN",
+          "PAK: PAKISTAN",
+          "PAN: PANAMA",
+          "PNG: PAPUA NEW GUINEA",
+          "XPR: PARACEL ISLANDS",
+          "PRY: PARAGUAY",
+          "PER: PERU",
+          "PHL: PHILIPPINES",
+          "PCN: PITCAIRN ISLANDS",
+          "POL: POLAND",
+          "PRT: PORTUGAL",
+          "QAT: QATAR",
+          "REU: REUNION",
+          "ROU: ROMANIA",
+          "RUS: RUSSIA",
+          "RWA: RWANDA",
+          "BLM: SAINT BARTHELEMY",
+          "SHN: SAINT HELENA, ASCENSION, AND TRISTAN DA CUNHA",
+          "KNA: SAINT KITTS AND NEVIS",
+          "LCA: SAINT LUCIA",
+          "MAF: SAINT MARTIN",
+          "SPM: SAINT PIERRE AND MIQUELON",
+          "VCT: SAINT VINCENT AND THE GRENADINES",
+          "WSM: SAMOA",
+          "SMR: SAN MARINO",
+          "STP: SAO TOME AND PRINCIPE",
+          "SAU: SAUDI ARABIA",
+          "SEN: SENEGAL",
+          "SRB: SERBIA",
+          "SYC: SEYCHELLES",
+          "SLE: SIERRA LEONE",
+          "SGP: SINGAPORE",
+          "SXM: SINT MAARTEN",
+          "SVK: SLOVAKIA",
+          "SVN: SLOVENIA",
+          "SLB: SOLOMON ISLANDS",
+          "SOM: SOMALIA",
+          "ZAF: SOUTH AFRICA",
+          "SGS: SOUTH GEORGIA AND SOUTH SANDWICH ISLANDS",
+          "SSD: SOUTH SUDAN",
+          "ESP: SPAIN",
+          "XSP: SPRATLY ISLANDS",
+          "LKA: SRI LANKA",
+          "SDN: SUDAN",
+          "SUR: SURINAME",
+          "XSV: SVALBARD",
+          "SWE: SWEDEN",
+          "CHE: SWITZERLAND",
+          "SYR: SYRIA",
+          "TWN: TAIWAN",
+          "TJK: TAJIKISTAN",
+          "TZA: TANZANIA",
+          "THA: THAILAND",
+          "TLS: TIMOR-LESTE",
+          "TGO: TOGO",
+          "TKL: TOKELAU",
+          "TON: TONGA",
+          "TTO: TRINIDAD AND TOBAGO",
+          "XTR: TROMELIN ISLAND",
+          "TUN: TUNISIA",
+          "TUR: TURKEY",
+          "TKM: TURKMENISTAN",
+          "TCA: TURKS AND CAICOS ISLANDS",
+          "TUV: TUVALU",
+          "UGA: UGANDA",
+          "UKR: UKRAINE",
+          "ARE: UNITED ARAB EMIRATES",
+          "GBR: UNITED KINGDOM",
+          "USA: UNITED STATES",
+          "URY: URUGUAY",
+          "UZB: UZBEKISTAN",
+          "VUT: VANUATU",
+          "VAT: VATICAN CITY",
+          "VEN: VENEZUELA",
+          "VNM: VIETNAM",
+          "VGB: VIRGIN ISLANDS, BRITISH",
+          "WLF: WALLIS AND FUTUNA",
+          "XWB: WEST BANK",
+          "ESH: WESTERN SAHARA",
+          "YEM: YEMEN",
+          "ZMB: ZAMBIA",
+          "ZWE: ZIMBABWE"
+        ]
+      }
+    },
+    "urn:grants-form-kernel:validation:8bd226f94133c523b569e677676ee65006ca9adf826a8493854065a991436620": {
+      "validation": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 25
+      }
+    },
+    "urn:grants-form-kernel:validation:957d8c0835f6ce47adc25d1ea006278fbf0ede8e63b281909650952fa7288787": {
+      "validation": {
+        "maxLength": 16,
+        "maximum": 999999999999.99,
+        "minLength": 1,
+        "minimum": 0,
+        "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$",
+        "type": "string"
+      }
+    },
+    "urn:grants-form-kernel:validation:a05c7e5b3fde6fda720aa07af9852be646642880bed5b1b0956e105d80c2755f": {
+      "validation": {
+        "type": "string",
+        "enum": [
+          "A: Increase Award",
+          "B: Decrease Award",
+          "C: Increase Duration",
+          "D: Decrease Duration",
+          "E: Other (specify)",
+          "AC: Increase Award, Increase Duration",
+          "AD: Increase Award, Decrease Duration",
+          "BC: Decrease Award, Increase Duration",
+          "BD: Decrease Award, Decrease Duration"
+        ]
+      }
+    },
+    "urn:grants-form-kernel:validation:adfac4e7c754832fdcfc83b0bde1a8a77be20a6f68a71b08a1d6dcfce2425478": {
+      "validation": {
+        "type": "string",
+        "minLength": 9,
+        "maxLength": 30
+      }
+    },
+    "urn:grants-form-kernel:validation:af822719b8f397ed410a57563c33bc1432d8b93c36a59968f85a52755cb98654": {
+      "validation": {
+        "type": "string",
+        "minLength": 0,
+        "maxLength": 30
+      }
+    },
+    "urn:grants-form-kernel:validation:b4e618d1cc905aa438b47383129965e8196c2cf53ade8163a412e4d855084680": {
+      "validation": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 35
+      }
+    },
+    "urn:grants-form-kernel:validation:b7b1b21714b58bd0524ecba38742de3b34301c7dc652ebfb802392e35176d787": {
+      "validation": {
+        "maxLength": 180,
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "urn:grants-form-kernel:validation:c844c1623b21ae0d7eeda775787f690990bab3ba0dd0d4decff209935dee0468": {
+      "validation": {
+        "type": "string",
+        "format": "date"
+      }
+    },
+    "urn:grants-form-kernel:validation:c91593401412933bd2fec74c901eed08bac91839d54f6a6105cf8b7227b5f311": {
+      "validation": {
+        "enum": [
+          "Project",
+          "Subaward/Consortium"
+        ],
+        "type": "string"
+      }
+    },
+    "urn:grants-form-kernel:validation:dd3f4b55651a221b181c647b1453a7a54a1bbdb34dc5292aa31cffcdb8b47706": {
+      "validation": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 30
+      }
+    },
+    "urn:grants-form-kernel:validation:de196183c872e3b80a1321db63193dd3a197fda457b59d3a2ef26e755d59feb5": {
+      "validation": {
+        "maximum": 9999,
+        "minimum": 0,
+        "type": "integer"
+      }
+    },
+    "urn:grants-form-kernel:validation:e5096a266f92df596ce50bda658d1749bc502bfcc3d19535ba68fc6c0bd0f616": {
+      "validation": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 3,
+        "items": {
+          "type": "string",
+          "enum": [
+            "A: State Government",
+            "B: County Government",
+            "C: City or Township Government",
+            "D: Special District Government",
+            "E: Regional Organization",
+            "F: U.S. Territory or Possession",
+            "G: Independent School District",
+            "H: Public/state Controlled Institution of Higher Education",
+            "I: Indian/Native American Tribal Government (Federally Recognized)",
+            "J: Indian/Native American Tribal Government (Other than Federally Recognized)",
+            "K: Indian/Native American Tribally Designated Organization",
+            "L: Public/Indian Housing Authority",
+            "M: Nonprofit with 501C3 IRS Status (Other than Institution of Higher Education)",
+            "N: Nonprofit without 501C3 IRS Status (Other than Institution of Higher Education)",
+            "O: Private Institution of Higher Education",
+            "P: Individual",
+            "Q: For-Profit Organization (Other than Small Business)",
+            "R: Small Business",
+            "S: Hispanic-serving Institution",
+            "T: Historically Black Colleges and Universities (HBCUs)",
+            "U: Tribally Controlled Colleges and Universities (TCCUs)",
+            "V: Alaska Native and Native Hawaiian Serving Institutions",
+            "W: Non-domestic (non-US) Entity",
+            "X: Other (specify)"
+          ]
+        }
+      }
+    },
+    "urn:grants-form-kernel:validation:eb9b1de08b93d8f142186ab2575bf0dc97b481d0866c1561e1245984a106cf07": {
+      "validation": {
+        "type": "string",
+        "minLength": 12,
+        "maxLength": 12
+      }
+    },
+    "urn:grants-form-kernel:validation:f0765dbf409c74f001806c446f2cf171d8c46b5b15779d54423dde921a4b0670": {
+      "validation": {
+        "type": "integer"
+      }
+    },
+    "urn:grants-form-kernel:validation:f2f55911c64576d670ab09b6e1dd1b0693d2d7b0515f1fcf50c6a9603f41b7b0": {
+      "validation": {
+        "type": "string",
+        "enum": [
+          "a. This application was made available to the state under the Executive Order 12372 Process for review on",
+          "b. Program is subject to E.O. 12372 but has not been selected by the state for review.",
+          "c. Program is not covered by E.O. 12372."
+        ]
+      }
+    }
+  }
+}

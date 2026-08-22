@@ -7,7 +7,10 @@ from pathlib import Path
 import jsonschema
 import pytest
 
-from src.form_schema.portable_form_bundle import PortableFormBundleError, load_portable_form_bundle
+from src.form_schema.portable_form_bundle import (
+    PortableFormBundleError,
+    load_portable_form_bundle,
+)
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[4]
 BUNDLE_ROOT = REPOSITORY_ROOT / "form-specs"
@@ -62,7 +65,9 @@ def test_generic_compiler_check_and_bundle_remain_loadable(tmp_path: Path) -> No
     assert len(load_portable_form_bundle(bundle).forms_by_key) == 8
 
 
-def test_portable_contract_independently_validates_every_authoring_and_runtime_document() -> None:
+def test_portable_contract_independently_validates_every_authoring_and_runtime_document() -> (
+    None
+):
     catalog = json.loads((BUNDLE_ROOT / "catalog.json").read_text(encoding="utf-8"))
     contract = json.loads(
         (BUNDLE_ROOT / catalog["contract_schema"]["path"]).read_text(encoding="utf-8")
@@ -78,7 +83,9 @@ def test_portable_contract_independently_validates_every_authoring_and_runtime_d
         validator.validate(
             json.loads((BUNDLE_ROOT / descriptor["path"]).read_text(encoding="utf-8"))
         )
-    validator.validate(json.loads((BUNDLE_ROOT / "manifest.json").read_text(encoding="utf-8")))
+    validator.validate(
+        json.loads((BUNDLE_ROOT / "manifest.json").read_text(encoding="utf-8"))
+    )
 
 
 def test_contract_rejects_an_occurrence_without_its_role(tmp_path: Path) -> None:
@@ -89,7 +96,9 @@ def test_contract_rejects_an_occurrence_without_its_role(tmp_path: Path) -> None
     declaration_path = bundle / descriptor["path"]
     declaration = json.loads(declaration_path.read_text(encoding="utf-8"))
     del declaration["question_bindings"][0]["role"]
-    encoded = (json.dumps(declaration, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
+    encoded = (json.dumps(declaration, indent=2, ensure_ascii=False) + "\n").encode(
+        "utf-8"
+    )
     declaration_path.write_bytes(encoded)
     descriptor["sha256"] = __import__("hashlib").sha256(encoded).hexdigest()
     catalog_path.write_text(json.dumps(catalog, indent=2) + "\n", encoding="utf-8")
@@ -179,9 +188,9 @@ def test_simpler_adapter_rejects_duplicate_form_ids(tmp_path: Path) -> None:
     second_path = bundle / second_descriptor["path"]
     first = json.loads(first_path.read_text(encoding="utf-8"))
     second = json.loads(second_path.read_text(encoding="utf-8"))
-    second["adapters"]["simpler"]["configuration"]["form_id"] = first["adapters"]["simpler"][
-        "configuration"
-    ]["form_id"]
+    second["adapters"]["simpler"]["configuration"]["form_id"] = first["adapters"][
+        "simpler"
+    ]["configuration"]["form_id"]
     encoded = (json.dumps(second, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
     second_path.write_bytes(encoded)
     second_descriptor["sha256"] = __import__("hashlib").sha256(encoded).hexdigest()
@@ -207,7 +216,9 @@ def test_generic_compiler_preserves_oracle_drift_assurance(tmp_path: Path) -> No
         for descriptor in catalog["form_declarations"]
         if descriptor["path"].endswith("rr-budget.form.json")
     )
-    budget = json.loads((bundle / budget_descriptor["path"]).read_text(encoding="utf-8"))
+    budget = json.loads(
+        (bundle / budget_descriptor["path"]).read_text(encoding="utf-8")
+    )
     oracle = bundle / budget["supplemental_evidence"][0]["path"]
     oracle.write_bytes(oracle.read_bytes() + b"\n")
 
@@ -232,7 +243,9 @@ def test_compiler_passes_through_new_consumer_adapter_without_code_changes(
     declaration = bundle / descriptor["path"]
     form = json.loads(declaration.read_text(encoding="utf-8"))
     form["adapters"] = {
-        "reference_renderer": {"artifacts": {"behavior_notes": form["supplemental_evidence"][0]}}
+        "reference_renderer": {
+            "artifacts": {"behavior_notes": form["supplemental_evidence"][0]}
+        }
     }
     encoded = (json.dumps(form, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
     declaration.write_bytes(encoded)
@@ -273,7 +286,7 @@ def test_generic_compiler_cli_is_agent_friendly_and_strict(tmp_path: Path) -> No
     assert "code: usage" in unknown.stdout
     assert "unrecognized arguments: --wat" in unknown.stderr
     assert version.returncode == 0
-    assert version.stdout == "0.1.0\n"
+    assert version.stdout == "0.2.0\n"
 
 
 def test_compiler_contains_no_form_or_question_semantic_authority() -> None:
@@ -281,7 +294,9 @@ def test_compiler_contains_no_form_or_question_semantic_authority() -> None:
     manifest = json.loads((BUNDLE_ROOT / "manifest.json").read_text(encoding="utf-8"))
     forbidden = {form["form_key"] for form in manifest["forms"]}
     forbidden.update(
-        schema["question_id"] for schema in manifest["schemas"] if schema["kind"] == "question"
+        schema["question_id"]
+        for schema in manifest["schemas"]
+        if schema["kind"] == "question"
     )
 
     assert not [value for value in forbidden if value in source]

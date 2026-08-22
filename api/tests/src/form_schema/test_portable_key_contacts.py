@@ -38,7 +38,9 @@ def _normalize_schema(value: Any, policy: dict[str, Any], *, root: bool = False)
 
     ignored_keys = set(policy["ignored_keys_any_depth"])
     ignored_prefixes = tuple(policy["ignored_key_prefixes_any_depth"])
-    ignored_root_keys = {row["path"].removeprefix("/") for row in policy["ignored_root_paths"]}
+    ignored_root_keys = {
+        row["path"].removeprefix("/") for row in policy["ignored_root_paths"]
+    }
     normalized = {
         key: _normalize_schema(item, policy)
         for key, item in value.items()
@@ -69,7 +71,9 @@ def _minimal_contact() -> dict:
     }
 
 
-def test_full_key_contacts_declaration_preserves_occurrences_and_review_boundary() -> None:
+def test_full_key_contacts_declaration_preserves_occurrences_and_review_boundary() -> (
+    None
+):
     bundle = load_portable_form_bundle(BUNDLE_ROOT)
     declaration = bundle.forms_by_key["KeyContacts"].definition
 
@@ -88,18 +92,21 @@ def test_full_key_contacts_declaration_preserves_occurrences_and_review_boundary
         "sgg_version": "1.0",
     }
     assert len(declaration["question_bindings"]) == 20
-    assert len({binding["binding_id"] for binding in declaration["question_bindings"]}) == 20
+    assert (
+        len({binding["binding_id"] for binding in declaration["question_bindings"]})
+        == 20
+    )
     assert {binding["role"] for binding in declaration["question_bindings"]} == {
         "applicant_organization",
         "key_contact",
     }
     assert declaration["review_boundary"] == {
-        "semantic_mappings": "agent_proposed",
+        "semantic_mappings": {"status": "agent_proposed", "events": []},
         "published_coverage_eligible": False,
         "production_ready": False,
     }
     assert all(
-        binding["mapping_status"] == "agent_proposed"
+        binding["semantic_review"] == {"status": "agent_proposed", "events": []}
         for binding in declaration["question_bindings"]
     )
 
@@ -136,7 +143,9 @@ def test_full_key_contacts_schema_preserves_cardinality_and_requiredness() -> No
 
     too_many = {**valid, "key_contacts": [_minimal_contact()] * 5}
     issues = validate_json_schema_for_form(too_many, form)
-    assert [(issue.field, issue.type) for issue in issues] == [("$.key_contacts", "maxItems")]
+    assert [(issue.field, issue.type) for issue in issues] == [
+        ("$.key_contacts", "maxItems")
+    ]
 
 
 def test_full_key_contacts_compiles_generic_repeated_ui() -> None:
@@ -208,7 +217,9 @@ def test_key_contacts_resolved_schema_parity_is_exhaustive_and_fail_closed() -> 
         proxies=False,
         jsonschema=True,
     )
-    portable = load_portable_form_bundle(BUNDLE_ROOT).kernel.resolved_schema("KeyContacts")
+    portable = load_portable_form_bundle(BUNDLE_ROOT).kernel.resolved_schema(
+        "KeyContacts"
+    )
 
     assert _normalize_schema(portable, policy, root=True) == _normalize_schema(
         native, policy, root=True
@@ -254,7 +265,8 @@ def test_full_key_contacts_xml_transform_matches_native_oracle_and_xsd() -> None
     validator = XSDValidator(REPOSITORY_ROOT / "api/src/services/xml_generation/xsds")
     result = validator.validate_xml(
         response.xml_data,
-        REPOSITORY_ROOT / "api/src/services/xml_generation/xsds/Key_Contacts_2_0-V2.0.xsd",
+        REPOSITORY_ROOT
+        / "api/src/services/xml_generation/xsds/Key_Contacts_2_0-V2.0.xsd",
     )
     assert result["valid"], result["error_message"]
 
@@ -282,10 +294,14 @@ def test_source_behavior_gaps_are_explicit_and_not_coverage_eligible() -> None:
     assert ledger["unclassified_differences_allowed"] is False
 
 
-def test_analysis_projects_all_key_contacts_occurrences_without_published_coverage() -> None:
+def test_analysis_projects_all_key_contacts_occurrences_without_published_coverage() -> (
+    None
+):
     projection = load_portable_form_bundle(BUNDLE_ROOT).analysis_projection()
     rows = [
-        row for row in projection["form_question_associations"] if row["form_key"] == "KeyContacts"
+        row
+        for row in projection["form_question_associations"]
+        if row["form_key"] == "KeyContacts"
     ]
 
     assert len(rows) == 20

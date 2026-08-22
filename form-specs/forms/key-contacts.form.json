@@ -1,5 +1,5 @@
 {
-  "contract": "portable-grants-form-declaration/v1",
+  "contract": "portable-grants-form-declaration/v2",
   "form_key": "KeyContacts",
   "schema_id": "urn:grants-form-kernel:forms:key-contacts:v2",
   "metadata": {
@@ -47,7 +47,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:key-contacts:applicant-organization-name"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:3ea040de4c9e48ed17a93eef109882f73b3fb481c71ddf9f52ac8075463fcdb8",
+      "occurrence_evidence": [
+        {
+          "source_ref": "keycontacts-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "/Key_Contacts_2_0/ApplicantOrganizationName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:key-contacts:project-role",
@@ -67,7 +80,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:key-contacts:project-role"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:57784dd997a0c7bd220dd67fe4087600875739bb616bffe5fce81cdacb820307",
+      "occurrence_evidence": [
+        {
+          "source_ref": "keycontacts-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "/Key_Contacts_2_0/RoleOnProject[]/ContactProjectRole"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:key-contacts:name-prefix",
@@ -87,7 +113,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:key-contacts:name-prefix"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:4295ef71c85c95136f14336d5a1fa79f50c130b15697af7b2e11bbb872eef857",
+      "occurrence_evidence": [
+        {
+          "source_ref": "keycontacts-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "/Key_Contacts_2_0/RoleOnProject[]/ContactName/PrefixName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:key-contacts:name-first",
@@ -107,7 +146,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:key-contacts:name-first"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:b4e618d1cc905aa438b47383129965e8196c2cf53ade8163a412e4d855084680",
+      "occurrence_evidence": [
+        {
+          "source_ref": "keycontacts-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "/Key_Contacts_2_0/RoleOnProject[]/ContactName/FirstName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:key-contacts:name-middle",
@@ -127,7 +179,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:key-contacts:name-middle"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:8bd226f94133c523b569e677676ee65006ca9adf826a8493854065a991436620",
+      "occurrence_evidence": [
+        {
+          "source_ref": "keycontacts-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "/Key_Contacts_2_0/RoleOnProject[]/ContactName/MiddleName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:key-contacts:name-last",
@@ -147,7 +212,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:key-contacts:name-last"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:3ea040de4c9e48ed17a93eef109882f73b3fb481c71ddf9f52ac8075463fcdb8",
+      "occurrence_evidence": [
+        {
+          "source_ref": "keycontacts-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "/Key_Contacts_2_0/RoleOnProject[]/ContactName/LastName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:key-contacts:name-suffix",
@@ -167,7 +245,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:key-contacts:name-suffix"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:4295ef71c85c95136f14336d5a1fa79f50c130b15697af7b2e11bbb872eef857",
+      "occurrence_evidence": [
+        {
+          "source_ref": "keycontacts-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "/Key_Contacts_2_0/RoleOnProject[]/ContactName/SuffixName"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:key-contacts:title",
@@ -187,7 +278,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:key-contacts:title"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:57784dd997a0c7bd220dd67fe4087600875739bb616bffe5fce81cdacb820307",
+      "occurrence_evidence": [
+        {
+          "source_ref": "keycontacts-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "/Key_Contacts_2_0/RoleOnProject[]/ContactTitle"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:key-contacts:organizational-affiliation",
@@ -207,7 +311,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:key-contacts:organizational-affiliation"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:3ea040de4c9e48ed17a93eef109882f73b3fb481c71ddf9f52ac8075463fcdb8",
+      "occurrence_evidence": [
+        {
+          "source_ref": "keycontacts-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "/Key_Contacts_2_0/RoleOnProject[]/ContactOrganizationalAffiliation"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:key-contacts:address-street1",
@@ -227,7 +344,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:key-contacts:address-street1"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:64848d4584e1b4ecec50d705e53d3a2ac48aa80328b4aadbe68d8d4f2efb3c57",
+      "occurrence_evidence": [
+        {
+          "source_ref": "keycontacts-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "/Key_Contacts_2_0/RoleOnProject[]/ContactAddress/Street1"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:key-contacts:address-street2",
@@ -247,7 +377,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:key-contacts:address-street2"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:64848d4584e1b4ecec50d705e53d3a2ac48aa80328b4aadbe68d8d4f2efb3c57",
+      "occurrence_evidence": [
+        {
+          "source_ref": "keycontacts-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "/Key_Contacts_2_0/RoleOnProject[]/ContactAddress/Street2"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:key-contacts:address-city",
@@ -267,7 +410,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:key-contacts:address-city"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:b4e618d1cc905aa438b47383129965e8196c2cf53ade8163a412e4d855084680",
+      "occurrence_evidence": [
+        {
+          "source_ref": "keycontacts-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "/Key_Contacts_2_0/RoleOnProject[]/ContactAddress/City"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:key-contacts:address-county",
@@ -287,7 +443,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:key-contacts:address-county"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:dd3f4b55651a221b181c647b1453a7a54a1bbdb34dc5292aa31cffcdb8b47706",
+      "occurrence_evidence": [
+        {
+          "source_ref": "keycontacts-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "/Key_Contacts_2_0/RoleOnProject[]/ContactAddress/County"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:key-contacts:address-state",
@@ -307,7 +476,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:key-contacts:address-state"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:173fc8f5c98105deeebbca6aa726e77fb8a2c2b9c064a6370b9b73980c977193",
+      "occurrence_evidence": [
+        {
+          "source_ref": "keycontacts-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "/Key_Contacts_2_0/RoleOnProject[]/ContactAddress/State"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:key-contacts:address-province",
@@ -327,7 +509,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:key-contacts:address-province"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:dd3f4b55651a221b181c647b1453a7a54a1bbdb34dc5292aa31cffcdb8b47706",
+      "occurrence_evidence": [
+        {
+          "source_ref": "keycontacts-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "/Key_Contacts_2_0/RoleOnProject[]/ContactAddress/Province"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:key-contacts:address-country",
@@ -347,7 +542,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:key-contacts:address-country"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:839f11873884ea90e879c4e10eac84d14a6fc1366a15f07ed90b7f6d63935fad",
+      "occurrence_evidence": [
+        {
+          "source_ref": "keycontacts-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "/Key_Contacts_2_0/RoleOnProject[]/ContactAddress/Country"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:key-contacts:address-postal-code",
@@ -367,7 +575,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:key-contacts:address-postal-code"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:dd3f4b55651a221b181c647b1453a7a54a1bbdb34dc5292aa31cffcdb8b47706",
+      "occurrence_evidence": [
+        {
+          "source_ref": "keycontacts-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "/Key_Contacts_2_0/RoleOnProject[]/ContactAddress/ZipPostalCode"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:key-contacts:phone",
@@ -387,7 +608,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:key-contacts:phone"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:8bd226f94133c523b569e677676ee65006ca9adf826a8493854065a991436620",
+      "occurrence_evidence": [
+        {
+          "source_ref": "keycontacts-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "/Key_Contacts_2_0/RoleOnProject[]/ContactPhone"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:key-contacts:fax",
@@ -407,7 +641,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:key-contacts:fax"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:8bd226f94133c523b569e677676ee65006ca9adf826a8493854065a991436620",
+      "occurrence_evidence": [
+        {
+          "source_ref": "keycontacts-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "/Key_Contacts_2_0/RoleOnProject[]/ContactFax"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     },
     {
       "binding_id": "binding:key-contacts:email",
@@ -427,7 +674,20 @@
       "mapping_refs": {
         "grants_gov_xml": "binding:key-contacts:email"
       },
-      "mapping_status": "agent_proposed"
+      "validation_fragment_id": "urn:grants-form-kernel:validation:657b7401bd5004d35d1c7eb43ece1ba968248f64982f779157ff6d244bf6857c",
+      "occurrence_evidence": [
+        {
+          "source_ref": "keycontacts-source-1",
+          "locator": {
+            "kind": "xsd_path",
+            "value": "/Key_Contacts_2_0/RoleOnProject[]/ContactEmail"
+          }
+        }
+      ],
+      "semantic_review": {
+        "status": "agent_proposed",
+        "events": []
+      }
     }
   ],
   "source_refs": [
@@ -448,7 +708,10 @@
     }
   ],
   "review_boundary": {
-    "semantic_mappings": "agent_proposed",
+    "semantic_mappings": {
+      "status": "agent_proposed",
+      "events": []
+    },
     "published_coverage_eligible": false,
     "production_ready": false
   }

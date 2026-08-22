@@ -64,7 +64,9 @@ def test_sf424_native_runtime_artifacts_still_match_the_portable_projection() ->
     assert _read("xml/sf424-v4.xml-transform.json") == FORM_XML_TRANSFORM_RULES
 
 
-def test_sf424_portable_schema_is_semantically_exact_after_reference_resolution() -> None:
+def test_sf424_portable_schema_is_semantically_exact_after_reference_resolution() -> (
+    None
+):
     shared = {
         "https://files.simpler.grants.gov/schemas/common_shared_v1.json": (
             NATIVE_COMMON_SHARED_SCHEMA
@@ -86,9 +88,9 @@ def test_sf424_portable_schema_is_semantically_exact_after_reference_resolution(
     )
     portable = load_portable_form_bundle(BUNDLE_ROOT).kernel.resolved_schema("SF424")
 
-    assert _normalized_resolved_schema(portable, root=True) == _normalized_resolved_schema(
-        native, root=True
-    )
+    assert _normalized_resolved_schema(
+        portable, root=True
+    ) == _normalized_resolved_schema(native, root=True)
 
 
 def test_sf424_source_accounting_is_complete_but_not_published() -> None:
@@ -119,19 +121,28 @@ def test_sf424_source_accounting_is_complete_but_not_published() -> None:
     }
 
 
-def test_sf424_occurrence_bindings_cover_all_source_paths_and_keep_roles_distinct() -> None:
+def test_sf424_occurrence_bindings_cover_all_source_paths_and_keep_roles_distinct() -> (
+    None
+):
     bundle = load_portable_form_bundle(BUNDLE_ROOT)
     definition = bundle.forms_by_key["SF424"].definition
     bindings = definition["question_bindings"]
-    source_paths = {path for binding in bindings for path in binding["context"]["source_paths"]}
+    source_paths = {
+        path for binding in bindings for path in binding["context"]["source_paths"]
+    }
 
     assert len(bindings) == 73
     assert len(source_paths) == 75
-    assert all(binding["mapping_status"] == "agent_proposed" for binding in bindings)
+    assert all(
+        binding["semantic_review"] == {"status": "agent_proposed", "events": []}
+        for binding in bindings
+    )
     assert definition["review_boundary"]["published_coverage_eligible"] is False
 
     first_name = [
-        binding for binding in bindings if binding["question_id"] == "question:person:name:first"
+        binding
+        for binding in bindings
+        if binding["question_id"] == "question:person:name:first"
     ]
     assert {(binding["role"], binding["form_pointer"]) for binding in first_name} == {
         ("applicant_contact", "/properties/contact_person/properties/first_name"),
@@ -167,7 +178,9 @@ def test_sf424_source_conditions_calculation_and_enums_remain_explicit() -> None
     conditional_paths = {row["path"] for row in ledger["paths"] if row["conditions"]}
     enumerated_paths = {row["path"] for row in ledger["paths"] if row["enumeration"]}
     calculations = [
-        (row["path"], calculation) for row in ledger["paths"] for calculation in row["calculations"]
+        (row["path"], calculation)
+        for row in ledger["paths"]
+        for calculation in row["calculations"]
     ]
 
     assert conditional_paths == {
@@ -247,13 +260,16 @@ def test_sf424_static_content_is_pdf_bound_without_claiming_acceptance() -> None
 
 def test_sf424_portable_and_native_constraint_differences_are_not_hidden() -> None:
     source_rows = {
-        row["path"]: row for row in _read("source-accounting/sf424-v4.source.json")["paths"]
+        row["path"]: row
+        for row in _read("source-accounting/sf424-v4.source.json")["paths"]
     }
 
     assert FORM_JSON_SCHEMA["properties"]["division_name"]["maxLength"] == 100
     assert source_rows["SF424_4_0.DivisionName"]["constraints"]["maxLength"] == 30
     assert "maxLength" not in FORM_JSON_SCHEMA["properties"]["revision_other_specify"]
-    assert source_rows["SF424_4_0.RevisionOtherSpecify"]["constraints"]["maxLength"] == 21
+    assert (
+        source_rows["SF424_4_0.RevisionOtherSpecify"]["constraints"]["maxLength"] == 21
+    )
     assert FORM_JSON_SCHEMA["properties"]["federal_estimated_funding"] == {
         "allOf": [
             {
@@ -266,4 +282,7 @@ def test_sf424_portable_and_native_constraint_differences_are_not_hidden() -> No
         "title": "Federal Estimated Funding",
         "description": "Enter the dollar amount.",
     }
-    assert source_rows["SF424_4_0.FederalEstimatedFunding"]["constraints"]["minInclusive"] == "0.00"
+    assert (
+        source_rows["SF424_4_0.FederalEstimatedFunding"]["constraints"]["minInclusive"]
+        == "0.00"
+    )
