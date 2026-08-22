@@ -274,6 +274,17 @@ Two, both in the adapter, both attributable, and neither about shape:
 Plus the fourteen rendered-field differences itemised in each form's parity test, each naming
 one field and one reason, with a test that fails when an entry goes stale.
 
+## Running the checks
+
+`npm run preflight` runs everything CI runs, in the same order, with the same commands: the
+build, the check tests, the enum generator, the standalone compile of every `.tsp`, the emit,
+the drift check, `ruff` against the API's own configuration, `actionlint`, and the API's parity
+tests. `npm run preflight -- --fast` leaves out the last of those, which is the slow one.
+
+Anything it cannot run -- a missing `ruff`, `actionlint`, or `uv` -- is reported as SKIPPED
+with the command to install it, never passed over quietly. A silent skip is how a green run
+stops meaning anything.
+
 ## Known gaps
 
 * Linter rules and diagnostics are declared but not implemented.

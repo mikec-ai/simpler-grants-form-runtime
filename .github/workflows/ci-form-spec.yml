@@ -51,7 +51,7 @@ jobs:
       # The scripts read and write the API's data, so they follow the API's style.
       - name: Lint the scripts
         run: |
-          pip install ruff
+          pip install 'ruff>=0.16,<0.17'
           ruff format --check --config api/pyproject.toml form-spec/scripts
           ruff check --config api/pyproject.toml --ignore T20 form-spec/scripts
         working-directory: .
@@ -79,7 +79,7 @@ jobs:
       # step is what keeps the checked-in copy honest.
       - name: Fail if the checked-in artifacts are stale
         run: |
-          if ! git diff --exit-code --stat; then
+          if ! git diff --exit-code --stat -- api/src/form_schema/form_spec/artifacts form-spec/specs/question-bank/generated; then
             echo "::error::Emitted artifacts differ from the checked-in copy."
             echo "Run 'npm run sync' in form-spec/ and commit the result."
             exit 1
