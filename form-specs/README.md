@@ -46,5 +46,19 @@ review state being `accepted` and its explicit published-coverage flag. The curr
 questions and 95% Key Contacts coverage are therefore proposed findings; accepted and published
 overlap are both zero.
 
+The first cost-curve stress test adds R&R Budget and R&R Budget 10 from one declarative profile.
+Both resolve the same 101 applicant-input question references, five repeating structures, shared
+UI declaration, and shared graph of 30 exact source-resolved sums. The runtime profile changes only
+the budget-period limit from five to ten. Fifty-six computed outputs remain separate from applicant
+questions; 26 source calculation records remain explicitly blocked rather than inferred.
+
+This also resolves an earlier analytical discrepancy that counted 97 questions in one budget form
+and 107 in the other despite identical 157-leaf structures. The portable declarations consistently
+classify 101 applicant inputs and 56 computed outputs in each form. That classification is still
+agent-proposed, so the budget pair's 100% working overlap contributes zero accepted or published
+coverage. R&R Budget 10 behavior evidence is inherited from the five-year form and does not establish
+target-form DAT parity. Grants.gov XML projection is not available in the pinned implementation
+oracle and is not claimed.
+
 TypeSpec and CommonGrants are optional compatibility inputs. Neither is required to author,
 validate, analyze, or load this bundle.

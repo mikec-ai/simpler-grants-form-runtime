@@ -178,6 +178,9 @@ class FormType(StrEnum):
 
     KEY_CONTACTS = "KeyContacts"
 
+    RR_BUDGET = "RRBudget"
+    RR_BUDGET_10 = "RRBudget10"
+
     ATTACHMENT_FORM = "AttachmentForm"
 
     PROJECT_PERFORMANCE_SITE_LOCATION = "ProjectPerformanceSiteLocation"

@@ -73,7 +73,7 @@ def test_sf424_portable_schema_is_semantically_exact_after_reference_resolution(
         return shared[uri.split("#", 1)[0]]
 
     native = jsonref.replace_refs(
-        FORM_JSON_SCHEMA,
+        _read("oracles/sf424-v4.native.schema.json"),
         loader=loader,
         lazy_load=False,
         proxies=False,

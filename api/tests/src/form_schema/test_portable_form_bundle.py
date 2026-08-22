@@ -75,11 +75,11 @@ def test_analysis_projection_is_derived_from_the_same_bindings() -> None:
 
     assert projection["contract"] == "portable-grants-form-analysis/v2"
     assert projection["summary"] == {
-        "forms": 2,
-        "proposed_unique_questions": 66,
+        "forms": 4,
+        "proposed_unique_questions": 167,
         "accepted_unique_questions": 0,
         "published_unique_questions": 0,
-        "proposed_associations": 93,
+        "proposed_associations": 295,
         "accepted_associations": 0,
         "published_associations": 0,
     }
@@ -104,7 +104,11 @@ def test_analysis_projection_is_derived_from_the_same_bindings() -> None:
     assert not any(row["included_in_accepted_overlap"] for row in associations)
     assert not any(row["included_in_published_overlap"] for row in associations)
 
-    pair = projection["pairwise_form_overlap"][0]
+    pair = next(
+        row
+        for row in projection["pairwise_form_overlap"]
+        if (row["form_a"], row["form_b"]) == ("KeyContacts", "SF424")
+    )
     assert (pair["form_a"], pair["form_b"]) == ("KeyContacts", "SF424")
     assert pair["proposed_overlap"]["questions_in_common"] == 19
     assert pair["proposed_overlap"]["form_a_coverage"] == pytest.approx(0.95)
@@ -284,10 +288,12 @@ print(json.dumps({
     summary = output["summary"]
     assert summary["accepted_associations"] == 0
     assert summary["published_associations"] == 0
-    assert summary["forms"] == 2
-    assert summary["proposed_unique_questions"] == 66
+    assert summary["forms"] == 4
+    assert summary["proposed_unique_questions"] == 167
     assert output["consumed"] == {
         "KeyContacts": {"resolved_properties": 2, "ui_controls": 21},
+        "RRBudget": {"resolved_properties": 6, "ui_controls": 162},
+        "RRBudget10": {"resolved_properties": 6, "ui_controls": 162},
         "SF424": {"resolved_properties": 58, "ui_controls": 72},
     }
 
@@ -472,7 +478,7 @@ def test_every_question_descriptor_has_direct_exact_source_provenance() -> None:
     manifest = json.loads((BUNDLE_ROOT / "manifest.json").read_text(encoding="utf-8"))
     questions = [schema for schema in manifest["schemas"] if schema["kind"] == "question"]
 
-    assert len(questions) == 66
+    assert len(questions) == 167
     assert all(question["source_evidence"] for question in questions)
     assert all(
         source_ref in manifest["sources"]

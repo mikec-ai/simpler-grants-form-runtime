@@ -1,0 +1,9 @@
+{
+  "$id": "urn:grants-form-kernel:questions:budget:budgetyear-keypersons-keyperson-name-middlename:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "maxLength": 25,
+  "minLength": 1,
+  "title": "Middle Name",
+  "type": "string",
+  "x-question-id": "question:budget:budgetyear-keypersons-keyperson-name-middlename"
+}

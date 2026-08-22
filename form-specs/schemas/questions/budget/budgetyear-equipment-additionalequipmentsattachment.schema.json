@@ -1,0 +1,7 @@
+{
+  "$id": "urn:grants-form-kernel:questions:budget:budgetyear-equipment-additionalequipmentsattachment:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Additional Equipment:",
+  "type": "string",
+  "x-question-id": "question:budget:budgetyear-equipment-additionalequipmentsattachment"
+}

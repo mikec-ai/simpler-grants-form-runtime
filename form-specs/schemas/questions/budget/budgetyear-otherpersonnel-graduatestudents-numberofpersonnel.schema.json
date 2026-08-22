@@ -1,0 +1,7 @@
+{
+  "$id": "urn:grants-form-kernel:questions:budget:budgetyear-otherpersonnel-graduatestudents-numberofpersonnel:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Number of Personnel Graduate Students",
+  "type": "integer",
+  "x-question-id": "question:budget:budgetyear-otherpersonnel-graduatestudents-numberofpersonnel"
+}
