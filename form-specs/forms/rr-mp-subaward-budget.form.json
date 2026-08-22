@@ -3,17 +3,23 @@
   "form_key": "RRMPSubawardBudget",
   "schema_id": "urn:grants-form-kernel:forms:rr-mp-subaward-budget:v1",
   "metadata": {
-    "form_id": "b5af0b9d-c4c1-4404-858c-917b315c6a14",
     "legacy_form_id": null,
     "form_name": "[Draft] Research & Related Multi-Project Subaward Budget Attachment(s) Form",
     "short_form_name": "RR_MP_SubawardBudget_3_0",
     "form_version": "3.0",
     "agency_code": "GRANTS_GOV",
     "omb_number": "4040-0001",
-    "form_type": "RRMPSubawardBudget",
-    "sgg_version": "1.0",
-    "is_deprecated": false,
-    "form_instruction_id": "df810177-8f07-4496-9946-8a247f70d519"
+    "is_deprecated": false
+  },
+  "adapters": {
+    "simpler": {
+      "configuration": {
+        "form_id": "b5af0b9d-c4c1-4404-858c-917b315c6a14",
+        "form_type": "RRMPSubawardBudget",
+        "sgg_version": "1.0",
+        "form_instruction_id": "df810177-8f07-4496-9946-8a247f70d519"
+      }
+    }
   },
   "ui": {
     "path": "ui/rr-mp-subaward-budget.ui.json",

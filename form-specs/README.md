@@ -6,6 +6,8 @@ This directory is a dependency-neutral canary for reusable grants-form declarati
 
 The versioned JSON declarations are the source of truth:
 
+- `contract/v1/schema.json` is the single, self-describing Draft 2020-12 contract for catalogs,
+  authored form declarations, and compiled runtime bundles.
 - `catalog.json` inventories exact source evidence and hashed question and form declarations.
 - `forms/*.form.json` declares which questions a form uses, occurrence roles and context,
   UI/mapping/rule/evidence sidecars, and review boundaries.
@@ -16,7 +18,9 @@ The versioned JSON declarations are the source of truth:
 Consumer-specific artifacts are explicitly namespaced under each form's `adapters` object. The
 current `adapters.simpler.artifacts.rules` files preserve native `gg_*` runtime parity; they are
 not presented as a portable rule language. The compiler passes arbitrary adapter namespaces
-through without knowing their meaning. The thin consumer adapter selects only its own namespace.
+through without knowing their meaning. Simpler-only identifiers, runtime type names, instruction
+IDs, and runtime versions live in `adapters.simpler.configuration`, outside portable metadata. The
+thin consumer adapter selects only its own namespace.
 
 `manifest.json` is a compiled runtime index. Regenerate it with:
 

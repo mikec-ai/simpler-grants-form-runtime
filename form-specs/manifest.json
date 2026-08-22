@@ -1,5 +1,9 @@
 {
   "contract": "portable-grants-form-bundle/v1",
+  "contract_schema": {
+    "path": "contract/v1/schema.json",
+    "sha256": "733d121d24c8bb4e1047c5bed642cb55ff5c8b5ae60e6bcb4f90d93bad14f87f"
+  },
   "bundle": {
     "name": "declarative-grants-form-pilot",
     "version": "0.7.0"
@@ -2881,16 +2885,22 @@
       "form_key": "KeyContacts",
       "schema_id": "urn:grants-form-kernel:forms:key-contacts:v2",
       "metadata": {
-        "form_id": "f140c7db-724d-4954-bebd-081c0527908c",
         "legacy_form_id": 683,
         "form_name": "KEY CONTACTS",
         "short_form_name": "Key_Contacts",
         "form_version": "2.0",
         "agency_code": "SGG",
         "omb_number": "4040-0010",
-        "form_type": "KeyContacts",
-        "sgg_version": "1.0",
         "is_deprecated": false
+      },
+      "adapters": {
+        "simpler": {
+          "configuration": {
+            "form_id": "f140c7db-724d-4954-bebd-081c0527908c",
+            "form_type": "KeyContacts",
+            "sgg_version": "1.0"
+          }
+        }
       },
       "ui": {
         "path": "ui/key-contacts.ui.json",
@@ -3364,17 +3374,13 @@
       "form_key": "SF424",
       "schema_id": "urn:grants-form-kernel:forms:sf424:v4",
       "metadata": {
-        "form_id": "1623b310-85be-496a-b84b-34bdee22a68a",
         "legacy_form_id": 713,
         "form_name": "Application for Federal Assistance (SF-424)",
         "short_form_name": "SF424_4_0",
         "form_version": "4.0",
         "agency_code": "SGG",
         "omb_number": "4040-0004",
-        "form_type": "SF424",
-        "sgg_version": "1.0",
-        "is_deprecated": false,
-        "form_instruction_id": "bf48a93f-d445-426f-a8fb-289bf93a2434"
+        "is_deprecated": false
       },
       "ui": {
         "path": "ui/sf424-v4.ui.json",
@@ -5045,6 +5051,12 @@
       },
       "adapters": {
         "simpler": {
+          "configuration": {
+            "form_id": "1623b310-85be-496a-b84b-34bdee22a68a",
+            "form_type": "SF424",
+            "sgg_version": "1.0",
+            "form_instruction_id": "bf48a93f-d445-426f-a8fb-289bf93a2434"
+          },
           "artifacts": {
             "rules": {
               "path": "rules/sf424-v4.rules.json",
@@ -5058,17 +5070,13 @@
       "form_key": "RRBudget",
       "schema_id": "urn:grants-form-kernel:forms:rrbudget:v3",
       "metadata": {
-        "form_id": "cfa593f7-e5ef-4ba8-82b2-c732ec65e461",
         "legacy_form_id": null,
         "form_name": "[Draft] Research & Related Budget",
         "short_form_name": "RR_Budget_3_0",
         "form_version": "3.0",
         "agency_code": "GRANTS_GOV",
         "omb_number": "4040-0001",
-        "form_type": "RRBudget",
-        "sgg_version": "1.0",
-        "is_deprecated": false,
-        "form_instruction_id": "6c604b81-8582-4d39-b899-f3e15bbcd3ef"
+        "is_deprecated": false
       },
       "ui": {
         "path": "ui/rr-budget-family.ui.json",
@@ -5080,6 +5088,12 @@
       },
       "adapters": {
         "simpler": {
+          "configuration": {
+            "form_id": "cfa593f7-e5ef-4ba8-82b2-c732ec65e461",
+            "form_type": "RRBudget",
+            "sgg_version": "1.0",
+            "form_instruction_id": "6c604b81-8582-4d39-b899-f3e15bbcd3ef"
+          },
           "artifacts": {
             "rules": {
               "path": "rules/rr-budget-family.rules.json",
@@ -7262,17 +7276,13 @@
       "form_key": "RRBudget10",
       "schema_id": "urn:grants-form-kernel:forms:rrbudget10:v3",
       "metadata": {
-        "form_id": "2ae77c1c-58f7-41e7-9fb0-7a0823621758",
         "legacy_form_id": null,
         "form_name": "[Draft] Research & Related Budget 10YR",
         "short_form_name": "RR_Budget10_3_0",
         "form_version": "3.0",
         "agency_code": "GRANTS_GOV",
         "omb_number": "4040-0001",
-        "form_type": "RRBudget10",
-        "sgg_version": "1.0",
-        "is_deprecated": false,
-        "form_instruction_id": "6436c11c-0756-4806-885f-819d21ffe914"
+        "is_deprecated": false
       },
       "ui": {
         "path": "ui/rr-budget-family.ui.json",
@@ -7284,6 +7294,12 @@
       },
       "adapters": {
         "simpler": {
+          "configuration": {
+            "form_id": "2ae77c1c-58f7-41e7-9fb0-7a0823621758",
+            "form_type": "RRBudget10",
+            "sgg_version": "1.0",
+            "form_instruction_id": "6436c11c-0756-4806-885f-819d21ffe914"
+          },
           "artifacts": {
             "rules": {
               "path": "rules/rr-budget-family.rules.json",
@@ -9466,17 +9482,13 @@
       "form_key": "RRSubawardBudget30",
       "schema_id": "urn:grants-form-kernel:forms:rr-subaward-budget30:v1",
       "metadata": {
-        "form_id": "33ce5425-e8f1-422e-8fe0-e2337adbd56f",
         "legacy_form_id": null,
         "form_name": "[Draft] R&R Subaward Budget Attachment(s) Form 30",
         "short_form_name": "RR_SubawardBudget30_3_0",
         "form_version": "3.0",
         "agency_code": "GRANTS_GOV",
         "omb_number": "4040-0001",
-        "form_type": "RRSubawardBudget30",
-        "sgg_version": "1.0",
-        "is_deprecated": false,
-        "form_instruction_id": "1bc60459-7d72-4964-9816-e965b2ba4aec"
+        "is_deprecated": false
       },
       "ui": {
         "path": "ui/rr-subaward-budget30.ui.json",
@@ -9488,6 +9500,12 @@
       },
       "adapters": {
         "simpler": {
+          "configuration": {
+            "form_id": "33ce5425-e8f1-422e-8fe0-e2337adbd56f",
+            "form_type": "RRSubawardBudget30",
+            "sgg_version": "1.0",
+            "form_instruction_id": "1bc60459-7d72-4964-9816-e965b2ba4aec"
+          },
           "artifacts": {
             "rules": {
               "path": "rules/rr-subaward-budget30.rules.json",
@@ -12513,17 +12531,13 @@
       "form_key": "RRSubawardBudget10_30",
       "schema_id": "urn:grants-form-kernel:forms:rr-subaward-budget10-30:v1",
       "metadata": {
-        "form_id": "8e208eec-a423-440b-9596-f71a33cec25f",
         "legacy_form_id": null,
         "form_name": "[Draft] R&R Subaward Budget Attachment(s) Form 10 YR 30 ATT",
         "short_form_name": "RR_SubawardBudget10_30_3_0",
         "form_version": "3.0",
         "agency_code": "GRANTS_GOV",
         "omb_number": "4040-0001",
-        "form_type": "RRSubawardBudget10_30",
-        "sgg_version": "1.0",
-        "is_deprecated": false,
-        "form_instruction_id": "f75a27cd-770b-41e9-bca8-ef0097201852"
+        "is_deprecated": false
       },
       "ui": {
         "path": "ui/rr-subaward-budget10-30.ui.json",
@@ -12535,6 +12549,12 @@
       },
       "adapters": {
         "simpler": {
+          "configuration": {
+            "form_id": "8e208eec-a423-440b-9596-f71a33cec25f",
+            "form_type": "RRSubawardBudget10_30",
+            "sgg_version": "1.0",
+            "form_instruction_id": "f75a27cd-770b-41e9-bca8-ef0097201852"
+          },
           "artifacts": {
             "rules": {
               "path": "rules/rr-subaward-budget10-30.rules.json",
@@ -15560,17 +15580,13 @@
       "form_key": "RRMPBudget",
       "schema_id": "urn:grants-form-kernel:forms:rr-mp-budget:v1",
       "metadata": {
-        "form_id": "955001b0-bade-4ed2-80f1-88630dd8d170",
         "legacy_form_id": null,
         "form_name": "[Draft] Research & Related Multi-Project Budget Form",
         "short_form_name": "RR_MP_Budget_3_0",
         "form_version": "3.0",
         "agency_code": "GRANTS_GOV",
         "omb_number": "4040-0001",
-        "form_type": "RRMPBudget",
-        "sgg_version": "1.0",
-        "is_deprecated": false,
-        "form_instruction_id": "f1bfa235-b36e-4b00-bc8b-ea9bb0a970e4"
+        "is_deprecated": false
       },
       "ui": {
         "path": "ui/rr-mp-budget.ui.json",
@@ -15582,6 +15598,12 @@
       },
       "adapters": {
         "simpler": {
+          "configuration": {
+            "form_id": "955001b0-bade-4ed2-80f1-88630dd8d170",
+            "form_type": "RRMPBudget",
+            "sgg_version": "1.0",
+            "form_instruction_id": "f1bfa235-b36e-4b00-bc8b-ea9bb0a970e4"
+          },
           "artifacts": {
             "rules": {
               "path": "rules/rr-mp-budget.rules.json",
@@ -17865,17 +17887,23 @@
       "form_key": "RRMPSubawardBudget",
       "schema_id": "urn:grants-form-kernel:forms:rr-mp-subaward-budget:v1",
       "metadata": {
-        "form_id": "b5af0b9d-c4c1-4404-858c-917b315c6a14",
         "legacy_form_id": null,
         "form_name": "[Draft] Research & Related Multi-Project Subaward Budget Attachment(s) Form",
         "short_form_name": "RR_MP_SubawardBudget_3_0",
         "form_version": "3.0",
         "agency_code": "GRANTS_GOV",
         "omb_number": "4040-0001",
-        "form_type": "RRMPSubawardBudget",
-        "sgg_version": "1.0",
-        "is_deprecated": false,
-        "form_instruction_id": "df810177-8f07-4496-9946-8a247f70d519"
+        "is_deprecated": false
+      },
+      "adapters": {
+        "simpler": {
+          "configuration": {
+            "form_id": "b5af0b9d-c4c1-4404-858c-917b315c6a14",
+            "form_type": "RRMPSubawardBudget",
+            "sgg_version": "1.0",
+            "form_instruction_id": "df810177-8f07-4496-9946-8a247f70d519"
+          }
+        }
       },
       "ui": {
         "path": "ui/rr-mp-subaward-budget.ui.json",

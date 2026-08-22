@@ -3,17 +3,13 @@
   "form_key": "RRBudget10",
   "schema_id": "urn:grants-form-kernel:forms:rrbudget10:v3",
   "metadata": {
-    "form_id": "2ae77c1c-58f7-41e7-9fb0-7a0823621758",
     "legacy_form_id": null,
     "form_name": "[Draft] Research & Related Budget 10YR",
     "short_form_name": "RR_Budget10_3_0",
     "form_version": "3.0",
     "agency_code": "GRANTS_GOV",
     "omb_number": "4040-0001",
-    "form_type": "RRBudget10",
-    "sgg_version": "1.0",
-    "is_deprecated": false,
-    "form_instruction_id": "6436c11c-0756-4806-885f-819d21ffe914"
+    "is_deprecated": false
   },
   "ui": {
     "path": "ui/rr-budget-family.ui.json",
@@ -25,6 +21,12 @@
   },
   "adapters": {
     "simpler": {
+      "configuration": {
+        "form_id": "2ae77c1c-58f7-41e7-9fb0-7a0823621758",
+        "form_type": "RRBudget10",
+        "sgg_version": "1.0",
+        "form_instruction_id": "6436c11c-0756-4806-885f-819d21ffe914"
+      },
       "artifacts": {
         "rules": {
           "path": "rules/rr-budget-family.rules.json",

@@ -3,17 +3,13 @@
   "form_key": "RRMPBudget",
   "schema_id": "urn:grants-form-kernel:forms:rr-mp-budget:v1",
   "metadata": {
-    "form_id": "955001b0-bade-4ed2-80f1-88630dd8d170",
     "legacy_form_id": null,
     "form_name": "[Draft] Research & Related Multi-Project Budget Form",
     "short_form_name": "RR_MP_Budget_3_0",
     "form_version": "3.0",
     "agency_code": "GRANTS_GOV",
     "omb_number": "4040-0001",
-    "form_type": "RRMPBudget",
-    "sgg_version": "1.0",
-    "is_deprecated": false,
-    "form_instruction_id": "f1bfa235-b36e-4b00-bc8b-ea9bb0a970e4"
+    "is_deprecated": false
   },
   "ui": {
     "path": "ui/rr-mp-budget.ui.json",
@@ -25,6 +21,12 @@
   },
   "adapters": {
     "simpler": {
+      "configuration": {
+        "form_id": "955001b0-bade-4ed2-80f1-88630dd8d170",
+        "form_type": "RRMPBudget",
+        "sgg_version": "1.0",
+        "form_instruction_id": "f1bfa235-b36e-4b00-bc8b-ea9bb0a970e4"
+      },
       "artifacts": {
         "rules": {
           "path": "rules/rr-mp-budget.rules.json",

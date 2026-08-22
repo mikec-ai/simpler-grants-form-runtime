@@ -4,7 +4,10 @@ import subprocess
 import sys
 from pathlib import Path
 
-from src.form_schema.portable_form_bundle import load_portable_form_bundle
+import jsonschema
+import pytest
+
+from src.form_schema.portable_form_bundle import PortableFormBundleError, load_portable_form_bundle
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[4]
 BUNDLE_ROOT = REPOSITORY_ROOT / "form-specs"
@@ -59,6 +62,68 @@ def test_generic_compiler_check_and_bundle_remain_loadable(tmp_path: Path) -> No
     assert len(load_portable_form_bundle(bundle).forms_by_key) == 8
 
 
+def test_portable_contract_independently_validates_every_authoring_and_runtime_document() -> None:
+    catalog = json.loads((BUNDLE_ROOT / "catalog.json").read_text(encoding="utf-8"))
+    contract = json.loads(
+        (BUNDLE_ROOT / catalog["contract_schema"]["path"]).read_text(encoding="utf-8")
+    )
+    jsonschema.Draft202012Validator.check_schema(contract)
+    validator = jsonschema.Draft202012Validator(
+        contract,
+        format_checker=jsonschema.FormatChecker(),
+    )
+
+    validator.validate(catalog)
+    for descriptor in catalog["form_declarations"]:
+        validator.validate(
+            json.loads((BUNDLE_ROOT / descriptor["path"]).read_text(encoding="utf-8"))
+        )
+    validator.validate(json.loads((BUNDLE_ROOT / "manifest.json").read_text(encoding="utf-8")))
+
+
+def test_contract_rejects_an_occurrence_without_its_role(tmp_path: Path) -> None:
+    root, bundle = _copy_compiler_bundle(tmp_path)
+    catalog_path = bundle / "catalog.json"
+    catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
+    descriptor = catalog["form_declarations"][0]
+    declaration_path = bundle / descriptor["path"]
+    declaration = json.loads(declaration_path.read_text(encoding="utf-8"))
+    del declaration["question_bindings"][0]["role"]
+    encoded = (json.dumps(declaration, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
+    declaration_path.write_bytes(encoded)
+    descriptor["sha256"] = __import__("hashlib").sha256(encoded).hexdigest()
+    catalog_path.write_text(json.dumps(catalog, indent=2) + "\n", encoding="utf-8")
+
+    result = subprocess.run(
+        [sys.executable, "scripts/compile_portable_form_bundle.py"],
+        cwd=root,
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 1
+    assert "form declaration violates the portable contract" in result.stderr
+
+
+def test_compiler_fails_closed_when_the_governing_contract_drifts(
+    tmp_path: Path,
+) -> None:
+    root, bundle = _copy_compiler_bundle(tmp_path)
+    catalog = json.loads((bundle / "catalog.json").read_text(encoding="utf-8"))
+    contract = bundle / catalog["contract_schema"]["path"]
+    contract.write_bytes(contract.read_bytes() + b"\n")
+
+    result = subprocess.run(
+        [sys.executable, "scripts/compile_portable_form_bundle.py"],
+        cwd=root,
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 1
+    assert "contract schema hash mismatch" in result.stderr
+
+
 def test_generic_compiler_fails_closed_on_declaration_drift(tmp_path: Path) -> None:
     root, bundle = _copy_compiler_bundle(tmp_path)
     catalog = json.loads((bundle / "catalog.json").read_text(encoding="utf-8"))
@@ -105,7 +170,7 @@ def test_generic_compiler_runs_full_kernel_validation_before_writing(
     assert (bundle / "manifest.json").read_bytes() == original_manifest
 
 
-def test_generic_compiler_rejects_duplicate_form_ids(tmp_path: Path) -> None:
+def test_simpler_adapter_rejects_duplicate_form_ids(tmp_path: Path) -> None:
     root, bundle = _copy_compiler_bundle(tmp_path)
     catalog_path = bundle / "catalog.json"
     catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
@@ -114,7 +179,9 @@ def test_generic_compiler_rejects_duplicate_form_ids(tmp_path: Path) -> None:
     second_path = bundle / second_descriptor["path"]
     first = json.loads(first_path.read_text(encoding="utf-8"))
     second = json.loads(second_path.read_text(encoding="utf-8"))
-    second["metadata"]["form_id"] = first["metadata"]["form_id"]
+    second["adapters"]["simpler"]["configuration"]["form_id"] = first["adapters"]["simpler"][
+        "configuration"
+    ]["form_id"]
     encoded = (json.dumps(second, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
     second_path.write_bytes(encoded)
     second_descriptor["sha256"] = __import__("hashlib").sha256(encoded).hexdigest()
@@ -127,8 +194,9 @@ def test_generic_compiler_rejects_duplicate_form_ids(tmp_path: Path) -> None:
         text=True,
     )
 
-    assert result.returncode == 1
-    assert "duplicate metadata.form_id" in result.stderr
+    assert result.returncode == 0
+    with pytest.raises(PortableFormBundleError, match="duplicate Simpler form_id"):
+        load_portable_form_bundle(bundle)
 
 
 def test_generic_compiler_preserves_oracle_drift_assurance(tmp_path: Path) -> None:

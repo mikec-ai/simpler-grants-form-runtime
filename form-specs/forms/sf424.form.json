@@ -3,17 +3,13 @@
   "form_key": "SF424",
   "schema_id": "urn:grants-form-kernel:forms:sf424:v4",
   "metadata": {
-    "form_id": "1623b310-85be-496a-b84b-34bdee22a68a",
     "legacy_form_id": 713,
     "form_name": "Application for Federal Assistance (SF-424)",
     "short_form_name": "SF424_4_0",
     "form_version": "4.0",
     "agency_code": "SGG",
     "omb_number": "4040-0004",
-    "form_type": "SF424",
-    "sgg_version": "1.0",
-    "is_deprecated": false,
-    "form_instruction_id": "bf48a93f-d445-426f-a8fb-289bf93a2434"
+    "is_deprecated": false
   },
   "ui": {
     "path": "ui/sf424-v4.ui.json",
@@ -1663,6 +1659,12 @@
   },
   "adapters": {
     "simpler": {
+      "configuration": {
+        "form_id": "1623b310-85be-496a-b84b-34bdee22a68a",
+        "form_type": "SF424",
+        "sgg_version": "1.0",
+        "form_instruction_id": "bf48a93f-d445-426f-a8fb-289bf93a2434"
+      },
       "artifacts": {
         "rules": {
           "path": "rules/sf424-v4.rules.json",
