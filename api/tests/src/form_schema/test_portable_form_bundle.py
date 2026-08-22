@@ -15,10 +15,7 @@ from src.form_schema.portable_form_bundle import (
     PortableFormBundleError,
     load_portable_form_bundle,
 )
-from src.form_schema.registry.form_template_registry import (
-    FormTemplateKey,
-    FormTemplateRegistry,
-)
+from src.form_schema.registry import form_template_registry
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[4]
 BUNDLE_ROOT = REPOSITORY_ROOT / "form-specs"
@@ -202,11 +199,13 @@ def test_standard_json_schema_consumer_uses_portable_refs_without_simpler_adapte
 
 def test_native_registry_accepts_generic_adapter_result() -> None:
     form = load_portable_form_bundle(BUNDLE_ROOT).to_form("KeyContacts")
-    registry = FormTemplateRegistry()
+    registry = form_template_registry.FormTemplateRegistry()
 
     registry.register(form, major_version=1)
 
-    registered = registry.get_by_id_and_major_version(FormTemplateKey(form.form_id, 1))
+    registered = registry.get_by_id_and_major_version(
+        form_template_registry.FormTemplateKey(form.form_id, 1)
+    )
     question = registered.form_json_schema["properties"]["applicant_organization_name"]
     assert question["allOf"][0]["x-question-id"] == "question:organization:legal-name"
 
