@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.simpler.grants.gov/forms/key-contacts-organization-canary/v1",
+  "$id": "urn:grants-form-kernel:forms:key-contacts-organization-canary:v1",
   "title": "Key Contacts organization canary",
   "type": "object",
   "required": ["applicant_organization_name"],
@@ -8,7 +8,7 @@
     "applicant_organization_name": {
       "allOf": [
         {
-          "$ref": "https://schemas.simpler.grants.gov/questions/organization/legal-name/v1"
+          "$ref": "urn:grants-form-kernel:questions:organization:legal-name:v1"
         }
       ],
       "title": "Applicant Organization Name"

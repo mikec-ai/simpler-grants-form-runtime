@@ -1,26 +1,30 @@
 {
-  "common_grants": {
-    "from": {
-      "applicant_organization_name": {
-        "field": "organizations.primary.name"
-      }
-    },
-    "to": {
-      "organizations": {
-        "primary": {
-          "name": {
-            "field": "applicant_organization_name"
+  "targets": {
+    "common_grants": {
+      "from": {
+        "applicant_organization_name": {
+          "field": "organizations.primary.name"
+        }
+      },
+      "to": {
+        "organizations": {
+          "primary": {
+            "name": {
+              "field": "applicant_organization_name"
+            }
           }
         }
       }
-    }
-  },
-  "xml_fields": {
-    "question:organization:legal-name": {
-      "path": "/Key_Contacts_2_0/ApplicantOrganizationName",
-      "type_source": "GlobalLibrary-V2.0.xsd#OrganizationNameDataType",
-      "type": "string",
-      "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/Key_Contacts_2_0-V2.0.xsd"
+    },
+    "grants_gov_xml": {
+      "bindings": {
+        "binding:key-contacts:applicant-organization-name": {
+          "path": "/Key_Contacts_2_0/ApplicantOrganizationName",
+          "type_source": "GlobalLibrary-V2.0.xsd#OrganizationNameDataType",
+          "type": "string",
+          "xsd_source": "https://apply07.grants.gov/apply/forms/schemas/Key_Contacts_2_0-V2.0.xsd"
+        }
+      }
     }
   }
 }
