@@ -195,9 +195,9 @@ def test_native_forms_are_independent_snapshots() -> None:
     first = bundle.to_form("KeyContactsOrganizationCanary")
     second = bundle.to_form("KeyContactsOrganizationCanary")
 
-    first.form_json_schema["x-mapping-from-cg"]["applicant_organization_name"]["field"] = (
-        "changed.path"
-    )
+    first.form_json_schema["x-mapping-from-cg"]["applicant_organization_name"][
+        "field"
+    ] = "changed.path"
     first.form_json_schema["x-portable-form-bundle"]["question_bindings"][0]["role"] = "changed"
 
     assert second.form_json_schema["x-mapping-from-cg"] == {
@@ -260,9 +260,7 @@ def test_same_question_can_have_distinct_occurrence_bindings(tmp_path: Path) -> 
     root = _copy_bundle(tmp_path)
     manifest_path = root / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    form = next(
-        item for item in manifest["forms"] if item["form_key"] == "SF424OrganizationCanary"
-    )
+    form = next(item for item in manifest["forms"] if item["form_key"] == "SF424OrganizationCanary")
     schema_relative = "schemas/forms/sf424-organization-canary.schema.json"
     schema_path = root / schema_relative
     schema = json.loads(schema_path.read_text(encoding="utf-8"))
@@ -391,9 +389,9 @@ def test_rejects_dangling_question_reference(tmp_path: Path) -> None:
     relative_path = "schemas/forms/sf424-organization-canary.schema.json"
     schema_path = root / relative_path
     schema = json.loads(schema_path.read_text(encoding="utf-8"))
-    schema["properties"]["organization_name"]["allOf"][0]["$ref"] = (
-        "https://schemas.simpler.grants.gov/questions/missing/v1"
-    )
+    schema["properties"]["organization_name"]["allOf"][0][
+        "$ref"
+    ] = "https://schemas.simpler.grants.gov/questions/missing/v1"
     schema_path.write_text(json.dumps(schema), encoding="utf-8")
     _rewrite_manifest_hash(root, relative_path)
 
