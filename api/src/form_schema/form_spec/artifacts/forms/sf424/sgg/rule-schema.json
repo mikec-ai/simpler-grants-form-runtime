@@ -59,19 +59,6 @@
       "rule": "attachment"
     }
   },
-  "total_estimated_funding": {
-    "gg_pre_population": {
-      "rule": "sum_monetary",
-      "fields": [
-        "federal_estimated_funding",
-        "applicant_estimated_funding",
-        "state_estimated_funding",
-        "local_estimated_funding",
-        "other_estimated_funding",
-        "program_income_estimated_funding"
-      ]
-    }
-  },
   "debt_explanation": {
     "gg_validation": {
       "rule": "attachment"
@@ -85,6 +72,19 @@
   "date_signed": {
     "gg_post_population": {
       "rule": "current_date"
+    }
+  },
+  "total_estimated_funding": {
+    "gg_pre_population": {
+      "rule": "sum_monetary",
+      "fields": [
+        "federal_estimated_funding",
+        "applicant_estimated_funding",
+        "state_estimated_funding",
+        "local_estimated_funding",
+        "other_estimated_funding",
+        "program_income_estimated_funding"
+      ]
     }
   }
 }

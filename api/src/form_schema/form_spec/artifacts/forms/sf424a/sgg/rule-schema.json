@@ -1,0 +1,331 @@
+{
+  "activity_line_items": {
+    "gg_type": "array",
+    "budget_categories": {
+      "total_direct_charge_amount": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@THIS.personnel_amount",
+            "@THIS.fringe_benefits_amount",
+            "@THIS.travel_amount",
+            "@THIS.equipment_amount",
+            "@THIS.supplies_amount",
+            "@THIS.contractual_amount",
+            "@THIS.construction_amount",
+            "@THIS.other_amount"
+          ]
+        }
+      },
+      "total_amount": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@THIS.total_direct_charge_amount",
+            "@THIS.total_indirect_charge_amount"
+          ],
+          "order": 2
+        }
+      }
+    },
+    "non_federal_resources": {
+      "total_amount": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@THIS.applicant_amount",
+            "@THIS.state_amount",
+            "@THIS.other_amount"
+          ]
+        }
+      }
+    }
+  },
+  "total_budget_summary": {
+    "federal_estimated_unobligated_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].budget_summary.federal_estimated_unobligated_amount"
+        ]
+      }
+    },
+    "non_federal_estimated_unobligated_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].budget_summary.non_federal_estimated_unobligated_amount"
+        ]
+      }
+    },
+    "federal_new_or_revised_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].budget_summary.federal_new_or_revised_amount"
+        ]
+      }
+    },
+    "non_federal_new_or_revised_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].budget_summary.non_federal_new_or_revised_amount"
+        ]
+      }
+    },
+    "total_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].budget_summary.total_amount"
+        ]
+      }
+    }
+  },
+  "total_budget_categories": {
+    "personnel_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].budget_categories.personnel_amount"
+        ]
+      }
+    },
+    "fringe_benefits_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].budget_categories.fringe_benefits_amount"
+        ]
+      }
+    },
+    "travel_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].budget_categories.travel_amount"
+        ]
+      }
+    },
+    "equipment_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].budget_categories.equipment_amount"
+        ]
+      }
+    },
+    "supplies_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].budget_categories.supplies_amount"
+        ]
+      }
+    },
+    "contractual_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].budget_categories.contractual_amount"
+        ]
+      }
+    },
+    "construction_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].budget_categories.construction_amount"
+        ]
+      }
+    },
+    "other_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].budget_categories.other_amount"
+        ]
+      }
+    },
+    "total_direct_charge_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].budget_categories.total_direct_charge_amount"
+        ],
+        "order": 2
+      }
+    },
+    "total_indirect_charge_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].budget_categories.total_indirect_charge_amount"
+        ]
+      }
+    },
+    "total_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].budget_categories.total_amount"
+        ],
+        "order": 3
+      }
+    },
+    "program_income_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].budget_categories.program_income_amount"
+        ]
+      }
+    }
+  },
+  "total_non_federal_resources": {
+    "applicant_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].non_federal_resources.applicant_amount"
+        ]
+      }
+    },
+    "state_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].non_federal_resources.state_amount"
+        ]
+      }
+    },
+    "other_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].non_federal_resources.other_amount"
+        ]
+      }
+    },
+    "total_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].non_federal_resources.total_amount"
+        ],
+        "order": 2
+      }
+    }
+  },
+  "forecasted_cash_needs": {
+    "federal_forecasted_cash_needs": {
+      "total_amount": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@THIS.first_quarter_amount",
+            "@THIS.second_quarter_amount",
+            "@THIS.third_quarter_amount",
+            "@THIS.fourth_quarter_amount"
+          ]
+        }
+      }
+    },
+    "non_federal_forecasted_cash_needs": {
+      "total_amount": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@THIS.first_quarter_amount",
+            "@THIS.second_quarter_amount",
+            "@THIS.third_quarter_amount",
+            "@THIS.fourth_quarter_amount"
+          ]
+        }
+      }
+    },
+    "total_forecasted_cash_needs": {
+      "first_quarter_amount": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "forecasted_cash_needs.federal_forecasted_cash_needs.first_quarter_amount",
+            "forecasted_cash_needs.non_federal_forecasted_cash_needs.first_quarter_amount"
+          ]
+        }
+      },
+      "second_quarter_amount": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "forecasted_cash_needs.federal_forecasted_cash_needs.second_quarter_amount",
+            "forecasted_cash_needs.non_federal_forecasted_cash_needs.second_quarter_amount"
+          ]
+        }
+      },
+      "third_quarter_amount": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "forecasted_cash_needs.federal_forecasted_cash_needs.third_quarter_amount",
+            "forecasted_cash_needs.non_federal_forecasted_cash_needs.third_quarter_amount"
+          ]
+        }
+      },
+      "fourth_quarter_amount": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "forecasted_cash_needs.federal_forecasted_cash_needs.fourth_quarter_amount",
+            "forecasted_cash_needs.non_federal_forecasted_cash_needs.fourth_quarter_amount"
+          ]
+        }
+      },
+      "total_amount": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "forecasted_cash_needs.federal_forecasted_cash_needs.total_amount",
+            "forecasted_cash_needs.non_federal_forecasted_cash_needs.total_amount"
+          ],
+          "order": 2
+        }
+      }
+    }
+  },
+  "total_federal_fund_estimates": {
+    "first_year_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].federal_fund_estimates.first_year_amount"
+        ]
+      }
+    },
+    "second_year_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].federal_fund_estimates.second_year_amount"
+        ]
+      }
+    },
+    "third_year_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].federal_fund_estimates.third_year_amount"
+        ]
+      }
+    },
+    "fourth_year_amount": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "activity_line_items[*].federal_fund_estimates.fourth_year_amount"
+        ]
+      }
+    }
+  }
+}

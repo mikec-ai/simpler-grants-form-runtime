@@ -1,4 +1,3 @@
-import "../dist/src/index.js";
 import "./types.tsp";
 import "./question.tsp";
 import "./form.tsp";

@@ -1,0 +1,9 @@
+{
+  "id": "budget/categories",
+  "kind": "question",
+  "name": "Budget Categories",
+  "description": "Funds required for each object class category.",
+  "tags": [
+    "money"
+  ]
+}

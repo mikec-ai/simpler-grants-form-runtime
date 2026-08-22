@@ -152,12 +152,37 @@ def composed(fields: dict[str, str]) -> dict[str, str]:
     """
     out: dict[str, str] = {}
     for field, reason in fields.items():
-        for keyword in _CONSTRAINT_KEYWORDS:
-            out[f"/properties/{field}/{keyword}"] = reason
-            out[f"/properties/{field}/allOf/0/{keyword}"] = reason
-        out[f"/properties/{field}/allOf/0/title"] = reason
-        out[f"/properties/{field}/allOf/0/description"] = reason
+        for keyword in (*_CONSTRAINT_KEYWORDS, "title", "description"):
+            # The field itself, the reference it now goes through, and -- when it is a
+            # list -- the entries, which compose the question one level down.
+            for prefix in (
+                f"*/properties/{field}",
+                f"*/properties/{field}/allOf/0",
+                f"*/properties/{field}/items",
+                f"*/properties/{field}/items/allOf/0",
+            ):
+                out[f"{prefix}/{keyword}"] = reason
     return out
+
+
+def _matches(pointer: str, pattern: str) -> bool:
+    """Match a difference's pointer against one allow-list key.
+
+    Three forms, so that an entry says exactly how much it means to cover:
+
+    * `/properties/remarks/type` -- that pointer and nothing else.
+    * `*/properties/phone/allOf/0/description` -- that suffix anywhere, for a question
+      reached from more than one place in a form.
+    * `/$defs/*` -- that subtree, for a wholesale relocation.
+
+    Suffix matching is anchored to a segment boundary, so `/description` cannot quietly
+    absorb every `.../allOf/0/description` in the form.
+    """
+    if pattern.startswith("*"):
+        return pointer.endswith(pattern[1:])
+    if pattern.endswith("/*"):
+        return pointer == pattern[:-2] or pointer.startswith(pattern[:-1])
+    return pointer == pattern
 
 
 def unused(differences: list[Difference], allowed: dict[str, str]) -> list[str]:
@@ -167,9 +192,9 @@ def unused(differences: list[Difference], allowed: dict[str, str]) -> list[str]:
     so a hand-written entry going stale should fail the test that relies on it.
     """
     return sorted(
-        suffix
-        for suffix in allowed
-        if not any(difference.pointer.endswith(suffix) for difference in differences)
+        pattern
+        for pattern in allowed
+        if not any(_matches(difference.pointer, pattern) for difference in differences)
     )
 
 
@@ -196,7 +221,7 @@ def unexplained(differences: list[Difference], allowed: dict[str, str]) -> list[
     return [
         difference
         for difference in differences
-        if not any(difference.pointer.endswith(suffix) for suffix in allowed)
+        if not any(_matches(difference.pointer, pattern) for pattern in allowed)
     ]
 
 

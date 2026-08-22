@@ -191,9 +191,22 @@ export const $computed = (
     refs: refs.map((r) => r.name),
   });
 
+/**
+ * Field-by-field totalling. Only the source properties are recorded; which field of the
+ * block pairs with which is worked out at emission, where the type graph is in view.
+ */
+export const $totals = (ctx: Ctx, target: ModelProperty, ...sources: ModelProperty[]) =>
+  set(ctx, stateKeys.totals, target, sources);
+
 // --- SGG target vocabulary ------------------------------------------------
 
 /** The rule name is the enum member's *value*, which is SGG's wire spelling. */
+export const $multiField = (ctx: Ctx, target: Model, section: unknown, widget: unknown) =>
+  push(ctx, stateKeys.multiField, target, {
+    section: sectionRef(section).name,
+    widget: enumName(widget),
+  });
+
 export const $prePopulate = (ctx: Ctx, target: ModelProperty, rule: unknown) =>
   set(ctx, stateKeys.prePopulate, target, String(literal(rule)));
 

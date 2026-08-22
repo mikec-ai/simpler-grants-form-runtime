@@ -1,8 +1,8 @@
 import type { Model, ModelProperty, Program } from "@typespec/compiler";
 import { getDoc } from "@typespec/compiler";
 import {
-  Block, childBlock, modelOrder, orderedProps, propHelpText, propLabel, propOmit,
-  propReadOnly, propSection, propWidget, modelLabel,
+  Block, childBlock, modelLabel, modelMultiFields, modelOrder, orderedProps, propHelpText,
+  propLabel, propOmit, propReadOnly, propSection, propTotals, propWidget,
 } from "../model.js";
 
 export interface SggField {
@@ -17,15 +17,30 @@ export interface SggFieldList {
   description?: string;
   children: SggField[];
 }
+export interface SggMultiField {
+  type: "multiField";
+  name: string;
+  widget: string;
+  definition: string[];
+}
 export interface SggSection {
   type: "section";
   name: string;
   label: string;
   description?: string;
-  children: (SggField | SggFieldList)[];
+  children: (SggField | SggFieldList | SggMultiField)[];
 }
 
 const snake = (s: string) => s.replace(/([a-z0-9])([A-Z])/g, "$1_$2").toLowerCase();
+
+/**
+ * A section's name is a wire identifier rather than a field name, and SGG's forms do not
+ * agree on a convention for it: most are snake-cased, SF-424A's are `SectionA`. So a
+ * lowerCamel member name is a canonical name and gets projected, while a member written in
+ * any other convention is being written in the wire's convention on purpose and is left
+ * alone.
+ */
+const sectionName = (s: string) => (/^[a-z]/.test(s) ? snake(s) : s);
 
 /**
  * Every property of a model including those inherited through `extends`, in
@@ -131,41 +146,98 @@ function asFieldList(
   return list;
 }
 
+/**
+ * The properties one of SGG's section components reads.
+ *
+ * Its own section's properties, plus whatever those total. Sections B, C and E each render
+ * a grid over the same repeatable list that the applicant edits in section A, and the
+ * list is named nowhere in their declarations -- but each section's total says which
+ * collection it totals, and that is the same fact. So the column source is read off
+ * `@Validation.totals` rather than repeated per section.
+ */
+function gridProperties(program: Program, block: Block, members: ModelProperty[]): string[] {
+  const names: string[] = [];
+  const add = (name: string) => {
+    if (!names.includes(name)) names.push(name);
+  };
+  for (const member of members) {
+    for (const source of propTotals(program, member) ?? []) {
+      if (source.model === block.model) add(source.name);
+    }
+  }
+  for (const member of members) add(member.name);
+  return names;
+}
+
 export function emitSggUi(program: Program, block: Block): SggSection[] {
   if (!block.sections || block.model.kind !== "Model") return [];
 
-  const bySection = new Map<string, (SggField | SggFieldList)[]>();
+  const order: string[] = [];
+  const bySection = new Map<string, (SggField | SggFieldList | SggMultiField)[]>();
   const meta = new Map<string, { label: string; description?: string }>();
   for (const m of block.sections.members.values()) {
-    const name = snake(m.name);
+    const name = sectionName(m.name);
+    order.push(name);
     bySection.set(name, []);
     meta.set(name, { label: String(m.value ?? m.name), description: getDoc(program, m) });
   }
 
+  // Which properties land in each section, in order. This is the whole content of a
+  // section, whether it is rendered as a field list or handed to one component.
+  const props = new Map<string, ModelProperty[]>(order.map((name) => [name, []]));
   const overrides = block.overrides as Overrides;
   for (const prop of orderedProps(program, block)) {
     const sec = propSection(program, prop);
     if (!sec) continue;
-    const bucket = bySection.get(snake(sec.name));
-    if (!bucket) continue;
     if (at(overrides, prop.name).omit === true) continue;
+    props.get(sectionName(sec.name))?.push(prop);
+  }
 
-    const list = asFieldList(program, prop, overrides);
-    if (list) { bucket.push(list); continue; }
+  const widgets = new Map(
+    modelMultiFields(program, block.model as Model).map((d) => [sectionName(d.section), d.widget]),
+  );
 
-    const path = `/properties/${snake(prop.name)}`;
-    const child = childBlock(program, prop);
-    if (child && !child.scalar && child.model.kind === "Model") {
-      const flat: SggField[] = [];
-      walk(program, child.model, path, prop.name, flat, overrides);
-      bucket.push(...flat);
+  for (const name of order) {
+    const bucket = bySection.get(name)!;
+    const members = props.get(name)!;
+
+    // A section handed to one of SGG's components receives its properties and lays itself
+    // out, so none of its fields are walked.
+    const widget = widgets.get(name);
+    if (widget) {
+      if (!members.length) continue;
+      bucket.push({
+        type: "multiField",
+        name: widget,
+        widget,
+        definition: gridProperties(program, block, members).map(
+          (p) => `/properties/${snake(p)}`,
+        ),
+      });
       continue;
     }
-    bucket.push(field(program, prop, path, at(overrides, prop.name)));
+
+    for (const prop of members) {
+      const list = asFieldList(program, prop, overrides);
+      if (list) {
+        bucket.push(list);
+        continue;
+      }
+      const path = `/properties/${snake(prop.name)}`;
+      const child = childBlock(program, prop);
+      if (child && !child.scalar && child.model.kind === "Model") {
+        const flat: SggField[] = [];
+        walk(program, child.model, path, prop.name, flat, overrides);
+        bucket.push(...flat);
+        continue;
+      }
+      bucket.push(field(program, prop, path, at(overrides, prop.name)));
+    }
   }
 
   const out: SggSection[] = [];
-  for (const [name, children] of bySection) {
+  for (const name of order) {
+    const children = bySection.get(name)!;
     if (!children.length) continue;
     const m = meta.get(name)!;
     const section: SggSection = { type: "section", name, label: m.label, children };

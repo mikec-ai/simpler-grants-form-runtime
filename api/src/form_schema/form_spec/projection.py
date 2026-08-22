@@ -24,6 +24,11 @@ same question bank can project differently without any of this leaking upstream.
    (`../../question-bank/generics/address/schema.json`). They become pointers into the
    single bank document this codebase registers with its resolver.
 
+A fifth, smaller one: a field pinned to a single value is spelled `const` in JSON Schema
+2020-12 and `enum` with one member by this codebase. That is not cosmetic -- the validator
+reports the keyword that failed and the renderer shows the message, so `const` would tell
+an applicant "True was expected" where the form today says "is not one of [True]".
+
 Conditional `allOf` branches (`if`/`then`) are never flattened: they are logic, not
 composition, and the runtime consumes them where they are.
 """
@@ -102,6 +107,10 @@ def _pointer(block_id: str, projection: Projection) -> str:
     return f"{projection.bank_uri}#/{block_id}"
 
 
+#: JSON type names for the literals a form can pin a field to.
+_JSON_TYPE = {bool: "boolean", str: "string", int: "integer", float: "number"}
+
+
 def project_schema(
     schema: dict[str, Any],
     projection: Projection,
@@ -148,9 +157,12 @@ def _project_node(
     projection: Projection,
     path: str,
     local_prefix: str,
+    in_condition: bool = False,
 ) -> Any:
     if isinstance(node, list):
-        return [_project_node(item, projection, path, local_prefix) for item in node]
+        return [
+            _project_node(item, projection, path, local_prefix, in_condition) for item in node
+        ]
     if not isinstance(node, dict):
         return node
 
@@ -161,7 +173,7 @@ def _project_node(
         elif key in _PROPERTY_MAPS:
             out[key] = {
                 projection.rename(_join(path, name), name): _project_node(
-                    sub, projection, _join(path, name), local_prefix
+                    sub, projection, _join(path, name), local_prefix, in_condition
                 )
                 for name, sub in value.items()
             }
@@ -169,14 +181,18 @@ def _project_node(
             out[key] = [projection.rename(_join(path, name), name) for name in value]
         elif key == "$defs":
             out[key] = {
-                name: _project_node(sub, projection, path, local_prefix)
+                name: _project_node(sub, projection, path, local_prefix, in_condition)
                 for name, sub in value.items()
             }
         elif key in _SUBSCHEMA:
-            out[key] = _project_node(value, projection, path, local_prefix)
+            # `const` inside `if` is a test, not a field's value: leave it alone.
+            out[key] = _project_node(
+                value, projection, path, local_prefix, in_condition or key == "if"
+            )
         elif key in _SUBSCHEMA_LIST:
             out[key] = [
-                _project_node(item, projection, path, local_prefix) for item in value
+                _project_node(item, projection, path, local_prefix, in_condition)
+                for item in value
             ]
         elif key == "dependentRequired":
             out[key] = {
@@ -188,8 +204,26 @@ def _project_node(
         else:
             out[key] = value
 
+    if not in_condition:
+        out = _singleton_enum(out)
     out = _wrap_ref(out, projection)
     return _flatten_composition(out, projection, path, local_prefix)
+
+
+def _singleton_enum(node: dict[str, Any]) -> dict[str, Any]:
+    """`{"const": true}` -> `{"type": "boolean", "enum": [true]}`.
+
+    Transformation 5. Both say the field must hold exactly that value; only the second
+    produces the message this codebase's forms produce today.
+    """
+    if "const" not in node or "enum" in node:
+        return node
+    node = dict(node)
+    value = node.pop("const")
+    kind = _JSON_TYPE.get(type(value))
+    if kind is not None:
+        node.setdefault("type", kind)
+    return {**node, "enum": [value]}
 
 
 def _join(path: str, name: str) -> str:

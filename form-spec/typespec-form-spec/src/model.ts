@@ -88,6 +88,8 @@ export const propRequiredWhen = (p: Program, prop: ModelProperty) =>
   (g(p, stateKeys.requiredWhen, prop) as Condition[]) ?? [];
 export const propComputed = (p: Program, prop: ModelProperty) =>
   g(p, stateKeys.computed, prop) as { operator: string; refs: string[] } | undefined;
+export const propTotals = (p: Program, prop: ModelProperty) =>
+  g(p, stateKeys.totals, prop) as ModelProperty[] | undefined;
 export const propPrePopulate = (p: Program, prop: ModelProperty) =>
   g(p, stateKeys.prePopulate, prop) as string | undefined;
 /** `@UI.label` for any model, block or not. */
@@ -96,6 +98,11 @@ export const modelLabel = (p: Program, model: Model) =>
 /** `@UI.order` for any model, block or not. */
 export const modelOrder = (p: Program, model: Model) =>
   g(p, stateKeys.order, model) as string[] | undefined;
+
+/** `@Sgg.multiField` declarations on a form, in the order they were written. */
+export const modelMultiFields = (p: Program, model: Model) =>
+  (g(p, stateKeys.multiField, model) as { section: string; widget: string }[] | undefined) ??
+  [];
 
 export const propOverrides = (p: Program, prop: ModelProperty) =>
   (g(p, stateKeys.overrides, prop) as Record<string, Record<string, unknown>>) ?? {};

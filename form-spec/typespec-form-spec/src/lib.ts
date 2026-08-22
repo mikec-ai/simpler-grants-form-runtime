@@ -40,6 +40,8 @@ export const $lib = createTypeSpecLibrary({
     readOnlyWhen: {},
     requiredWhen: {},
     computed: {},
+    totals: {},
+    multiField: {},
     prePopulate: {},
   },
 } as const);

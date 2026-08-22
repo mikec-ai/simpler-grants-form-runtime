@@ -66,25 +66,32 @@ COMPOSED = {
 HAND_WRITTEN = {
     # Bank questions name and document themselves where several of SGG's shared primitives
     # do not. The form-level title and description sit on the property and still win.
-    "/properties/organization_name/allOf/0/description": "bank question carries a description",
-    "/properties/contact_person/allOf/0/title": (
+    "*/properties/organization_name/allOf/0/description": "bank question carries a description",
+    "*/properties/contact_person/allOf/0/title": (
         "the golden titles the shared definition 'Name and Contact Information', which "
         "describes neither; the bank calls a name a name"
     ),
-    "/properties/contact_person/allOf/0/description": (
+    "*/properties/contact_person/allOf/0/description": (
         "the golden's shared person_name has an empty description; the bank states one"
     ),
-    "/properties/authorized_representative/allOf/0/title": "as contact_person, same question",
-    "/properties/authorized_representative/allOf/0/description": (
+    "*/properties/authorized_representative/allOf/0/title": "as contact_person, same question",
+    "*/properties/authorized_representative/allOf/0/description": (
         "as contact_person, same question"
     ),
-    "/properties/phone_number/allOf/0/description": "bank question carries a description",
-    "/properties/fax/allOf/0/description": "bank question carries a description",
-    "/properties/authorized_representative_phone_number/allOf/0/description": (
+    "*/properties/phone_number/allOf/0/description": "bank question carries a description",
+    "*/properties/fax/allOf/0/description": "bank question carries a description",
+    "*/properties/authorized_representative_phone_number/allOf/0/description": (
         "bank question carries a description"
     ),
-    "/properties/email/allOf/0/description": "bank question carries a description",
-    "/properties/sam_uei/allOf/0/description": "bank question carries a description",
+    "*/properties/authorized_representative_fax/allOf/0/description": (
+        "bank question carries a description"
+    ),
+    "/properties/authorized_representative/description": (
+        "the golden gives box 21's name an empty description; an absent description and "
+        "an empty one render the same"
+    ),
+    "*/properties/email/allOf/0/description": "bank question carries a description",
+    "*/properties/sam_uei/allOf/0/description": "bank question carries a description",
     "/description": "the form's own description",
     "/$defs": (
         "the form's five enums are declarations held in $defs and referenced; the golden "
@@ -95,8 +102,8 @@ HAND_WRITTEN = {
     # `null` in the UI schema. Nothing reads the keyword -- the renderer takes read-only
     # from the UI schema's `null` node, and the API never looks -- so it is vestigial, and
     # emitting it on two of six would be reproducing an inconsistency.
-    "/properties/state_application_id/readOnly": "vestigial; the UI schema carries read-only",
-    "/properties/state_receive_date/readOnly": "vestigial; the UI schema carries read-only",
+    "*/properties/state_application_id/readOnly": "vestigial; the UI schema carries read-only",
+    "*/properties/state_receive_date/readOnly": "vestigial; the UI schema carries read-only",
 }
 
 ALLOWED = {**parity.composed(COMPOSED), **HAND_WRITTEN}

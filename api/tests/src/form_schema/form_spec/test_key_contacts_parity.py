@@ -21,28 +21,28 @@ ALLOWED = {
     # The bank names and documents its questions; several of SGG's shared primitives
     # carry no description at all, and the form-level title and description still win at
     # render time because they sit on the property rather than the definition.
-    "/properties/phone/allOf/0/description": "bank question carries a description",
-    "/properties/fax/allOf/0/description": "bank question carries a description",
-    "/properties/email/allOf/0/description": "bank question carries a description",
-    "/properties/organizational_affiliation/allOf/0/description": (
+    "*/properties/phone/allOf/0/description": "bank question carries a description",
+    "*/properties/fax/allOf/0/description": "bank question carries a description",
+    "*/properties/email/allOf/0/description": "bank question carries a description",
+    "*/properties/organizational_affiliation/allOf/0/description": (
         "bank question carries a description"
     ),
-    "/properties/applicant_organization_name/allOf/0/description": (
+    "*/properties/applicant_organization_name/allOf/0/description": (
         "bank question carries a description"
     ),
-    "/properties/name/allOf/0/description": (
+    "*/properties/name/allOf/0/description": (
         "the golden's shared person_name has an empty description; the bank states one"
     ),
-    "/properties/name/allOf/0/title": (
+    "*/properties/name/allOf/0/title": (
         "the golden titles the shared definition 'Name and Contact Information', which "
         "describes neither; the bank calls a name a name"
     ),
     # Block-level metadata the bank adds. Additive, and not rendered: the section and
     # fieldList labels come from the UI schema, which matches the golden exactly.
-    "/$defs/key_contact_person/title": "block label",
-    "/$defs/key_contact_person/description": "block description",
-    "/properties/key_contacts/items/title": "block label",
-    "/properties/key_contacts/items/description": "block description",
+    "*/$defs/key_contact_person/title": "block label",
+    "*/$defs/key_contact_person/description": "block description",
+    "*/properties/key_contacts/items/title": "block label",
+    "*/properties/key_contacts/items/description": "block description",
     "/description": (
         "the form's own description; the golden carries the form name only in its "
         "registry row"

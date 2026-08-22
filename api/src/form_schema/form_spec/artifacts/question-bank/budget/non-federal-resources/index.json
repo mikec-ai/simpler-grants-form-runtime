@@ -1,0 +1,9 @@
+{
+  "id": "budget/non-federal-resources",
+  "kind": "question",
+  "name": "Non-federal Resources",
+  "description": "Resources provided by the applicant, the state, or other sources.",
+  "tags": [
+    "money"
+  ]
+}

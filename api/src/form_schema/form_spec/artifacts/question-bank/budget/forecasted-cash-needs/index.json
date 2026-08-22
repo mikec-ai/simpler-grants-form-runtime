@@ -1,0 +1,9 @@
+{
+  "id": "budget/forecasted-cash-needs",
+  "kind": "question",
+  "name": "Forecasted Cash Needs",
+  "description": "Cash needed by quarter for the first year.",
+  "tags": [
+    "money"
+  ]
+}
