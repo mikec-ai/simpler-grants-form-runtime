@@ -13,32 +13,32 @@
     "keycontacts-source-1": {
       "kind": "authoritative_source",
       "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
-      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
-      "path": "work/grantsgov-xsds/Key_Contacts_2_0-V2.0.xsd",
+      "revision": "2f8d6081595797fa293fdba8043a19f3ed3c19a5",
+      "path": "evidence/source-snapshots/portable-form-kernel/2026-08-22/files/keycontacts-source-1/Key_Contacts_2_0-V2.0.xsd",
       "sha256": "d361843ac5acaf39aa58a10d87cb36647e2f834052ef5d7cf9370442908296e6",
       "source_version": "Key Contacts 2.0"
     },
     "keycontacts-source-2": {
       "kind": "authoritative_source",
       "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
-      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
-      "path": "work/grantsgov-xsds/dependencies/GlobalLibrary-V2.0.xsd",
+      "revision": "2f8d6081595797fa293fdba8043a19f3ed3c19a5",
+      "path": "evidence/source-snapshots/portable-form-kernel/2026-08-22/files/keycontacts-source-2/GlobalLibrary-V2.0.xsd",
       "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8",
       "source_version": "GlobalLibrary 2.0"
     },
     "keycontacts-source-3": {
       "kind": "authoritative_source",
       "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
-      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
-      "path": "work/grantsgov-xsds/dependencies/UniversalCodes-V2.0.xsd",
+      "revision": "2f8d6081595797fa293fdba8043a19f3ed3c19a5",
+      "path": "evidence/source-snapshots/portable-form-kernel/2026-08-22/files/keycontacts-source-3/UniversalCodes-V2.0.xsd",
       "sha256": "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a",
       "source_version": "UniversalCodes 2.0"
     },
     "keycontacts-source-4": {
       "kind": "authoritative_source",
       "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
-      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
-      "path": "artifacts/portfolio/top30-behavior-sources/Key_Contacts_2_0-V2.0_F683.xls",
+      "revision": "2f8d6081595797fa293fdba8043a19f3ed3c19a5",
+      "path": "evidence/source-snapshots/portable-form-kernel/2026-08-22/files/keycontacts-source-4/Key_Contacts_2_0-V2.0_F683.xls",
       "sha256": "b4856e146a424bea07ba508c5f261c5756798ed139bef4ea4c66d286fb439543",
       "source_version": "Key Contacts 2.0 F683 DAT"
     },
@@ -53,16 +53,16 @@
     "sf424-source-1": {
       "kind": "authoritative_source",
       "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
-      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
-      "path": "work/grantsgov-xsds/SF424_4_0-V4.0.xsd",
+      "revision": "2f8d6081595797fa293fdba8043a19f3ed3c19a5",
+      "path": "evidence/source-snapshots/portable-form-kernel/2026-08-22/files/sf424-source-1/SF424_4_0-V4.0.xsd",
       "sha256": "21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364",
       "source_version": "SF424 4.0"
     },
     "sf424-source-2": {
       "kind": "authoritative_source",
       "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
-      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
-      "path": "work/form-metadata/SF424_4_0-V4.0_F713.xls",
+      "revision": "2f8d6081595797fa293fdba8043a19f3ed3c19a5",
+      "path": "evidence/source-snapshots/portable-form-kernel/2026-08-22/files/sf424-source-2/SF424_4_0-V4.0_F713.xls",
       "sha256": "d6c16b73f5ade8c30bff93163503d1b80a1ee609ea8daa543a90214523b92bde",
       "source_version": "SF424 4.0 F713 DAT"
     },
@@ -77,72 +77,72 @@
     "budget-source-rr-xsd": {
       "kind": "authoritative_source",
       "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
-      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
-      "path": "work/grantsgov-xsds/RR_Budget_3_0-V3.0.xsd",
+      "revision": "2f8d6081595797fa293fdba8043a19f3ed3c19a5",
+      "path": "evidence/source-snapshots/portable-form-kernel/2026-08-22/files/budget-source-rr-xsd/RR_Budget_3_0-V3.0.xsd",
       "sha256": "d474010f85819549990de65fc51292bed08ba98ac0895d0dde9513fbe855cdbc",
       "source_version": "R&R Budget 3.0"
     },
     "budget-source-rr10-xsd": {
       "kind": "authoritative_source",
       "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
-      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
-      "path": "work/grantsgov-xsds/RR_Budget10_3_0-V3.0.xsd",
-      "sha256": "cccce03554424d59b5958e4443a54db12a5a10780fbdc5df2ec25955d443fc9d",
+      "revision": "2f8d6081595797fa293fdba8043a19f3ed3c19a5",
+      "path": "evidence/source-snapshots/portable-form-kernel/2026-08-22/files/budget-source-rr10-xsd/RR_Budget10_3_0-V3.0.xsd",
+      "sha256": "e9d004c15ffcbae04b65087cb0eff7e87b8eb8ba0ffd6bfb6aba5542e04708cc",
       "source_version": "R&R Budget 10 3.0"
     },
     "budget-source-rr-dat": {
       "kind": "authoritative_source",
       "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
-      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
-      "path": "work/form-metadata/RR_Budget_3_0-V3.0_F770.xls",
+      "revision": "2f8d6081595797fa293fdba8043a19f3ed3c19a5",
+      "path": "evidence/source-snapshots/portable-form-kernel/2026-08-22/files/budget-source-rr-dat/RR_Budget_3_0-V3.0_F770.xls",
       "sha256": "c85158ce7ddcc756d6e8a55a050e00b4a95cdfc8d9a2d91b7bd94c7f8bdb1035",
       "source_version": "R&R Budget 3.0 F770 DAT"
     },
     "subaward-source-ledger": {
-      "kind": "authoritative_source",
+      "kind": "agent_derivation",
       "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
-      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
-      "path": "artifacts/proof/grantsgov-RRSubawardBudget30.jsonl",
+      "revision": "2f8d6081595797fa293fdba8043a19f3ed3c19a5",
+      "path": "evidence/source-snapshots/portable-form-kernel/2026-08-22/files/subaward-source-ledger/grantsgov-RRSubawardBudget30.jsonl",
       "sha256": "4aeab4e8d6dc1161ce2cfae3ffb36b9f5aca53472d9fcfbcdacaf881724a8890",
       "source_version": "RR Subaward Budget 30 3.0; XSD sha256:d5d534326e8f7e4416baf98c95c1f9234c0a23628259ee2d7e3199181a24e08a"
     },
     "subaward10-30-source-ledger": {
-      "kind": "authoritative_source",
+      "kind": "agent_derivation",
       "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
-      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
-      "path": "artifacts/proof/grantsgov-RRSubawardBudget10_30.jsonl",
+      "revision": "2f8d6081595797fa293fdba8043a19f3ed3c19a5",
+      "path": "evidence/source-snapshots/portable-form-kernel/2026-08-22/files/subaward10-30-source-ledger/grantsgov-RRSubawardBudget10_30.jsonl",
       "sha256": "8e14f59f046ab82857c2eb7f4e24bb09a15df84da86fa66c5272af2f7dae4d76",
       "source_version": "RR Subaward Budget 10-year/30 attachment 3.0; XSD sha256:0ed112b2e50f0e0c43423f690201b207f5b9c5a85349335260e4fd999f3a611a"
     },
     "mp-budget-source-xsd": {
       "kind": "authoritative_source",
       "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
-      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
-      "path": "harness/portfolio-ingestion/cache/RR_MP_Budget_3_0-V3.0_F788/RR_MP_Budget_3_0-V3.0.xsd",
+      "revision": "2f8d6081595797fa293fdba8043a19f3ed3c19a5",
+      "path": "evidence/source-snapshots/portable-form-kernel/2026-08-22/files/mp-budget-source-xsd/RR_MP_Budget_3_0-V3.0.xsd",
       "sha256": "8ee3867971d4030582ff4c4cd906cd1a086c2d2491fb6f05b33cdd07ae435846",
       "source_version": "R&R Multi-Project Budget 3.0"
     },
     "mp-budget-source-dat": {
       "kind": "authoritative_source",
       "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
-      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
-      "path": "harness/portfolio-ingestion/cache/RR_MP_Budget_3_0-V3.0_F788/RR_MP_Budget_3_0-V3.0_F788.xls",
+      "revision": "2f8d6081595797fa293fdba8043a19f3ed3c19a5",
+      "path": "evidence/source-snapshots/portable-form-kernel/2026-08-22/files/mp-budget-source-dat/RR_MP_Budget_3_0-V3.0_F788.xls",
       "sha256": "1b306bea720d7c470b20b2fb6920c76687479dc1ed468caf6d165c02465d6827",
       "source_version": "R&R Multi-Project Budget 3.0 F788 DAT"
     },
     "mp-subaward-source-xsd": {
       "kind": "authoritative_source",
       "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
-      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
-      "path": "harness/portfolio-ingestion/cache/RR_MP_SubawardBudget_3_0-V3.0_F789/RR_MP_SubawardBudget_3_0-V3.0.xsd",
+      "revision": "2f8d6081595797fa293fdba8043a19f3ed3c19a5",
+      "path": "evidence/source-snapshots/portable-form-kernel/2026-08-22/files/mp-subaward-source-xsd/RR_MP_SubawardBudget_3_0-V3.0.xsd",
       "sha256": "20dce5b3498c809727892ee6cb837db223d687564c5829d94fe481367b7815c4",
       "source_version": "R&R Multi-Project Subaward Budget 3.0"
     },
     "mp-subaward-source-dat": {
       "kind": "authoritative_source",
       "repository": "https://github.com/mikec-ai/grants-question-crosswalk.git",
-      "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
-      "path": "harness/portfolio-ingestion/cache/RR_MP_SubawardBudget_3_0-V3.0_F789/RR_MP_SubawardBudget_3_0-V3.0_F789.xls",
+      "revision": "2f8d6081595797fa293fdba8043a19f3ed3c19a5",
+      "path": "evidence/source-snapshots/portable-form-kernel/2026-08-22/files/mp-subaward-source-dat/RR_MP_SubawardBudget_3_0-V3.0_F789.xls",
       "sha256": "aa2288490aec0ae2848a803946e6d80633fa90bd0f6bdefe9d515bfc2a800569",
       "source_version": "R&R Multi-Project Subaward Budget 3.0 F789 DAT"
     }
