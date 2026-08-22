@@ -2179,14 +2179,6 @@
   ],
   "supplemental_evidence": [
     {
-      "path": "oracles/budget/rr-budget-v3.candidate.json",
-      "sha256": "84219caf65d2f3495a7b570a6b2fcce6f82ea6bf40fb9e6a95f3388a8af7b0cd"
-    },
-    {
-      "path": "oracles/budget/rr-budget-v3.runtime-rules.json",
-      "sha256": "e61b568b6397a24a1f527b573303efa7bc78a5d5a649b19568a006a82b21d321"
-    },
-    {
       "path": "evidence/rr-budget-family-profile.json",
       "sha256": "22e831736d1ddd197b78a6f27c517fa59bd0bb19aa34f9801c2d4a4c36e24de2"
     }

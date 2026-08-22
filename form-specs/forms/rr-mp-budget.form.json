@@ -2280,14 +2280,6 @@
   ],
   "supplemental_evidence": [
     {
-      "path": "oracles/budget/rr-mp-budget-v3.candidate.json",
-      "sha256": "6cd2aae9da2b1bf8f8f028ed8843aad0bebc3f13bf3fe781ebb75dbc8112dc51"
-    },
-    {
-      "path": "oracles/budget/rr-mp-budget-v3.runtime-rules.json",
-      "sha256": "94b2295559806855ebeb96e8b1694e0a8982c49140b98953c4ed9663d18fd771"
-    },
-    {
       "path": "evidence/rr-budget-composition-wave.json",
       "sha256": "d525eb010336111073a1e160841e61f9c91911d41f16b341d42b034e39904bb3"
     }

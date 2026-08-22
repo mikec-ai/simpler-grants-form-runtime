@@ -438,15 +438,7 @@
     },
     {
       "path": "evidence/key-contacts.parity-exceptions.json",
-      "sha256": "82423d2b8bcea07e59c916930adf61555b97584ddd0d36ae48a41565891d874c"
-    },
-    {
-      "path": "oracles/key-contacts-v2.native.schema.json",
-      "sha256": "8baf01802cff98771d7795b6339430c937b13e55660a72301382aeb6602df645"
-    },
-    {
-      "path": "oracles/key-contacts-v2.native.ui.json",
-      "sha256": "30b6c3f00e2a8fea1658c747acae5139771c7caeade442c6476b41ea0c9c7daa"
+      "sha256": "f406749e603825867f095576d11141c501deb2953f0dd31ba34139232264d837"
     }
   ],
   "review_boundary": {

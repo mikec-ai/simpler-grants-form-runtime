@@ -19,9 +19,10 @@ The removed migration scripts remain recoverable from Git history:
 - `scripts/build_portable_budget_pilot.py`
 - `scripts/build_portable_budget_composition.py`
 
-Their generated declarations, source pins, runtime parity tests, analysis exports, and regression
-oracles are preserved. This refactor changes the authority and review surface, not the six forms'
-resolved behavior or analytical results.
+Their generated declarations, source pins, and runtime parity tests are preserved. Regression
+oracles and analysis exports are deterministically regenerated and published as CI build artifacts
+instead of being checked into the runtime repository. This refactor changes the authority and
+review surface, not the six forms' resolved behavior or analytical results.
 
 Future form work should not add a form-specific compiler function. If a new form exposes a missing
 capability, add a typed declarative construct and teach the generic compiler or adapter to process

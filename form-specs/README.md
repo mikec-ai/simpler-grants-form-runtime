@@ -28,6 +28,13 @@ CI uses `--check` to reject stale output. The compiler performs only generic loa
 path validation, deterministic assembly, and serialization. It contains no form keys, question
 identities, role rules, validation variants, calculation selection, or source-wire paths.
 
+Resolved runtime oracles, native implementation snapshots, parity reports, analysis tables, and
+the Excel workbook are build products. They are not runtime inputs and are not checked into this
+repository. The `Portable Form Build Artifacts` workflow regenerates them from the canonical
+declarations and current native implementation, then publishes commit-addressed artifacts with
+SHA-256 manifests. See `documentation/form-analysis/README.md` for local commands and artifact
+names.
+
 The earlier budget-specific Python builders were migration scaffolding used to discover and
 materialize the current declarations. They have been removed from the supported build path; their
 exact history remains available in Git. New forms must be added by declarations and processed by

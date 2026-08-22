@@ -1,7 +1,0 @@
-form_key,form_name,form_version,semantic_question_occurrences,content_capture_mechanisms,semantic_mapping_status,published_coverage_eligible,production_ready
-KeyContacts,KEY CONTACTS,2.0,20,0,agent_proposed,False,False
-RRBudget,[Draft] Research & Related Budget,3.0,101,0,agent_proposed,False,False
-RRBudget10,[Draft] Research & Related Budget 10YR,3.0,101,0,agent_proposed,False,False
-RRMPBudget,[Draft] Research & Related Multi-Project Budget Form,3.0,101,0,agent_proposed,False,False
-RRSubawardBudget30,[Draft] R&R Subaward Budget Attachment(s) Form 30,3.0,101,30,agent_proposed,False,False
-SF424,Application for Federal Assistance (SF-424),4.0,73,0,agent_proposed,False,False

@@ -55,9 +55,11 @@ def test_sf424_native_projection_dimensions_and_runtime_artifacts_are_exact() ->
     assert str(form.form_instruction_id) == "bf48a93f-d445-426f-a8fb-289bf93a2434"
 
 
-def test_sf424_pinned_native_oracles_still_match_the_implementation() -> None:
-    assert _read("oracles/sf424-v4.native.schema.json") == FORM_JSON_SCHEMA
-    assert _read("oracles/sf424-v4.native.ui.json") == FORM_UI_SCHEMA
+def test_sf424_native_runtime_artifacts_still_match_the_portable_projection() -> None:
+    form = load_portable_form_bundle(BUNDLE_ROOT).to_form("SF424")
+    assert form.form_ui_schema == FORM_UI_SCHEMA
+    assert form.form_rule_schema == FORM_RULE_SCHEMA
+    assert form.json_to_xml_schema == FORM_XML_TRANSFORM_RULES
     assert _read("rules/sf424-v4.rules.json") == FORM_RULE_SCHEMA
     assert _read("xml/sf424-v4.xml-transform.json") == FORM_XML_TRANSFORM_RULES
 
@@ -76,7 +78,7 @@ def test_sf424_portable_schema_is_semantically_exact_after_reference_resolution(
         return shared[uri.split("#", 1)[0]]
 
     native = jsonref.replace_refs(
-        _read("oracles/sf424-v4.native.schema.json"),
+        FORM_JSON_SCHEMA,
         loader=loader,
         lazy_load=False,
         proxies=False,

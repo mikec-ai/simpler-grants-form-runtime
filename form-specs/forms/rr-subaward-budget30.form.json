@@ -3022,14 +3022,6 @@
   ],
   "supplemental_evidence": [
     {
-      "path": "oracles/budget/rr-subaward-budget30-v3.candidate.json",
-      "sha256": "7090f3a9e76b09df87a862df49134ed63d2e8dce3947a312d35992d18205fe90"
-    },
-    {
-      "path": "oracles/budget/rr-subaward-budget30-v3.runtime-rules.json",
-      "sha256": "2554e6d8400c045568c5626f7dcdb3ede5a9e07e256cb882c0da613e4b65040f"
-    },
-    {
       "path": "evidence/rr-budget-composition-wave.json",
       "sha256": "d525eb010336111073a1e160841e61f9c91911d41f16b341d42b034e39904bb3"
     }

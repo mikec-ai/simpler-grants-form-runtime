@@ -19,7 +19,7 @@ from src.form_schema.portable_form_kernel import (  # ruff: ignore[module-import
 )
 
 VERSION = "0.1.0"
-DEFAULT_OUTPUT = ROOT / "documentation" / "form-analysis"
+DEFAULT_OUTPUT = ROOT / "build" / "portable-form-artifacts" / "analysis"
 
 
 def write_csv(path: Path, fieldnames: list[str], rows: list[dict[str, Any]]) -> None:
@@ -70,17 +70,12 @@ def export(bundle_root: Path, output_dir: Path) -> dict[str, int]:
     for association in associations:
         if association["analysis_classification"] != "semantic_question":
             continue
-        associations_by_question.setdefault(association["question_id"], []).append(
-            association
-        )
+        associations_by_question.setdefault(association["question_id"], []).append(association)
     count_by_question = {row["question_id"]: row for row in projection["questions"]}
     for question_id, rows in sorted(associations_by_question.items()):
         schema_ids = sorted({row["schema_id"] for row in rows})
         titles = sorted(
-            {
-                kernel.schemas_by_id[schema_id].get("title", question_id)
-                for schema_id in schema_ids
-            }
+            {kernel.schemas_by_id[schema_id].get("title", question_id) for schema_id in schema_ids}
         )
         counts = count_by_question[question_id]
         question_rows.append(
@@ -121,8 +116,7 @@ def export(bundle_root: Path, output_dir: Path) -> dict[str, int]:
 
     pair_rows: list[dict[str, Any]] = []
     template_pairs = {
-        (pair["form_a"], pair["form_b"]): pair
-        for pair in projection["pairwise_form_overlap"]
+        (pair["form_a"], pair["form_b"]): pair for pair in projection["pairwise_form_overlap"]
     }
     for pair in projection["pairwise_role_qualified_overlap"]:
         template = template_pairs[pair["form_a"], pair["form_b"]]
@@ -140,9 +134,7 @@ def export(bundle_root: Path, output_dir: Path) -> dict[str, int]:
                 "form_a_proposed_coverage": proposed["form_a_coverage"],
                 "form_b_proposed_coverage": proposed["form_b_coverage"],
                 "template_proposed_similarity": proposed_template["similarity"],
-                "template_proposed_questions_in_common": proposed_template[
-                    "questions_in_common"
-                ],
+                "template_proposed_questions_in_common": proposed_template["questions_in_common"],
                 "accepted_similarity": accepted["similarity"],
                 "accepted_questions_in_common": accepted["questions_in_common"],
             }
