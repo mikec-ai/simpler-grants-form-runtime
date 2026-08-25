@@ -6,11 +6,11 @@ assignee: codex-multiproject-cover-closure
 description: >-
   Exact-XSD, generic projection, lifecycle, and browser closure for the portable
   Multi-Project Cover form.
-superbee_progress_status: in_progress
-superbee_updated_by: codex-multiproject-cover-closure
+superbee_progress_status: done
+superbee_updated_by: codex-form-lane-status
 generated:
   by: 'process:superbee'
-  at: '2026-08-25T10:38:08.132Z'
+  at: '2026-08-25T13:43:26.837Z'
 ---
 # Summary
 
@@ -44,3 +44,14 @@ Do not resynchronize PR #112 yet. The repair producer revision also contains the
 ## Separate gates
 
 Human semantic equivalence, policy interpretation, accessibility, and release acceptance remain open and are not implied by these technical receipts.
+
+## Technical closure receipt — 2026-08-25
+
+- Producer repair PR #107 merged as `551228220521140440f651b3bad94f1ca00bac19`; the consumer bundle pins that exact immutable revision.
+- Consumer PR #112 merged to the private fork as `beed3479f37158a3a5e3391d3bad59e0c5e83958` from head `73bf5ce6608168f8ded3fe2aa8b4378f5a0d233b`.
+- Current-head bounded browser run `32853841892` selected only `rr-sf424-multi-project-cover` and completed 4 passed / 4 intentionally skipped.
+- Current-head format, lint, migration, and security phases passed. The focused repaired Project Abstract provenance plus Multi-Project cohort passed 14/14 locally.
+- The runtime-identical preceding head completed 4,771 broad API tests; its sole failure was a stale Project Abstract provenance assertion, repaired on the merged head with exact form-scoped artifact hashes.
+- Broad E2E shard 4 completed 36 passed / 6 skipped; its only failures were the two documented unrelated SF-424A Mobile Chrome `Total, row 1` baseline failures. The remaining shards were canceled by fail-fast.
+- No form-specific compiler or adapter branch was introduced. The form remains unregistered; semantic, policy, accessibility, and human release acceptance remain separate open gates.
+- R&R Subaward Budget 10YR/30 remained outside this lane.
