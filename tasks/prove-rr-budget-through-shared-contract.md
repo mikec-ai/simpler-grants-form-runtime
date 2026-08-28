@@ -13,7 +13,7 @@ superbee_progress_status: in_progress
 superbee_updated_by: codex-primary
 generated:
   by: 'process:superbee'
-  at: '2026-08-28T19:14:56.769Z'
+  at: '2026-08-28T19:19:49.466Z'
 ---
 [depends on](converge-reference-forms.md)
 
@@ -25,6 +25,8 @@ The hidden-oracle evaluation preserves both measurements. The original oracle us
 
 Exact receipts are committed at `5efc201` on `codex/rr-budget-holdout-benchmark` and published in grants-form-workbench PR #61: https://github.com/mikec-ai/grants-form-workbench/pull/61. `benchmarks/rr-budget/` contains the pinned extraction and manifest, oracle-isolated request and receipt, agent recommendations, preview, the first wrapper run, and the score. Full repository verification passed: 491 Vitest tests, 76 agent-tool tests, typechecking, question-catalog integrity (232 questions), and all builds. Hosted run 33202974428 failed before executing any step (empty step list), so it provides no code-level failure signal.
 
+A second shared-runtime slice is committed at `b41facd` and published in stacked PR #62: https://github.com/mikec-ai/grants-form-workbench/pull/62. Generic calculation `forEach` scopes now traverse nested arrays through wildcard segments while retaining bounded execution and fail-closed behavior. This supplies the missing runtime shape for period-level and nested-row R&R Budget calculations without adding form-specific code. Full verification passed with 493 Vitest tests and 76 agent-tool tests.
+
 ## Remaining acceptance
 
-The full P0 remains open. Next slices must prove calculation and condition execution, ordering/UI/validation parity, XML fidelity, the real Simpler consumer path, and a declaration-only sibling.
+The full P0 remains open. Next slices must project the 30 source-resolved calculations with exact provenance and execute them as one portable artifact; then prove conditions, ordering/UI/validation parity, XML fidelity, the real Simpler consumer path, and a declaration-only sibling.
