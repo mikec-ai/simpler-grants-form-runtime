@@ -13,7 +13,7 @@ superbee_progress_status: in_progress
 superbee_updated_by: codex-primary
 generated:
   by: 'process:superbee'
-  at: '2026-08-28T19:19:49.466Z'
+  at: '2026-08-28T21:04:52.886Z'
 ---
 [depends on](converge-reference-forms.md)
 
@@ -33,8 +33,12 @@ The checked fixture is byte-identical to `grants-question-crosswalk` revision `b
 
 The repeated-row condition foundation is committed at `e584d40` and published in stacked PR #64: https://github.com/mikec-ai/grants-form-workbench/pull/64. The neutral behavior contract now supports explicit `present` predicates and row-scoped conditions over repeated and nested repeated collections. Execution returns each outcome with its exact indexed data pointer, the renderer preserves those instance receipts for consumer use, and capability preflight names this separately as `behavior.collection-condition`. Global calculation gates and UI effects are rejected for repeated conditions so one row's outcome cannot be incorrectly applied to an entire form.
 
-The R&R Budget projection now contains 50 executable rules: the prior 30 calculations plus all 20 source-resolved requiredness predicates. Fourteen predicates run once per budget period; six run across nested repeated equipment and other-personnel rows. The 20 requiredness effects remain explicitly blocked with their exact relative targets until an instance-aware consumer binding exists. The source ledger has zero blocked condition predicates. Full repository verification passed with 499 Vitest tests, 76 agent-tool tests, typechecking, question-catalog integrity, and all builds. Hosted run `33207170851` again failed with an empty step list before executing repository code.
+The R&R Budget projection now contains 50 executable rules: the prior 30 calculations plus all 20 source-resolved requiredness predicates. Fourteen predicates run once per budget period; six run across nested repeated equipment and other-personnel rows. At this slice boundary, the 20 requiredness effects remained explicitly blocked with their exact relative targets until an instance-aware consumer binding existed. The source ledger has zero blocked condition predicates. Full repository verification passed with 499 Vitest tests, 76 agent-tool tests, typechecking, question-catalog integrity, and all builds. Hosted run `33207170851` again failed with an empty step list before executing repository code.
+
+The instance-aware consumer slice is committed at `b6e51ba` and published in stacked PR #65: https://github.com/mikec-ai/grants-form-workbench/pull/65. The projector now emits all 20 exact requiredness effects, so `blockedConditionEffects` is zero. The generic consumer binds each repeated outcome to its indexed field, reports standard field-level validation errors, and supplies active required markers to the Simpler-compatible controls without changing the portable schema. Repeated calculations also remove applicant-supplied stale outputs before condition evaluation, retain exact indexed output receipts, and mark wildcard structural schema targets read-only. No form identifier or form-specific renderer branch was added.
+
+The generated package and receipt retain the pinned crosswalk repository, revision, path, and SHA-256 above. All behavior remains `agent_proposed`; `semanticAcceptanceGranted` is false and `publishedCoverageEligible` is false. Full repository verification passed with 502 Vitest tests, 77 agent-tool tests, typechecking, question-catalog integrity at 232 questions, and all builds.
 
 ## Remaining acceptance
 
-The full P0 remains open. The 30 source-resolved calculations and 20 source-resolved condition predicates are projected and executable. The next consumer slice must bind each repeated condition outcome to the correct rendered row for field-level requiredness and validation. Remaining work also includes resolving or explicitly dispositioning the 26 blocked calculations, then proving ordering/UI parity, XML fidelity, the real Simpler consumer path, and a declaration-only sibling.
+The full P0 remains open. The 30 source-resolved calculations, 20 source-resolved condition predicates, and all 20 exact requiredness effects are projected and executable through the generic consumer. Remaining work includes resolving or explicitly dispositioning the 26 blocked calculations, then proving ordering/UI parity, XML fidelity, the real Simpler consumer path, and a declaration-only sibling.
