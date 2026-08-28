@@ -13,7 +13,7 @@ superbee_progress_status: in_progress
 superbee_updated_by: codex-primary
 generated:
   by: 'process:superbee'
-  at: '2026-08-28T21:04:52.886Z'
+  at: '2026-08-28T21:05:40.643Z'
 ---
 [depends on](converge-reference-forms.md)
 
@@ -37,7 +37,7 @@ The R&R Budget projection now contains 50 executable rules: the prior 30 calcula
 
 The instance-aware consumer slice is committed at `b6e51ba` and published in stacked PR #65: https://github.com/mikec-ai/grants-form-workbench/pull/65. The projector now emits all 20 exact requiredness effects, so `blockedConditionEffects` is zero. The generic consumer binds each repeated outcome to its indexed field, reports standard field-level validation errors, and supplies active required markers to the Simpler-compatible controls without changing the portable schema. Repeated calculations also remove applicant-supplied stale outputs before condition evaluation, retain exact indexed output receipts, and mark wildcard structural schema targets read-only. No form identifier or form-specific renderer branch was added.
 
-The generated package and receipt retain the pinned crosswalk repository, revision, path, and SHA-256 above. All behavior remains `agent_proposed`; `semanticAcceptanceGranted` is false and `publishedCoverageEligible` is false. Full repository verification passed with 502 Vitest tests, 77 agent-tool tests, typechecking, question-catalog integrity at 232 questions, and all builds.
+The generated package and receipt retain the pinned crosswalk repository, revision, path, and SHA-256 above. All behavior remains `agent_proposed`; `semanticAcceptanceGranted` is false and `publishedCoverageEligible` is false. Full repository verification passed with 502 Vitest tests, 77 agent-tool tests, typechecking, question-catalog integrity at 232 questions, and all builds. Hosted run `33210936077` failed before executing any step (`steps: []`, no failure log), matching the established account/infrastructure failure mode and providing no code-level failure signal.
 
 ## Remaining acceptance
 
