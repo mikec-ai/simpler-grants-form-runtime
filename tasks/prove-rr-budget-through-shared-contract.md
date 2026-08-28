@@ -13,7 +13,7 @@ superbee_progress_status: in_progress
 superbee_updated_by: codex-primary
 generated:
   by: 'process:superbee'
-  at: '2026-08-28T19:13:07.252Z'
+  at: '2026-08-28T19:14:56.769Z'
 ---
 [depends on](converge-reference-forms.md)
 
@@ -23,7 +23,7 @@ The target-excluded R&R Budget holdout is complete as the first slice of this ta
 
 The hidden-oracle evaluation preserves both measurements. The original oracle uses five top-level occurrences, so component-decomposition recall remains 0/5. The decomposition-neutral comparison shows all 6 top-level properties covered, identical required fields, and normalized structural parity after excluding only presentation text and relative reference depth. This is implementation evidence, not semantic acceptance: the reused component has two prior unreviewed occurrences and `semanticAcceptanceGranted` remains false.
 
-Exact receipts live on `codex/rr-budget-holdout-benchmark` in `benchmarks/rr-budget/`: pinned extraction and manifest, oracle-isolated request and receipt, agent recommendations, preview, the first wrapper run, and the score. Full repository verification passed: 491 Vitest tests, 76 agent-tool tests, typechecking, question-catalog integrity (232 questions), and all builds.
+Exact receipts are committed at `5efc201` on `codex/rr-budget-holdout-benchmark` and published in grants-form-workbench PR #61: https://github.com/mikec-ai/grants-form-workbench/pull/61. `benchmarks/rr-budget/` contains the pinned extraction and manifest, oracle-isolated request and receipt, agent recommendations, preview, the first wrapper run, and the score. Full repository verification passed: 491 Vitest tests, 76 agent-tool tests, typechecking, question-catalog integrity (232 questions), and all builds. Hosted run 33202974428 failed before executing any step (empty step list), so it provides no code-level failure signal.
 
 ## Remaining acceptance
 
