@@ -13,7 +13,7 @@ superbee_progress_status: in_progress
 superbee_updated_by: codex-primary
 generated:
   by: 'process:superbee'
-  at: '2026-08-28T21:21:14.408Z'
+  at: '2026-08-28T21:21:54.495Z'
 ---
 [depends on](converge-reference-forms.md)
 
@@ -41,7 +41,7 @@ The generated package and receipt retain the pinned crosswalk repository, revisi
 
 The boundary-hardening slice is committed at `f490450` and published in stacked PR #66: https://github.com/mikec-ai/grants-form-workbench/pull/66. Exact schema traversal and source-resolved behavior projection now live in the reusable design-time-only `behavior-projection` package. The R&R command retains only its pinned evidence identity, ledger-scope translation, stable identifiers, receipt construction, validation, and AXI output. The shared package understands generic same-instance and across-collection semantics and is guarded against budget, PHS, SF-424, renderer, and Simpler identities. The checked 50-rule R&R package and receipt remain deterministically identical.
 
-Instance-specific requiredness now crosses from renderer to components through the independent `presentation-state` leaf package. That package has no dependency on contracts, behaviors, JSON Forms, React, a renderer, a component library, a producer, or Simpler. Architecture tests prohibit consumer/runtime packages from importing design-time projection and keep the presentation dependency inward-only. Full repository verification passed with 506 Vitest tests, 77 agent-tool tests, typechecking, question-catalog integrity at 232 questions, and all builds.
+Instance-specific requiredness now crosses from renderer to components through the independent `presentation-state` leaf package. That package has no dependency on contracts, behaviors, JSON Forms, React, a renderer, a component library, a producer, or Simpler. Architecture tests prohibit consumer/runtime packages from importing design-time projection and keep the presentation dependency inward-only. Full repository verification passed with 506 Vitest tests, 77 agent-tool tests, typechecking, question-catalog integrity at 232 questions, and all builds. Hosted run `33212152865` again failed before executing any step (`steps: []`, no failure log), so it provides no code-level failure signal.
 
 ## Remaining acceptance
 
