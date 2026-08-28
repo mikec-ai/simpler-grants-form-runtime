@@ -13,7 +13,7 @@ superbee_progress_status: in_progress
 superbee_updated_by: codex-primary
 generated:
   by: 'process:superbee'
-  at: '2026-08-28T21:05:40.643Z'
+  at: '2026-08-28T21:21:14.408Z'
 ---
 [depends on](converge-reference-forms.md)
 
@@ -38,6 +38,10 @@ The R&R Budget projection now contains 50 executable rules: the prior 30 calcula
 The instance-aware consumer slice is committed at `b6e51ba` and published in stacked PR #65: https://github.com/mikec-ai/grants-form-workbench/pull/65. The projector now emits all 20 exact requiredness effects, so `blockedConditionEffects` is zero. The generic consumer binds each repeated outcome to its indexed field, reports standard field-level validation errors, and supplies active required markers to the Simpler-compatible controls without changing the portable schema. Repeated calculations also remove applicant-supplied stale outputs before condition evaluation, retain exact indexed output receipts, and mark wildcard structural schema targets read-only. No form identifier or form-specific renderer branch was added.
 
 The generated package and receipt retain the pinned crosswalk repository, revision, path, and SHA-256 above. All behavior remains `agent_proposed`; `semanticAcceptanceGranted` is false and `publishedCoverageEligible` is false. Full repository verification passed with 502 Vitest tests, 77 agent-tool tests, typechecking, question-catalog integrity at 232 questions, and all builds. Hosted run `33210936077` failed before executing any step (`steps: []`, no failure log), matching the established account/infrastructure failure mode and providing no code-level failure signal.
+
+The boundary-hardening slice is committed at `f490450` and published in stacked PR #66: https://github.com/mikec-ai/grants-form-workbench/pull/66. Exact schema traversal and source-resolved behavior projection now live in the reusable design-time-only `behavior-projection` package. The R&R command retains only its pinned evidence identity, ledger-scope translation, stable identifiers, receipt construction, validation, and AXI output. The shared package understands generic same-instance and across-collection semantics and is guarded against budget, PHS, SF-424, renderer, and Simpler identities. The checked 50-rule R&R package and receipt remain deterministically identical.
+
+Instance-specific requiredness now crosses from renderer to components through the independent `presentation-state` leaf package. That package has no dependency on contracts, behaviors, JSON Forms, React, a renderer, a component library, a producer, or Simpler. Architecture tests prohibit consumer/runtime packages from importing design-time projection and keep the presentation dependency inward-only. Full repository verification passed with 506 Vitest tests, 77 agent-tool tests, typechecking, question-catalog integrity at 232 questions, and all builds.
 
 ## Remaining acceptance
 
